@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #e9e7e3; }
+  a { color: #1c1917; text-decoration: underline; text-underline-offset: 2px; }
+  a:hover { color: #7a3b12; }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+</helmet>
+
+<div style="min-height: 100vh; background: #e9e7e3; font-family: 'IBM Plex Sans KR', 'Noto Sans KR', sans-serif; color: #1c1917; padding: 0 0 80px;">
+
+  <div style="position: sticky; top: 0; z-index: 40; background: rgba(233,231,227,0.96); border-bottom: 1px solid #d3cfc8; padding: 14px 32px; display: flex; align-items: center; gap: 28px; flex-wrap: wrap;">
+    <div style="display: flex; flex-direction: column; gap: 2px;">
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.16em; color: #6b6459;">LENSFACT / 렌즈팩트</span>
+      <span style="font-size: 15px; font-weight: 500;">컨셉 보드 — 세 가지 방향</span>
+    </div>
+    <div style="display: flex; gap: 6px;">
+      <sc-for list="{{ conceptTabs }}" as="t" hint-placeholder-count="3">
+        <button onClick="{{ t.onClick }}" style="min-height: 44px; padding: 0 16px; border-radius: 2px; border: 1px solid #c8c3ba; font-family: 'IBM Plex Sans KR', sans-serif; font-size: 13px; cursor: pointer; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 1px; background: {{ t.bg }}; color: {{ t.fg }}; border-color: {{ t.bd }};">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; opacity: 0.7;">{{ t.code }}</span>
+          <span style="font-weight: 500;">{{ t.label }}</span>
+        </button>
+      </sc-for>
+    </div>
+    <div style="display: flex; gap: 6px; margin-left: auto;">
+      <sc-for list="{{ viewTabs }}" as="v" hint-placeholder-count="2">
+        <button onClick="{{ v.onClick }}" style="min-height: 44px; padding: 0 18px; border-radius: 2px; border: 1px solid #c8c3ba; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.08em; cursor: pointer; background: {{ v.bg }}; color: {{ v.fg }}; border-color: {{ v.bd }};">{{ v.label }}</button>
+      </sc-for>
+    </div>
+    <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #6b6459;">프로토타입 예시 데이터 · 2026.08.27 확인</span>
+  </div>
+
+  <!-- ============ CONCEPT A · DESKTOP ============ -->
+  <sc-if value="{{ showADesk }}" hint-placeholder-val="{{ true }}">
+  <div style="padding: 40px 32px 0; display: flex; justify-content: center;">
+    <div style="width: 1123px; height: 702px; overflow: hidden; border: 1px solid #d3cfc8; background: #faf8f5; box-shadow: 0 24px 48px -30px rgba(28,25,23,0.35);">
+      <div style="width: 1440px; height: 900px; transform: scale(0.78); transform-origin: top left; background: #faf8f5; display: flex; flex-direction: column;">
+
+        <div style="height: 60px; border-bottom: 1px solid #e6e0d6; display: flex; align-items: center; padding: 0 40px; gap: 36px;">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; letter-spacing: 0.2em; font-weight: 600;">LENSFACT</span>
+          <div style="display: flex; gap: 24px; font-size: 14px; color: #4a443b;">
+            <span style="font-weight: 500; color: #1c1917; border-bottom: 2px solid oklch(0.62 0.14 55); padding-bottom: 4px;">숫자 해석</span>
+            <span>공식 사양 비교</span>
+            <span>자료실</span>
+          </div>
+          <span style="margin-left: auto; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #6b6459;">2026.08.27 확인</span>
+        </div>
+
+        <div style="flex: 1; display: grid; grid-template-columns: 660px 1fr;">
+
+          <div style="padding: 44px 40px; border-right: 1px solid #e6e0d6;">
+            <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #8a8276; margin-bottom: 6px;">포장지 원문 · SAMPLE PACK 01</div>
+            <div style="font-size: 26px; font-weight: 500; letter-spacing: -0.01em; margin-bottom: 26px;">포장지 숫자 해석하기</div>
+
+            <div style="position: relative; width: 372px;">
+              <div style="background: #fff; border: 1px solid #ded7cb; padding: 24px 26px 22px;">
+                <div style="display: flex; align-items: center; gap: 10px; padding-bottom: 16px; border-bottom: 1px solid #ece6da;">
+                  <div style="width: 20px; height: 20px; border: 2px solid #1c1917; border-radius: 50%;"></div>
+                  <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.18em;">CLEAR SPHERICAL · 1 DAY</span>
+                </div>
+                <sc-for list="{{ fields }}" as="f" hint-placeholder-count="7">
+                  <div onClick="{{ f.onClick }}" style="min-height: 44px; display: grid; grid-template-columns: 96px 1fr auto; align-items: center; gap: 12px; cursor: pointer; border-bottom: 1px solid #f2ede4; padding: 0 8px; margin: 0 -8px; background: {{ f.bg }};">
+                    <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.1em; color: #8a8276;">{{ f.code }}</span>
+                    <span style="font-family: 'IBM Plex Mono', monospace; font-size: 17px; font-weight: 500; color: {{ f.valColor }};">{{ f.value }}</span>
+                    <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #a09889;">{{ f.unit }}</span>
+                  </div>
+                </sc-for>
+              </div>
+              <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #a09889; margin-top: 8px; line-height: 1.6;">프로토타입 예시 데이터입니다. 실제 제품 표기와 다를 수 있습니다.</div>
+
+              <div style="position: absolute; left: 372px; top: 74px; display: flex; align-items: center; gap: 0;">
+                <div style="width: 28px; height: 1px; background: #c9c1b3;"></div>
+                <div style="width: 172px; padding: 8px 10px; border-left: 2px solid oklch(0.62 0.14 55); background: #f3ece3;">
+                  <div style="font-size: 12px; font-weight: 500; line-height: 1.5;">뒷면 곡률입니다</div>
+                  <div style="font-size: 11px; color: #6b6459; line-height: 1.5;">값이 작으면 곡면이 더 급합니다</div>
+                </div>
+              </div>
+              <div style="position: absolute; left: 372px; top: 250px; display: flex; align-items: center;">
+                <div style="width: 28px; height: 1px; background: #c9c1b3;"></div>
+                <div style="width: 172px; padding: 8px 10px; border-left: 2px solid oklch(0.62 0.14 55); background: #f3ece3;">
+                  <div style="font-size: 12px; font-weight: 500; line-height: 1.5;">두께를 반영한 산소 지표</div>
+                  <div style="font-size: 11px; color: #6b6459; line-height: 1.5;">표기 조건에 따라 값이 달라집니다</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="background: #fff; padding: 44px 40px; display: flex; flex-direction: column;">
+            <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #8a8276;">선택한 값</div>
+            <div style="display: flex; align-items: baseline; gap: 12px; margin-top: 14px;">
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 68px; font-weight: 500; letter-spacing: -0.02em; line-height: 1;">{{ sel.value }}</span>
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 20px; color: #8a8276;">{{ sel.unit }}</span>
+            </div>
+            <div style="margin-top: 10px; font-size: 17px; font-weight: 500;">{{ sel.code }} · {{ sel.label }}</div>
+            <p style="margin: 18px 0 0; font-size: 15px; line-height: 1.85; color: #3d3830; max-width: 520px; text-wrap: pretty;">{{ sel.desc }}</p>
+
+            <div style="margin-top: 22px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+              <span style="font-size: 12px; padding: 5px 10px; border: 1px solid #d8d1c4; background: #f6f2ea; color: #4a443b;">{{ sel.src }}</span>
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #6b6459;">{{ sel.date }}</span>
+            </div>
+            <div style="margin-top: 14px; font-size: 13px; color: oklch(0.5 0.12 45); font-weight: 500;">{{ sel.note }}</div>
+            <div style="margin-top: 6px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #6b6459; line-height: 1.7;">{{ sel.altText }}</div>
+
+            <div style="margin-top: 30px; padding-top: 22px; border-top: 1px solid #ece6da;">
+              <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #8a8276; margin-bottom: 12px;">출처 구분</div>
+              <div style="display: flex; flex-direction: column; gap: 9px; font-size: 13px; color: #3d3830;">
+                <div style="display: flex; align-items: center; gap: 10px;"><span style="width: 10px; height: 10px; background: #3f5a44;"></span>식약처 허가정보</div>
+                <div style="display: flex; align-items: center; gap: 10px;"><span style="width: 10px; height: 10px; background: #5a5347;"></span>제조사 공식 사양</div>
+                <div style="display: flex; align-items: center; gap: 10px;"><span style="width: 10px; height: 10px; background: oklch(0.62 0.14 55);"></span>렌즈팩트 편집 해설</div>
+                <div style="display: flex; align-items: center; gap: 10px;"><span style="width: 10px; height: 10px; border: 1px dashed #8a4b1e;"></span>확인되지 않음 / 출처 간 값이 다릅니다</div>
+              </div>
+            </div>
+
+            <div style="margin-top: auto; padding-top: 26px; font-size: 12px; color: #6b6459; line-height: 1.7; border-top: 1px solid #ece6da;">최종 적합성·도수·피팅은 안경사 또는 안과 전문인에게 확인하세요.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- ============ CONCEPT A · MOBILE ============ -->
+  <sc-if value="{{ showAMob }}" hint-placeholder-val="{{ true }}">
+  <div style="padding: 40px 32px 0; display: flex; justify-content: center;">
+    <div style="width: 390px; height: 844px; overflow: hidden; border: 1px solid #d3cfc8; background: #faf8f5; box-shadow: 0 24px 48px -30px rgba(28,25,23,0.35); display: flex; flex-direction: column; position: relative;">
+      <div style="height: 52px; display: flex; align-items: center; justify-content: space-between; padding: 0 18px; border-bottom: 1px solid #e6e0d6;">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.18em; font-weight: 600;">LENSFACT</span>
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #6b6459;">2026.08.27 확인</span>
+      </div>
+      <div style="padding: 20px 18px 0;">
+        <div style="font-size: 21px; font-weight: 500; letter-spacing: -0.01em;">포장지 숫자 해석하기</div>
+        <div style="font-size: 13px; color: #6b6459; margin-top: 6px; line-height: 1.6;">숫자를 누르면 뜻과 출처를 보여줍니다.</div>
+      </div>
+      <div style="padding: 18px; overflow: hidden;">
+        <div style="background: #fff; border: 1px solid #ded7cb; padding: 14px 16px;">
+          <div style="display: flex; align-items: center; gap: 8px; padding-bottom: 12px; border-bottom: 1px solid #ece6da;">
+            <div style="width: 16px; height: 16px; border: 2px solid #1c1917; border-radius: 50%;"></div>
+            <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.16em;">CLEAR SPHERICAL · 1 DAY</span>
+          </div>
+          <sc-for list="{{ fields }}" as="f" hint-placeholder-count="7">
+            <div onClick="{{ f.onClick }}" style="min-height: 46px; display: grid; grid-template-columns: 80px 1fr auto; align-items: center; gap: 8px; border-bottom: 1px solid #f2ede4; padding: 0 6px; margin: 0 -6px; background: {{ f.bg }};">
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: #8a8276;">{{ f.code }}</span>
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 15px; font-weight: 500; color: {{ f.valColor }};">{{ f.value }}</span>
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #a09889;">{{ f.unit }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #a09889; margin-top: 8px;">프로토타입 예시 데이터</div>
+      </div>
+
+      <div style="margin-top: auto; background: #fff; border-top: 1px solid #ded7cb; box-shadow: 0 -12px 28px -22px rgba(28,25,23,0.5); padding: 12px 18px 20px;">
+        <div style="width: 42px; height: 4px; border-radius: 2px; background: #ded7cb; margin: 0 auto 14px;"></div>
+        <div style="display: flex; align-items: baseline; gap: 8px;">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 40px; font-weight: 500; line-height: 1; letter-spacing: -0.02em;">{{ sel.value }}</span>
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 15px; color: #8a8276;">{{ sel.unit }}</span>
+        </div>
+        <div style="margin-top: 8px; font-size: 14px; font-weight: 500;">{{ sel.code }} · {{ sel.label }}</div>
+        <p style="margin: 10px 0 0; font-size: 13px; line-height: 1.75; color: #3d3830; text-wrap: pretty;">{{ sel.desc }}</p>
+        <div style="margin-top: 12px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+          <span style="font-size: 11px; padding: 4px 8px; border: 1px solid #d8d1c4; background: #f6f2ea; color: #4a443b;">{{ sel.src }}</span>
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #6b6459;">{{ sel.date }}</span>
+        </div>
+        <div style="margin-top: 10px; font-size: 12px; color: oklch(0.5 0.12 45); font-weight: 500;">{{ sel.note }}</div>
+        <div style="margin-top: 12px; font-size: 11px; color: #6b6459; line-height: 1.6;">최종 적합성·도수·피팅은 안경사 또는 안과 전문인에게 확인하세요.</div>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- ============ CONCEPT B · DESKTOP ============ -->
+  <sc-if value="{{ showBDesk }}" hint-placeholder-val="{{ true }}">
+  <div style="padding: 40px 32px 0; display: flex; justify-content: center;">
+    <div style="width: 1123px; height: 702px; overflow: hidden; border: 1px solid #d3cfc8; background: #f5f6f6; box-shadow: 0 24px 48px -30px rgba(20,32,28,0.35);">
+      <div style="width: 1440px; height: 900px; transform: scale(0.78); transform-origin: top left; background: #f5f6f6; font-family: 'Noto Sans KR', sans-serif; display: flex; flex-direction: column;">
+
+        <div style="height: 64px; background: #fff; border-bottom: 1px solid #e0e4e2; display: flex; align-items: center; padding: 0 36px; gap: 32px;">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; letter-spacing: 0.2em; font-weight: 600;">LENSFACT</span>
+          <span style="font-size: 20px; font-weight: 500;">공식 사양 비교</span>
+          <div style="margin-left: auto; display: flex; align-items: center; gap: 18px;">
+            <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #5c6663;">데이터 확인일 2026.08.27</span>
+            <button onClick="{{ toggleDiff }}" style="min-height: 40px; padding: 0 14px; font-family: 'Noto Sans KR', sans-serif; font-size: 13px; cursor: pointer; border: 1px solid #cfd6d3; background: {{ diffBg }}; color: {{ diffFg }};">차이 있는 항목만</button>
+          </div>
+        </div>
+
+        <div style="flex: 1; display: grid; grid-template-columns: 280px 1fr;">
+          <div style="padding: 30px 26px; border-right: 1px solid #e0e4e2;">
+            <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #7b8481;">조건</div>
+            <div style="margin-top: 12px; font-size: 15px; line-height: 1.6;">선택한 조건과 일치하는 제품<br><span style="font-family: 'IBM Plex Mono', monospace; font-size: 28px; font-weight: 500; color: oklch(0.45 0.09 175);">12</span> <span style="font-size: 14px; color: #5c6663;">개</span></div>
+            <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px;">
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; padding: 5px 9px; background: #fff; border: 1px solid #d7dedb;">BC 8.6–8.7</span>
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; padding: 5px 9px; background: #fff; border: 1px solid #d7dedb;">DIA 14.0–14.2</span>
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; padding: 5px 9px; background: #fff; border: 1px solid #d7dedb;">1일 교체</span>
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; padding: 5px 9px; background: #fff; border: 1px solid #d7dedb;">구면 · 클리어</span>
+            </div>
+            <div style="margin-top: 28px; padding-top: 20px; border-top: 1px solid #e0e4e2;">
+              <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #7b8481; margin-bottom: 10px;">값의 상태</div>
+              <div style="display: flex; flex-direction: column; gap: 10px; font-size: 13px; color: #35403c; line-height: 1.5;">
+                <div>공식 출처에서 확인된 값 <span style="font-family: 'IBM Plex Mono', monospace; color: #7b8481;">11</span></div>
+                <div>확인되지 않음 <span style="font-family: 'IBM Plex Mono', monospace; color: #7b8481;">2</span></div>
+                <div>출처 간 값이 다릅니다 <span style="font-family: 'IBM Plex Mono', monospace; color: oklch(0.5 0.12 45);">1</span></div>
+              </div>
+            </div>
+            <div style="margin-top: 28px; font-size: 12px; color: #5c6663; line-height: 1.7;">렌즈팩트는 제품을 판매하거나 순위를 매기지 않습니다. 공개된 공식 표기만 정렬해 보여줍니다.</div>
+          </div>
+
+          <div style="padding: 26px 36px 0; overflow: hidden;">
+            <div style="display: grid; grid-template-columns: 210px 1fr 1fr; border-bottom: 2px solid #1e2b27; padding-bottom: 12px; align-items: end;">
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #7b8481;">항목</span>
+              <div>
+                <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #7b8481; letter-spacing: 0.1em;">SAMPLE-A</div>
+                <div style="font-size: 16px; font-weight: 500; margin-top: 3px;">1일 구면 클리어 렌즈 A</div>
+              </div>
+              <div>
+                <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #7b8481; letter-spacing: 0.1em;">SAMPLE-B</div>
+                <div style="font-size: 16px; font-weight: 500; margin-top: 3px;">1일 구면 클리어 렌즈 B</div>
+              </div>
+            </div>
+            <sc-for list="{{ rows }}" as="r" hint-placeholder-count="7">
+              <div style="display: grid; grid-template-columns: 210px 1fr 1fr; border-bottom: 1px solid #e4e8e6; padding: 16px 0; align-items: start; background: {{ r.bg }};">
+                <div>
+                  <div style="font-size: 14px; font-weight: 500;">{{ r.label }}</div>
+                  <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #7b8481; margin-top: 3px; letter-spacing: 0.08em;">{{ r.code }}</div>
+                </div>
+                <div style="padding-right: 28px;">
+                  <div style="font-family: 'IBM Plex Mono', monospace; font-size: 22px; font-weight: 500; color: {{ r.a.color }};">{{ r.a.v }} <span style="font-size: 13px; color: #7b8481;">{{ r.a.unit }}</span></div>
+                  <div style="display: flex; align-items: center; gap: 8px; margin-top: 7px;">
+                    <span style="font-size: 11px; padding: 3px 7px; background: #fff; border: 1px solid #d7dedb; color: #35403c;">{{ r.a.src }}</span>
+                    <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #7b8481;">{{ r.a.date }}</span>
+                  </div>
+                  <div style="font-size: 12px; color: oklch(0.5 0.12 45); margin-top: 6px; line-height: 1.6;">{{ r.a.note }}</div>
+                </div>
+                <div>
+                  <div style="font-family: 'IBM Plex Mono', monospace; font-size: 22px; font-weight: 500; color: {{ r.b.color }};">{{ r.b.v }} <span style="font-size: 13px; color: #7b8481;">{{ r.b.unit }}</span></div>
+                  <div style="display: flex; align-items: center; gap: 8px; margin-top: 7px;">
+                    <span style="font-size: 11px; padding: 3px 7px; background: #fff; border: 1px solid #d7dedb; color: #35403c;">{{ r.b.src }}</span>
+                    <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #7b8481;">{{ r.b.date }}</span>
+                  </div>
+                  <div style="font-size: 12px; color: oklch(0.5 0.12 45); margin-top: 6px; line-height: 1.6;">{{ r.b.note }}</div>
+                </div>
+              </div>
+            </sc-for>
+            <div style="padding: 18px 0; font-size: 12px; color: #5c6663; line-height: 1.7;">표시된 값은 프로토타입 예시 데이터입니다. 최종 적합성·도수·피팅은 안경사 또는 안과 전문인에게 확인하세요.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- ============ CONCEPT B · MOBILE ============ -->
+  <sc-if value="{{ showBMob }}" hint-placeholder-val="{{ true }}">
+  <div style="padding: 40px 32px 0; display: flex; justify-content: center;">
+    <div style="width: 390px; height: 844px; overflow: hidden; border: 1px solid #d3cfc8; background: #f5f6f6; font-family: 'Noto Sans KR', sans-serif; box-shadow: 0 24px 48px -30px rgba(20,32,28,0.35); display: flex; flex-direction: column;">
+      <div style="background: #fff; border-bottom: 1px solid #e0e4e2; padding: 14px 18px 12px;">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.18em; font-weight: 600;">LENSFACT</span>
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #7b8481;">2026.08.27 확인</span>
+        </div>
+        <div style="font-size: 19px; font-weight: 500; margin-top: 10px;">공식 사양 비교</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px;">
+          <div style="border: 1px solid #d7dedb; padding: 8px 10px; background: #fbfcfc;">
+            <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #7b8481;">SAMPLE-A</div>
+            <div style="font-size: 13px; font-weight: 500; margin-top: 2px;">클리어 렌즈 A</div>
+          </div>
+          <div style="border: 1px solid #d7dedb; padding: 8px 10px; background: #fbfcfc;">
+            <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #7b8481;">SAMPLE-B</div>
+            <div style="font-size: 13px; font-weight: 500; margin-top: 2px;">클리어 렌즈 B</div>
+          </div>
+        </div>
+        <button onClick="{{ toggleDiff }}" style="width: 100%; min-height: 44px; margin-top: 10px; font-family: 'Noto Sans KR', sans-serif; font-size: 13px; cursor: pointer; border: 1px solid #cfd6d3; background: {{ diffBg }}; color: {{ diffFg }};">차이 있는 항목만 보기</button>
+      </div>
+      <div style="flex: 1; overflow: hidden; padding: 4px 18px 0;">
+        <sc-for list="{{ rows }}" as="r" hint-placeholder-count="5">
+          <div style="border-bottom: 1px solid #e4e8e6; padding: 12px 0;">
+            <div style="display: flex; align-items: baseline; gap: 8px;">
+              <span style="font-size: 13px; font-weight: 500;">{{ r.label }}</span>
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #7b8481; letter-spacing: 0.08em;">{{ r.code }}</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px;">
+              <div>
+                <div style="font-family: 'IBM Plex Mono', monospace; font-size: 17px; font-weight: 500; color: {{ r.a.color }};">{{ r.a.v }} <span style="font-size: 11px; color: #7b8481;">{{ r.a.unit }}</span></div>
+                <div style="font-size: 10px; color: #35403c; margin-top: 4px;">{{ r.a.src }} · <span style="font-family: 'IBM Plex Mono', monospace;">{{ r.a.date }}</span></div>
+                <div style="font-size: 11px; color: oklch(0.5 0.12 45); margin-top: 4px; line-height: 1.5;">{{ r.a.note }}</div>
+              </div>
+              <div>
+                <div style="font-family: 'IBM Plex Mono', monospace; font-size: 17px; font-weight: 500; color: {{ r.b.color }};">{{ r.b.v }} <span style="font-size: 11px; color: #7b8481;">{{ r.b.unit }}</span></div>
+                <div style="font-size: 10px; color: #35403c; margin-top: 4px;">{{ r.b.src }} · <span style="font-family: 'IBM Plex Mono', monospace;">{{ r.b.date }}</span></div>
+                <div style="font-size: 11px; color: oklch(0.5 0.12 45); margin-top: 4px; line-height: 1.5;">{{ r.b.note }}</div>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="padding: 12px 18px 16px; border-top: 1px solid #e0e4e2; background: #fff; font-size: 11px; color: #5c6663; line-height: 1.6;">프로토타입 예시 데이터입니다. 최종 적합성·도수·피팅은 안경사 또는 안과 전문인에게 확인하세요.</div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- ============ CONCEPT C · DESKTOP ============ -->
+  <sc-if value="{{ showCDesk }}" hint-placeholder-val="{{ true }}">
+  <div style="padding: 40px 32px 0; display: flex; justify-content: center;">
+    <div style="width: 1123px; height: 702px; overflow: hidden; border: 1px solid #d3cfc8; background: #f7f4ef; box-shadow: 0 24px 48px -30px rgba(34,29,24,0.35);">
+      <div style="width: 1440px; height: 900px; transform: scale(0.78); transform-origin: top left; background: #f7f4ef; color: #221d18; font-family: 'Noto Sans KR', sans-serif; display: flex; flex-direction: column;">
+
+        <div style="height: 62px; display: flex; align-items: center; padding: 0 56px; gap: 34px; border-bottom: 1px solid #e5ded2;">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; letter-spacing: 0.2em; font-weight: 600;">LENSFACT</span>
+          <div style="display: flex; gap: 22px; font-size: 14px; color: #4d4438;">
+            <span style="font-family: 'Noto Serif KR', serif; font-weight: 500; color: #221d18;">소재 아틀라스</span>
+            <span>숫자 해석</span>
+            <span>공식 사양 비교</span>
+          </div>
+          <span style="margin-left: auto; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #7a6f5f;">03 / 산소 전달</span>
+        </div>
+
+        <div style="flex: 1; display: grid; grid-template-columns: 600px 1fr;">
+          <div style="padding: 48px 48px 40px 56px;">
+            <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.18em; color: #8a7c68;">MATERIAL ATLAS · 03</div>
+            <h1 style="font-family: 'Noto Serif KR', serif; font-size: 44px; font-weight: 500; line-height: 1.28; letter-spacing: -0.02em; margin: 16px 0 0; max-width: 460px; text-wrap: pretty;">산소는 렌즈를<br>어떻게 지나가는가</h1>
+            <p style="font-size: 15px; line-height: 1.9; color: #4d4438; max-width: 470px; margin: 22px 0 0; text-wrap: pretty;">하이드로겔은 물을 통해 산소를 전달합니다. 실리콘 하이드로겔은 실리콘 구조 자체가 산소를 전달하므로, 함수율이 낮아도 산소 지표가 높게 표기될 수 있습니다.</p>
+            <p style="font-size: 15px; line-height: 1.9; color: #4d4438; max-width: 470px; margin: 14px 0 0; text-wrap: pretty;">그래서 함수율 숫자만으로 두 소재를 비교할 수 없습니다. 아래에서 소재를 바꿔 표기 값이 어떻게 달라지는지 확인하세요.</p>
+
+            <div style="display: flex; gap: 8px; margin-top: 30px;">
+              <sc-for list="{{ materialTabs }}" as="m" hint-placeholder-count="2">
+                <button onClick="{{ m.onClick }}" style="min-height: 46px; padding: 0 20px; font-family: 'Noto Sans KR', sans-serif; font-size: 14px; cursor: pointer; border: 1px solid #d9cfbe; background: {{ m.bg }}; color: {{ m.fg }};">{{ m.label }}</button>
+              </sc-for>
+            </div>
+            <div style="margin-top: 34px; padding-top: 22px; border-top: 1px solid #e5ded2; font-size: 12px; color: #7a6f5f; line-height: 1.8; max-width: 460px;">렌즈팩트 편집 해설입니다. 소재 설명은 일반적인 재료 특성이며 개별 제품의 착용 결과를 예측하지 않습니다.</div>
+          </div>
+
+          <div style="background: #fffdf9; border-left: 1px solid #e5ded2; padding: 48px 56px 40px 44px; display: flex; flex-direction: column;">
+            <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.16em; color: #8a7c68;">{{ mat.tag }}</div>
+            <div style="font-family: 'Noto Serif KR', serif; font-size: 26px; font-weight: 500; margin-top: 8px;">{{ mat.name }}</div>
+            <p style="font-size: 14px; line-height: 1.85; color: #4d4438; margin: 12px 0 0; max-width: 520px; text-wrap: pretty;">{{ mat.desc }}</p>
+
+            <div style="margin-top: 34px; display: flex; flex-direction: column; gap: 26px;">
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                  <span style="font-size: 13px; color: #4d4438;">함수율 (표기 범위)</span>
+                  <span style="font-family: 'IBM Plex Mono', monospace; font-size: 19px; font-weight: 500;">{{ mat.water }} <span style="font-size: 12px; color: #8a7c68;">%</span></span>
+                </div>
+                <div style="height: 10px; background: #f1eae0; margin-top: 8px;">
+                  <div style="height: 10px; background: #b9ab93; width: {{ mat.waterPct }};"></div>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #a2947f; margin-top: 4px;"><span>0</span><span>80</span></div>
+              </div>
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                  <span style="font-size: 13px; color: #4d4438;">Dk/t (표기 범위)</span>
+                  <span style="font-family: 'IBM Plex Mono', monospace; font-size: 19px; font-weight: 500;">{{ mat.dk }}</span>
+                </div>
+                <div style="height: 10px; background: #f1eae0; margin-top: 8px;">
+                  <div style="height: 10px; background: oklch(0.52 0.13 32); width: {{ mat.dkPct }};"></div>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #a2947f; margin-top: 4px;"><span>0</span><span>180</span></div>
+              </div>
+              <div style="font-size: 13px; color: #4d4438; line-height: 1.8; border-left: 2px solid oklch(0.52 0.13 32); padding-left: 14px;">{{ mat.insight }}</div>
+            </div>
+
+            <div style="margin-top: 36px; padding-top: 22px; border-top: 1px solid #e9e1d5;">
+              <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.16em; color: #8a7c68;">이 개념이 표기에서는</div>
+              <sc-for list="{{ mat.examples }}" as="e" hint-placeholder-count="2">
+                <div style="display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: center; padding: 13px 0; border-bottom: 1px solid #f0e9de;">
+                  <div>
+                    <div style="font-size: 14px; font-weight: 500;">{{ e.name }}</div>
+                    <div style="display: flex; align-items: center; gap: 8px; margin-top: 5px;">
+                      <span style="font-size: 11px; padding: 3px 7px; border: 1px solid #ded4c3; background: #faf6ef; color: #4d4438;">{{ e.src }}</span>
+                      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #8a7c68;">{{ e.date }}</span>
+                    </div>
+                  </div>
+                  <div style="font-family: 'IBM Plex Mono', monospace; font-size: 15px; font-weight: 500; text-align: right; color: {{ e.color }};">{{ e.spec }}</div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="margin-top: auto; padding-top: 20px; font-size: 12px; color: #7a6f5f; line-height: 1.7;">프로토타입 예시 데이터입니다. 최종 적합성·도수·피팅은 안경사 또는 안과 전문인에게 확인하세요.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- ============ CONCEPT C · MOBILE ============ -->
+  <sc-if value="{{ showCMob }}" hint-placeholder-val="{{ true }}">
+  <div style="padding: 40px 32px 0; display: flex; justify-content: center;">
+    <div style="width: 390px; height: 844px; overflow: hidden; border: 1px solid #d3cfc8; background: #f7f4ef; color: #221d18; font-family: 'Noto Sans KR', sans-serif; box-shadow: 0 24px 48px -30px rgba(34,29,24,0.35); display: flex; flex-direction: column;">
+      <div style="height: 50px; display: flex; align-items: center; justify-content: space-between; padding: 0 18px; border-bottom: 1px solid #e5ded2;">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.18em; font-weight: 600;">LENSFACT</span>
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #7a6f5f;">MATERIAL ATLAS 03</span>
+      </div>
+      <div style="padding: 22px 18px 0;">
+        <h1 style="font-family: 'Noto Serif KR', serif; font-size: 27px; font-weight: 500; line-height: 1.35; letter-spacing: -0.02em; margin: 0;">산소는 렌즈를<br>어떻게 지나가는가</h1>
+        <p style="font-size: 13.5px; line-height: 1.85; color: #4d4438; margin: 14px 0 0; text-wrap: pretty;">하이드로겔은 물을 통해, 실리콘 하이드로겔은 실리콘 구조를 통해 산소를 전달합니다. 함수율 숫자만으로 두 소재를 비교할 수 없습니다.</p>
+        <div style="display: flex; gap: 6px; margin-top: 18px;">
+          <sc-for list="{{ materialTabs }}" as="m" hint-placeholder-count="2">
+            <button onClick="{{ m.onClick }}" style="flex: 1; min-height: 46px; font-family: 'Noto Sans KR', sans-serif; font-size: 13px; cursor: pointer; border: 1px solid #d9cfbe; background: {{ m.bg }}; color: {{ m.fg }};">{{ m.label }}</button>
+          </sc-for>
+        </div>
+      </div>
+      <div style="margin-top: 18px; background: #fffdf9; border-top: 1px solid #e5ded2; padding: 18px; flex: 1; overflow: hidden;">
+        <div style="font-family: 'Noto Serif KR', serif; font-size: 18px; font-weight: 500;">{{ mat.name }}</div>
+        <div style="margin-top: 16px; display: flex; flex-direction: column; gap: 16px;">
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: baseline;"><span style="font-size: 12px; color: #4d4438;">함수율</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 15px; font-weight: 500;">{{ mat.water }} %</span></div>
+            <div style="height: 8px; background: #f1eae0; margin-top: 6px;"><div style="height: 8px; background: #b9ab93; width: {{ mat.waterPct }};"></div></div>
+          </div>
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: baseline;"><span style="font-size: 12px; color: #4d4438;">Dk/t</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 15px; font-weight: 500;">{{ mat.dk }}</span></div>
+            <div style="height: 8px; background: #f1eae0; margin-top: 6px;"><div style="height: 8px; background: oklch(0.52 0.13 32); width: {{ mat.dkPct }};"></div></div>
+          </div>
+          <div style="font-size: 12.5px; color: #4d4438; line-height: 1.75; border-left: 2px solid oklch(0.52 0.13 32); padding-left: 12px;">{{ mat.insight }}</div>
+        </div>
+        <div style="margin-top: 20px; padding-top: 14px; border-top: 1px solid #e9e1d5;">
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.14em; color: #8a7c68;">이 개념이 표기에서는</div>
+          <sc-for list="{{ mat.examples }}" as="e" hint-placeholder-count="2">
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 11px 0; border-bottom: 1px solid #f0e9de;">
+              <div>
+                <div style="font-size: 13px; font-weight: 500;">{{ e.name }}</div>
+                <div style="font-size: 10px; color: #4d4438; margin-top: 3px;">{{ e.src }} · <span style="font-family: 'IBM Plex Mono', monospace;">{{ e.date }}</span></div>
+              </div>
+              <div style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; color: {{ e.color }};">{{ e.spec }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div style="padding: 12px 18px 16px; border-top: 1px solid #e5ded2; font-size: 11px; color: #7a6f5f; line-height: 1.6;">프로토타입 예시 데이터입니다. 최종 적합성·도수·피팅은 안경사 또는 안과 전문인에게 확인하세요.</div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- ============ RATIONALE ============ -->
+  <sc-if value="{{ showRationale }}" hint-placeholder-val="{{ true }}">
+  <div style="padding: 36px 32px 0; display: flex; justify-content: center;">
+    <div style="width: 1123px; background: #fbfaf8; border: 1px solid #d3cfc8;">
+      <div style="display: grid; grid-template-columns: 1.4fr 1fr; border-bottom: 1px solid #e4e0d9;">
+        <div style="padding: 30px 32px; border-right: 1px solid #e4e0d9;">
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.16em; color: #8a8276;">{{ note.code }} · 주요 화면 {{ note.surface }}</div>
+          <div style="font-size: 22px; font-weight: 500; margin-top: 8px;">{{ note.title }}</div>
+          <p style="font-size: 14.5px; line-height: 1.9; color: #3d3830; margin: 14px 0 0; max-width: 560px; text-wrap: pretty;">{{ note.rationale }}</p>
+          <div style="margin-top: 20px; font-size: 13.5px; line-height: 1.85; color: #3d3830;">주요 인터랙션 — {{ note.interaction }}</div>
+        </div>
+        <div style="padding: 30px 32px; display: flex; flex-direction: column; gap: 22px;">
+          <div>
+            <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.16em; color: #8a8276; margin-bottom: 10px;">팔레트</div>
+            <div style="display: flex; gap: 8px;">
+              <sc-for list="{{ note.palette }}" as="p" hint-placeholder-count="5">
+                <div style="display: flex; flex-direction: column; gap: 5px;">
+                  <div style="width: 46px; height: 46px; border: 1px solid rgba(0,0,0,0.12); background: {{ p.c }};"></div>
+                  <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: #8a8276;">{{ p.n }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <div>
+            <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.16em; color: #8a8276; margin-bottom: 8px;">타이포그래피</div>
+            <div style="font-size: 13.5px; line-height: 1.8; color: #3d3830;">{{ note.type }}</div>
+          </div>
+          <div>
+            <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.16em; color: #8a8276; margin-bottom: 8px;">컴포넌트 방향</div>
+            <div style="font-size: 13.5px; line-height: 1.8; color: #3d3830;">{{ note.components }}</div>
+          </div>
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr 0.8fr;">
+        <div style="padding: 24px 32px; border-right: 1px solid #e4e0d9;">
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.16em; color: #8a8276; margin-bottom: 10px;">강점</div>
+          <sc-for list="{{ note.strengths }}" as="s" hint-placeholder-count="3">
+            <div style="font-size: 13.5px; line-height: 1.75; color: #3d3830; padding: 5px 0;">{{ s }}</div>
+          </sc-for>
+        </div>
+        <div style="padding: 24px 32px; border-right: 1px solid #e4e0d9;">
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.16em; color: #8a8276; margin-bottom: 10px;">위험 요소</div>
+          <sc-for list="{{ note.risks }}" as="s" hint-placeholder-count="3">
+            <div style="font-size: 13.5px; line-height: 1.75; color: #3d3830; padding: 5px 0;">{{ s }}</div>
+          </sc-for>
+        </div>
+        <div style="padding: 24px 32px;">
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.16em; color: #8a8276; margin-bottom: 10px;">구현 난이도</div>
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 30px; font-weight: 500;">{{ note.effort }}</div>
+          <div style="font-size: 13px; line-height: 1.75; color: #3d3830; margin-top: 8px;">{{ note.effortNote }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <div style="padding: 28px 32px 0; display: flex; justify-content: center;">
+    <div style="width: 1123px; font-size: 12px; color: #6b6459; line-height: 1.8;">이 보드는 시각 컨셉 탐색 자료입니다. 모든 수치는 프로토타입 예시 데이터이며 실제 허가정보·제조사 표기와 다를 수 있습니다. 렌즈팩트는 제품을 판매하거나 의학적 적합성을 판단하지 않습니다.</div>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;showRationale&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;보드&quot;},&quot;startConcept&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;A&quot;,&quot;B&quot;,&quot;C&quot;],&quot;default&quot;:&quot;A&quot;,&quot;tsType&quot;:&quot;'A'|'B'|'C'&quot;,&quot;section&quot;:&quot;보드&quot;}}">
+const DATE = '2026.08.27 확인';
+const ACC = { A: 'oklch(0.62 0.14 55)', B: 'oklch(0.45 0.09 175)', C: 'oklch(0.52 0.13 32)' };
+const WARN = 'oklch(0.5 0.12 45)';
+
+const FIELDS = [
+  { code: 'BC', label: '베이스커브', value: '8.6', unit: 'mm', src: '제조사 공식 사양', date: DATE,
+    desc: '렌즈 뒷면의 곡률입니다. 숫자가 작을수록 곡면이 더 급합니다. 눈의 곡률과 맞는지는 착용 상태에서만 확인할 수 있습니다.' },
+  { code: 'DIA', label: '전체 지름', value: '14.2', unit: 'mm', src: '제조사 공식 사양', date: DATE,
+    desc: '렌즈의 바깥 지름입니다. 각막을 덮는 범위를 결정하는 값이며, 도수와는 관계가 없습니다.' },
+  { code: '소재', label: '재질 표기', value: 'hilafilcon B', unit: '하이드로겔', src: '식약처 허가정보', date: DATE,
+    desc: '물을 머금는 고분자 계열입니다. 하이드로겔은 함유된 물을 통해 산소를 전달하는 구조로 표기됩니다.' },
+  { code: '함수율', label: '수분 함량', value: '59', unit: '%', src: '제조사 공식 사양', date: DATE,
+    desc: '렌즈 무게 대비 수분 비율입니다. 값이 높다고 착용감이 더 좋다는 의미는 아니며, 소재 계열이 다르면 직접 비교할 수 없습니다.' },
+  { code: 'Dk/t', label: '산소 투과 지표', value: '22', unit: '', src: '제조사 공식 사양', date: DATE,
+    desc: '재질의 산소 투과성(Dk)을 렌즈 두께(t)로 나눈 지표입니다. 측정 조건과 두께 기준이 공개되지 않으면 값을 그대로 비교하기 어렵습니다.',
+    note: '출처 간 값이 다릅니다', altText: '제조사 자료 22 / 허가정보 24.5', warn: true },
+  { code: '교체주기', label: '사용 기간', value: '1일', unit: '', src: '식약처 허가정보', date: DATE,
+    desc: '허가된 최대 사용 주기입니다. 표기된 주기를 넘겨 사용하는 것을 전제로 한 정보는 제공하지 않습니다.' },
+  { code: 'UV 표기', label: '공식 UV 차단 표기', value: '확인되지 않음', unit: '', src: '확인되지 않음', date: DATE,
+    desc: '공개된 허가정보와 제조사 자료 어디에서도 UV 차단 표기를 확인하지 못했습니다. 표기가 없는 것과 기능이 없는 것은 다르므로, 렌즈팩트는 미확인으로 남겨 둡니다.',
+    note: '확인되지 않음', unknown: true }
+];
+
+const ROWS = [
+  { code: 'BC', label: '베이스커브', diff: true,
+    a: { v: '8.6', unit: 'mm', src: '제조사 공식 사양', date: DATE },
+    b: { v: '8.7', unit: 'mm', src: '제조사 공식 사양', date: DATE } },
+  { code: 'DIA', label: '전체 지름', diff: false,
+    a: { v: '14.2', unit: 'mm', src: '제조사 공식 사양', date: DATE },
+    b: { v: '14.2', unit: 'mm', src: '제조사 공식 사양', date: DATE } },
+  { code: 'MATERIAL', label: '재질 표기', diff: true,
+    a: { v: 'hilafilcon B', unit: '', src: '식약처 허가정보', date: DATE },
+    b: { v: 'stenfilcon A', unit: '', src: '식약처 허가정보', date: DATE } },
+  { code: 'WATER', label: '함수율', diff: true,
+    a: { v: '59', unit: '%', src: '제조사 공식 사양', date: DATE },
+    b: { v: '54', unit: '%', src: '제조사 공식 사양', date: DATE } },
+  { code: 'DK/T', label: '산소 투과 지표', diff: true,
+    a: { v: '22', unit: '', src: '제조사 공식 사양', date: DATE, note: '출처 간 값이 다릅니다 (22 / 24.5)', warn: true },
+    b: { v: '100', unit: '', src: '제조사 공식 사양', date: DATE, note: '측정 두께 기준 표기 없음', warn: true } },
+  { code: 'SCHEDULE', label: '교체주기', diff: false,
+    a: { v: '1일', unit: '', src: '식약처 허가정보', date: DATE },
+    b: { v: '1일', unit: '', src: '식약처 허가정보', date: DATE } },
+  { code: 'UV', label: '공식 UV 차단 표기', diff: true,
+    a: { v: '확인되지 않음', unit: '', src: '확인되지 않음', date: DATE, unknown: true },
+    b: { v: '있음', unit: '', src: '식약처 허가정보', date: DATE } }
+];
+
+const MATERIALS = {
+  hydrogel: {
+    tag: 'MATERIAL 01', name: '하이드로겔', label: '하이드로겔',
+    desc: '물을 머금는 고분자입니다. 산소는 렌즈에 함유된 물을 통해 이동하므로, 함수율이 산소 전달과 함께 움직입니다.',
+    water: '38–59', waterPct: '62%', dk: '18–28', dkPct: '16%',
+    insight: '같은 계열 안에서는 함수율이 높을수록 산소 지표도 높게 표기되는 경향이 있습니다. 다만 물이 많은 렌즈는 표면 수분 변화에 더 민감하게 표기됩니다.',
+    examples: [
+      { name: 'SAMPLE-A · 1일 구면 클리어', spec: '59 % / Dk/t 22', src: '제조사 공식 사양', date: DATE },
+      { name: 'SAMPLE-C · 1일 구면 클리어', spec: '38 % / Dk/t 확인되지 않음', src: '확인되지 않음', date: DATE, unknown: true }
+    ]
+  },
+  silicone: {
+    tag: 'MATERIAL 02', name: '실리콘 하이드로겔', label: '실리콘 하이드로겔',
+    desc: '실리콘 구조가 산소를 직접 전달합니다. 물에 의존하지 않으므로 함수율이 낮게 표기되면서도 산소 지표는 높게 표기될 수 있습니다.',
+    water: '38–56', waterPct: '58%', dk: '96–160', dkPct: '78%',
+    insight: '함수율만 보면 하이드로겔보다 낮아 보이지만 산소 지표는 몇 배로 표기됩니다. 두 소재를 비교할 때 함수율은 같은 축이 아닙니다.',
+    examples: [
+      { name: 'SAMPLE-B · 1일 구면 클리어', spec: '54 % / Dk/t 100', src: '제조사 공식 사양', date: DATE },
+      { name: 'SAMPLE-D · 1일 구면 클리어', spec: '46 % / Dk/t 156', src: '식약처 허가정보', date: DATE }
+    ]
+  }
+};
+
+const NOTES = {
+  A: {
+    code: 'CONCEPT A', surface: 'Explore / Inspect', title: 'Package Decoder — 포장지가 곧 인터페이스',
+    rationale: '사용자가 실제로 들고 있는 물건이 포장지이므로, 화면의 중심도 포장지 레이블입니다. 히어로 문구 대신 원문 표기 블록을 먼저 두고, 각 숫자를 누르면 해설·출처·확인일이 오른쪽에서 열립니다. 랜딩 페이지가 아니라 판독기처럼 보이게 만든 배치입니다.',
+    interaction: '레이블의 값을 선택하면 해설 패널이 갱신되고, 값의 상태(공식·미확인·출처 충돌)가 값 자체의 색과 주석으로 표시됩니다. 모바일에서는 하단 시트로 열립니다.',
+    palette: [{ n: 'paper', c: '#faf8f5' }, { n: 'card', c: '#ffffff' }, { n: 'ink', c: '#1c1917' }, { n: 'rule', c: '#ded7cb' }, { n: 'accent', c: 'oklch(0.62 0.14 55)' }],
+    type: 'IBM Plex Sans KR 본문 / IBM Plex Mono 수치·단위·코드. 숫자는 항상 모노로 고정폭 정렬되어 표기 원문처럼 읽힙니다.',
+    components: '레이블 스펙 행, 리더선 주석, 값 상세 패널, 출처 칩, 출처 구분 범례, 하단 시트.',
+    strengths: ['— 첫 화면에서 서비스의 용도가 즉시 전달됩니다.', '— 표기 원문과 해설이 한 화면에 붙어 있어 신뢰 구조가 명확합니다.', '— 정보 밀도가 낮아도 성립하므로 MVP 데이터 범위에 잘 맞습니다.'],
+    risks: ['— 레이블 은유가 실제 제품 포장과 혼동될 수 있어 예시 데이터 표시가 필수입니다.', '— 제품 수가 늘어나면 비교 동선이 별도로 필요합니다.', '— 필드가 늘어날 때 레이블 카드가 길어집니다.'],
+    effort: '낮음', effortNote: '정적 데이터와 선택 상태만으로 구현됩니다. 반응형 전환이 단순합니다.'
+  },
+  B: {
+    code: 'CONCEPT B', surface: 'Compare', title: 'Evidence Desk — 근거가 정렬된 비교 표',
+    rationale: '비교 화면의 단위는 카드가 아니라 행입니다. 두 제품의 같은 필드를 같은 축에 놓고, 각 값 아래에 출처와 확인일을 붙였습니다. 미확인 값과 출처 충돌을 숨기지 않고 같은 자리에 표기해, 표가 곧 근거 목록이 되도록 했습니다.',
+    interaction: '차이 있는 항목만 보기로 동일한 값을 접고, 조건 칩으로 후보군을 좁힙니다. 셀은 값·출처·확인일·주석 네 층으로 고정되어 어떤 값이 비어 있는지 바로 보입니다.',
+    palette: [{ n: 'bg', c: '#f5f6f6' }, { n: 'surface', c: '#ffffff' }, { n: 'ink', c: '#1e2b27' }, { n: 'rule', c: '#d7dedb' }, { n: 'accent', c: 'oklch(0.45 0.09 175)' }],
+    type: 'Noto Sans KR 본문 / IBM Plex Mono 수치. 강조는 굵기와 괘선으로만 처리하고 색은 상태 표시에만 씁니다.',
+    components: '비교 행, 값 셀(값·출처·확인일·주석), 조건 칩, 상태 요약, 차이 필터.',
+    strengths: ['— 서비스의 핵심 주장인 투명성이 레이아웃 자체로 드러납니다.', '— 필드와 제품이 늘어나도 구조가 그대로 확장됩니다.', '— 미확인·충돌 값이 약점이 아니라 정보로 읽힙니다.'],
+    risks: ['— 표 중심 화면은 첫 방문자에게 설명이 부족할 수 있습니다.', '— 대시보드처럼 보이지 않게 여백과 색 사용을 계속 억제해야 합니다.', '— 모바일에서 2열 비교의 가독 한계가 있습니다.'],
+    effort: '보통', effortNote: '데이터 스키마와 상태 규칙(미확인·충돌)을 먼저 확정해야 합니다.'
+  },
+  C: {
+    code: 'CONCEPT C', surface: 'Decide / Learn', title: 'Material Atlas — 개념을 먼저, 표기를 다음에',
+    rationale: '함수율과 Dk/t는 값을 나열해도 이해되지 않습니다. 그래서 소재 계열을 먼저 설명하고, 같은 화면 오른쪽에서 그 개념이 실제 표기에 어떻게 나타나는지 연결했습니다. 편집 해설과 공식 표기를 좌우로 분리해 역할을 혼동하지 않게 했습니다.',
+    interaction: '소재를 전환하면 함수율·Dk/t 표기 범위와 예시 제품 표기가 함께 바뀌어, 두 축이 같지 않다는 점을 값으로 확인하게 됩니다.',
+    palette: [{ n: 'paper', c: '#f7f4ef' }, { n: 'surface', c: '#fffdf9' }, { n: 'ink', c: '#221d18' }, { n: 'rule', c: '#e5ded2' }, { n: 'accent', c: 'oklch(0.52 0.13 32)' }],
+    type: 'Noto Serif KR 제목 / Noto Sans KR 본문 / IBM Plex Mono 수치. 편집물의 위계를 쓰되 장식은 넣지 않습니다.',
+    components: '개념 아티클, 소재 토글, 표기 범위 미터, 편집 해설 인용, 표기 연결 목록.',
+    strengths: ['— 재방문 이유가 되는 콘텐츠 축이 생깁니다.', '— 해설과 공식 표기의 경계가 구조적으로 분리됩니다.', '— 검색 유입에 유리한 형식입니다.'],
+    risks: ['— 콘텐츠 작성 부담이 가장 큽니다.', '— 해설이 길어지면 비교 기능이 뒤로 밀립니다.', '— 교육 톤이 과해지면 정보 서비스보다 매체로 읽힙니다.'],
+    effort: '높음', effortNote: '소재별 해설 원고와 검수 프로세스가 함께 필요합니다.'
+  }
+};
+
+class Component extends DCLogic {
+  state = { concept: 'A', view: 'desktop', field: 0, material: 'silicone', diffOnly: false };
+
+  componentDidMount() {
+    const s = this.props.startConcept;
+    if (s && s !== this.state.concept) this.setState({ concept: s });
+  }
+
+  tab(id, code, label) {
+    const on = this.state.concept === id;
+    return { code, label, onClick: () => this.setState({ concept: id }),
+      bg: on ? '#1c1917' : '#f4f2ef', fg: on ? '#faf8f5' : '#4a443b', bd: on ? '#1c1917' : '#c8c3ba' };
+  }
+
+  vtab(id, label) {
+    const on = this.state.view === id;
+    return { label, onClick: () => this.setState({ view: id }),
+      bg: on ? '#1c1917' : '#f4f2ef', fg: on ? '#faf8f5' : '#4a443b', bd: on ? '#1c1917' : '#c8c3ba' };
+  }
+
+  renderVals() {
+    const st = this.state;
+    const acc = ACC[st.concept];
+
+    const fields = FIELDS.map((f, i) => ({
+      ...f,
+      value: f.value, unit: f.unit,
+      note: f.note || '', altText: f.altText || '',
+      valColor: f.unknown ? '#a09889' : (f.warn ? WARN : '#1c1917'),
+      bg: st.field === i ? '#f3ece3' : 'transparent',
+      onClick: () => this.setState({ field: i })
+    }));
+    const sel = fields[st.field] || fields[0];
+
+    const cell = (c) => ({
+      v: c.v, unit: c.unit || '', src: c.src, date: c.date, note: c.note || '',
+      color: c.unknown ? '#9aa5a1' : (c.warn ? WARN : '#1e2b27')
+    });
+    const rows = ROWS.filter(r => !st.diffOnly || r.diff).map(r => ({
+      code: r.code, label: r.label, a: cell(r.a), b: cell(r.b),
+      bg: r.diff ? 'transparent' : '#fbfcfc'
+    }));
+
+    const m = MATERIALS[st.material];
+    const mat = { ...m, examples: m.examples.map(e => ({ ...e, color: e.unknown ? '#a2947f' : '#221d18' })) };
+
+    const materialTabs = ['hydrogel', 'silicone'].map(k => {
+      const on = st.material === k;
+      return { label: MATERIALS[k].label, onClick: () => this.setState({ material: k }),
+        bg: on ? '#221d18' : 'transparent', fg: on ? '#fffdf9' : '#4d4438' };
+    });
+
+    return {
+      conceptTabs: [this.tab('A', 'A', 'Package Decoder'), this.tab('B', 'B', 'Evidence Desk'), this.tab('C', 'C', 'Material Atlas')],
+      viewTabs: [this.vtab('desktop', 'DESKTOP 1440'), this.vtab('mobile', 'MOBILE 390')],
+      showADesk: st.concept === 'A' && st.view === 'desktop',
+      showAMob: st.concept === 'A' && st.view === 'mobile',
+      showBDesk: st.concept === 'B' && st.view === 'desktop',
+      showBMob: st.concept === 'B' && st.view === 'mobile',
+      showCDesk: st.concept === 'C' && st.view === 'desktop',
+      showCMob: st.concept === 'C' && st.view === 'mobile',
+      fields, sel, rows, mat, materialTabs, accent: acc,
+      toggleDiff: () => this.setState({ diffOnly: !st.diffOnly }),
+      diffBg: st.diffOnly ? '#1e2b27' : '#fff',
+      diffFg: st.diffOnly ? '#f5f6f6' : '#35403c',
+      note: NOTES[st.concept],
+      showRationale: this.props.showRationale !== false
+    };
+  }
+}
+
+</script>
+</body>
+</html>

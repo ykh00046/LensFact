@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #dfe4ea; }
+  a { color: #051230; text-decoration: none; }
+  a:hover { color: #051230; text-decoration: underline; text-decoration-color: #F48067; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+</helmet>
+
+<div style="min-height: 100vh; background: #dfe4ea; font-family: Pretendard, 'Apple SD Gothic Neo', system-ui, sans-serif; color: #051230; padding: 0 0 64px;">
+
+  <div style="position: sticky; top: 0; z-index: 40; background: rgba(223,228,234,0.96); border-bottom: 1px solid #cbd2da; padding: 12px 28px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+    <span style="font-size: 13px; color: #5B6472;">LensFact 콘텐츠 시스템 V1 · 실제 크기 미리보기</span>
+    <div style="display: flex; gap: 8px;">
+      <sc-for list="{{ screenTabs }}" as="t" hint-placeholder-count="2">
+        <button onClick="{{ t.onClick }}" style="min-height: 44px; padding: 0 18px; border-radius: 8px; font-family: Pretendard, system-ui, sans-serif; font-size: 14px; cursor: pointer; border: 1px solid {{ t.bd }}; background: {{ t.bg }}; color: {{ t.fg }};" style-focus="outline: 2px solid #F48067; outline-offset: 2px;">{{ t.label }}</button>
+      </sc-for>
+    </div>
+    <div style="display: flex; gap: 8px;">
+      <sc-for list="{{ viewTabs }}" as="v" hint-placeholder-count="2">
+        <button onClick="{{ v.onClick }}" style="min-height: 44px; padding: 0 18px; border-radius: 8px; font-family: Pretendard, system-ui, sans-serif; font-size: 14px; cursor: pointer; border: 1px solid {{ v.bd }}; background: {{ v.bg }}; color: {{ v.fg }};" style-focus="outline: 2px solid #F48067; outline-offset: 2px;">{{ v.label }}</button>
+      </sc-for>
+    </div>
+    <span style="margin-left: auto; font-size: 13px; color: #5B6472;">광고는 예약 영역만 표시했습니다. 실제 광고 코드는 없습니다.</span>
+  </div>
+
+  <!-- =============== HUB · DESKTOP =============== -->
+  <sc-if value="{{ hubDesk }}" hint-placeholder-val="{{ true }}">
+  <div style="padding: 28px; display: flex; justify-content: center;">
+    <div style="width: 1280px; flex: 0 0 auto; min-width: 1280px; background: #FFFFFF; box-shadow: 0 30px 60px -40px rgba(5,18,48,0.4);">
+
+      <div style="height: 76px; border-bottom: 1px solid #E5E7EB; display: flex; align-items: center; justify-content: center;">
+        <div style="width: 1120px; display: flex; align-items: center; gap: 44px;">
+          <div style="display: flex; align-items: baseline; gap: 9px;">
+            <span style="font-size: 19px; font-weight: 700; letter-spacing: -0.01em;">LENSFACT</span>
+            <span style="font-size: 15px; color: #5B6472;">렌즈팩트</span>
+          </div>
+          <div style="display: flex; gap: 30px; font-size: 16px;">
+            <span style="color: #3C4655;">렌즈 숫자 해석</span>
+            <span style="color: #3C4655;">공식 사양 비교</span>
+            <span style="color: #3C4655;">포장지 읽는 법</span>
+            <span style="font-weight: 600; padding-bottom: 3px; box-shadow: inset 0 -2px 0 #F48067;">렌즈 상식</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: center; padding: 64px 0 0;">
+        <div style="width: 1120px;">
+          <h1 style="margin: 0; font-size: 42px; font-weight: 700; letter-spacing: -0.025em; line-height: 1.34;">렌즈 상식</h1>
+          <p style="margin: 16px 0 0; font-size: 18px; line-height: 1.78; color: #3C4655; max-width: 640px; text-wrap: pretty;">포장지와 공식 자료에 적힌 표기를 쉬운 말로 설명하고, 확인한 출처를 함께 남깁니다.</p>
+
+          <div style="display: flex; gap: 10px; margin-top: 32px; flex-wrap: wrap;">
+            <sc-for list="{{ cats }}" as="c" hint-placeholder-count="5">
+              <button onClick="{{ c.onClick }}" style="min-height: 46px; padding: 0 18px; border-radius: 24px; cursor: pointer; font-family: Pretendard, system-ui, sans-serif; font-size: 15px; font-weight: {{ c.weight }}; border: 1px solid {{ c.bd }}; background: {{ c.bg }}; color: #051230;" style-focus="outline: 2px solid #F48067; outline-offset: 2px;">{{ c.label }}</button>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: center; padding: 44px 0 0;">
+        <div style="width: 1120px; box-sizing: border-box; background: #FFF8F2; border-radius: 16px; padding: 40px 44px; display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 48px; align-items: end;">
+          <div style="min-width: 0;">
+            <div style="font-size: 14px; font-weight: 600; color: #5B6472;">대표 글</div>
+            <h2 style="margin: 12px 0 0; font-size: 32px; font-weight: 700; letter-spacing: -0.025em; line-height: 1.4; text-wrap: pretty;">{{ featured.title }}</h2>
+            <p style="margin: 14px 0 0; font-size: 17px; line-height: 1.8; color: #3C4655; max-width: 620px; text-wrap: pretty;">{{ featured.lead }}</p>
+            <div style="display: flex; align-items: center; gap: 18px; margin-top: 20px; font-size: 15px; color: #5B6472; flex-wrap: wrap;">
+              <span>{{ featured.cat }}</span>
+              <span>예시 확인일 2026.08.27</span>
+              <span>출처 4건</span>
+            </div>
+          </div>
+          <button onClick="{{ goArticle }}" style="min-height: 54px; padding: 0 24px; border: 1px solid #051230; border-radius: 10px; background: #FFFFFF; font-family: Pretendard, system-ui, sans-serif; font-size: 16px; font-weight: 600; color: #051230; cursor: pointer; white-space: nowrap;" style-focus="outline: 2px solid #F48067; outline-offset: 2px;">글 읽기</button>
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: center; padding: 56px 0 0;">
+        <div style="width: 1120px; display: grid; grid-template-columns: 1fr 300px; gap: 64px; align-items: start;">
+          <div style="min-width: 0;">
+            <div style="font-size: 15px; font-weight: 600; color: #5B6472;">{{ listTitle }}</div>
+            <sc-for list="{{ list }}" as="a" hint-placeholder-count="5">
+              <button onClick="{{ a.onClick }}" style="width: 100%; text-align: left; display: block; cursor: pointer; border: 0; border-bottom: 1px solid #E5E7EB; background: transparent; padding: 22px 4px; font-family: Pretendard, system-ui, sans-serif;" style-hover="background: #FBFCFD;" style-focus="outline: 2px solid #F48067; outline-offset: -2px;">
+                <div style="font-size: 14px; color: #5B6472;">{{ a.cat }}</div>
+                <div style="margin-top: 8px; font-size: 21px; font-weight: 600; line-height: 1.5; text-wrap: pretty;">{{ a.title }}</div>
+                <div style="margin-top: 8px; font-size: 16px; line-height: 1.75; color: #3C4655; max-width: 640px; text-wrap: pretty;">{{ a.lead }}</div>
+              </button>
+            </sc-for>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 28px;">
+            <div style="background: #EAF5FF; border-radius: 14px; padding: 24px 22px;">
+              <div style="font-size: 18px; font-weight: 700; line-height: 1.5;">포장 숫자 해석하기</div>
+              <p style="margin: 10px 0 0; font-size: 15px; line-height: 1.75; color: #3C4655;">포장지에 적힌 값을 하나씩 눌러 뜻과 출처를 확인합니다.</p>
+              <button style="width: 100%; min-height: 48px; margin-top: 16px; border: 1px solid #051230; border-radius: 10px; background: transparent; font-family: Pretendard, system-ui, sans-serif; font-size: 15px; font-weight: 600; color: #051230; cursor: pointer;" style-focus="outline: 2px solid #F48067; outline-offset: 2px;">해석 시작하기</button>
+            </div>
+            <div style="border-top: 1px solid #E5E7EB; padding-top: 24px;">
+              <div style="font-size: 18px; font-weight: 700; line-height: 1.5;">공식 사양 비교하기</div>
+              <p style="margin: 10px 0 0; font-size: 15px; line-height: 1.75; color: #3C4655;">두 제품의 공개 사양을 같은 항목에 놓고 확인일까지 함께 봅니다.</p>
+              <div style="margin-top: 14px; font-size: 15px; font-weight: 600; display: inline-block; box-shadow: inset 0 -2px 0 #F48067; padding-bottom: 2px;">두 제품의 공개 사양 비교하기</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: center; padding: 64px 0 0;">
+        <div style="width: 1120px; border-top: 1px solid #E5E7EB; padding: 28px 0 44px; display: flex; gap: 48px; align-items: flex-start;">
+          <div style="font-size: 16px; line-height: 1.8; color: #3C4655; max-width: 640px;">최종 적합성·도수·피팅은 안경사 또는 안과 전문인에게 확인하세요.</div>
+          <div style="margin-left: auto; font-size: 14px; line-height: 1.8; color: #5B6472; text-align: right;">LENSFACT 렌즈팩트<br>독립 정보 서비스 · 판매하지 않습니다</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- =============== HUB · MOBILE =============== -->
+  <sc-if value="{{ hubMob }}" hint-placeholder-val="{{ false }}">
+  <div style="padding: 28px; display: flex; justify-content: center;">
+    <div style="width: 390px; flex: 0 0 auto; background: #FFFFFF; box-shadow: 0 30px 60px -40px rgba(5,18,48,0.4);">
+      <div style="position: sticky; top: 0; background: #FFFFFF; border-bottom: 1px solid #E5E7EB; height: 60px; display: flex; align-items: center; padding: 0 18px; gap: 10px;">
+        <span style="font-size: 17px; font-weight: 700;">LENSFACT</span>
+        <span style="font-size: 14px; color: #5B6472;">렌즈 상식</span>
+      </div>
+
+      <div style="padding: 30px 20px 0;">
+        <h1 style="margin: 0; font-size: 30px; font-weight: 700; letter-spacing: -0.025em; line-height: 1.38;">렌즈 상식</h1>
+        <p style="margin: 14px 0 0; font-size: 16px; line-height: 1.78; color: #3C4655; text-wrap: pretty;">포장지와 공식 자료에 적힌 표기를 쉬운 말로 설명하고, 확인한 출처를 함께 남깁니다.</p>
+        <div style="display: flex; gap: 8px; margin-top: 20px; flex-wrap: wrap;">
+          <sc-for list="{{ cats }}" as="c" hint-placeholder-count="5">
+            <button onClick="{{ c.onClick }}" style="min-height: 44px; padding: 0 15px; border-radius: 22px; cursor: pointer; font-family: Pretendard, system-ui, sans-serif; font-size: 14.5px; font-weight: {{ c.weight }}; border: 1px solid {{ c.bd }}; background: {{ c.bg }}; color: #051230;" style-focus="outline: 2px solid #F48067; outline-offset: 2px;">{{ c.label }}</button>
+          </sc-for>
+        </div>
+      </div>
+
+      <div style="padding: 26px 20px 0;">
+        <div style="background: #FFF8F2; border-radius: 16px; padding: 22px 20px;">
+          <div style="font-size: 13.5px; font-weight: 600; color: #5B6472;">대표 글</div>
+          <h2 style="margin: 10px 0 0; font-size: 23px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.45; text-wrap: pretty;">{{ featured.title }}</h2>
+          <p style="margin: 12px 0 0; font-size: 15.5px; line-height: 1.78; color: #3C4655; text-wrap: pretty;">{{ featured.lead }}</p>
+          <div style="margin-top: 14px; font-size: 14px; color: #5B6472; line-height: 1.7;">{{ featured.cat }} · 예시 확인일 2026.08.27 · 출처 4건</div>
+          <button onClick="{{ goArticle }}" style="width: 100%; min-height: 50px; margin-top: 16px; border: 1px solid #051230; border-radius: 10px; background: #FFFFFF; font-family: Pretendard, system-ui, sans-serif; font-size: 16px; font-weight: 600; color: #051230; cursor: pointer;" style-focus="outline: 2px solid #F48067; outline-offset: 2px;">글 읽기</button>
+        </div>
+      </div>
+
+      <div style="padding: 32px 20px 0;">
+        <div style="font-size: 14.5px; font-weight: 600; color: #5B6472;">{{ listTitle }}</div>
+        <sc-for list="{{ list }}" as="a" hint-placeholder-count="5">
+          <button onClick="{{ a.onClick }}" style="width: 100%; text-align: left; display: block; cursor: pointer; border: 0; border-bottom: 1px solid #E5E7EB; background: transparent; padding: 18px 2px; font-family: Pretendard, system-ui, sans-serif;" style-focus="outline: 2px solid #F48067; outline-offset: -2px;">
+            <div style="font-size: 13.5px; color: #5B6472;">{{ a.cat }}</div>
+            <div style="margin-top: 6px; font-size: 18px; font-weight: 600; line-height: 1.5; text-wrap: pretty;">{{ a.title }}</div>
+            <div style="margin-top: 6px; font-size: 15px; line-height: 1.75; color: #3C4655; text-wrap: pretty;">{{ a.lead }}</div>
+          </button>
+        </sc-for>
+      </div>
+
+      <div style="padding: 30px 20px 0; display: flex; flex-direction: column; gap: 22px;">
+        <div style="background: #EAF5FF; border-radius: 14px; padding: 20px 18px;">
+          <div style="font-size: 17px; font-weight: 700;">포장 숫자 해석하기</div>
+          <p style="margin: 8px 0 0; font-size: 15px; line-height: 1.75; color: #3C4655;">포장지에 적힌 값을 하나씩 눌러 뜻과 출처를 확인합니다.</p>
+          <button style="width: 100%; min-height: 48px; margin-top: 14px; border: 1px solid #051230; border-radius: 10px; background: transparent; font-family: Pretendard, system-ui, sans-serif; font-size: 15.5px; font-weight: 600; color: #051230; cursor: pointer;" style-focus="outline: 2px solid #F48067; outline-offset: 2px;">해석 시작하기</button>
+        </div>
+        <div style="border-top: 1px solid #E5E7EB; padding-top: 20px;">
+          <div style="font-size: 17px; font-weight: 700;">공식 사양 비교하기</div>
+          <p style="margin: 8px 0 0; font-size: 15px; line-height: 1.75; color: #3C4655;">두 제품의 공개 사양을 같은 항목에 놓고 확인일까지 함께 봅니다.</p>
+          <div style="margin-top: 12px; font-size: 15.5px; font-weight: 600; display: inline-block; box-shadow: inset 0 -2px 0 #F48067; padding-bottom: 2px;">두 제품의 공개 사양 비교하기</div>
+        </div>
+      </div>
+
+      <div style="margin-top: 32px; padding: 26px 20px 36px; border-top: 1px solid #E5E7EB;">
+        <div style="font-size: 15.5px; line-height: 1.8; color: #3C4655;">최종 적합성·도수·피팅은 안경사 또는 안과 전문인에게 확인하세요.</div>
+        <div style="margin-top: 14px; font-size: 14px; line-height: 1.8; color: #5B6472;">LENSFACT 렌즈팩트 · 독립 정보 서비스<br>제품을 판매하지 않습니다</div>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- =============== ARTICLE · DESKTOP =============== -->
+  <sc-if value="{{ artDesk }}" hint-placeholder-val="{{ false }}">
+  <div style="padding: 28px; display: flex; justify-content: center;">
+    <div style="width: 1280px; flex: 0 0 auto; min-width: 1280px; background: #FFFFFF; box-shadow: 0 30px 60px -40px rgba(5,18,48,0.4);">
+
+      <div style="height: 76px; border-bottom: 1px solid #E5E7EB; display: flex; align-items: center; justify-content: center;">
+        <div style="width: 1120px; display: flex; align-items: center; gap: 44px;">
+          <div style="display: flex; align-items: baseline; gap: 9px;">
+            <span style="font-size: 19px; font-weight: 700; letter-spacing: -0.01em;">LENSFACT</span>
+            <span style="font-size: 15px; color: #5B6472;">렌즈팩트</span>
+          </div>
+          <div style="display: flex; gap: 30px; font-size: 16px;">
+            <span style="color: #3C4655;">렌즈 숫자 해석</span>
+            <span style="color: #3C4655;">공식 사양 비교</span>
+            <span style="color: #3C4655;">포장지 읽는 법</span>
+            <span style="font-weight: 600; padding-bottom: 3px; box-shadow: inset 0 -2px 0 #F48067;">렌즈 상식</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: center; padding: 56px 0 0;">
+        <div style="width: 1120px; display: grid; grid-template-columns: 720px 300px; gap: 100px; align-items: start;">
+
+          <div style="min-width: 0;">
+            <button onClick="{{ goHub }}" style="min-height: 44px; padding: 0; border: 0; background: transparent; font-family: Pretendard, system-ui, sans-serif; font-size: 15px; color: #5B6472; cursor: pointer;" style-focus="outline: 2px solid #F48067; outline-offset: 2px;">← 렌즈 상식 · 오해 확인</button>
+            <h1 style="margin: 8px 0 0; font-size: 40px; font-weight: 700; letter-spacing: -0.025em; line-height: 1.38; text-wrap: pretty;">함수율이 높으면 더 촉촉한 렌즈일까요?</h1>
+
+            <div style="margin-top: 26px; background: #FFF8F2; border-radius: 14px; padding: 24px 26px;">
+              <div style="font-size: 14px; font-weight: 600; color: #5B6472;">짧은 결론</div>
+              <p style="margin: 10px 0 0; font-size: 18px; line-height: 1.85; color: #051230; text-wrap: pretty;">함수율은 렌즈가 머금은 물의 비율일 뿐, 착용 중 느끼는 촉촉함을 그대로 뜻하지 않습니다. 소재 계열이 다르면 같은 축에서 비교할 수 없고, 표기 기준이 밝혀지지 않은 값도 많습니다. 이 글은 표기가 무엇을 말하고 무엇을 말하지 않는지만 정리합니다.</p>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 14px; margin-top: 20px; flex-wrap: wrap; font-size: 15px; color: #5B6472;">
+              <span style="color: #051230; font-weight: 600;">공식 자료 기반</span>
+              <span>예시 확인일 2026.08.27</span>
+              <span>편집 해설 포함</span>
+              <span>출처 4건</span>
+            </div>
+
+            <div style="margin-top: 30px; border-top: 1px solid #E5E7EB; border-bottom: 1px solid #E5E7EB; padding: 20px 0;">
+              <div style="font-size: 14px; font-weight: 600; color: #5B6472;">목차</div>
+              <div style="display: flex; flex-wrap: wrap; gap: 8px 24px; margin-top: 12px;">
+                <sc-for list="{{ toc }}" as="t" hint-placeholder-count="5">
+                  <span style="font-size: 16px; line-height: 1.7; box-shadow: inset 0 -2px 0 #FBD9CC; padding-bottom: 1px;">{{ t }}</span>
+                </sc-for>
+              </div>
+            </div>
+
+            <h2 style="margin: 44px 0 0; font-size: 26px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.5;">함수율은 무엇을 재는 값인가</h2>
+            <p style="margin: 16px 0 0; font-size: 17.5px; line-height: 1.95; color: #16233C; text-wrap: pretty;">함수율은 렌즈 무게에서 물이 차지하는 비율입니다. 포장지나 제조사 자료에 <span style="font-family: 'IBM Plex Mono', monospace; font-weight: 500;">59 %</span>처럼 적히고, 숫자가 클수록 렌즈에 물이 많다는 뜻입니다.</p>
+            <p style="margin: 16px 0 0; font-size: 17.5px; line-height: 1.95; color: #16233C; text-wrap: pretty;">여기까지가 표기가 보장하는 내용입니다. 물이 많다는 사실은 착용 중 눈이 느끼는 상태를 직접 알려주지 않습니다. 렌즈의 수분은 착용 환경에서 계속 변하고, 표기값은 그 변화를 담지 않습니다.</p>
+
+            <div style="margin: 28px 0 0; border-left: 3px solid #F48067; padding: 4px 0 4px 20px;">
+              <p style="margin: 0; font-size: 18px; line-height: 1.9; color: #051230; text-wrap: pretty;">표기는 렌즈가 처음 머금은 물의 양을 말하고, 착용감은 그 뒤에 일어나는 일에 달려 있습니다.</p>
+              <div style="margin-top: 8px; font-size: 14px; color: #5B6472;">렌즈팩트 편집 해설</div>
+            </div>
+
+            <div style="margin: 40px 0 0; border: 1px dashed #D7DCE3; border-radius: 12px; background: #FBFCFD; min-height: 250px; padding: 14px 16px; display: flex; flex-direction: column;">
+              <span style="font-size: 13px; font-weight: 600; color: #5B6472;">광고</span>
+              <div style="margin: auto; text-align: center; font-size: 14px; line-height: 1.8; color: #5B6472;">광고 예약 영역 · 도입부 이후<br>720 × 250 최소 높이 예약 · 실제 광고는 연동하지 않았습니다</div>
+            </div>
+
+            <h2 style="margin: 44px 0 0; font-size: 26px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.5;">소재 계열이 다르면 같은 축이 아닙니다</h2>
+            <p style="margin: 16px 0 0; font-size: 17.5px; line-height: 1.95; color: #16233C; text-wrap: pretty;">하이드로겔은 머금은 물을 통해 산소를 전달합니다. 실리콘 하이드로겔은 실리콘 구조가 산소를 전달하므로, 물이 적어도 산소 지표는 더 높게 표기될 수 있습니다.</p>
+            <p style="margin: 16px 0 0; font-size: 17.5px; line-height: 1.95; color: #16233C; text-wrap: pretty;">그래서 계열이 다른 두 제품의 함수율 숫자를 나란히 놓는 비교는 성립하지 않습니다. 아래는 예시 표기입니다.</p>
+
+            <div style="margin: 24px 0 0; border-top: 1px solid #E5E7EB;">
+              <sc-for list="{{ compare }}" as="c" hint-placeholder-count="2">
+                <div style="display: grid; grid-template-columns: 1fr auto auto; gap: 24px; align-items: baseline; padding: 16px 2px; border-bottom: 1px solid #E5E7EB;">
+                  <span style="font-size: 16px; line-height: 1.6; color: #3C4655;">{{ c.name }}</span>
+                  <span style="font-family: 'IBM Plex Mono', monospace; font-size: 18px; font-weight: 500;">{{ c.water }}</span>
+                  <span style="font-family: 'IBM Plex Mono', monospace; font-size: 18px; font-weight: 500; color: {{ c.color }}; width: 150px; text-align: right;">{{ c.dkt }}</span>
+                </div>
+              </sc-for>
+              <div style="padding: 12px 2px 0; font-size: 14px; line-height: 1.75; color: #5B6472;">화면 예시 데이터입니다. 오른쪽 값은 Dk/t 표기이며, 시험 도수와 두께 기준이 공개되지 않은 값은 직접 비교하지 않습니다.</div>
+            </div>
+
+            <div style="margin: 40px 0 0; border: 1px dashed #D7DCE3; border-radius: 12px; background: #FBFCFD; min-height: 250px; padding: 14px 16px; display: flex; flex-direction: column;">
+              <span style="font-size: 13px; font-weight: 600; color: #5B6472;">광고</span>
+              <div style="margin: auto; text-align: center; font-size: 14px; line-height: 1.8; color: #5B6472;">광고 예약 영역 · 본문 소제목 사이<br>720 × 250 최소 높이 예약</div>
+            </div>
+
+            <h2 style="margin: 44px 0 0; font-size: 26px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.5;">표기 기준이 밝혀지지 않은 경우</h2>
+            <p style="margin: 16px 0 0; font-size: 17.5px; line-height: 1.95; color: #16233C; text-wrap: pretty;">같은 제품이라도 렌즈 내부 기준과 표면 기준의 함수율이 다르게 적힐 수 있습니다. 자료가 기준을 밝히지 않으면 렌즈팩트는 값을 그대로 옮기고, 기준이 표기되지 않았다는 사실을 함께 남깁니다.</p>
+            <p style="margin: 16px 0 0; font-size: 17.5px; line-height: 1.95; color: #16233C; text-wrap: pretty;">값이 비어 있는 것과 확인되지 않은 것은 다릅니다. 확인하지 못한 항목은 <span style="font-weight: 600;">확인되지 않음</span>으로 남겨 둡니다.</p>
+
+            <h2 style="margin: 44px 0 0; font-size: 24px; font-weight: 700; letter-spacing: -0.02em;">핵심 용어</h2>
+            <div style="margin-top: 18px;">
+              <sc-for list="{{ terms }}" as="t" hint-placeholder-count="3">
+                <div style="display: grid; grid-template-columns: 140px 1fr; gap: 24px; padding: 16px 2px; border-top: 1px solid #E5E7EB;">
+                  <span style="font-family: 'IBM Plex Mono', monospace; font-size: 16px; font-weight: 500;">{{ t.k }}</span>
+                  <span style="font-size: 16.5px; line-height: 1.85; color: #16233C; text-wrap: pretty;">{{ t.v }}</span>
+                </div>
+              </sc-for>
+            </div>
+
+            <div style="margin-top: 48px; background: #EAF5FF; border-radius: 14px; padding: 26px 28px;">
+              <div style="display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap;">
+                <span style="font-size: 19px; font-weight: 700;">공식 출처와 측정 조건</span>
+                <span style="font-size: 15px; color: #3C4655;">공식 자료 4건 · 예시 확인일 2026.08.27</span>
+                <button onClick="{{ toggleSrc }}" style="margin-left: auto; min-height: 46px; padding: 0 18px; border: 1px solid #051230; border-radius: 8px; background: {{ srcBtnBg }}; font-family: Pretendard, system-ui, sans-serif; font-size: 15px; font-weight: 600; color: #051230; cursor: pointer;" style-focus="outline: 2px solid #F48067; outline-offset: 2px;">{{ srcLabel }}</button>
+              </div>
+              <sc-if value="{{ showSrc }}" hint-placeholder-val="{{ false }}">
+                <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 14px;">
+                  <sc-for list="{{ sources }}" as="s" hint-placeholder-count="3">
+                    <div style="background: #FFFFFF; border-radius: 12px; padding: 20px 22px;">
+                      <div style="display: grid; grid-template-columns: 116px 1fr; gap: 10px 20px; font-size: 15px; line-height: 1.7;">
+                        <span style="color: #5B6472;">기관·제조사</span><span>{{ s.org }}</span>
+                        <span style="color: #5B6472;">문서명</span><span style="overflow-wrap: anywhere;">{{ s.doc }}</span>
+                        <span style="color: #5B6472;">원문 표기</span><span style="font-family: 'IBM Plex Mono', monospace; overflow-wrap: anywhere;">{{ s.raw }}</span>
+                        <span style="color: #5B6472;">주소</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: #3C4655; overflow-wrap: anywhere;">{{ s.url }}</span>
+                        <span style="color: #5B6472;">확인일</span><span>{{ s.date }}</span>
+                        <span style="color: #5B6472;">측정 조건</span><span style="overflow-wrap: anywhere;">{{ s.cond }}</span>
+                        <span style="color: #5B6472;">값 차이</span><span style="overflow-wrap: anywhere; color: {{ s.diffColor }};">{{ s.diff }}</span>
+                      </div>
+                    </div>
+                  </sc-for>
+                  <div style="font-size: 14px; line-height: 1.8; color: #5B6472;">화면 예시로 구성한 출처 목록입니다. 실제 문서명·주소·확인일이 아닙니다.</div>
+                </div>
+              </sc-if>
+            </div>
+
+            <h2 style="margin: 48px 0 0; font-size: 24px; font-weight: 700; letter-spacing: -0.02em;">확인할 수 없는 부분</h2>
+            <div style="margin-top: 16px; display: flex; flex-direction: column; gap: 12px;">
+              <sc-for list="{{ limits }}" as="l" hint-placeholder-count="3">
+                <div style="display: grid; grid-template-columns: 20px 1fr; gap: 14px; font-size: 16.5px; line-height: 1.85; color: #16233C;">
+                  <span style="width: 7px; height: 7px; margin-top: 12px; border-radius: 50%; background: #F48067;"></span>
+                  <span style="text-wrap: pretty;">{{ l }}</span>
+                </div>
+              </sc-for>
+            </div>
+
+            <div style="margin-top: 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+              <div style="border: 1px solid #E5E7EB; border-radius: 14px; padding: 24px 24px 22px;">
+                <div style="font-size: 14px; font-weight: 600; color: #5B6472;">이 글의 값</div>
+                <div style="margin-top: 8px; font-size: 19px; font-weight: 700; line-height: 1.5;">함수율 표기 해석</div>
+                <p style="margin: 8px 0 0; font-size: 15.5px; line-height: 1.75; color: #3C4655;">포장지의 함수율 값을 눌러 뜻과 출처를 확인합니다.</p>
+                <button style="width: 100%; min-height: 48px; margin-top: 16px; border: 0; border-radius: 10px; background: #051230; color: #FFFFFF; font-family: Pretendard, system-ui, sans-serif; font-size: 15.5px; font-weight: 600; cursor: pointer;" style-focus="outline: 2px solid #F48067; outline-offset: 3px;">이 숫자 해석하기</button>
+              </div>
+              <div style="border: 1px solid #E5E7EB; border-radius: 14px; padding: 24px 24px 22px;">
+                <div style="font-size: 14px; font-weight: 600; color: #5B6472;">관련 비교</div>
+                <div style="margin-top: 8px; font-size: 19px; font-weight: 700; line-height: 1.5;">함수율·Dk/t 공식 표기</div>
+                <p style="margin: 8px 0 0; font-size: 15.5px; line-height: 1.75; color: #3C4655;">두 제품의 공개 사양을 같은 항목에 놓고 측정 조건까지 봅니다.</p>
+                <button style="width: 100%; min-height: 48px; margin-top: 16px; border: 1px solid #051230; border-radius: 10px; background: transparent; font-family: Pretendard, system-ui, sans-serif; font-size: 15.5px; font-weight: 600; color: #051230; cursor: pointer;" style-focus="outline: 2px solid #F48067; outline-offset: 2px;">두 제품의 공개 사양 비교하기</button>
+              </div>
+            </div>
+
+            <div style="margin: 44px 0 0; border: 1px dashed #D7DCE3; border-radius: 12px; background: #FBFCFD; min-height: 250px; padding: 14px 16px; display: flex; flex-direction: column;">
+              <span style="font-size: 13px; font-weight: 600; color: #5B6472;">광고</span>
+              <div style="margin: auto; text-align: center; font-size: 14px; line-height: 1.8; color: #5B6472;">광고 예약 영역 · 본문 종료 후 · 관련 글 앞<br>720 × 250 최소 높이 예약</div>
+            </div>
+
+            <div style="margin-top: 44px;">
+              <div style="font-size: 15px; font-weight: 600; color: #5B6472;">관련 글</div>
+              <sc-for list="{{ related }}" as="a" hint-placeholder-count="3">
+                <div style="padding: 20px 2px; border-bottom: 1px solid #E5E7EB;">
+                  <div style="font-size: 14px; color: #5B6472;">{{ a.cat }}</div>
+                  <div style="margin-top: 6px; font-size: 19px; font-weight: 600; line-height: 1.5;">{{ a.title }}</div>
+                  <div style="margin-top: 6px; font-size: 16px; line-height: 1.75; color: #3C4655; text-wrap: pretty;">{{ a.lead }}</div>
+                </div>
+              </sc-for>
+            </div>
+
+            <div style="margin-top: 44px; padding-top: 26px; border-top: 1px solid #E5E7EB; padding-bottom: 56px;">
+              <div style="font-size: 16.5px; line-height: 1.85; color: #3C4655;">최종 적합성·도수·피팅은 안경사 또는 안과 전문인에게 확인하세요.</div>
+            </div>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 28px; padding-top: 60px;">
+            <div style="border: 1px dashed #D7DCE3; border-radius: 12px; background: #FBFCFD; min-height: 250px; padding: 12px 14px; display: flex; flex-direction: column;">
+              <span style="font-size: 13px; font-weight: 600; color: #5B6472;">광고</span>
+              <div style="margin: auto; text-align: center; font-size: 13.5px; line-height: 1.75; color: #5B6472;">보조 영역 후보<br>300 × 250 최소 높이 예약<br>고정 스크롤 없음</div>
+            </div>
+            <div style="font-size: 13.5px; line-height: 1.8; color: #5B6472;">보조 영역은 본문·출처·전문가 확인 문구를 가리지 않습니다. 스크롤에 고정하지 않고, 광고가 없으면 열이 그대로 비어 레이아웃이 밀리지 않습니다.</div>
+            <div style="border-top: 1px solid #E5E7EB; padding-top: 22px;">
+              <div style="font-size: 15px; font-weight: 600;">이 글에서 이어지는 곳</div>
+              <div style="margin-top: 12px; display: flex; flex-direction: column; gap: 10px; font-size: 15px; line-height: 1.7;">
+                <span style="box-shadow: inset 0 -2px 0 #F48067; display: inline-block; padding-bottom: 1px; width: fit-content;">이 숫자 해석하기</span>
+                <span style="box-shadow: inset 0 -2px 0 #F48067; display: inline-block; padding-bottom: 1px; width: fit-content;">관련 근거 읽기</span>
+                <span style="box-shadow: inset 0 -2px 0 #F48067; display: inline-block; padding-bottom: 1px; width: fit-content;">두 제품의 공개 사양 비교하기</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- =============== ARTICLE · MOBILE =============== -->
+  <sc-if value="{{ artMob }}" hint-placeholder-val="{{ false }}">
+  <div style="padding: 28px; display: flex; justify-content: center;">
+    <div style="width: 390px; flex: 0 0 auto; background: #FFFFFF; box-shadow: 0 30px 60px -40px rgba(5,18,48,0.4);">
+      <div style="position: sticky; top: 0; background: #FFFFFF; border-bottom: 1px solid #E5E7EB; height: 60px; display: flex; align-items: center; padding: 0 18px; gap: 10px;">
+        <button onClick="{{ goHub }}" style="min-width: 44px; min-height: 44px; border: 0; background: transparent; font-size: 17px; color: #051230; cursor: pointer; text-align: left; padding: 0;" style-focus="outline: 2px solid #F48067; outline-offset: 2px;">←</button>
+        <span style="font-size: 16px; font-weight: 600;">렌즈 상식</span>
+        <span style="margin-left: auto; font-size: 13.5px; color: #5B6472;">오해 확인</span>
+      </div>
+
+      <div style="padding: 26px 20px 0;">
+        <h1 style="margin: 0; font-size: 27px; font-weight: 700; letter-spacing: -0.025em; line-height: 1.44; text-wrap: pretty;">함수율이 높으면 더 촉촉한 렌즈일까요?</h1>
+        <div style="margin-top: 20px; background: #FFF8F2; border-radius: 14px; padding: 18px 18px;">
+          <div style="font-size: 13.5px; font-weight: 600; color: #5B6472;">짧은 결론</div>
+          <p style="margin: 8px 0 0; font-size: 16.5px; line-height: 1.85; color: #051230; text-wrap: pretty;">함수율은 렌즈가 머금은 물의 비율일 뿐, 착용 중 느끼는 촉촉함을 그대로 뜻하지 않습니다. 소재 계열이 다르면 같은 축에서 비교할 수 없고, 표기 기준이 밝혀지지 않은 값도 많습니다.</p>
+        </div>
+        <div style="margin-top: 14px; font-size: 14px; line-height: 1.75; color: #5B6472;"><span style="color: #051230; font-weight: 600;">공식 자료 기반</span> · 예시 확인일 2026.08.27 · 편집 해설 포함 · 출처 4건</div>
+        <div style="margin-top: 20px; border-top: 1px solid #E5E7EB; border-bottom: 1px solid #E5E7EB; padding: 16px 0;">
+          <div style="font-size: 13.5px; font-weight: 600; color: #5B6472;">목차</div>
+          <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
+            <sc-for list="{{ toc }}" as="t" hint-placeholder-count="5">
+              <span style="min-height: 44px; display: flex; align-items: center; font-size: 16px; line-height: 1.6;"><span style="box-shadow: inset 0 -2px 0 #FBD9CC; padding-bottom: 1px;">{{ t }}</span></span>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding: 30px 20px 0;">
+        <h2 style="margin: 0; font-size: 21px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.5;">함수율은 무엇을 재는 값인가</h2>
+        <p style="margin: 12px 0 0; font-size: 16.5px; line-height: 1.9; color: #16233C; text-wrap: pretty;">함수율은 렌즈 무게에서 물이 차지하는 비율입니다. 포장지나 제조사 자료에 <span style="font-family: 'IBM Plex Mono', monospace; font-weight: 500;">59 %</span>처럼 적히고, 숫자가 클수록 렌즈에 물이 많다는 뜻입니다.</p>
+        <p style="margin: 14px 0 0; font-size: 16.5px; line-height: 1.9; color: #16233C; text-wrap: pretty;">여기까지가 표기가 보장하는 내용입니다. 물이 많다는 사실은 착용 중 눈이 느끼는 상태를 직접 알려주지 않습니다.</p>
+        <div style="margin: 22px 0 0; border-left: 3px solid #F48067; padding: 2px 0 2px 16px;">
+          <p style="margin: 0; font-size: 16.5px; line-height: 1.9; color: #051230; text-wrap: pretty;">표기는 렌즈가 처음 머금은 물의 양을 말하고, 착용감은 그 뒤에 일어나는 일에 달려 있습니다.</p>
+          <div style="margin-top: 6px; font-size: 13.5px; color: #5B6472;">렌즈팩트 편집 해설</div>
+        </div>
+      </div>
+
+      <div style="padding: 30px 20px 0;">
+        <div style="border: 1px dashed #D7DCE3; border-radius: 12px; background: #FBFCFD; min-height: 200px; padding: 12px 14px; display: flex; flex-direction: column;">
+          <span style="font-size: 13px; font-weight: 600; color: #5B6472;">광고</span>
+          <div style="margin: auto; text-align: center; font-size: 13.5px; line-height: 1.75; color: #5B6472;">광고 예약 영역 · 도입부 이후<br>인라인 · 최소 높이 200px<br>고정·전면 광고 없음</div>
+        </div>
+      </div>
+
+      <div style="padding: 30px 20px 0;">
+        <h2 style="margin: 0; font-size: 21px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.5;">소재 계열이 다르면 같은 축이 아닙니다</h2>
+        <p style="margin: 12px 0 0; font-size: 16.5px; line-height: 1.9; color: #16233C; text-wrap: pretty;">하이드로겔은 머금은 물을 통해 산소를 전달합니다. 실리콘 하이드로겔은 실리콘 구조가 산소를 전달하므로, 물이 적어도 산소 지표는 더 높게 표기될 수 있습니다.</p>
+        <div style="margin-top: 18px; border-top: 1px solid #E5E7EB;">
+          <sc-for list="{{ compare }}" as="c" hint-placeholder-count="2">
+            <div style="padding: 14px 2px; border-bottom: 1px solid #E5E7EB;">
+              <div style="font-size: 15.5px; line-height: 1.6; color: #3C4655;">{{ c.name }}</div>
+              <div style="display: flex; justify-content: space-between; gap: 14px; margin-top: 8px;">
+                <span style="font-family: 'IBM Plex Mono', monospace; font-size: 17px; font-weight: 500;">{{ c.water }}</span>
+                <span style="font-family: 'IBM Plex Mono', monospace; font-size: 15px; font-weight: 500; text-align: right; color: {{ c.color }};">{{ c.dkt }}</span>
+              </div>
+            </div>
+          </sc-for>
+          <div style="padding: 10px 2px 0; font-size: 13.5px; line-height: 1.75; color: #5B6472;">화면 예시 데이터입니다. 시험 도수·두께 기준이 공개되지 않은 Dk/t는 직접 비교하지 않습니다.</div>
+        </div>
+      </div>
+
+      <div style="padding: 28px 20px 0;">
+        <div style="border: 1px dashed #D7DCE3; border-radius: 12px; background: #FBFCFD; min-height: 200px; padding: 12px 14px; display: flex; flex-direction: column;">
+          <span style="font-size: 13px; font-weight: 600; color: #5B6472;">광고</span>
+          <div style="margin: auto; text-align: center; font-size: 13.5px; line-height: 1.75; color: #5B6472;">광고 예약 영역 · 소제목 사이<br>인라인 · 최소 높이 200px</div>
+        </div>
+      </div>
+
+      <div style="padding: 30px 20px 0;">
+        <h2 style="margin: 0; font-size: 21px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.5;">표기 기준이 밝혀지지 않은 경우</h2>
+        <p style="margin: 12px 0 0; font-size: 16.5px; line-height: 1.9; color: #16233C; text-wrap: pretty;">같은 제품이라도 렌즈 내부 기준과 표면 기준의 함수율이 다르게 적힐 수 있습니다. 자료가 기준을 밝히지 않으면 값을 그대로 옮기고, 기준이 표기되지 않았다는 사실을 함께 남깁니다. 확인하지 못한 항목은 <span style="font-weight: 600;">확인되지 않음</span>으로 남겨 둡니다.</p>
+      </div>
+
+      <div style="padding: 32px 20px 0;">
+        <h2 style="margin: 0; font-size: 20px; font-weight: 700; letter-spacing: -0.02em;">핵심 용어</h2>
+        <sc-for list="{{ terms }}" as="t" hint-placeholder-count="3">
+          <div style="padding: 14px 2px; border-top: 1px solid #E5E7EB;">
+            <div style="font-family: 'IBM Plex Mono', monospace; font-size: 15.5px; font-weight: 500;">{{ t.k }}</div>
+            <div style="margin-top: 6px; font-size: 15.5px; line-height: 1.85; color: #16233C; text-wrap: pretty;">{{ t.v }}</div>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="padding: 32px 20px 0;">
+        <div style="background: #EAF5FF; border-radius: 14px; padding: 20px 18px;">
+          <div style="font-size: 17.5px; font-weight: 700;">공식 출처와 측정 조건</div>
+          <div style="margin-top: 6px; font-size: 14.5px; color: #3C4655; line-height: 1.7;">공식 자료 4건 · 예시 확인일 2026.08.27</div>
+          <button onClick="{{ toggleSrc }}" style="width: 100%; min-height: 48px; margin-top: 14px; border: 1px solid #051230; border-radius: 10px; background: {{ srcBtnBg }}; font-family: Pretendard, system-ui, sans-serif; font-size: 15.5px; font-weight: 600; color: #051230; cursor: pointer;" style-focus="outline: 2px solid #F48067; outline-offset: 2px;">{{ srcLabel }}</button>
+          <sc-if value="{{ showSrc }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top: 14px; display: flex; flex-direction: column; gap: 12px;">
+              <sc-for list="{{ sources }}" as="s" hint-placeholder-count="3">
+                <div style="background: #FFFFFF; border-radius: 12px; padding: 16px 16px;">
+                  <div style="display: grid; grid-template-columns: 88px 1fr; gap: 9px 12px; font-size: 14.5px; line-height: 1.7;">
+                    <span style="color: #5B6472;">기관</span><span>{{ s.org }}</span>
+                    <span style="color: #5B6472;">문서명</span><span style="overflow-wrap: anywhere;">{{ s.doc }}</span>
+                    <span style="color: #5B6472;">원문</span><span style="font-family: 'IBM Plex Mono', monospace; overflow-wrap: anywhere;">{{ s.raw }}</span>
+                    <span style="color: #5B6472;">주소</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; color: #3C4655; overflow-wrap: anywhere;">{{ s.url }}</span>
+                    <span style="color: #5B6472;">확인일</span><span>{{ s.date }}</span>
+                    <span style="color: #5B6472;">측정 조건</span><span style="overflow-wrap: anywhere;">{{ s.cond }}</span>
+                    <span style="color: #5B6472;">값 차이</span><span style="overflow-wrap: anywhere; color: {{ s.diffColor }};">{{ s.diff }}</span>
+                  </div>
+                </div>
+              </sc-for>
+              <div style="font-size: 13.5px; line-height: 1.8; color: #5B6472;">화면 예시로 구성한 출처 목록입니다. 실제 문서명·주소·확인일이 아닙니다.</div>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+
+      <div style="padding: 32px 20px 0;">
+        <h2 style="margin: 0; font-size: 20px; font-weight: 700; letter-spacing: -0.02em;">확인할 수 없는 부분</h2>
+        <div style="margin-top: 12px; display: flex; flex-direction: column; gap: 10px;">
+          <sc-for list="{{ limits }}" as="l" hint-placeholder-count="3">
+            <div style="display: grid; grid-template-columns: 16px 1fr; gap: 12px; font-size: 15.5px; line-height: 1.85; color: #16233C;">
+              <span style="width: 6px; height: 6px; margin-top: 11px; border-radius: 50%; background: #F48067;"></span>
+              <span style="text-wrap: pretty;">{{ l }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <div style="padding: 32px 20px 0; display: flex; flex-direction: column; gap: 12px;">
+        <div style="border: 1px solid #E5E7EB; border-radius: 14px; padding: 18px 18px;">
+          <div style="font-size: 13.5px; font-weight: 600; color: #5B6472;">이 글의 값</div>
+          <div style="margin-top: 6px; font-size: 17.5px; font-weight: 700;">함수율 표기 해석</div>
+          <p style="margin: 6px 0 0; font-size: 15px; line-height: 1.75; color: #3C4655;">포장지의 함수율 값을 눌러 뜻과 출처를 확인합니다.</p>
+          <button style="width: 100%; min-height: 48px; margin-top: 14px; border: 0; border-radius: 10px; background: #051230; color: #FFFFFF; font-family: Pretendard, system-ui, sans-serif; font-size: 15.5px; font-weight: 600; cursor: pointer;" style-focus="outline: 2px solid #F48067; outline-offset: 3px;">이 숫자 해석하기</button>
+        </div>
+        <div style="border: 1px solid #E5E7EB; border-radius: 14px; padding: 18px 18px;">
+          <div style="font-size: 13.5px; font-weight: 600; color: #5B6472;">관련 비교</div>
+          <div style="margin-top: 6px; font-size: 17.5px; font-weight: 700;">함수율·Dk/t 공식 표기</div>
+          <p style="margin: 6px 0 0; font-size: 15px; line-height: 1.75; color: #3C4655;">두 제품의 공개 사양을 같은 항목에 놓고 측정 조건까지 봅니다.</p>
+          <button style="width: 100%; min-height: 48px; margin-top: 14px; border: 1px solid #051230; border-radius: 10px; background: transparent; font-family: Pretendard, system-ui, sans-serif; font-size: 15.5px; font-weight: 600; color: #051230; cursor: pointer;" style-focus="outline: 2px solid #F48067; outline-offset: 2px;">두 제품의 공개 사양 비교하기</button>
+        </div>
+      </div>
+
+      <div style="padding: 30px 20px 0;">
+        <div style="border: 1px dashed #D7DCE3; border-radius: 12px; background: #FBFCFD; min-height: 200px; padding: 12px 14px; display: flex; flex-direction: column;">
+          <span style="font-size: 13px; font-weight: 600; color: #5B6472;">광고</span>
+          <div style="margin: auto; text-align: center; font-size: 13.5px; line-height: 1.75; color: #5B6472;">광고 예약 영역 · 본문 종료 후<br>관련 글 앞 · 최소 높이 200px</div>
+        </div>
+      </div>
+
+      <div style="padding: 30px 20px 0;">
+        <div style="font-size: 14.5px; font-weight: 600; color: #5B6472;">관련 글</div>
+        <sc-for list="{{ related }}" as="a" hint-placeholder-count="3">
+          <div style="padding: 16px 2px; border-bottom: 1px solid #E5E7EB;">
+            <div style="font-size: 13.5px; color: #5B6472;">{{ a.cat }}</div>
+            <div style="margin-top: 6px; font-size: 17px; font-weight: 600; line-height: 1.5;">{{ a.title }}</div>
+            <div style="margin-top: 6px; font-size: 15px; line-height: 1.75; color: #3C4655; text-wrap: pretty;">{{ a.lead }}</div>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="margin-top: 30px; padding: 24px 20px 36px; border-top: 1px solid #E5E7EB;">
+        <div style="font-size: 15.5px; line-height: 1.8; color: #3C4655;">최종 적합성·도수·피팅은 안경사 또는 안과 전문인에게 확인하세요.</div>
+        <div style="margin-top: 14px; font-size: 14px; line-height: 1.8; color: #5B6472;">LENSFACT 렌즈팩트 · 독립 정보 서비스<br>제품을 판매하지 않습니다</div>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;startScreen&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;hub&quot;,&quot;article&quot;],&quot;default&quot;:&quot;hub&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;미리보기&quot;},&quot;startView&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;desktop&quot;,&quot;mobile&quot;],&quot;default&quot;:&quot;desktop&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;미리보기&quot;}}">
+const CATS = ['전체', '렌즈 숫자 읽기', '오해 확인', '공식 사양 비교', '포장지·허가정보 읽기'];
+
+const ARTICLES = [
+  { cat: '오해 확인', featured: true, title: '함수율이 높으면 더 촉촉한 렌즈일까요?',
+    lead: '함수율 표기가 무엇을 재는 값인지, 그리고 이 숫자로 알 수 없는 것이 무엇인지 공식 표기 기준으로 정리했습니다.' },
+  { cat: '렌즈 숫자 읽기', title: '포장지의 BC는 무엇을 뜻하나요',
+    lead: '베이스커브가 나타내는 곡률과, 같은 BC라도 착용 상태가 달라지는 이유를 표기 범위 안에서 설명합니다.' },
+  { cat: '렌즈 숫자 읽기', title: 'DIA와 착색 지름은 어떻게 다른가요',
+    lead: '전체 지름과 색이 있는 렌즈의 착색 지름은 서로 다른 값입니다. 표기에서 두 값을 구분하는 방법을 봅니다.' },
+  { cat: '오해 확인', title: '같은 BC면 같은 착용감일까요',
+    lead: '곡률 숫자가 같아도 재질과 형상이 다르면 표기만으로 착용 상태를 예상할 수 없는 이유를 정리했습니다.' },
+  { cat: '공식 사양 비교', title: 'Dk와 Dk/t는 어떻게 다른가요',
+    lead: '재질 고유값과 두께 반영값을 구분하고, 측정 조건이 공개되지 않은 값을 어떻게 다루는지 설명합니다.' },
+  { cat: '포장지·허가정보 읽기', title: '식약처 허가정보에서 무엇을 확인할 수 있나요',
+    lead: '허가정보에 적히는 항목과 제조사 자료에만 있는 항목을 구분해, 어디까지 공식 표기로 볼 수 있는지 봅니다.' },
+  { cat: '포장지·허가정보 읽기', title: '포장 표기와 제조사 자료가 다를 때',
+    lead: '두 출처의 값이 어긋나는 경우 렌즈팩트가 값을 병합하지 않고 그대로 남기는 방식을 설명합니다.' },
+  { cat: '공식 사양 비교', title: 'UV 표기는 무엇을 보장하나요',
+    lead: '공식 UV 표기 확인과 차단율·측정 조건 확인은 별개입니다. 표기만으로 말할 수 있는 범위를 정리했습니다.' }
+];
+
+const TOC = ['함수율은 무엇을 재는 값인가', '소재 계열이 다르면 같은 축이 아닙니다', '표기 기준이 밝혀지지 않은 경우', '핵심 용어', '공식 출처와 측정 조건', '확인할 수 없는 부분'];
+
+const COMPARE = [
+  { name: '하이드로겔 계열 · 화면 예시 A', water: '59 %', dkt: 'Dk/t 22.8', warn: true },
+  { name: '실리콘 하이드로겔 계열 · 화면 예시 B', water: '54 %', dkt: 'Dk/t 100', warn: true },
+  { name: '화면 예시 C', water: '확인되지 않음', dkt: 'Dk/t 확인되지 않음', unknown: true }
+];
+
+const TERMS = [
+  { k: '함수율', v: '렌즈 무게에서 물이 차지하는 비율입니다. 측정 기준이 내부인지 표면인지에 따라 같은 제품도 다르게 적힐 수 있습니다.' },
+  { k: 'Dk', v: '재질 자체가 산소를 통과시키는 정도입니다. 렌즈 두께는 반영되지 않습니다.' },
+  { k: 'Dk/t', v: '재질의 Dk를 렌즈 두께로 나눈 값입니다. 시험 도수와 중심 두께에 따라 달라지므로 조건이 공개되지 않으면 비교하지 않습니다.' }
+];
+
+const SOURCES = [
+  { org: '식품의약품안전처 (화면 예시)', doc: '의료기기 품목허가 정보 · 예시 레코드', raw: '원재료: hilafilcon B', url: 'example.invalid/mfds/record', date: '예시 · 2026.08.27', cond: '해당 없음', diff: '없음' },
+  { org: '제조사 A (화면 예시)', doc: '제품 사양 페이지 · 예시 문서', raw: 'Water content 59% / Dk/t 22.8', url: 'example.invalid/sample-a/spec', date: '예시 · 2026.08.27', cond: '함수율 표기 기준 없음 · 시험 도수·중심 두께 표기 없음', diff: 'Dk 값이 허가정보와 다릅니다 (22 / 24.5)', warn: true },
+  { org: '제조사 B (화면 예시)', doc: '제품 사양 페이지 · 예시 문서', raw: 'Water content 54% / Dk/t 100', url: 'example.invalid/sample-b/spec', date: '예시 · 2026.08.27', cond: '측정 조건 미공개', diff: '없음' }
+];
+
+const LIMITS = [
+  '착용 중 느끼는 촉촉함은 표기값으로 확인할 수 없습니다. 이 글은 개인의 착용 결과를 예측하지 않습니다.',
+  '함수율 표기 기준(내부·표면)이 공개되지 않은 자료가 있어, 같은 숫자라도 동일한 조건에서 측정된 값이라고 단정할 수 없습니다.',
+  '시험 도수와 중심 두께가 공개되지 않은 Dk/t는 다른 제품과 같은 축에 놓지 않았습니다.',
+  '검토한 공개 자료에서 찾지 못한 값은 추정하지 않고 확인되지 않음으로 남겼습니다.'
+];
+
+class Component extends DCLogic {
+  state = { screen: 'hub', view: 'desktop', cat: '전체', showSrc: false };
+
+  componentDidMount() {
+    if (this.props.startScreen === 'article') this.setState({ screen: 'article' });
+    if (this.props.startView === 'mobile') this.setState({ view: 'mobile' });
+  }
+
+  btn(on, label, fn) {
+    return { label, onClick: fn,
+      bg: on ? '#051230' : '#FFFFFF', fg: on ? '#FFFFFF' : '#051230', bd: on ? '#051230' : '#cbd2da' };
+  }
+
+  renderVals() {
+    const st = this.state;
+    const featured = ARTICLES[0];
+    const pool = ARTICLES.slice(1);
+    const list = (st.cat === '전체' ? pool : pool.filter(a => a.cat === st.cat)).map(a => ({
+      cat: a.cat, title: a.title, lead: a.lead,
+      onClick: () => this.setState({ screen: 'article', showSrc: false })
+    }));
+
+    return {
+      screenTabs: [
+        this.btn(st.screen === 'hub', '콘텐츠 허브', () => this.setState({ screen: 'hub' })),
+        this.btn(st.screen === 'article', '글 상세', () => this.setState({ screen: 'article' }))
+      ],
+      viewTabs: [
+        this.btn(st.view === 'desktop', '데스크톱 1280', () => this.setState({ view: 'desktop' })),
+        this.btn(st.view === 'mobile', '모바일 390', () => this.setState({ view: 'mobile' }))
+      ],
+      hubDesk: st.screen === 'hub' && st.view === 'desktop',
+      hubMob: st.screen === 'hub' && st.view === 'mobile',
+      artDesk: st.screen === 'article' && st.view === 'desktop',
+      artMob: st.screen === 'article' && st.view === 'mobile',
+      cats: CATS.map(c => {
+        const on = st.cat === c;
+        return { label: c, weight: on ? '600' : '400',
+          bg: on ? '#FFEFE6' : '#FFFFFF', bd: on ? '#F48067' : '#E5E7EB',
+          onClick: () => this.setState({ cat: c }) };
+      }),
+      featured,
+      list,
+      listTitle: st.cat === '전체' ? '최신 글' : st.cat,
+      goArticle: () => this.setState({ screen: 'article', showSrc: false }),
+      goHub: () => this.setState({ screen: 'hub' }),
+      toc: TOC,
+      compare: COMPARE.map(c => ({ name: c.name, water: c.water, dkt: c.dkt,
+        color: c.unknown ? '#5B6472' : '#8A4B12' })),
+      terms: TERMS,
+      sources: SOURCES.map(s => ({ ...s, diffColor: s.warn ? '#8A4B12' : '#16233C' })),
+      limits: LIMITS,
+      related: [ARTICLES[4], ARTICLES[3], ARTICLES[7]],
+      showSrc: st.showSrc,
+      srcLabel: st.showSrc ? '출처 닫기' : '출처 보기',
+      srcBtnBg: st.showSrc ? '#FFEFE6' : '#FFFFFF',
+      toggleSrc: () => this.setState({ showSrc: !st.showSrc })
+    };
+  }
+}
+
+</script>
+</body>
+</html>
