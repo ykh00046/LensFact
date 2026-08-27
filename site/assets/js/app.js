@@ -27,18 +27,21 @@ const ADS_ENABLED = false;
     const panel = qs("#mobile-nav");
     if (!button || !panel) return;
 
-    button.addEventListener("click", () => {
-      const open = button.getAttribute("aria-expanded") !== "true";
+    function setMenuState(open) {
       setExpanded(button, open);
+      button.setAttribute("aria-label", open ? "메뉴 닫기" : "메뉴 열기");
       toggleHidden(panel, !open);
       document.body.classList.toggle("menu-open", open);
+    }
+
+    button.addEventListener("click", () => {
+      const open = button.getAttribute("aria-expanded") !== "true";
+      setMenuState(open);
     });
 
     panel.addEventListener("click", (event) => {
       if (event.target.closest("a")) {
-        setExpanded(button, false);
-        toggleHidden(panel, true);
-        document.body.classList.remove("menu-open");
+        setMenuState(false);
       }
     });
   }
@@ -121,7 +124,8 @@ const ADS_ENABLED = false;
       button.addEventListener("click", () => {
         const decoder = qs("#decoder");
         const firstRow = qs("[data-field-index='0']");
-        decoder?.scrollIntoView({ behavior: "smooth", block: "start" });
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        decoder?.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
         firstRow?.click();
         firstRow?.focus({ preventScroll: true });
       });
@@ -181,7 +185,11 @@ const ADS_ENABLED = false;
 
   function initAdSlots() {
     qsa("[data-ad-slot]").forEach((slot) => {
-      if (ADS_ENABLED) return;
+      if (!ADS_ENABLED) {
+        slot.hidden = true;
+        slot.setAttribute("aria-hidden", "true");
+        return;
+      }
       const label = slot.dataset.adLabel || "광고 예약 영역";
       const size = slot.dataset.adSize || "최소 높이 예약";
       slot.classList.add("ad-slot");
