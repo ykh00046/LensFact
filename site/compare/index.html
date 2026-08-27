@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LensFact 공식 사양 비교 | 화면 예시</title>
+  <meta name="description" content="공식 자료 표기를 항목별로 나란히 보는 LensFact 비교 화면 예시입니다.">
+  <link rel="stylesheet" href="/site/assets/css/style.css">
+  <script src="/site/assets/js/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">본문으로 건너뛰기</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="/site/index.html" aria-label="LensFact 홈"><span class="brand-mark">LF</span>렌즈팩트</a>
+      <nav class="nav desktop-nav" aria-label="주요 메뉴">
+        <a href="/site/index.html">렌즈 숫자 해석</a>
+        <a href="/site/compare/index.html" aria-current="page">공식 사양 비교</a>
+        <a href="/site/knowledge/index.html">포장지 읽는 법</a>
+        <a href="/site/knowledge/index.html">렌즈 상식</a>
+      </nav>
+      <button class="menu-toggle" type="button" data-menu-toggle aria-label="메뉴 열기" aria-expanded="false" aria-controls="mobile-nav"><span aria-hidden="true"></span></button>
+    </div>
+    <nav class="nav mobile-nav" id="mobile-nav" aria-label="모바일 메뉴" hidden>
+      <a href="/site/index.html">렌즈 숫자 해석</a>
+      <a href="/site/compare/index.html" aria-current="page">공식 사양 비교</a>
+      <a href="/site/knowledge/index.html">포장지 읽는 법</a>
+      <a href="/site/knowledge/index.html">렌즈 상식</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="section alt">
+      <div class="wrap">
+        <p class="eyebrow">공식 사양 비교 · 화면 예시입니다</p>
+        <h1 class="page-title">공개 사양을 같은 항목으로 놓고 확인합니다</h1>
+        <p class="lead">이 화면은 비교 표 패턴을 보여 주는 정적 예시입니다. 모든 이름과 주소는 화면 예시이며 실제 제품 정보가 아닙니다.</p>
+      </div>
+    </section>
+    <section class="section">
+      <div class="wrap">
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th scope="col">항목</th>
+              <th scope="col">렌즈 A · 화면 예시</th>
+              <th scope="col">렌즈 B · 화면 예시</th>
+              <th scope="col">확인 메모</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">BC</th><td class="mono">8.6 mm</td><td class="mono">8.7 mm</td><td>제조사 공식 사양 · 예시 확인일 2026.08.27</td></tr>
+            <tr><th scope="row">DIA</th><td class="mono">14.2 mm</td><td class="mono">14.0 mm</td><td>전체 지름이며 착색 지름과 다릅니다.</td></tr>
+            <tr><th scope="row">함수율</th><td class="mono">59 %</td><td class="mono">54 %</td><td class="warn">소재 계열과 표기 기준이 다르면 같은 축으로 보지 않습니다.</td></tr>
+            <tr><th scope="row">재질</th><td class="mono">hilafilcon B</td><td class="mono">samfilcon A</td><td>허가정보 예시 레코드 기준입니다.</td></tr>
+            <tr><th scope="row">Dk</th><td class="mono warn">22 / 24.5</td><td class="mono">확인되지 않음</td><td>렌즈 A는 출처 간 값이 다릅니다. 값을 합치지 않고 나란히 표시합니다.</td></tr>
+            <tr><th scope="row">Dk/t</th><td class="mono">22.8</td><td class="mono">100</td><td>시험 도수·중심 두께가 공개되지 않은 값은 직접 비교하지 않습니다.</td></tr>
+            <tr><th scope="row">교체 일정</th><td class="mono">1일</td><td class="mono">1일</td><td>포장 표기 화면 예시입니다.</td></tr>
+            <tr><th scope="row">UV</th><td class="mono">확인되지 않음</td><td class="mono">공식 표기 있음</td><td>차단율·측정 조건 확인과는 별개입니다.</td></tr>
+          </tbody>
+        </table>
+        <p class="sample-note">화면 예시입니다. 실제 제품 정보가 아닙니다. 예시 주소: example.invalid/compare/sample</p>
+        <div class="cta-grid">
+          <article class="card">
+            <h2>표기 뜻부터 보기</h2>
+            <p>BC, DIA, 함수율처럼 자주 보는 항목을 먼저 해석합니다.</p>
+            <a class="button" href="/site/index.html#decoder">포장 숫자 해석하기</a>
+          </article>
+          <article class="card">
+            <h2>함수율 해설 읽기</h2>
+            <p>함수율과 Dk/t가 같은 축의 지표가 아닌 이유를 확인합니다.</p>
+            <a class="text-button" href="/site/knowledge/water-content-moisture.html">관련 글 읽기</a>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <strong>LENSFACT 렌즈팩트</strong>
+      <span>최종 적합성·도수·피팅은 안경사 또는 안과 전문인에게 확인하세요.</span>
+    </div>
+  </footer>
+</body>
+</html>
