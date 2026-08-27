@@ -4,10 +4,13 @@
 
 ## 현재 단계
 
-1. Manus에서 시각 콘셉트 3개만 생성
-2. Boss가 1개 선택
-3. 선택 후 정적 프로토타입 생성
-4. Hermes/Codex가 코드를 검토하고 프로덕션 구현 인수
+1. 시각 콘셉트와 콘텐츠 시스템 확정
+2. 정적 프로토타입 구현 및 데스크톱·모바일 검증 완료
+3. 실데이터 3개 제품 + 핵심 글 1개 파일럿 준비
+4. 사실·법적 경계 검수 후 미리보기 배포
+5. 검색 색인과 실제 유입을 확인한 뒤 콘텐츠 확대
+
+AdSense는 초기 범위에서 비활성화합니다. 빌드, 운영, 검색 발견, 수익화는 서로 다른 검증 단계로 관리합니다.
 
 ## 핵심 원칙
 
@@ -21,4 +24,6 @@
 ## 문서
 
 - `docs/MVP_BRIEF.md` — 검증형 MVP 범위
-- `docs/MANUS_CONCEPT_PROMPT.md` — Manus 1차 콘셉트 요청문
+- `docs/V4_CONTENT_DESIGN_ACCEPTANCE.md` — 최종 홈·콘텐츠 시스템 수용 기록
+- `docs/VIDEO_REFERENCE_ADSENSE_REALITY.md` — 바이브코딩 사이트 실패·검색·수익화 사례 검증과 LensFact 적용 원칙
+- `docs/MANUS_CONCEPT_PROMPT.md` — 초기 Manus 콘셉트 요청문(보관용)
