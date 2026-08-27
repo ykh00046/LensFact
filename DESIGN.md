@@ -59,6 +59,12 @@ LensFact feels like a calm evidence desk for consumer lens-package labels: white
 - States: selected row uses soft coral fill and coral left rule; focus ring uses coral.
 - Accessibility: rows are buttons with `aria-expanded`; selected row updates the detail region.
 
+### Product Selector
+- Structure: three repository-owned product buttons above the field rows.
+- States: selected product uses soft coral fill, coral border, and `aria-pressed=true`.
+- Behavior: click, Enter/Space, and arrow keys update the package card, field values, and source detail as one state change.
+- Accessibility: one roving tab stop is retained inside the selector; focus remains visible.
+
 ### Evidence Panel
 - Structure: live detail region, meaning, caution, source summary, source disclosure.
 - States: empty guidance and selected detail.
@@ -68,6 +74,12 @@ LensFact feels like a calm evidence desk for consumer lens-package labels: white
 - Structure: category, title, lead, metadata, link.
 - Variants: featured and compact.
 - Accessibility: entire card is not nested in a link; primary title link remains clear.
+- States: completed articles expose a title link and verification metadata; unfinished articles show `준비 중` without a destination.
+
+### Comparison Table
+- Structure: one semantic table with row and product column headers; values reference both through `headers`.
+- Responsive state: the table stays intact inside a keyboard-focusable horizontal scroll region; the first column remains sticky.
+- Evidence states: conflict and unknown labels use the existing warn/coral tokens without implying a ranking.
 
 ### Ad Reserve
 - Structure: neutral placeholder rendered only through JS.
@@ -90,4 +102,4 @@ Mixed but restrained: borders define most surfaces; subtle shadows are limited t
 - Focus: every interactive element has a visible outline.
 - Touch: primary buttons and menu controls are at least 44px tall.
 - Reading: article body remains single-column on mobile with no fixed canvas.
-- Accepted debt: browser screenshot QA is deferred to Hermes per user instruction; static fetch and HTML/ARIA checks run locally.
+- Accepted debt: MFDS 상세 원장 직접 대조가 미완료인 두 허가번호와 공식 출처 간 충돌은 제품 데이터와 화면에 명시적으로 남긴다.

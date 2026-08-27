@@ -1,0 +1,28 @@
+{
+  "source": "https://emedi.mfds.go.kr/msismext/udi/uif/schStddCdLstView.do",
+  "retrieved_on": "2026-08-27",
+  "query_scope": {
+    "bplcNm": "한국알콘",
+    "returned_rows": 46382
+  },
+  "filter": {
+    "modelnm": "Dailies Total1",
+    "prdtNmCn": "워터렌즈"
+  },
+  "matched_rows": 105,
+  "distinct_identity": [
+    [
+      "한국알콘(주)",
+      "매일착용소프트콘택트렌즈",
+      "수허 13-112 호",
+      "Dailies Total1",
+      "워터렌즈"
+    ]
+  ],
+  "distinct_udi_di_count": 105,
+  "package_quantity_counts": {
+    "30": 35,
+    "5": 35,
+    "90": 35
+  }
+}
