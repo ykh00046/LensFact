@@ -1,17 +1,17 @@
 # LensFact Real-Data Pilot
 
-This directory contains a no-build static pilot for LensFact using verified public data for four transparent spherical contact-lens products distributed in Korea.
+This directory contains a no-build static pilot for LensFact using verified public data for five transparent spherical contact-lens products distributed in Korea.
 
 ## Structure
 
 This directory is the web root. Every internal link is relative, so the site works from any root path.
 
-- `index.html`: home page with a four-product package-label decoder.
+- `index.html`: home page with a five-product package-label decoder.
 - `products/index.html`: product list rendered from `products.js`, with a static card fallback.
-- `products/<slug>.html`: one page per product (`acuvue-oasys-1-day`, `dailies-total1`, `biofinity`, `acuvue-moist-1-day`). Thin HTML shell plus `<main data-product-page="<id>">`; `initProductPage()` renders every field with its full source list open, and a `<noscript>` table carries all values and the first source per field for crawlers and no-JS readers.
+- `products/<slug>.html`: one page per product (`acuvue-oasys-1-day`, `dailies-total1`, `biofinity`, `acuvue-moist-1-day`, `myday`). Thin HTML shell plus `<main data-product-page="<id>">`; `initProductPage()` renders every field with its full source list open, and a `<noscript>` table carries all values and the first source per field for crawlers and no-JS readers.
 - `knowledge/index.html`: content hub with one completed article and seven clearly marked pending topics.
 - `knowledge/water-content-moisture.html`: evidence-based article about water content and perceived moisture.
-- `compare/index.html`: accessible four-product official-spec comparison rendered from `assets/data/products.js`, with a `<noscript>` static fallback.
+- `compare/index.html`: accessible five-product official-spec comparison rendered from `assets/data/products.js`, with a `<noscript>` static fallback.
 - `about/index.html`: what the site does and does not do, operator conflict-of-interest disclosure, contact.
 - `policy/editorial.html`: editorial policy, evidence states, medical boundary, correction procedure.
 - `policy/methodology.html`: source hierarchy, meaning of `raw`/`condition`/`verifiedAt`, why values are not merged.
@@ -43,7 +43,7 @@ The site currently ships with a placeholder origin and a preview-only `robots.tx
    grep -rln DOMAIN-TBD site/
    ```
 
-   Expected: the thirteen pages (`index.html`, `products/index.html`, `products/acuvue-oasys-1-day.html`, `products/dailies-total1.html`, `products/biofinity.html`, `products/acuvue-moist-1-day.html`, `compare/index.html`, `knowledge/index.html`, `knowledge/water-content-moisture.html`, `about/index.html`, `policy/editorial.html`, `policy/methodology.html`, `policy/privacy.html`), plus `sitemap.xml`, `robots.txt`, and this README.
+   Expected: the fourteen pages (`index.html`, `products/index.html`, `products/acuvue-oasys-1-day.html`, `products/dailies-total1.html`, `products/biofinity.html`, `products/acuvue-moist-1-day.html`, `products/myday.html`, `compare/index.html`, `knowledge/index.html`, `knowledge/water-content-moisture.html`, `about/index.html`, `policy/editorial.html`, `policy/methodology.html`, `policy/privacy.html`), plus `sitemap.xml`, `robots.txt`, and this README.
 2. **Fill in the contact email.** `about/index.html` contains the literal placeholder `문의 이메일: [배포 전 입력]`. Publishing with the placeholder in place is not acceptable.
 3. **Flip `robots.txt`.** Change `Disallow: /` to `Allow: /` and uncomment the `Sitemap:` line once the domain is final and the content is ready to be indexed.
 4. **Register the site with search engines by meta tag only.** Google Search Console and Naver Search Advisor both allow verification through an HTML meta tag; use that method. Do not add a verification script — the site loads no external scripts, and that constraint stays.
@@ -53,7 +53,7 @@ The site currently ships with a placeholder origin and a preview-only `robots.tx
 
 ## Data and Source Scope
 
-The pilot covers ACUVUE OASYS 1-Day, DAILIES TOTAL1, Biofinity, and 1-DAY ACUVUE MOIST transparent spherical products. Korean official product pages, Korean IFUs, CooperVision Korea's 2023 specification sheet, and the MFDS UDI lookup are used to identify Korean distribution and permit information. Manufacturer technical or professional specifications supply BC, DIA, water-content, Dk/t, and thickness values. Scientific literature supports the water-content article.
+The pilot covers ACUVUE OASYS 1-Day, DAILIES TOTAL1, Biofinity, 1-DAY ACUVUE MOIST, and MyDay transparent spherical products. Korean official product pages, Korean IFUs, CooperVision Korea's 2023 specification sheet, and the MFDS UDI lookup are used to identify Korean distribution and permit information. Manufacturer technical or professional specifications supply BC, DIA, water-content, Dk/t, and thickness values. Scientific literature supports the water-content article.
 
 Source links are ordinary user-initiated external links. The pages load no external scripts, styles, images, analytics, advertising, APIs, or CDNs at runtime. `ADS_ENABLED=false` remains fixed and all ad-slot elements stay hidden.
 
@@ -61,7 +61,10 @@ Source links are ordinary user-initiated external links. The pages load no exter
 
 - The MFDS detailed permit ledger has not yet been directly reconciled for `수허 16-499 호` and `수허 08-131`; the Korean IFU or official Korean product list is identified as the current evidence. Identifiers retain each source's original spacing and suffix.
 - Biofinity's official sources disagree on Dk/t (`170` versus `171 at -3.00D`) and UV (`기술 적용` versus `No`). Both versions remain visible.
+- Biofinity's and MyDay's centre thickness are `unknown`: no reviewed official source states the value. Dk/t depends on thickness, so both Dk/t figures are read without that condition.
+- Two corrections were applied on 2026-08-28 and logged in `docs/verification/CORRECTIONS.md`: Biofinity's centre thickness `0.08 mm` was withdrawn for lack of a reproducible source, and CooperVision Korea's legal name was fixed from `쿠퍼비젼코리아(주)` to `쿠퍼비전코리아(주)`.
 - DAILIES TOTAL1's core and surface water values use different locations and methods and are not combined into one number.
 - Public specifications do not predict individual comfort, fitting, prescription, or wearing outcome. The pilot offers no recommendation, ranking, score, purchase link, or diagnosis.
 - 1-DAY ACUVUE MOIST's BC, DIA, water content, Dk/t, centre thickness and UV figures come from the global ACUVUE technical specification guide; no Korean official source states them, and the Korean page's UV percentages are image-only, so the Korean wording stays unverified.
+- MyDay's UV entry is a grade (`UV 차단 · Class 2`), not a blocking percentage, and the specification sheet does not define which standard the grade belongs to.
 - Only the water-content article is complete. The other seven hub topics remain non-linked `준비 중` cards.

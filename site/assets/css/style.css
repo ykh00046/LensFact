@@ -678,7 +678,7 @@ h3,
   white-space: nowrap;
 }
 
-.spec-summary.compare-table .status-label {
+.spec-summary.compare-table [headers~="summary-col-state"] .status-label {
   white-space: nowrap;
 }
 

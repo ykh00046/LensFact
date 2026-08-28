@@ -410,7 +410,8 @@ const ADS_ENABLED = false;
     { productId: "acuvue-oasys-1-day", colId: "col-acuvue-oasys-1-day", label: "아큐브 오아시스 원데이®" },
     { productId: "dailies-total1", colId: "col-dailies-total1", label: "데일리스 토탈원®" },
     { productId: "biofinity", colId: "col-biofinity", label: "바이오피니티®" },
-    { productId: "acuvue-moist-1-day", colId: "col-acuvue-moist-1-day", label: "원데이 아큐브 모이스트®" }
+    { productId: "acuvue-moist-1-day", colId: "col-acuvue-moist-1-day", label: "원데이 아큐브 모이스트®" },
+    { productId: "myday", colId: "col-myday", label: "마이데이®" }
   ];
 
   const COMPARE_ROWS = [
@@ -425,7 +426,8 @@ const ADS_ENABLED = false;
         "acuvue-oasys-1-day": "실리콘 하이드로겔",
         "dailies-total1": "워터 그라디언트 실리콘 하이드로겔",
         "biofinity": "실리콘 하이드로겔",
-        "acuvue-moist-1-day": "하이드로겔"
+        "acuvue-moist-1-day": "하이드로겔",
+        "myday": "실리콘 하이드로겔"
       }
     },
     { rowId: "row-bc", fieldId: "bc", label: "BC", mono: true },
@@ -436,27 +438,34 @@ const ADS_ENABLED = false;
         "acuvue-oasys-1-day": "벌크",
         "dailies-total1": "코어와 표면은 측정 위치와 방법이 달라 하나의 값으로 합치지 않음. 표면은 공식 자료에 따라 약 100%로도 표기됨",
         "biofinity": "벌크",
-        "acuvue-moist-1-day": "출처가 측정 위치를 표기하지 않음"
+        "acuvue-moist-1-day": "출처가 측정 위치를 표기하지 않음",
+        "myday": "출처가 측정 위치를 표기하지 않음"
       }
     },
     {
       rowId: "row-dkt", fieldId: "dkt", label: "Dk/t", labelNote: "시험 조건 포함", mono: true,
-      rowNote: "아큐브 두 제품 원문만 단위(× 10⁻⁹)를 명기함. 데일리스 토탈원과 바이오피니티 원문은 단위를 표기하지 않아 임의로 단위를 붙이지 않음.",
+      rowNote: "아큐브 두 제품 원문만 단위(× 10⁻⁹)를 명기함. 데일리스 토탈원·바이오피니티·마이데이 원문은 단위를 표기하지 않아 임의로 단위를 붙이지 않음.",
       notes: {
         "acuvue-oasys-1-day": "-3.00D · 중심 0.085 mm · 35℃ · boundary/edge-corrected Dk",
         "dailies-total1": "-3.00D · 중심 0.09 mm",
-        "acuvue-moist-1-day": "-3.00D · 중심 0.084 mm · 35℃ · boundary/edge-corrected Dk"
+        "acuvue-moist-1-day": "-3.00D · 중심 0.084 mm · 35℃ · boundary/edge-corrected Dk",
+        "myday": "@-3.00DS · 측정법·보정·온도 조건 미표기 · 중심두께 미확인"
       }
     },
     {
       rowId: "row-thickness", fieldId: "thickness", label: "중심두께", mono: true, useCondition: true,
-      notes: { "acuvue-moist-1-day": "-3.00D" }
+      notes: {
+        "acuvue-moist-1-day": "-3.00D",
+        "biofinity": "2026-08-28 재확인에서 항목 없음 · 이전 기록의 0.08 mm는 철회",
+        "myday": "검토한 공식 자료 6종에 중심두께 항목 없음"
+      }
     },
     {
       rowId: "row-uv", fieldId: "uv", label: "UV", chip: true,
       notes: {
         "dailies-total1": "기능 없음으로 단정하지 않음",
-        "acuvue-moist-1-day": "글로벌 기술 사양의 근사값 · 한국 표기 수치는 확인되지 않음"
+        "acuvue-moist-1-day": "글로벌 기술 사양의 근사값 · 한국 표기 수치는 확인되지 않음",
+        "myday": "차단율 퍼센트가 아니라 등급 표기 · 등급 기준은 사양서에 정의되지 않음"
       }
     },
     {
@@ -464,8 +473,9 @@ const ADS_ENABLED = false;
       memo: {
         "acuvue-oasys-1-day": "한국 IFU로 허가번호 확인. MFDS 상세 원장 직접 대조는 미완료.",
         "dailies-total1": "MFDS UDI 조회에서 제품 연결 105건 확인. 코어와 표면 함수율을 합치지 않음.",
-        "biofinity": "MFDS 상세 원장 직접 대조는 미완료. Dk/t와 UV 충돌을 보류 상태로 유지.",
-        "acuvue-moist-1-day": "MFDS UDI 조회로 허가번호 확인. BC·DIA·함수율·Dk/t·UV는 글로벌 기술 사양이 유일한 근거이며 한국 표기는 미확인."
+        "biofinity": "MFDS 상세 원장 직접 대조는 미완료. Dk/t와 UV 충돌을 보류 상태로 유지. 중심두께는 2026-08-28 재확인에서 근거를 찾지 못해 철회.",
+        "acuvue-moist-1-day": "MFDS UDI 조회로 허가번호 확인. BC·DIA·함수율·Dk/t·UV는 글로벌 기술 사양이 유일한 근거이며 한국 표기는 미확인.",
+        "myday": "MFDS UDI 174건 전수 대조로 허가번호 확인. 중심두께는 공식 자료에 항목이 없어 미확인."
       }
     }
   ];
@@ -474,7 +484,8 @@ const ADS_ENABLED = false;
     { productId: "acuvue-oasys-1-day", fieldIds: ["permit"] },
     { productId: "dailies-total1", fieldIds: ["permit", "replacement"] },
     { productId: "biofinity", fieldIds: ["permit"] },
-    { productId: "acuvue-moist-1-day", fieldIds: ["permit"] }
+    { productId: "acuvue-moist-1-day", fieldIds: ["permit"] },
+    { productId: "myday", fieldIds: ["permit"] }
   ];
 
   function compareCell(row, product, column) {
@@ -487,8 +498,9 @@ const ADS_ENABLED = false;
 
     const state = fieldState(field.state);
     const conflicted = state === "conflict";
-    const valueClass = [row.mono ? "mono" : "", row.mono && conflicted ? "warn" : ""].filter(Boolean).join(" ");
-    const value = row.chip
+    const unknown = state === "unknown";
+    const valueClass = [row.mono && !unknown ? "mono" : "", row.mono && conflicted ? "warn" : ""].filter(Boolean).join(" ");
+    const value = row.chip || unknown
       ? `<span class="status-label status-${state}">${text(field.value)}</span>`
       : `<span${valueClass ? ` class="${valueClass}"` : ""}>${text(field.value)}</span>`;
 
@@ -586,7 +598,7 @@ const ADS_ENABLED = false;
     const rowId = `summary-${escapeHtml(item.id)}`;
     const condition = item.sources?.[0]?.condition || "";
     const note = condition ? `<span class="cell-note">${text(condition)}</span>` : "";
-    const valueClass = state === "conflict" ? "mono warn" : "mono";
+    const valueClass = { conflict: "mono warn", unknown: "status-label status-unknown", verified: "mono" }[state];
     const anchorLabel = `${item.code} ${item.label} 출처 보기`;
     return `<tr>
       <th id="${rowId}" scope="row">${escapeHtml(item.code)}<br><span class="cell-note">${escapeHtml(item.label)}</span></th>
