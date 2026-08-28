@@ -41,10 +41,10 @@ The site currently ships with a placeholder origin and a preview-only `robots.tx
 1. **Replace `DOMAIN-TBD` with the real origin.** List every file that still contains it:
 
    ```bash
-   grep -rln DOMAIN-TBD site/
+   grep -rIl DOMAIN-TBD site/ | wc -l
    ```
 
-   Expected: the twenty-nine pages (`index.html`, `products/index.html`, `products/acuvue-oasys-1-day.html`, `products/dailies-total1.html`, `products/biofinity.html`, `products/acuvue-moist-1-day.html`, `products/myday.html`, `products/clariti-1-day.html`, `products/acuvue-oasys-2-week.html`, `products/precision1.html`, `products/biotrue-oneday.html`, `products/acuvue-oasys-max-1-day.html`, `products/dailies-aquacomfort-plus.html`, `products/acuvue-vita.html`, `products/total30.html`, `products/airoptix-plus-hydraglyde.html`, `products/proclear-1-day.html`, `products/biofinity-energys.html`, `products/ultra-one-day.html`, `products/miru-1day.html`, `products/soflens-daily.html`, `products/clalen-1day.html`, `compare/index.html`, `knowledge/index.html`, `knowledge/water-content-moisture.html`, `about/index.html`, `policy/editorial.html`, `policy/methodology.html`, `policy/privacy.html`), plus `sitemap.xml`, `robots.txt`, and this README.
+   Expected: 32 files total — 29 HTML pages, plus this README, `robots.txt`, and `sitemap.xml`. Use `grep -rIl DOMAIN-TBD site/` without `wc -l` when you need to inspect the command-derived path list.
 2. **Contact email** — done 2026-08-28: `about/index.html` shows `interojo679@gmail.com` as a mailto link.
 3. **Flip `robots.txt`.** Change `Disallow: /` to `Allow: /` and uncomment the `Sitemap:` line once the domain is final and the content is ready to be indexed.
 4. **Register the site with search engines by meta tag only.** Google Search Console and Naver Search Advisor both allow verification through an HTML meta tag; use that method. Do not add a verification script — the site loads no external scripts, and that constraint stays.

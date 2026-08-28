@@ -362,7 +362,7 @@ const ADS_ENABLED = false;
   ];
 
   // Package wording differs from the wording in the official specifications.
-  const REPLACEMENT_EQUIVALENTS = { "1일": ["1일", "매일"], "2주": ["2주", "14일"], "1개월": ["1개월", "30일", "한 달"] };
+  const REPLACEMENT_EQUIVALENTS = { "1일": ["1일", "매일"], "2주": ["2주", "14일"], "1개월": ["1개월", "1달", "30일", "한 달"] };
 
   const INPUT_BOUNDARY = "같은 숫자라도 재질·디자인·피팅에 따라 착용 상태는 다르며, 최종 도수·피팅은 안경사 또는 안과 전문인에게 확인해야 합니다.";
 
@@ -437,8 +437,7 @@ const ADS_ENABLED = false;
       const needle = normalizeText(entry.raw);
       if (!needle) return null;
       const segments = valueSegments(field.value).map(normalizeText);
-      const aliases = (product.aliases || []).map(normalizeText);
-      const hit = segments.some((segment) => segment === needle || segment.includes(needle)) || aliases.some((alias) => alias === needle);
+      const hit = segments.some((segment) => segment === needle);
       return hit ? { field, note: "" } : null;
     }
     const wanted = REPLACEMENT_EQUIVALENTS[entry.raw] || [entry.raw];
@@ -480,6 +479,22 @@ const ADS_ENABLED = false;
     return values;
   }
 
+  function locationQualifiedWaterMentions(entry) {
+    return products.flatMap((product) => {
+      const field = productField(product, "water");
+      if (!field || fieldState(field.state) === "unknown") return [];
+      const segments = valueSegments(field.value);
+      if (!segments.some((segment) => segment.includes("코어"))) return [];
+      return segments
+        .filter((segment) => segment.includes("표면"))
+        .filter((segment) => {
+          const found = segment.match(/-?\d+(?:\.\d+)?/);
+          return found && sameNumber(Number(found[0]), entry.number);
+        })
+        .map((segment) => ({ product, segment }));
+    });
+  }
+
   // The neutral placement sentence. It states where the typed figure sits among the
   // figures on file; it never says the figure is good, better, or suitable.
   function placementSentence(spec, entry, matched) {
@@ -489,6 +504,13 @@ const ADS_ENABLED = false;
       return `${fieldCode(spec.id)} ${entry.label} — 현재 수록된 ${total}개 제품 중 ${matched.length}개(${names})에 같은 값이 적혀 있습니다.`;
     }
     if (spec.kind === "number") {
+      if (spec.id === "water") {
+        const qualified = locationQualifiedWaterMentions(entry);
+        if (qualified.length) {
+          const mentions = qualified.map(({ product, segment }) => `${product.name} (${segment})`).join(", ");
+          return `${fieldCode(spec.id)} ${entry.label} — 공식 자료에 같은 숫자의 표면 함수율 표기가 있습니다: ${mentions}. 코어·표면·벌크 값은 측정 위치가 달라, 입력값의 측정 위치를 알 수 없으면 직접 대조할 수 없습니다.`;
+        }
+      }
       const recorded = recordedNumbers(spec);
       if (!recorded.length) return `${fieldCode(spec.id)} ${entry.label} — 현재 수록된 제품에는 대조할 수 있는 표기가 없습니다.`;
       const low = formatInputNumber(recorded[0].number, spec);
@@ -560,11 +582,14 @@ const ADS_ENABLED = false;
     const best = Math.max(0, ...rows.map((row) => row.hits.length));
     const partial = !full.length && best > 0;
     const shown = full.length ? full : (partial ? rows.filter((row) => row.hits.length === best) : []);
+    const hasQualifiedSurfaceWater = entries.some((entry) => entry.spec.id === "water" && locationQualifiedWaterMentions(entry).length);
     const lead = full.length
       ? `입력한 ${entries.length}개 항목이 모두 같은 값으로 적힌 제품입니다. 표기가 같다는 사실만 확인한 결과이며 적합성 판단이 아닙니다. 순서는 수록 순서입니다.`
       : (partial
         ? `입력한 ${entries.length}개 항목이 모두 같은 제품은 없습니다. 가장 많은 항목이 같은 제품을 표기 일치 개수와 함께 보여 드립니다. 적합성 판단이 아닙니다.`
-        : `현재 수록된 ${products.length}개 제품 가운데 입력한 값과 같은 표기가 있는 제품이 없습니다.`);
+        : (hasQualifiedSurfaceWater
+          ? `현재 수록된 ${products.length}개 제품 가운데 직접 비교할 수 있는 동일 표기가 있는 제품은 없습니다. 위의 같은 숫자 표면 함수율 표기는 측정 위치를 알 수 없어 직접 일치에서 제외했습니다.`
+          : `현재 수록된 ${products.length}개 제품 가운데 입력한 값과 같은 표기가 있는 제품이 없습니다.`));
     const list = shown.length ? `<ul class="match-list">${shown.map((row) => matchItem(row, entries, partial)).join("")}</ul>` : "";
     return `<section class="input-result-matches">
       <h4>입력한 표기와 같은 값이 적힌 제품</h4>
