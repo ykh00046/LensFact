@@ -31,7 +31,8 @@ LensFact feels like a calm evidence desk for consumer lens-package labels: white
 
 ## 3. Typography
 
-- Primary: `Pretendard, "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif`
+- Primary: `"Pretendard Variable", Pretendard, "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif`
+- Pretendard Variable is self-hosted from `site/assets/fonts/pretendard/` as a dynamic subset (92 unicode-range woff2 slices, ~2.9 MB on disk; a Korean page pulls only the handful of slices it needs). Served same-origin — no CDN and no external font service at runtime. SIL OFL 1.1, license kept at `assets/fonts/pretendard/LICENSE.txt`.
 - Mono: `ui-monospace, "Cascadia Mono", Consolas, monospace`
 - Display: clamped 32-48px, 700, 1.32 line height, -0.025em tracking.
 - Page H1: clamped 32-44px, 700, 1.28 line height, -0.02em tracking (H2 shares the tracking).
@@ -40,9 +41,9 @@ LensFact feels like a calm evidence desk for consumer lens-package labels: white
 - Body: 16-18px, 400, 1.75 line height.
 - Article body: 17.5px desktop, 16.5px mobile, 1.9 line height.
 - Meta/caption: 13-15px, 500, 1.6 line height.
-- Weight ladder: 400 / 500 / 600 / 700 only (fallback fonts have no intermediate weights). Mono values use 500-600.
+- Weight ladder: 400 / 500 / 600 / 700 only. Pretendard Variable covers the whole 45-920 axis, but the design stays on these four so the fallback stack (which has no intermediate weights) renders the same hierarchy. Mono values use 500-600.
 - Korean wrapping: `word-break: keep-all` on body, `text-wrap: pretty` on headings, leads, and paragraphs; unicode superscripts in values are rendered as `<sup>` at render time.
-- Pretendard is declared but not self-hosted yet; the fallback stack must look finished on its own.
+- Every `@font-face` uses `font-display: swap`, so text paints in the fallback stack first and swaps to Pretendard when its subset arrives. The fallback stack is retained in full and must still look finished on its own.
 
 ## 4. Spacing & Layout
 

@@ -18,6 +18,7 @@ This directory is the web root. Every internal link is relative, so the site wor
 - `policy/privacy.html`: privacy policy for the current no-cookie, no-analytics, no-ads site.
 - `robots.txt`, `sitemap.xml`: discovery files. Both still contain the `DOMAIN-TBD` placeholder origin.
 - `assets/css/style.css`: shared responsive stylesheet.
+- `assets/fonts/pretendard/`: self-hosted Pretendard Variable (SIL OFL 1.1). `pretendard-dynamic-subset.css` declares 92 `@font-face` rules for the family `Pretendard Variable`, each with its own `unicode-range` and `font-display: swap`, pointing at the woff2 slices in `woff2-dynamic-subset/`. Every page links this stylesheet immediately before `assets/css/style.css`. The browser downloads only the slices a page's characters actually need, so a Korean page fetches a few tens of KB rather than the whole 2.9 MB set. `LICENSE.txt` is the upstream OFL text.
 - `assets/js/app.js`: vanilla JavaScript for menu, the home input decoder, synchronized product selection, decoder details, disclosures, filters, the comparison table, the product list and product pages, and disabled ad slots.
 - `assets/data/products.js`: repository-owned verified product values, evidence states, and official source URLs, plus each product's `slug` and `aliases` (Korean sales name, English global name, material name).
 - `assets/data/fields.js`: common field terminology used across all products.
@@ -55,7 +56,7 @@ The site currently ships with a placeholder origin and a preview-only `robots.tx
 
 The pilot covers ACUVUE OASYS 1-Day, DAILIES TOTAL1, Biofinity, 1-DAY ACUVUE MOIST, MyDay, clariti 1 day, ACUVUE OASYS 2-Week, PRECISION1, Biotrue ONEday, ACUVUE OASYS MAX 1-Day, DAILIES AquaComfort Plus, ACUVUE VITA, and TOTAL30 transparent spherical products. Korean official product pages, Korean IFUs, CooperVision Korea's 2023 specification sheet, Alcon's US and international professional specifications, Alcon's and Bausch + Lomb's package inserts and fitting guides, and the MFDS UDI lookup are used to identify Korean distribution and permit information. DAILIES AquaComfort Plus is the only product with no Korean official page at all; its Korean distribution is identified from the MFDS UDI ledger alone. Manufacturer technical or professional specifications supply BC, DIA, water-content, Dk/t, and thickness values. Scientific literature supports the water-content article.
 
-Source links are ordinary user-initiated external links. The pages load no external scripts, styles, images, analytics, advertising, APIs, or CDNs at runtime. `ADS_ENABLED=false` remains fixed and all ad-slot elements stay hidden.
+Source links are ordinary user-initiated external links. The pages load no external scripts, styles, images, analytics, advertising, APIs, or CDNs at runtime; the web font is served from this site's own origin alongside the pages, never from a font CDN. `ADS_ENABLED=false` remains fixed and all ad-slot elements stay hidden.
 
 ## Remaining Limitations
 

@@ -41,7 +41,7 @@ body {
   margin: 0;
   background: var(--color-white);
   color: var(--color-ink);
-  font-family: Pretendard, "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  font-family: "Pretendard Variable", Pretendard, "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
   line-height: 1.75;
   text-rendering: optimizeLegibility;
   word-break: keep-all;
@@ -1329,7 +1329,7 @@ div.label-item:hover {
   display: block;
   margin-block-start: var(--space-1);
   color: var(--color-muted);
-  font-family: Pretendard, "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  font-family: "Pretendard Variable", Pretendard, "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
   font-size: 0.84rem;
   font-weight: 500;
   line-height: 1.55;
