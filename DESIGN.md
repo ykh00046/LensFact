@@ -57,13 +57,13 @@ LensFact feels like a calm evidence desk for consumer lens-package labels: white
 - Structure: button row with code, label, value, optional flag.
 - Variants: main visible fields and disclosed full fields.
 - States: selected row uses soft coral fill and coral left rule; focus ring uses coral.
-- Accessibility: rows are buttons with `aria-expanded`; selected row updates the detail region.
+- Accessibility: rows are buttons with `aria-pressed`; the detail region is always visible and updates on selection.
 
 ### Product Selector
 - Structure: three repository-owned product buttons above the field rows.
 - States: selected product uses soft coral fill, coral border, and `aria-pressed=true`.
 - Behavior: click, Enter/Space, and arrow keys update the package card, field values, and source detail as one state change.
-- Accessibility: one roving tab stop is retained inside the selector; focus remains visible.
+- Accessibility: all three buttons stay in the Tab order (no roving tabindex); arrow keys move selection; focus remains visible.
 
 ### Evidence Panel
 - Structure: live detail region, meaning, caution, source summary, source disclosure.

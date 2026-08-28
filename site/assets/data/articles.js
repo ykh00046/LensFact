@@ -3,7 +3,7 @@ window.LENSFACT_ARTICLES = [
     category: "오해 확인",
     title: "함수율이 높으면 더 촉촉한 렌즈일까요?",
     lead: "함수율이 말하는 범위와 착용 중 촉촉함을 단독으로 예측할 수 없는 이유를 과학 문헌과 공식 제품 자료로 확인합니다.",
-    href: "/site/knowledge/water-content-moisture.html",
+    href: "./water-content-moisture.html",
     featured: true,
     status: "live",
     sources: 12,

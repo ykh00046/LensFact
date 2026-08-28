@@ -1,0 +1,10 @@
+# Preview deployment: indexing is blocked on purpose.
+# The domain is not final and the content is still being reviewed.
+#
+# Before public launch, replace `Disallow: /` with `Allow: /`,
+# replace DOMAIN-TBD with the real host, and uncomment the Sitemap line below.
+
+User-agent: *
+Disallow: /
+
+# Sitemap: https://DOMAIN-TBD/sitemap.xml

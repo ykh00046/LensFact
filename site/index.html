@@ -5,30 +5,42 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>LensFact 렌즈팩트 | 포장 숫자 해석</title>
   <meta name="description" content="한국에서 유통되는 투명 구면 렌즈 3개의 포장 표기를 공식 자료와 함께 확인합니다.">
-  <link rel="stylesheet" href="/site/assets/css/style.css">
-  <script src="/site/assets/data/fields.js" defer></script>
-  <script src="/site/assets/data/products.js" defer></script>
-  <script src="/site/assets/data/articles.js" defer></script>
-  <script src="/site/assets/js/app.js" defer></script>
+  <link rel="canonical" href="https://DOMAIN-TBD/index.html">
+  <meta property="og:title" content="LensFact 렌즈팩트 | 포장 숫자 해석">
+  <meta property="og:description" content="한국에서 유통되는 투명 구면 렌즈 3개의 포장 표기를 공식 자료와 함께 확인합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://DOMAIN-TBD/index.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta name="twitter:card" content="summary">
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <script src="./assets/data/fields.js" defer></script>
+  <script src="./assets/data/products.js" defer></script>
+  <script src="./assets/js/app.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">본문으로 건너뛰기</a>
   <header class="site-header">
     <div class="wrap header-inner">
-      <a class="brand" href="/site/index.html" aria-label="LensFact 홈"><span class="brand-mark">LF</span>렌즈팩트</a>
+      <a class="brand" href="./index.html" aria-label="LensFact 홈"><span class="brand-mark">LF</span>렌즈팩트</a>
       <nav class="nav desktop-nav" aria-label="주요 메뉴">
-        <a href="/site/index.html" aria-current="page">렌즈 숫자 해석</a>
-        <a href="/site/compare/index.html">공식 사양 비교</a>
-        <a href="/site/knowledge/index.html">포장지 읽는 법</a>
-        <a href="/site/knowledge/index.html">렌즈 상식</a>
+        <a href="./index.html" aria-current="page">렌즈 숫자 해석</a>
+        <a href="./compare/index.html">공식 사양 비교</a>
+        <a href="./knowledge/index.html">렌즈 상식</a>
+        <a href="./about/index.html">소개</a>
+        <a href="./policy/editorial.html">편집방침</a>
+        <a href="./policy/methodology.html">근거·방법론</a>
+        <a href="./policy/privacy.html">개인정보처리방침</a>
       </nav>
       <button class="menu-toggle" type="button" data-menu-toggle aria-label="메뉴 열기" aria-expanded="false" aria-controls="mobile-nav"><span aria-hidden="true"></span></button>
     </div>
     <nav class="nav mobile-nav" id="mobile-nav" aria-label="모바일 메뉴" hidden>
-      <a href="/site/index.html" aria-current="page">렌즈 숫자 해석</a>
-      <a href="/site/compare/index.html">공식 사양 비교</a>
-      <a href="/site/knowledge/index.html">포장지 읽는 법</a>
-      <a href="/site/knowledge/index.html">렌즈 상식</a>
+      <a href="./index.html" aria-current="page">렌즈 숫자 해석</a>
+      <a href="./compare/index.html">공식 사양 비교</a>
+      <a href="./knowledge/index.html">렌즈 상식</a>
+      <a href="./about/index.html">소개</a>
+      <a href="./policy/editorial.html">편집방침</a>
+      <a href="./policy/methodology.html">근거·방법론</a>
+      <a href="./policy/privacy.html">개인정보처리방침</a>
     </nav>
   </header>
 
@@ -41,7 +53,7 @@
           <p class="lead">BC, DIA, 함수율처럼 헷갈리는 표기를 쉬운 말과 공식 출처로 설명합니다.</p>
           <div class="actions">
             <button class="button" type="button" data-decoder-start>포장 숫자 해석하기</button>
-            <button class="text-button" type="button" data-decoder-start>첫 제품부터 보기</button>
+            <button class="text-button" type="button" data-first-product>첫 제품부터 보기</button>
           </div>
           <ul class="trust-list" aria-label="서비스 원칙">
             <li>공식 자료를 출처로 확인합니다</li>
@@ -76,7 +88,7 @@
             <button class="product-button" type="button" data-product-id="dailies-total1" aria-pressed="false">데일리스 토탈원</button>
             <button class="product-button" type="button" data-product-id="biofinity" aria-pressed="false">바이오피니티</button>
           </div>
-          <p class="selector-help">화살표 키 또는 Tab과 Enter로 제품을 바꿀 수 있습니다. 선택하면 포장 카드, 값, 상세 출처가 함께 바뀝니다.</p>
+          <p class="selector-help">세 제품 버튼 모두 Tab으로 이동할 수 있고 Enter 또는 Space로 선택합니다. 화살표 키로도 제품을 바꿀 수 있습니다. 선택하면 포장 카드, 값, 상세 출처가 함께 바뀝니다.</p>
           <div class="field-list" data-main-fields aria-label="주요 포장 표기"></div>
           <button class="disclosure-button" type="button" data-more-fields aria-expanded="false" aria-controls="all-fields">포장지 표기 전체 보기 (재질, Dk/t, 중심두께, 교체주기, 허가, UV)</button>
           <div class="extra-fields" id="all-fields" data-extra-fields hidden></div>
@@ -92,15 +104,15 @@
         <h2 id="next-title">이어서 확인할 수 있습니다</h2>
         <div class="cards-grid">
           <article class="card">
-            <h3><a href="/site/compare/index.html">세 렌즈 공식 사양 비교하기</a></h3>
+            <h3><a href="./compare/index.html">세 렌즈 공식 사양 비교하기</a></h3>
             <p>같은 항목을 나란히 놓고 공식 표기와 확인일을 함께 봅니다. 점수는 매기지 않습니다.</p>
           </article>
           <article class="card">
-            <h3><a href="/site/knowledge/index.html">포장지 읽는 법</a></h3>
+            <h3><a href="./knowledge/index.html">렌즈 상식</a></h3>
             <p>표기가 어디에 어떤 순서로 적히는지부터 차례대로 봅니다.</p>
           </article>
           <article class="card">
-            <h3><a href="/site/knowledge/water-content-moisture.html">렌즈 상식</a></h3>
+            <h3><a href="./knowledge/water-content-moisture.html">함수율이 높으면 더 촉촉한 렌즈일까요?</a></h3>
             <p>함수율, Dk/t처럼 오해하기 쉬운 표기의 범위를 공식 자료 기준으로 확인합니다.</p>
           </article>
         </div>
@@ -113,6 +125,12 @@
       <strong>LENSFACT 렌즈팩트</strong>
       <span>최종 적합성·도수·피팅은 안경사 또는 안과 전문인에게 확인하세요.</span>
     </div>
+    <nav class="wrap footer-links" aria-label="사이트 정보">
+      <a href="./about/index.html">소개</a>
+      <a href="./policy/editorial.html">편집방침</a>
+      <a href="./policy/methodology.html">근거·방법론</a>
+      <a href="./policy/privacy.html">개인정보처리방침</a>
+    </nav>
   </footer>
 </body>
 </html>

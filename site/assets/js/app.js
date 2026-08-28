@@ -32,11 +32,19 @@ const ADS_ENABLED = false;
 
   function internalHref(value) {
     const href = String(value || "");
-    return href.startsWith("/site/") ? href : "#";
+    if (!href) return "#";
+    if (href.includes("://")) return "#";
+    if (href.startsWith("//")) return "#";
+    if (/^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(href)) return "#";
+    return href;
   }
 
   function setExpanded(button, expanded) {
     button.setAttribute("aria-expanded", String(expanded));
+  }
+
+  function setPressed(button, pressed) {
+    button.setAttribute("aria-pressed", String(pressed));
   }
 
   function toggleHidden(panel, hidden) {
@@ -55,14 +63,36 @@ const ADS_ENABLED = false;
       document.body.classList.toggle("menu-open", open);
     }
 
-    button.addEventListener("click", () => setMenuState(button.getAttribute("aria-expanded") !== "true"));
+    function isOpen() {
+      return button.getAttribute("aria-expanded") === "true";
+    }
+
+    button.addEventListener("click", () => setMenuState(!isOpen()));
     panel.addEventListener("click", (event) => {
       if (event.target.closest("a")) setMenuState(false);
     });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape" || !isOpen()) return;
+      setMenuState(false);
+      button.focus();
+    });
+
+    document.addEventListener("click", (event) => {
+      if (!isOpen()) return;
+      if (panel.contains(event.target) || button.contains(event.target)) return;
+      setMenuState(false);
+    });
+  }
+
+  const FIELD_STATES = ["verified", "conflict", "unknown"];
+
+  function fieldState(state) {
+    return FIELD_STATES.includes(state) ? state : "unknown";
   }
 
   function stateLabel(state) {
-    return { verified: "공식 원문 확인", conflict: "공식 출처 간 충돌", unknown: "공식 자료에서 미확인" }[state] || "검토 상태";
+    return { verified: "공식 원문 확인", conflict: "공식 출처 간 충돌", unknown: "공식 자료에서 미확인" }[fieldState(state)];
   }
 
   function resolvedField(field) {
@@ -96,7 +126,7 @@ const ADS_ENABLED = false;
         <div><div class="detail-code">${escapeHtml(item.code)}</div><div>${escapeHtml(item.label)}</div></div>
         <div class="detail-value">${escapeHtml(item.value)}</div>
       </div>
-      <div class="status-label status-${escapeHtml(item.state)}">${escapeHtml(stateLabel(item.state))}</div>
+      <div class="status-label status-${fieldState(item.state)}">${escapeHtml(stateLabel(item.state))}</div>
       <div class="info-block"><div class="info-label">뜻</div><p>${escapeHtml(item.meaning)}</p></div>
       <div class="info-block"><div class="info-label">주의할 점</div><p>${escapeHtml(item.caution)}</p></div>
       <div class="source-summary">${escapeHtml(item.sourceSummary)}</div>
@@ -116,7 +146,7 @@ const ADS_ENABLED = false;
   function fieldButton(field) {
     const item = resolvedField(field);
     const flag = item.flag ? `<span class="field-flag">${escapeHtml(item.flag)}</span>` : "";
-    return `<button class="field-row" type="button" data-field-id="${escapeHtml(item.id)}" aria-expanded="false" aria-controls="decoder-detail">
+    return `<button class="field-row" type="button" data-field-id="${escapeHtml(item.id)}" aria-pressed="false">
       <span class="field-code">${escapeHtml(item.code)}</span><span class="field-label">${escapeHtml(item.label)}<br>${escapeHtml(item.teaser)}</span><span class="field-value">${escapeHtml(item.value)}</span>${flag}
     </button>`;
   }
@@ -126,11 +156,24 @@ const ADS_ENABLED = false;
     rows.forEach((row) => {
       row.addEventListener("click", () => {
         activeFieldId = row.dataset.fieldId;
-        rows.forEach((item) => setExpanded(item, item === row));
+        rows.forEach((item) => setPressed(item, item === row));
         const field = activeProduct.fields.find((candidate) => candidate.id === activeFieldId);
         if (field) renderDetail(field);
       });
     });
+  }
+
+  function findFieldRow(fieldId) {
+    return qsa("[data-field-id]").find((row) => row.dataset.fieldId === fieldId) || null;
+  }
+
+  function revealExtraFields() {
+    const moreButton = qs("[data-more-fields]");
+    const morePanel = qs("#all-fields");
+    if (!moreButton || !morePanel || moreButton.getAttribute("aria-expanded") === "true") return;
+    setExpanded(moreButton, true);
+    moreButton.textContent = "표기 접기";
+    toggleHidden(morePanel, false);
   }
 
   function renderPackage(product) {
@@ -148,9 +191,7 @@ const ADS_ENABLED = false;
   function renderProduct(product) {
     activeProduct = product;
     qsa("[data-product-id]").forEach((button) => {
-      const selected = button.dataset.productId === product.id;
-      button.setAttribute("aria-pressed", String(selected));
-      button.setAttribute("tabindex", selected ? "0" : "-1");
+      setPressed(button, button.dataset.productId === product.id);
     });
     renderPackage(product);
 
@@ -161,10 +202,12 @@ const ADS_ENABLED = false;
     extra.innerHTML = product.fields.slice(3).map(fieldButton).join("");
     bindFieldRows();
 
-    const selectedField = product.fields.find((field) => field.id === activeFieldId) || product.fields[0];
+    const selectedIndex = product.fields.findIndex((field) => field.id === activeFieldId);
+    const selectedField = selectedIndex >= 0 ? product.fields[selectedIndex] : product.fields[0];
     activeFieldId = selectedField.id;
-    const selectedButton = qs(`[data-field-id="${activeFieldId}"]`);
-    if (selectedButton) setExpanded(selectedButton, true);
+    if (selectedIndex >= 3) revealExtraFields();
+    const selectedButton = findFieldRow(activeFieldId);
+    if (selectedButton) setPressed(selectedButton, true);
     renderDetail(selectedField);
   }
 
@@ -188,17 +231,31 @@ const ADS_ENABLED = false;
     renderProduct(products[0]);
   }
 
+  function scrollToDecoder() {
+    const decoder = qs("#decoder");
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    decoder?.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+  }
+
   function initDecoder() {
     if (!products.length) return;
     initProductSelector();
+
     qsa("[data-decoder-start]").forEach((button) => {
       button.addEventListener("click", () => {
-        const decoder = qs("#decoder");
+        scrollToDecoder();
         const firstRow = qs("[data-field-id]");
-        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-        decoder?.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
         firstRow?.click();
         firstRow?.focus({ preventScroll: true });
+      });
+    });
+
+    qsa("[data-first-product]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const firstProductButton = qs("[data-product-id]");
+        firstProductButton?.click();
+        scrollToDecoder();
+        firstProductButton?.focus({ preventScroll: true });
       });
     });
 
@@ -250,6 +307,129 @@ const ADS_ENABLED = false;
     render("전체");
   }
 
+  const COMPARE_COLUMNS = [
+    { productId: "acuvue-oasys-1-day", colId: "col-acuvue" },
+    { productId: "dailies-total1", colId: "col-total1" },
+    { productId: "biofinity", colId: "col-biofinity" }
+  ];
+
+  const COMPARE_ROWS = [
+    { rowId: "row-permit", fieldId: "permit", label: "한국 수입허가번호", mono: true },
+    {
+      rowId: "row-replacement", fieldId: "replacement", label: "교체주기",
+      notes: { "biofinity": "연속착용 여부와 별도" }
+    },
+    {
+      rowId: "row-material", fieldId: "material", label: "재질", mono: true,
+      notes: {
+        "acuvue-oasys-1-day": "실리콘 하이드로겔",
+        "dailies-total1": "워터 그라디언트 실리콘 하이드로겔",
+        "biofinity": "실리콘 하이드로겔"
+      }
+    },
+    { rowId: "row-bc", fieldId: "bc", label: "BC", mono: true },
+    { rowId: "row-dia", fieldId: "dia", label: "DIA", mono: true },
+    {
+      rowId: "row-water", fieldId: "water", label: "함수율", labelNote: "벌크·코어·표면", mono: true,
+      notes: {
+        "acuvue-oasys-1-day": "벌크",
+        "dailies-total1": "코어와 표면은 측정 위치와 방법이 달라 하나의 값으로 합치지 않음. 표면은 공식 자료에 따라 약 100%로도 표기됨",
+        "biofinity": "벌크"
+      }
+    },
+    {
+      rowId: "row-dkt", fieldId: "dkt", label: "Dk/t", labelNote: "시험 조건 포함", mono: true,
+      rowNote: "아큐브 원문만 단위(× 10⁻⁹)를 명기함. 다른 두 제품 원문은 단위를 표기하지 않아 임의로 단위를 붙이지 않음.",
+      notes: {
+        "acuvue-oasys-1-day": "-3.00D · 중심 0.085 mm · 35℃ · boundary/edge-corrected Dk",
+        "dailies-total1": "-3.00D · 중심 0.09 mm"
+      }
+    },
+    { rowId: "row-thickness", fieldId: "thickness", label: "중심두께", mono: true, useCondition: true },
+    {
+      rowId: "row-uv", fieldId: "uv", label: "UV", chip: true,
+      notes: { "dailies-total1": "기능 없음으로 단정하지 않음" }
+    },
+    {
+      rowId: "row-note", label: "확인 메모",
+      memo: {
+        "acuvue-oasys-1-day": "한국 IFU로 허가번호 확인. MFDS 상세 원장 직접 대조는 미완료.",
+        "dailies-total1": "MFDS UDI 조회에서 제품 연결 105건 확인. 코어와 표면 함수율을 합치지 않음.",
+        "biofinity": "MFDS 상세 원장 직접 대조는 미완료. Dk/t와 UV 충돌을 보류 상태로 유지."
+      }
+    }
+  ];
+
+  const PERMIT_EVIDENCE = [
+    { productId: "acuvue-oasys-1-day", fieldIds: ["permit"] },
+    { productId: "dailies-total1", fieldIds: ["permit", "replacement"] },
+    { productId: "biofinity", fieldIds: ["permit"] }
+  ];
+
+  function compareCell(row, product, colId) {
+    const headers = `${row.rowId} ${colId}`;
+    if (row.memo) return `<td headers="${headers}">${escapeHtml(row.memo[product.id] || "")}</td>`;
+
+    const field = product.fields.find((candidate) => candidate.id === row.fieldId);
+    if (!field) return `<td headers="${headers}"><span class="status-label status-unknown">${escapeHtml(stateLabel("unknown"))}</span></td>`;
+
+    const state = fieldState(field.state);
+    const conflicted = state === "conflict";
+    const valueClass = [row.mono ? "mono" : "", row.mono && conflicted ? "warn" : ""].filter(Boolean).join(" ");
+    const value = row.chip
+      ? `<span class="status-label status-${state}">${escapeHtml(field.value)}</span>`
+      : `<span${valueClass ? ` class="${valueClass}"` : ""}>${escapeHtml(field.value)}</span>`;
+
+    let note = "";
+    if (field.conflicts?.length) {
+      note = field.conflicts.map((conflict) => `${escapeHtml(conflict.source)}: ${escapeHtml(conflict.value)}`).join("<br>");
+    } else if (row.useCondition) {
+      note = escapeHtml(field.sources?.[0]?.condition || "");
+    } else if (row.notes?.[product.id]) {
+      note = escapeHtml(row.notes[product.id]);
+    }
+    const noteMarkup = note ? `<span class="cell-note${conflicted ? " warn" : ""}">${note}</span>` : "";
+    return `<td headers="${headers}">${value}${noteMarkup}</td>`;
+  }
+
+  function compareRow(row, byId) {
+    const labelNote = row.labelNote ? `<br><span class="cell-note">${escapeHtml(row.labelNote)}</span>` : "";
+    const rowNote = row.rowNote ? `<span class="cell-note">${escapeHtml(row.rowNote)}</span>` : "";
+    const cells = COMPARE_COLUMNS.map((column) => {
+      const product = byId[column.productId];
+      return product ? compareCell(row, product, column.colId) : `<td headers="${row.rowId} ${column.colId}"></td>`;
+    }).join("");
+    return `<tr><th id="${row.rowId}" scope="row">${escapeHtml(row.label)}${labelNote}${rowNote}</th>${cells}</tr>`;
+  }
+
+  function initCompareTable() {
+    const body = qs("[data-compare-body]");
+    if (!body || !products.length) return;
+    const byId = {};
+    products.forEach((product) => { byId[product.id] = product; });
+    body.innerHTML = COMPARE_ROWS.map((row) => compareRow(row, byId)).join("");
+    toggleHidden(qs("[data-compare-live]"), false);
+  }
+
+  function initPermitSources() {
+    const list = qs("[data-permit-sources]");
+    if (!list || !products.length) return;
+    const items = [];
+    PERMIT_EVIDENCE.forEach((entry) => {
+      const product = products.find((candidate) => candidate.id === entry.productId);
+      if (!product) return;
+      entry.fieldIds.forEach((fieldId) => {
+        const field = product.fields.find((candidate) => candidate.id === fieldId);
+        (field?.sources || []).forEach((source) => {
+          const url = externalUrl(source.url);
+          if (url === "#") return;
+          items.push(`<li><a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(source.document)}</a> <span class="cell-note">${escapeHtml(product.selectorLabel)} · ${escapeHtml(source.organization)}</span></li>`);
+        });
+      });
+    });
+    list.innerHTML = items.join("");
+  }
+
   function initAdSlots() {
     qsa("[data-ad-slot]").forEach((slot) => {
       if (!ADS_ENABLED) {
@@ -268,6 +448,8 @@ const ADS_ENABLED = false;
     initDecoder();
     initArticleDisclosure();
     initArticleList();
+    initCompareTable();
+    initPermitSources();
     initAdSlots();
   });
 })();
