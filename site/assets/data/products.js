@@ -17,54 +17,61 @@ window.LENSFACT_PRODUCTS = [
     fields: [
       {
         id: "bc", value: "8.5 mm / 9.0 mm", state: "verified",
-        sourceSummary: "ACUVUE 글로벌 기술 사양 · 2026.08.27 확인",
-        sources: [{ sourceType: "제조사 기술·전문가 사양", verifiedAt: "2026-08-27", organization: "Johnson & Johnson Vision", document: "ACUVUE Technical Specification Guide 2025", raw: "Base Curve 8.5 mm, 9.0 mm", url: "https://shop.acuvue.com/pub/media/ACUVUE-Technical-Specification-Guide-05-27-25.pdf", condition: "근시·원시용 구면 사양", linkNote: "한국 공식 제품 페이지와 한국 IFU에서 유통 제품 연결 확인" }]
+        sourceSummary: "ACUVUE 글로벌 기술 사양 · 2026.08.28 확인",
+        sources: [{ sourceType: "제조사 기술·전문가 사양", verifiedAt: "2026-08-28", organization: "Johnson & Johnson Vision", document: "ACUVUE Technical Specification Guide (PP2020ACLP4800 v13 · AS112401)", raw: "8.5/14.3  ·  9.0/14.3", url: "https://shop.acuvue.com/pub/media/ACUVUE-Technical-Specification-Guide-05-27-25.pdf", condition: "1쪽 ACUVUE® OASYS 1-Day 열 · Parameters BC (mm) / Dia (mm) 행", linkNote: "한국 페이지는 평평한 안구에 적합한 9.0 베이스커브까지! 만 언급하고 8.5는 언급하지 않는다" }]
       },
       {
         id: "dia", value: "14.3 mm", state: "verified",
-        sourceSummary: "ACUVUE 글로벌 기술 사양 · 2026.08.27 확인",
-        sources: [{ sourceType: "제조사 기술·전문가 사양", verifiedAt: "2026-08-27", organization: "Johnson & Johnson Vision", document: "ACUVUE Technical Specification Guide 2025", raw: "Diameter 14.3 mm", url: "https://shop.acuvue.com/pub/media/ACUVUE-Technical-Specification-Guide-05-27-25.pdf", condition: "근시·원시용 구면 사양", linkNote: "한국 공식 제품 페이지와 한국 IFU에서 유통 제품 연결 확인" }]
+        sourceSummary: "ACUVUE 글로벌 기술 사양 · 2026.08.28 확인",
+        sources: [{ sourceType: "제조사 기술·전문가 사양", verifiedAt: "2026-08-28", organization: "Johnson & Johnson Vision", document: "ACUVUE Technical Specification Guide (PP2020ACLP4800 v13 · AS112401)", raw: "8.5/14.3  ·  9.0/14.3", url: "https://shop.acuvue.com/pub/media/ACUVUE-Technical-Specification-Guide-05-27-25.pdf", condition: "1쪽 ACUVUE® OASYS 1-Day 열 · Parameters BC (mm) / Dia (mm) 행", linkNote: "한국 공식 제품 페이지와 한국 IFU에서 유통 제품 연결 확인" }]
       },
       {
         id: "water", value: "38%", state: "verified",
-        sourceSummary: "ACUVUE 글로벌 기술 사양 · 2026.08.27 확인",
-        sources: [{ sourceType: "제조사 기술·전문가 사양", verifiedAt: "2026-08-27", organization: "Johnson & Johnson Vision", document: "ACUVUE Technical Specification Guide 2025", raw: "Water Content 38%", url: "https://shop.acuvue.com/pub/media/ACUVUE-Technical-Specification-Guide-05-27-25.pdf", condition: "벌크 함수율", linkNote: "senofilcon A 사양" }]
+        sourceSummary: "ACUVUE 글로벌 기술 사양 · 2026.08.28 확인",
+        sources: [{ sourceType: "제조사 기술·전문가 사양", verifiedAt: "2026-08-28", organization: "Johnson & Johnson Vision", document: "ACUVUE Technical Specification Guide (PP2020ACLP4800 v13 · AS112401)", raw: "Water Content 38%", url: "https://shop.acuvue.com/pub/media/ACUVUE-Technical-Specification-Guide-05-27-25.pdf", condition: "벌크 함수율", linkNote: "senofilcon A 사양" }]
       },
       {
-        id: "material", value: "senofilcon A", state: "verified",
-        sourceSummary: "ACUVUE 공식 제품·기술 사양 · 2026.08.27 확인",
-        sources: [{ sourceType: "한국 공식 페이지·IFU", verifiedAt: "2026-08-27", organization: "Johnson & Johnson Vision", document: "아큐브 오아시스 원데이 공식 제품 페이지", raw: "senofilcon A · 실리콘 하이드로겔", url: "https://acuvue.co.kr/products/acuvue-oasys-1-day", condition: "근시·원시용 투명 구면", linkNote: "한국 유통 제품" }]
+        id: "material", value: "senofilcon A", state: "verified", flag: "글로벌 공식 자료",
+        sourceSummary: "ACUVUE 글로벌 기술 사양 · 2026.08.28 확인",
+        caution: "한국 공식 제품 페이지와 한국 사용설명서에는 재질명 표기가 없어 글로벌 기술 사양이 유일한 근거입니다.",
+        sources: [{ sourceType: "제조사 기술·전문가 사양", verifiedAt: "2026-08-28", organization: "Johnson & Johnson Vision", document: "ACUVUE Technical Specification Guide (PP2020ACLP4800 v13 · AS112401)", raw: "senofilcon A", url: "https://shop.acuvue.com/pub/media/ACUVUE-Technical-Specification-Guide-05-27-25.pdf", condition: "1쪽 ACUVUE® OASYS 1-Day 열 · Lens Material 행", linkNote: "인쇄물은 fi 합자로 senoﬁlcon A로 추출됨. 한국 공식 페이지·한국 IFU에는 재질명 표기 없음" }]
       },
       {
         id: "dkt", value: "121 × 10⁻⁹", state: "verified",
         sourceSummary: "ACUVUE 글로벌 기술 사양 · 시험 조건 확인",
         caution: "시험도수, 중심두께, 온도와 보정 조건이 포함된 값입니다. 조건이 다른 Dk/t와 그대로 비교하지 않습니다.",
-        sources: [{ sourceType: "제조사 기술·전문가 사양", verifiedAt: "2026-08-27", organization: "Johnson & Johnson Vision", document: "ACUVUE Technical Specification Guide 2025", raw: "Dk/t 121 × 10⁻⁹ at -3.00D", url: "https://shop.acuvue.com/pub/media/ACUVUE-Technical-Specification-Guide-05-27-25.pdf", condition: "분극법 · 렌즈 중심 · boundary/edge-corrected Dk · 35℃", linkNote: "중심두께 0.085 mm at -3.00D" }]
+        sources: [{ sourceType: "제조사 기술·전문가 사양", verifiedAt: "2026-08-28", organization: "Johnson & Johnson Vision", document: "ACUVUE Technical Specification Guide (PP2020ACLP4800 v13 · AS112401)", raw: "Dk/t 121 × 10⁻⁹ at -3.00D", url: "https://shop.acuvue.com/pub/media/ACUVUE-Technical-Specification-Guide-05-27-25.pdf", condition: "분극법 · 렌즈 중심 · boundary/edge-corrected Dk · 35℃", linkNote: "중심두께 0.085 mm at -3.00D" }]
       },
       {
         id: "thickness", value: "0.085 mm", state: "verified",
-        sourceSummary: "ACUVUE 글로벌 기술 사양 · 2026.08.27 확인",
-        sources: [{ sourceType: "제조사 기술·전문가 사양", verifiedAt: "2026-08-27", organization: "Johnson & Johnson Vision", document: "ACUVUE Technical Specification Guide 2025", raw: "Center Thickness 0.085 mm", url: "https://shop.acuvue.com/pub/media/ACUVUE-Technical-Specification-Guide-05-27-25.pdf", condition: "-3.00D", linkNote: "Dk/t 조건과 연결" }]
+        sourceSummary: "ACUVUE 글로벌 기술 사양 · 2026.08.28 확인",
+        sources: [{ sourceType: "제조사 기술·전문가 사양", verifiedAt: "2026-08-28", organization: "Johnson & Johnson Vision", document: "ACUVUE Technical Specification Guide (PP2020ACLP4800 v13 · AS112401)", raw: "Center Thickness 0.085 mm", url: "https://shop.acuvue.com/pub/media/ACUVUE-Technical-Specification-Guide-05-27-25.pdf", condition: "-3.00D", linkNote: "Dk/t 조건과 연결" }]
       },
       {
         id: "replacement", value: "1일", state: "verified",
-        sourceSummary: "ACUVUE 한국 공식 제품 페이지 · 2026.08.27 확인",
-        sources: [{ sourceType: "한국 공식 페이지·IFU", verifiedAt: "2026-08-27", organization: "Johnson & Johnson Vision", document: "아큐브 오아시스 원데이 공식 제품 페이지", raw: "1일 교체", url: "https://acuvue.co.kr/products/acuvue-oasys-1-day", condition: "매일 새 렌즈로 교체", linkNote: "교체주기와 착용방식은 별도 개념" }]
+        sourceSummary: "아큐브 오아시스 원데이 한국 사용설명서 · 2026.08.28 확인",
+        sources: [
+          { sourceType: "한국 공식 페이지·IFU", verifiedAt: "2026-08-28", organization: "(주)한국존슨앤드존슨비전", document: "아큐브 오아시스 원데이 한국 사용설명서", raw: "착용한 렌즈는 1회(1일) 착용 후 교체하여야 한다.", url: "https://acuvue.co.kr/files/patient-instruction-guides/Oasys1day_%EC%82%AC%EC%9A%A9%EB%B0%A9%EB%B2%95.pdf", condition: "다. 콘택트렌즈 사용 후 보관 및 관리 방법", linkNote: "교체주기와 착용방식은 별도 개념" },
+          { sourceType: "한국 공식 페이지·IFU", verifiedAt: "2026-08-28", organization: "(주)한국존슨앤드존슨비전", document: "아큐브 오아시스 원데이 공식 제품 페이지", raw: "1일 착용", url: "https://acuvue.co.kr/products/acuvue-oasys-1-day", condition: "제품 배지 표기", linkNote: "이 페이지에는 1일 교체 문자열이 없다" }
+        ]
       },
       {
         id: "permit", value: "수허 16-499 호", state: "verified",
-        sourceSummary: "한국 사용설명서 기재 · MFDS 상세 원장 직접 대조 미완료",
-        caution: "한국 IFU에서 확인한 수입허가번호입니다. 의료기기 광고 사전심의 번호와 구분합니다.",
-        sources: [{ sourceType: "한국 공식 페이지·IFU", verifiedAt: "2026-08-27", organization: "(주)한국존슨앤드존슨비전", document: "아큐브 오아시스 원데이 한국 사용설명서", raw: "수허 16-499 호", url: "https://acuvue.co.kr/files/patient-instruction-guides/Oasys1day_%EC%82%AC%EC%9A%A9%EB%B0%A9%EB%B2%95.pdf", condition: "한국 IFU", linkNote: "MFDS 상세 원장 직접 대조는 미완료" }]
+        sourceSummary: "MFDS UDI 원장 497건 전수 대조 · 한국 IFU 표기와 병기",
+        caution: "MFDS 원장과 한국 IFU의 번호는 같으나 표기(공백)가 다릅니다. 의료기기 광고 사전심의 번호와 구분합니다.",
+        sources: [
+          { sourceType: "MFDS 허가·UDI", verifiedAt: "2026-08-28", organization: "식품의약품안전처", document: "의료기기 UDI 표준코드 조회", raw: "수허 16-499 호", url: "https://emedi.mfds.go.kr/msismext/udi/uif/schStddCdLstView.do", condition: "itemPermitNo=수허 16-499 호 · 497건 전수 집계 · distinct 신원 1건", linkNote: "모델명 ACUVUE OASYS Brand Contact Lenses with HydraLuxe · 업체 제품 명칭 …(아큐브 오아시스 원데이) · (주)한국존슨앤드존슨비전 · 매일착용소프트콘택트렌즈 · 등급 2" },
+          { sourceType: "한국 공식 페이지·IFU", verifiedAt: "2026-08-28", organization: "(주)한국존슨앤드존슨비전", document: "아큐브 오아시스 원데이 한국 사용설명서", raw: "[수입허가번호] 수허16-499 호", url: "https://acuvue.co.kr/files/patient-instruction-guides/Oasys1day_%EC%82%AC%EC%9A%A9%EB%B0%A9%EB%B2%95.pdf", condition: "한국 IFU 1쪽", linkNote: "IFU는 수허와 숫자 사이에 공백이 없다. 번호는 같고 표기만 다르다" }
+        ]
       },
       {
         id: "uv", value: "한국: UVB 99% 이상 / UVA 90%", state: "conflict", flag: "지역별 공식 표기 차이",
         sourceSummary: "한국 제품 페이지와 글로벌 기술 사양의 원문값을 병기",
         caution: "지역별 공식 원문값을 하나로 합치지 않습니다. UV 차단 콘택트렌즈는 선글라스나 고글을 대신하지 않습니다.",
-        conflicts: [{ source: "한국 공식 제품 페이지", value: "UVB 99% 이상 / UVA 90%" }, { source: "글로벌 기술 사양", value: "UVB >99.9% / UVA 96%" }],
+        conflicts: [{ source: "한국 공식 제품 페이지", value: "자외선 차단 1등급 - UVA 90%, UVB 99% 이상 차단" }, { source: "글로벌 기술 사양", value: "Blocks >99.9% of UVB & 96% of UVA" }],
         sources: [
-          { sourceType: "한국 공식 페이지·IFU", verifiedAt: "2026-08-27", organization: "Johnson & Johnson Vision Korea", document: "아큐브 오아시스 원데이 공식 제품 페이지", raw: "UVB 99% 이상 / UVA 90%", url: "https://acuvue.co.kr/products/acuvue-oasys-1-day", condition: "한국 페이지 표기", linkNote: "한국 공식 원문" },
-          { sourceType: "제조사 기술·전문가 사양", verifiedAt: "2026-08-27", organization: "Johnson & Johnson Vision", document: "ACUVUE Technical Specification Guide 2025", raw: "UVB >99.9% / UVA 96%", url: "https://shop.acuvue.com/pub/media/ACUVUE-Technical-Specification-Guide-05-27-25.pdf", condition: "글로벌 기술 사양", linkNote: "지역별 원문값 별도 유지" }
+          { sourceType: "한국 공식 페이지·IFU", verifiedAt: "2026-08-28", organization: "Johnson & Johnson Vision Korea", document: "아큐브 오아시스 원데이 공식 제품 페이지", raw: "자외선 차단 1등급 - UVA 90%, UVB 99% 이상 차단", url: "https://acuvue.co.kr/products/acuvue-oasys-1-day", condition: "각주: UVA 316~380nm, UVB 280~315nm 범위에서 측정", linkNote: "한국 공식 원문" },
+          { sourceType: "제조사 기술·전문가 사양", verifiedAt: "2026-08-28", organization: "Johnson & Johnson Vision", document: "ACUVUE Technical Specification Guide (PP2020ACLP4800 v13 · AS112401)", raw: "Blocks >99.9% of UVB & 96% of UVA", url: "https://shop.acuvue.com/pub/media/ACUVUE-Technical-Specification-Guide-05-27-25.pdf", condition: "1쪽 ACUVUE® OASYS 1-Day 열 · Approximate UV Blocking 행", linkNote: "지역별 원문값 별도 유지" }
         ]
       }
     ]
@@ -85,32 +92,40 @@ window.LENSFACT_PRODUCTS = [
       { value: "Dk/t 156", label: "-3.00D" }
     ],
     fields: [
-      { id: "bc", value: "8.5 mm", state: "verified", sourceSummary: "Alcon 글로벌 전문가 사양 · 2026.08.27 확인", sources: [{ sourceType: "제조사 기술·전문가 사양", verifiedAt: "2026-08-27", organization: "Alcon", document: "DAILIES TOTAL1 전문가용 공식 사양", raw: "Base Curve 8.5 mm", url: "https://www.myalcon.com/professional/contact-lenses/daily/dailies-total1", condition: "근시·원시용 구면", linkNote: "한국 공식 사이트에서 유통 제품 연결 확인" }] },
-      { id: "dia", value: "14.1 mm", state: "verified", sourceSummary: "Alcon 글로벌 전문가 사양 · 2026.08.27 확인", sources: [{ sourceType: "제조사 기술·전문가 사양", verifiedAt: "2026-08-27", organization: "Alcon", document: "DAILIES TOTAL1 전문가용 공식 사양", raw: "Diameter 14.1 mm", url: "https://www.myalcon.com/professional/contact-lenses/daily/dailies-total1", condition: "근시·원시용 구면", linkNote: "한국 공식 사이트에서 유통 제품 연결 확인" }] },
+      { id: "bc", value: "8.5 mm", state: "verified", sourceSummary: "Alcon 글로벌 전문가 사양 · 2026.08.28 확인", sources: [{ sourceType: "제조사 기술·전문가 사양", verifiedAt: "2026-08-28", organization: "Alcon", document: "DAILIES TOTAL1 전문가용 공식 사양", raw: "Base Curve 8.5 mm", url: "https://www.myalcon.com/professional/contact-lenses/daily/dailies-total1", condition: "근시·원시용 구면", linkNote: "한국 공식 사이트에서 유통 제품 연결 확인" }] },
+      { id: "dia", value: "14.1 mm", state: "verified", sourceSummary: "Alcon 글로벌 전문가 사양 · 2026.08.28 확인", sources: [{ sourceType: "제조사 기술·전문가 사양", verifiedAt: "2026-08-28", organization: "Alcon", document: "DAILIES TOTAL1 전문가용 공식 사양", raw: "Diameter 14.1 mm", url: "https://www.myalcon.com/professional/contact-lenses/daily/dailies-total1", condition: "근시·원시용 구면", linkNote: "한국 공식 사이트에서 유통 제품 연결 확인" }] },
       {
         id: "water", value: "코어 33% / 표면 80% 이상", state: "verified", flag: "측정 위치별 별도 값",
         sourceSummary: "코어와 표면 함수율을 하나의 값으로 합치지 않음",
-        caution: "코어·표면 함수율의 측정법은 렌즈 전체 함수율 측정법과 다릅니다. 표면은 공식 자료에 따라 80% 이상 또는 약 100%로 별도 표기됩니다.",
+        caution: "코어·표면 함수율의 측정법은 렌즈 전체 함수율 측정법과 다릅니다. 표면은 공식 자료에 따라 80% 이상, 〜100%(일본), -100%(미국 원문 표기)로 서로 다르게 적힙니다.",
         sources: [
-          { sourceType: "제조사 기술·전문가 사양", verifiedAt: "2026-08-27", organization: "Alcon", document: "DAILIES TOTAL1 전문가용 공식 사양", raw: "Core water content 33%", url: "https://www.myalcon.com/professional/contact-lenses/daily/dailies-total1", condition: "렌즈 코어", linkNote: "벌크/전체 함수율로 환산하지 않음" },
-          { sourceType: "제조사 기술·전문가 사양", verifiedAt: "2026-08-27", organization: "Alcon Japan", document: "DAILIES TOTAL1 일본 공식 페이지", raw: "표면 함수율 80% 이상 · 표면 약 100% 표기", url: "https://www.myalcon.com/jp/contact-lenses/daily/dailies-total1", condition: "렌즈 표면 · 별도 측정법", linkNote: "코어값과 합치지 않음" },
-          { sourceType: "과학 문헌", verifiedAt: "2026-08-27", organization: "PubMed", document: "Surface water characteristics of daily disposable lens materials", raw: "표면 함수 특성 측정 연구", url: "https://pubmed.ncbi.nlm.nih.gov/26543349", condition: "제품 표면 특성 연구", linkNote: "측정 위치 해석 근거" }
+          { sourceType: "제조사 기술·전문가 사양", verifiedAt: "2026-08-28", organization: "Alcon", document: "DAILIES TOTAL1 전문가용 공식 사양", raw: "Core water content 33%", url: "https://www.myalcon.com/professional/contact-lenses/daily/dailies-total1", condition: "렌즈 코어", linkNote: "벌크/전체 함수율로 환산하지 않음" },
+          { sourceType: "제조사 기술·전문가 사양", verifiedAt: "2026-08-28", organization: "Alcon Japan", document: "DAILIES TOTAL1 일본 공식 페이지", raw: "含水率 〜100% / レンズコアの含水率は33％、レンズ表面の含水率は80％以上です。", url: "https://www.myalcon.com/jp/contact-lenses/daily/dailies-total1", condition: "レンズコア・表面の含水率の測定方法は、レンズ全体の含水率の測定方法とは異なります。", linkNote: "코어값과 합치지 않음" },
+          { sourceType: "과학 문헌", verifiedAt: "2026-08-28", organization: "PubMed", document: "Evaluation of surface water characteristics of novel daily disposable contact lens materials, using refractive index shifts after wear. (Clin Ophthalmol 2015; doi 10.2147/opth.s90376)", raw: "nesofilcon A and delefilcon A high surface water lenses", url: "https://pubmed.ncbi.nlm.nih.gov/26543349", condition: "제품 표면 특성 연구", linkNote: "측정 위치 해석 근거 · 2026-08-28 PubMed 직접 접근은 403으로 차단됐고 Europe PMC로 서지사항만 확인했다." },
+          { sourceType: "한국 공식 페이지·IFU", verifiedAt: "2026-08-28", organization: "한국알콘(주)", document: "데일리스 토탈원 한국 공식 제품 페이지", raw: "80% 이상의 표면 함수율로 수분 쿠션이 눈에 닿아 편안한 착용감을 제공", url: "https://total.myalcon.com/kr/products/dailies-total1", condition: "표면 함수율 · 한국 표기", linkNote: "코어 함수율은 이 페이지에 없다" }
         ]
       },
-      { id: "material", value: "delefilcon A", state: "verified", sourceSummary: "Alcon 공식 사양 · 워터 그라디언트 실리콘 하이드로겔", sources: [{ sourceType: "제조사 기술·전문가 사양", verifiedAt: "2026-08-27", organization: "Alcon", document: "DAILIES TOTAL1 전문가용 공식 사양", raw: "delefilcon A", url: "https://www.myalcon.com/professional/contact-lenses/daily/dailies-total1", condition: "워터 그라디언트 실리콘 하이드로겔", linkNote: "한국 유통 제품 연결 확인" }] },
-      { id: "dkt", value: "156", state: "verified", sourceSummary: "Alcon 글로벌 전문가 사양 · 시험도수 확인", caution: "-3.00D 기준입니다. 시험 조건이 다른 제품과 숫자만 직접 비교하지 않습니다.", sources: [{ sourceType: "제조사 기술·전문가 사양", verifiedAt: "2026-08-27", organization: "Alcon", document: "DAILIES TOTAL1 전문가용 공식 사양", raw: "Dk/t 156 at -3.00D", url: "https://www.myalcon.com/professional/contact-lenses/daily/dailies-total1", condition: "-3.00D · 중심두께 0.09 mm", linkNote: "두께 조건과 함께 해석" }] },
-      { id: "thickness", value: "0.09 mm", state: "verified", sourceSummary: "Alcon 글로벌 전문가 사양 · 2026.08.27 확인", sources: [{ sourceType: "제조사 기술·전문가 사양", verifiedAt: "2026-08-27", organization: "Alcon", document: "DAILIES TOTAL1 전문가용 공식 사양", raw: "Center Thickness 0.09 mm", url: "https://www.myalcon.com/professional/contact-lenses/daily/dailies-total1", condition: "-3.00D", linkNote: "Dk/t 조건과 연결" }] },
-      { id: "replacement", value: "1일", state: "verified", sourceSummary: "DAILIES TOTAL1 한국 공식 제품 페이지", sources: [{ sourceType: "한국 공식 페이지·IFU", verifiedAt: "2026-08-27", organization: "한국알콘(주)", document: "DAILIES TOTAL1 한국 공식 제품 페이지", raw: "1일 교체", url: "https://total.myalcon.com/kr/products/dailies-total1", condition: "매일 새 렌즈로 교체", linkNote: "한국 유통 제품" }] },
+      { id: "material", value: "delefilcon A", state: "verified", sourceSummary: "Alcon 공식 사양 · 워터 그라디언트 실리콘 하이드로겔", sources: [{ sourceType: "제조사 기술·전문가 사양", verifiedAt: "2026-08-28", organization: "Alcon", document: "DAILIES TOTAL1 전문가용 공식 사양", raw: "delefilcon A", url: "https://www.myalcon.com/professional/contact-lenses/daily/dailies-total1", condition: "워터 그라디언트 실리콘 하이드로겔", linkNote: "한국 유통 제품 연결 확인" }] },
+      { id: "dkt", value: "156", state: "verified", sourceSummary: "Alcon 글로벌 전문가 사양 · 시험도수 확인", caution: "-3.00D 기준입니다. 시험 조건이 다른 제품과 숫자만 직접 비교하지 않습니다.", sources: [{ sourceType: "제조사 기술·전문가 사양", verifiedAt: "2026-08-28", organization: "Alcon", document: "DAILIES TOTAL1 전문가용 공식 사양", raw: "Dk/t 156 at -3.00D", url: "https://www.myalcon.com/professional/contact-lenses/daily/dailies-total1", condition: "-3.00D · 중심두께 0.09 mm", linkNote: "두께 조건과 함께 해석" }] },
+      { id: "thickness", value: "0.09 mm", state: "verified", sourceSummary: "Alcon 글로벌 전문가 사양 · 2026.08.28 확인", sources: [{ sourceType: "제조사 기술·전문가 사양", verifiedAt: "2026-08-28", organization: "Alcon", document: "DAILIES TOTAL1 전문가용 공식 사양", raw: "Center Thickness 0.09 mm", url: "https://www.myalcon.com/professional/contact-lenses/daily/dailies-total1", condition: "-3.00D", linkNote: "Dk/t 조건과 연결" }] },
       {
-        id: "permit", value: "수허 13-112 호", state: "verified", sourceSummary: "MFDS UDI 표준코드 조회 · 2026.08.27 확인",
+        id: "replacement", value: "1일", state: "verified", sourceSummary: "DAILIES TOTAL1 한국 공식 제품 페이지 · 2026.08.28 확인",
+        caution: "Alcon 미국 전문가 사양 페이지에는 교체주기 행 자체가 없습니다. 한국 페이지에도 1일 교체라는 문자열은 없고 1회용 렌즈·매일착용소프트콘택트렌즈 표기만 있습니다.",
+        sources: [
+          { sourceType: "한국 공식 페이지·IFU", verifiedAt: "2026-08-28", organization: "한국알콘(주)", document: "DAILIES TOTAL1 한국 공식 제품 페이지", raw: "관리가 필요 없는 편안한 1회용 렌즈를 찾는 분 / 이 제품은 의료기기(매일착용소프트콘택트렌즈)이며, 사용시 주의사항과 사용방법을 잘 읽고 사용하십시오.", url: "https://total.myalcon.com/kr/products/dailies-total1", condition: "페이지에 1일 교체 문자열은 없고 1회용 렌즈·매일착용소프트콘택트렌즈 표기만 있다", linkNote: "한국 유통 제품" },
+          { sourceType: "MFDS 허가·UDI", verifiedAt: "2026-08-28", organization: "식품의약품안전처", document: "의료기기 UDI 표준코드 조회", raw: "매일착용소프트콘택트렌즈", url: "https://emedi.mfds.go.kr/msismext/udi/uif/schStddCdLstView.do", condition: "itemPermitNo=수허 13-112 호 · 105건 전부 동일 소분류", linkNote: "소분류 품목 명칭은 교체주기가 아니라 착용 구분이다" }
+        ]
+      },
+      {
+        id: "permit", value: "수허 13-112 호", state: "verified", sourceSummary: "MFDS UDI 표준코드 조회 · 2026.08.28 확인",
         caution: "MFDS 조회에서 제품명·모델명·품목명이 일치하는 105건이 모두 같은 허가번호로 연결됐습니다.",
-        sources: [{ sourceType: "MFDS 허가·UDI", verifiedAt: "2026-08-27", organization: "식품의약품안전처", document: "의료기기 UDI 표준코드 조회", raw: "수허 13-112 호", url: "https://emedi.mfds.go.kr/msismext/udi/uif/schStddCdLstView.do", condition: "modelnm=Dailies Total1 · prdtNmCn=워터렌즈 · 105건", linkNote: "한국알콘 제품 연결 확인" }]
+        sources: [{ sourceType: "MFDS 허가·UDI", verifiedAt: "2026-08-28", organization: "식품의약품안전처", document: "의료기기 UDI 표준코드 조회", raw: "수허 13-112 호", url: "https://emedi.mfds.go.kr/msismext/udi/uif/schStddCdLstView.do", condition: "itemPermitNo=수허 13-112 호 105건 / modelnm=Dailies Total1 495건 중 prdtNmCn=워터렌즈 105건 · 2026-08-28 재실행 일치", linkNote: "한국알콘 제품 연결 확인" }]
       },
       {
         id: "uv", value: "공식 UV 표기 확인되지 않음", state: "unknown", flag: "확인되지 않음",
         sourceSummary: "검토한 제조사 전문 사양에서 UV 표기를 확인하지 못함",
         caution: "표기를 찾지 못했다는 뜻이며 UV 기능이 없다고 단정하지 않습니다.",
-        sources: [{ sourceType: "제조사 기술·전문가 사양", verifiedAt: "2026-08-27", organization: "Alcon", document: "DAILIES TOTAL1 전문가용 공식 사양", raw: "검토 범위에서 UV 표기 확인되지 않음", url: "https://www.myalcon.com/professional/contact-lenses/daily/dailies-total1", condition: "2026.08.27 공개 페이지 검토", linkNote: "미확인을 기능 없음으로 해석하지 않음" }]
+        sources: [{ sourceType: "제조사 기술·전문가 사양", verifiedAt: "2026-08-28", organization: "Alcon", document: "DAILIES TOTAL1 전문가용 공식 사양", raw: "검토 범위에서 UV 표기 확인되지 않음", url: "https://www.myalcon.com/professional/contact-lenses/daily/dailies-total1", condition: "2026.08.28 공개 페이지 검토 · 일본·한국 페이지에도 UV 표기 0건", linkNote: "미확인을 기능 없음으로 해석하지 않음" }]
       }
     ]
   },
@@ -130,19 +145,19 @@ window.LENSFACT_PRODUCTS = [
       { value: "Dk/t 170 / 171", label: "공식 출처 간 차이" }
     ],
     fields: [
-      { id: "bc", value: "8.6 mm", state: "verified", sourceSummary: "쿠퍼비전코리아 2023 제품 사양서", sources: [{ sourceType: "제조사 기술·전문가 사양", verifiedAt: "2026-08-27", organization: "쿠퍼비전코리아(주)", document: "제품 사양서 2023", raw: "BC 8.6 mm", url: "https://coopervision.co.kr/sites/coopervision.co.kr/files/CVK%20Product%20Specifications.pdf", condition: "바이오피니티 구면", linkNote: "한국 공식 사양" }] },
-      { id: "dia", value: "14.0 mm", state: "verified", sourceSummary: "쿠퍼비전코리아 2023 제품 사양서", sources: [{ sourceType: "제조사 기술·전문가 사양", verifiedAt: "2026-08-27", organization: "쿠퍼비전코리아(주)", document: "제품 사양서 2023", raw: "DIA 14.0 mm", url: "https://coopervision.co.kr/sites/coopervision.co.kr/files/CVK%20Product%20Specifications.pdf", condition: "바이오피니티 구면", linkNote: "한국 공식 사양" }] },
-      { id: "water", value: "48%", state: "verified", sourceSummary: "쿠퍼비전코리아 2023 제품 사양서", sources: [{ sourceType: "제조사 기술·전문가 사양", verifiedAt: "2026-08-27", organization: "쿠퍼비전코리아(주)", document: "제품 사양서 2023", raw: "함수율 48%", url: "https://coopervision.co.kr/sites/coopervision.co.kr/files/CVK%20Product%20Specifications.pdf", condition: "벌크 함수율", linkNote: "comfilcon A 사양" }] },
-      { id: "material", value: "comfilcon A", state: "verified", sourceSummary: "쿠퍼비전코리아 공식 사양", sources: [{ sourceType: "제조사 기술·전문가 사양", verifiedAt: "2026-08-27", organization: "쿠퍼비전코리아(주)", document: "제품 사양서 2023", raw: "comfilcon A · 실리콘 하이드로겔", url: "https://coopervision.co.kr/sites/coopervision.co.kr/files/CVK%20Product%20Specifications.pdf", condition: "바이오피니티 구면", linkNote: "한국 유통 제품" }] },
+      { id: "bc", value: "8.6 mm", state: "verified", sourceSummary: "쿠퍼비전코리아 2023 제품 사양서", sources: [{ sourceType: "제조사 기술·전문가 사양", verifiedAt: "2026-08-28", organization: "쿠퍼비전코리아(주)", document: "쿠퍼비전코리아 제품 사양서 (CVK Product Specifications · SA09487 Rev #4 09/2023)", raw: "BC 8.6 mm", url: "https://coopervision.co.kr/sites/coopervision.co.kr/files/CVK%20Product%20Specifications.pdf", condition: "바이오피니티 구면", linkNote: "한국 공식 사양" }] },
+      { id: "dia", value: "14.0 mm", state: "verified", sourceSummary: "쿠퍼비전코리아 2023 제품 사양서", sources: [{ sourceType: "제조사 기술·전문가 사양", verifiedAt: "2026-08-28", organization: "쿠퍼비전코리아(주)", document: "쿠퍼비전코리아 제품 사양서 (CVK Product Specifications · SA09487 Rev #4 09/2023)", raw: "DIA 14.0 mm", url: "https://coopervision.co.kr/sites/coopervision.co.kr/files/CVK%20Product%20Specifications.pdf", condition: "바이오피니티 구면", linkNote: "한국 공식 사양" }] },
+      { id: "water", value: "48%", state: "verified", sourceSummary: "쿠퍼비전코리아 2023 제품 사양서", sources: [{ sourceType: "제조사 기술·전문가 사양", verifiedAt: "2026-08-28", organization: "쿠퍼비전코리아(주)", document: "쿠퍼비전코리아 제품 사양서 (CVK Product Specifications · SA09487 Rev #4 09/2023)", raw: "함수율 48%", url: "https://coopervision.co.kr/sites/coopervision.co.kr/files/CVK%20Product%20Specifications.pdf", condition: "벌크 함수율", linkNote: "comfilcon A 사양" }] },
+      { id: "material", value: "comfilcon A", state: "verified", sourceSummary: "쿠퍼비전코리아 공식 사양", sources: [{ sourceType: "제조사 기술·전문가 사양", verifiedAt: "2026-08-28", organization: "쿠퍼비전코리아(주)", document: "쿠퍼비전코리아 제품 사양서 (CVK Product Specifications · SA09487 Rev #4 09/2023)", raw: "comfilcon A · 실리콘 하이드로겔", url: "https://coopervision.co.kr/sites/coopervision.co.kr/files/CVK%20Product%20Specifications.pdf", condition: "바이오피니티 구면", linkNote: "한국 유통 제품" }] },
       {
         id: "dkt", value: "170 / 171", state: "conflict", flag: "공식 출처 간 값이 다름",
         sourceSummary: "현재 한국 페이지 170 / 한국 2023 사양서·미국 전문가 페이지 171",
         caution: "170은 조건이 표기되지 않았고, 171은 -3.00D 기준입니다. 두 값을 하나로 정규화하지 않습니다.",
         conflicts: [{ source: "현재 한국 제품 페이지", value: "170 · 조건 미표기" }, { source: "한국 2023 사양서 / 미국 전문가 페이지", value: "171 at -3.00D" }],
         sources: [
-          { sourceType: "한국 공식 페이지·IFU", verifiedAt: "2026-08-27", organization: "쿠퍼비전코리아(주)", document: "바이오피니티 한국 공식 제품 페이지", raw: "Dk/t 170", url: "https://coopervision.co.kr/contact-lenses/biofinity", condition: "시험 조건 미표기", linkNote: "현재 한국 페이지" },
-          { sourceType: "제조사 기술·전문가 사양", verifiedAt: "2026-08-27", organization: "쿠퍼비전코리아(주)", document: "제품 사양서 2023", raw: "Dk/t 171", url: "https://coopervision.co.kr/sites/coopervision.co.kr/files/CVK%20Product%20Specifications.pdf", condition: "-3.00D", linkNote: "한국 공식 사양서" },
-          { sourceType: "제조사 기술·전문가 사양", verifiedAt: "2026-08-27", organization: "CooperVision US", document: "Biofinity & Biofinity XR practitioner specs", raw: "Dk/t 171", url: "https://coopervision.com/practitioner/our-products/biofinity-family/biofinity-biofinity-xr", condition: "-3.00D", linkNote: "글로벌 공식 전문가 사양" }
+          { sourceType: "한국 공식 페이지·IFU", verifiedAt: "2026-08-28", organization: "쿠퍼비전코리아(주)", document: "바이오피니티 한국 공식 제품 페이지", raw: "（별첨 1）바이오피니티®의［1．함수율과 2．산소 투과율（Dk/t）］은 아래와 같습니다． - 1．48%／2．170", url: "https://coopervision.co.kr/contact-lenses/biofinity", condition: "시험 조건 미표기", linkNote: "현재 한국 페이지" },
+          { sourceType: "제조사 기술·전문가 사양", verifiedAt: "2026-08-28", organization: "쿠퍼비전코리아(주)", document: "쿠퍼비전코리아 제품 사양서 (CVK Product Specifications · SA09487 Rev #4 09/2023)", raw: "Dk/t 171", url: "https://coopervision.co.kr/sites/coopervision.co.kr/files/CVK%20Product%20Specifications.pdf", condition: "-3.00D", linkNote: "한국 공식 사양서" },
+          { sourceType: "제조사 기술·전문가 사양", verifiedAt: "2026-08-28", organization: "CooperVision US", document: "Biofinity & Biofinity XR practitioner specs", raw: "Oxygen transmissibility  171 Dk/t (at -3.00D)", url: "https://coopervision.com/practitioner/our-products/biofinity-family/biofinity-biofinity-xr", condition: "-3.00D", linkNote: "글로벌 공식 전문가 사양" }
         ]
       },
       {
@@ -152,23 +167,30 @@ window.LENSFACT_PRODUCTS = [
         sources: [{ sourceType: "제조사 기술·전문가 사양", verifiedAt: "2026-08-28", organization: "CooperVision", document: "Biofinity & Biofinity XR practitioner specs", raw: "검토 범위에서 중심두께 항목 확인되지 않음", url: "https://coopervision.com/practitioner/our-products/biofinity-family/biofinity-biofinity-xr", condition: "2026.08.28 렌더링 페이지 전수 검토 · Dk/t 171 at -3.00D는 있으나 중심두께 항목 없음", linkNote: "미확인을 값 없음으로 단정하지 않음" }]
       },
       {
-        id: "replacement", value: "30일", state: "verified", sourceSummary: "바이오피니티 한국 공식 제품 페이지",
-        caution: "30일은 교체주기입니다. 연속착용은 전문가 판단이 필요한 별도 착용방식이며 수면착용 허용으로 해석하지 않습니다.",
-        sources: [{ sourceType: "한국 공식 페이지·IFU", verifiedAt: "2026-08-27", organization: "쿠퍼비전코리아(주)", document: "바이오피니티 한국 공식 제품 페이지", raw: "30일 교체", url: "https://coopervision.co.kr/contact-lenses/biofinity", condition: "월간 교체", linkNote: "교체주기와 연속착용을 구분" }]
+        id: "replacement", value: "30일", state: "verified", sourceSummary: "쿠퍼비전코리아 2023 제품 사양서 · 2026.08.28 확인",
+        caution: "30일은 교체주기입니다. 연속착용은 전문가 판단이 필요한 별도 착용방식이며 수면착용 허용으로 해석하지 않습니다. 한국 페이지는 매월, 한국 사양서는 30 days replacement로 적습니다.",
+        sources: [
+          { sourceType: "제조사 기술·전문가 사양", verifiedAt: "2026-08-28", organization: "쿠퍼비전코리아(주)", document: "쿠퍼비전코리아 제품 사양서 (CVK Product Specifications · SA09487 Rev #4 09/2023)", raw: "30 days replacement", url: "https://coopervision.co.kr/sites/coopervision.co.kr/files/CVK%20Product%20Specifications.pdf", condition: "3쪽 Biofinity® 구면 행 · 착용기간 Wear Schedule & Replacement Frequency 열", linkNote: "같은 칸에 연속착용소프트렌즈 · Extended wear · 14 days/13 nights; 가 함께 인쇄돼 있다" },
+          { sourceType: "한국 공식 페이지·IFU", verifiedAt: "2026-08-28", organization: "쿠퍼비전코리아(주)", document: "바이오피니티 한국 공식 제품 페이지", raw: "교체 주기 / 매월", url: "https://coopervision.co.kr/contact-lenses/biofinity", condition: "제품 헤더 표기", linkNote: "이 페이지에는 30일 문자열이 없다" }
+        ]
       },
       {
-        id: "permit", value: "수허 08-131", state: "verified", sourceSummary: "쿠퍼비전코리아 전체 제품 목록 기재 · MFDS 상세 원장 직접 대조 미완료",
-        caution: "한국 공식 제품 목록에서 확인한 수입허가번호입니다. MFDS 상세 원장 직접 대조는 미완료입니다.",
-        sources: [{ sourceType: "한국 공식 페이지·IFU", verifiedAt: "2026-08-27", organization: "쿠퍼비전코리아(주)", document: "쿠퍼비전코리아 전체 제품 목록", raw: "수허 08-131", url: "https://coopervision.co.kr/contact-lenses", condition: "한국 공식 제품 목록", linkNote: "MFDS 상세 원장 직접 대조 미완료" }]
+        id: "permit", value: "수허 08-131 호", state: "verified", sourceSummary: "MFDS UDI 원장 94건 전수 대조 · 한국 제품 목록 표기와 병기",
+        caution: "MFDS 원장은 수허 08-131 호, 한국 제품 목록은 수허 08-131로 호가 없습니다. 번호는 같고 표기만 다릅니다.",
+        sources: [
+          { sourceType: "MFDS 허가·UDI", verifiedAt: "2026-08-28", organization: "식품의약품안전처", document: "의료기기 UDI 표준코드 조회", raw: "수허 08-131 호", url: "https://emedi.mfds.go.kr/msismext/udi/uif/schStddCdLstView.do", condition: "itemPermitNo=수허 08-131 호 · 94건 전수 집계", linkNote: "쿠퍼비전코리아(주) · 연속착용 소프트 콘택트렌즈 · 등급 3 · 모델명 Biofinity 64건 / Biofinity XR 30건" },
+          { sourceType: "한국 공식 페이지·IFU", verifiedAt: "2026-08-28", organization: "쿠퍼비전코리아(주)", document: "쿠퍼비전코리아 전체 제품 목록", raw: "수허 08-131 바이오피니티 & 바이오피니티 XR", url: "https://coopervision.co.kr/contact-lenses", condition: "제품 목록 각주", linkNote: "이 페이지만 호를 빠뜨렸다. 같은 각주의 다른 제품은 모두 …호다" }
+        ]
       },
       {
         id: "uv", value: "공식 자료 간 충돌", state: "conflict", flag: "확인 보류",
         sourceSummary: "현재 한국 페이지는 UV 기술 적용 주장 / 한국 2023 사양서는 No",
         caution: "허가 원장 또는 최신 정정 사양을 확인하기 전까지 어느 한쪽으로 단정하지 않습니다.",
-        conflicts: [{ source: "현재 한국 제품 페이지", value: "UV 기술 적용 주장" }, { source: "한국 2023 공식 사양서", value: "No" }],
+        conflicts: [{ source: "현재 한국 제품 페이지", value: "UV 기술 적용 주장" }, { source: "한국 2023 공식 사양서", value: "No" }, { source: "CooperVision 미국 전문가 페이지", value: "Product Details에 UV 항목 없음" }],
         sources: [
-          { sourceType: "한국 공식 페이지·IFU", verifiedAt: "2026-08-27", organization: "쿠퍼비전코리아(주)", document: "바이오피니티 한국 공식 제품 페이지", raw: "UV 기술 적용 주장", url: "https://coopervision.co.kr/contact-lenses/biofinity", condition: "현재 공개 페이지", linkNote: "기술 설명" },
-          { sourceType: "제조사 기술·전문가 사양", verifiedAt: "2026-08-27", organization: "쿠퍼비전코리아(주)", document: "제품 사양서 2023", raw: "UV: No", url: "https://coopervision.co.kr/sites/coopervision.co.kr/files/CVK%20Product%20Specifications.pdf", condition: "2023 공식 사양서", linkNote: "허가 원장 또는 최신 정정 사양 확인 전 충돌 유지" }
+          { sourceType: "한국 공식 페이지·IFU", verifiedAt: "2026-08-28", organization: "쿠퍼비전코리아(주)", document: "바이오피니티 한국 공식 제품 페이지", raw: "UV 차단 기술이 적용되어, 자외선으로부터 눈을 보호합니다.", url: "https://coopervision.co.kr/contact-lenses/biofinity", condition: "주요 제품 특징 · 차단율·등급 수치는 없음", linkNote: "기술 설명" },
+          { sourceType: "제조사 기술·전문가 사양", verifiedAt: "2026-08-28", organization: "쿠퍼비전코리아(주)", document: "쿠퍼비전코리아 제품 사양서 (CVK Product Specifications · SA09487 Rev #4 09/2023)", raw: "UV: No", url: "https://coopervision.co.kr/sites/coopervision.co.kr/files/CVK%20Product%20Specifications.pdf", condition: "3쪽 Biofinity® 구면 행 · 자외선 투과율 UV Blocking & Class 열", linkNote: "허가 원장 또는 최신 정정 사양 확인 전 충돌 유지" },
+          { sourceType: "제조사 기술·전문가 사양", verifiedAt: "2026-08-28", organization: "CooperVision US", document: "Biofinity & Biofinity XR practitioner specs", raw: "Product Details에 UV 항목 없음", url: "https://coopervision.com/practitioner/our-products/biofinity-family/biofinity-biofinity-xr", condition: "2026.08.28 렌더링 페이지 전수 검토 · Product Details 표에 UV 행 없음 · 본문 UV 차단 표기 0건", linkNote: "미확인을 기능 없음으로 단정하지 않음" }
         ]
       }
     ]
@@ -907,7 +929,7 @@ window.LENSFACT_PRODUCTS = [
             sourceType: "제조사 기술·전문가 사양",
             verifiedAt: "2026-08-28",
             organization: "쿠퍼비전코리아(주)",
-            document: "쿠퍼비전코리아 제품 사양서 (©2023 CooperVision SA09487 Rev #4 09/2023)",
+            document: "쿠퍼비전코리아 제품 사양서 (CVK Product Specifications · SA09487 Rev #4 09/2023)",
             raw: "8.6",
             url: "https://coopervision.co.kr/sites/coopervision.co.kr/files/CVK%20Product%20Specifications.pdf",
             condition: "2쪽 clariti® 1 day sphere 행 · 내면곡률반경 Base Curve (mm) 열",
@@ -946,7 +968,7 @@ window.LENSFACT_PRODUCTS = [
             sourceType: "제조사 기술·전문가 사양",
             verifiedAt: "2026-08-28",
             organization: "쿠퍼비전코리아(주)",
-            document: "쿠퍼비전코리아 제품 사양서 (©2023 CooperVision SA09487 Rev #4 09/2023)",
+            document: "쿠퍼비전코리아 제품 사양서 (CVK Product Specifications · SA09487 Rev #4 09/2023)",
             raw: "14.1",
             url: "https://coopervision.co.kr/sites/coopervision.co.kr/files/CVK%20Product%20Specifications.pdf",
             condition: "2쪽 clariti® 1 day sphere 행 · 렌즈 직경 Diameter (mm) 열",
@@ -995,7 +1017,7 @@ window.LENSFACT_PRODUCTS = [
             sourceType: "제조사 기술·전문가 사양",
             verifiedAt: "2026-08-28",
             organization: "쿠퍼비전코리아(주)",
-            document: "쿠퍼비전코리아 제품 사양서 (©2023 CooperVision SA09487 Rev #4 09/2023)",
+            document: "쿠퍼비전코리아 제품 사양서 (CVK Product Specifications · SA09487 Rev #4 09/2023)",
             raw: "56",
             url: "https://coopervision.co.kr/sites/coopervision.co.kr/files/CVK%20Product%20Specifications.pdf",
             condition: "2쪽 clariti® 1 day sphere 행 · 함수율 Water content (%) 열",
@@ -1029,7 +1051,7 @@ window.LENSFACT_PRODUCTS = [
             sourceType: "제조사 기술·전문가 사양",
             verifiedAt: "2026-08-28",
             organization: "쿠퍼비전코리아(주)",
-            document: "쿠퍼비전코리아 제품 사양서 (©2023 CooperVision SA09487 Rev #4 09/2023)",
+            document: "쿠퍼비전코리아 제품 사양서 (CVK Product Specifications · SA09487 Rev #4 09/2023)",
             raw: "실리콘 하이드로겔 stenﬁlcon A",
             url: "https://coopervision.co.kr/sites/coopervision.co.kr/files/CVK%20Product%20Specifications.pdf",
             condition: "2쪽 clariti® 1 day sphere 행 · 렌즈 재질 Material USAN 열 (sphere·toric·multifocal 3개 행 모두 동일 표기)",
@@ -1113,7 +1135,7 @@ window.LENSFACT_PRODUCTS = [
             sourceType: "제조사 기술·전문가 사양",
             verifiedAt: "2026-08-28",
             organization: "쿠퍼비전코리아(주)",
-            document: "쿠퍼비전코리아 제품 사양서 (©2023 CooperVision SA09487 Rev #4 09/2023)",
+            document: "쿠퍼비전코리아 제품 사양서 (CVK Product Specifications · SA09487 Rev #4 09/2023)",
             raw: "86",
             url: "https://coopervision.co.kr/sites/coopervision.co.kr/files/CVK%20Product%20Specifications.pdf",
             condition: "2쪽 clariti® 1 day sphere 행 · 산소 투과율 Oxygen transmissibility Dk/t † 열 · 각주 †: (@-3.00DS) x 10 -9 [(cm/sec) x (ml O₂)/(ml x mmHg)]",
@@ -1153,7 +1175,7 @@ window.LENSFACT_PRODUCTS = [
             sourceType: "제조사 기술·전문가 사양",
             verifiedAt: "2026-08-28",
             organization: "쿠퍼비전코리아(주)",
-            document: "쿠퍼비전코리아 제품 사양서 (©2023 CooperVision SA09487 Rev #4 09/2023)",
+            document: "쿠퍼비전코리아 제품 사양서 (CVK Product Specifications · SA09487 Rev #4 09/2023)",
             raw: "중심두께 열 없음 (두께·thickness 문자열 0건)",
             url: "https://coopervision.co.kr/sites/coopervision.co.kr/files/CVK%20Product%20Specifications.pdf",
             condition: "3쪽 전문 텍스트 추출 후 검색",
@@ -1222,7 +1244,7 @@ window.LENSFACT_PRODUCTS = [
             sourceType: "제조사 기술·전문가 사양",
             verifiedAt: "2026-08-28",
             organization: "쿠퍼비전코리아(주)",
-            document: "쿠퍼비전코리아 제품 사양서 (©2023 CooperVision SA09487 Rev #4 09/2023)",
+            document: "쿠퍼비전코리아 제품 사양서 (CVK Product Specifications · SA09487 Rev #4 09/2023)",
             raw: "매일착용 소프트렌즈 Daily wear; 1 day replacement",
             url: "https://coopervision.co.kr/sites/coopervision.co.kr/files/CVK%20Product%20Specifications.pdf",
             condition: "2쪽 clariti® 1 day sphere 행 · 착용기간 Wear Schedule & Replacement Frequency 열",
@@ -1320,7 +1342,7 @@ window.LENSFACT_PRODUCTS = [
             sourceType: "제조사 기술·전문가 사양",
             verifiedAt: "2026-08-28",
             organization: "쿠퍼비전코리아(주)",
-            document: "쿠퍼비전코리아 제품 사양서 (©2023 CooperVision SA09487 Rev #4 09/2023)",
+            document: "쿠퍼비전코리아 제품 사양서 (CVK Product Specifications · SA09487 Rev #4 09/2023)",
             raw: "Class 2",
             url: "https://coopervision.co.kr/sites/coopervision.co.kr/files/CVK%20Product%20Specifications.pdf",
             condition: "2쪽 clariti® 1 day sphere 행 · 자외선 차단 등급 UV Blocking ‡ & Class 열 · 각주 ‡: UV 흡수 콘택트렌즈는 눈과 주변 부위를 완전히 덮지 않기 때문에, 자외선 흡수 고글 또는 선글라스와 같은 보호용 UV 흡수 안경류를 대체하지 않습니다.",

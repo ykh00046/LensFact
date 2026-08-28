@@ -6,7 +6,7 @@ This directory contains a no-build static pilot for LensFact using verified publ
 
 This directory is the web root. Every internal link is relative, so the site works from any root path.
 
-- `index.html`: home page with a six-product package-label decoder.
+- `index.html`: home page. Between the hero and the preset decoder sits `#input-decoder`, the "내 포장지 숫자 입력" form: the reader types the figures printed on their own package (BC, DIA, 함수율, Dk/t, 재질명, 교체주기 — all optional, at least one required) and gets each figure's meaning plus a factual placement statement against `products.js` and a `표기 일치` product list. Values are computed in the page only: nothing is stored and nothing is sent. Below it, the original six-product package-label decoder stays as the preset path.
 - `products/index.html`: product list rendered from `products.js`, with a static card fallback.
 - `products/<slug>.html`: one page per product (`acuvue-oasys-1-day`, `dailies-total1`, `biofinity`, `acuvue-moist-1-day`, `myday`, `clariti-1-day`). Thin HTML shell plus `<main data-product-page="<id>">`; `initProductPage()` renders every field with its full source list open, and a `<noscript>` table carries all values and the first source per field for crawlers and no-JS readers.
 - `knowledge/index.html`: content hub with one completed article and seven clearly marked pending topics.
@@ -18,7 +18,7 @@ This directory is the web root. Every internal link is relative, so the site wor
 - `policy/privacy.html`: privacy policy for the current no-cookie, no-analytics, no-ads site.
 - `robots.txt`, `sitemap.xml`: discovery files. Both still contain the `DOMAIN-TBD` placeholder origin.
 - `assets/css/style.css`: shared responsive stylesheet.
-- `assets/js/app.js`: vanilla JavaScript for menu, synchronized product selection, decoder details, disclosures, filters, the comparison table, the product list and product pages, and disabled ad slots.
+- `assets/js/app.js`: vanilla JavaScript for menu, the home input decoder, synchronized product selection, decoder details, disclosures, filters, the comparison table, the product list and product pages, and disabled ad slots.
 - `assets/data/products.js`: repository-owned verified product values, evidence states, and official source URLs, plus each product's `slug` and `aliases` (Korean sales name, English global name, material name).
 - `assets/data/fields.js`: common field terminology used across all products.
 - `assets/data/articles.js`: content status and metadata.
@@ -59,10 +59,11 @@ Source links are ordinary user-initiated external links. The pages load no exter
 
 ## Remaining Limitations
 
-- The MFDS detailed permit ledger has not yet been directly reconciled for `수허 16-499 호` and `수허 08-131`; the Korean IFU or official Korean product list is identified as the current evidence. Identifiers retain each source's original spacing and suffix.
-- Biofinity's official sources disagree on Dk/t (`170` versus `171 at -3.00D`) and UV (`기술 적용` versus `No`). Both versions remain visible.
+- Permit display values follow the MFDS UDI ledger string; each manufacturer document keeps its own spelling verbatim in its `raw` record, so the same number can appear with and without a space or a trailing `호` depending on the source.
+- Biofinity's official sources disagree on Dk/t (`170` versus `171 at -3.00D`) and UV (`기술 적용` versus `No` versus no UV row at all on the US practitioner page). All versions remain visible.
 - Biofinity's and MyDay's centre thickness are `unknown`: no reviewed official source states the value. Dk/t depends on thickness, so both Dk/t figures are read without that condition.
 - Two corrections were applied on 2026-08-28 and logged in `docs/verification/CORRECTIONS.md`: Biofinity's centre thickness `0.08 mm` was withdrawn for lack of a reproducible source, and CooperVision Korea's legal name was fixed from `쿠퍼비젼코리아(주)` to `쿠퍼비전코리아(주)`.
+- A source-by-source audit of the three pilot products on 2026-08-28 (`docs/verification/audit-pilot-2026-08-28/`) replaced four unreproducible `raw` quotations (ACUVUE OASYS 1-Day material and replacement, Biofinity replacement, DAILIES TOTAL1 replacement), moved both outstanding permit records onto the MFDS UDI ledger (`수허 16-499 호` 497 records, `수허 08-131 호` 94 records — Biofinity's displayed value gained its `호`), corrected eight further `raw`/`document` strings to the printed originals, and re-dated every touched record to `2026-08-28`. All of it is logged in `docs/verification/CORRECTIONS.md`.
 - DAILIES TOTAL1's core and surface water values use different locations and methods and are not combined into one number.
 - Public specifications do not predict individual comfort, fitting, prescription, or wearing outcome. The pilot offers no recommendation, ranking, score, purchase link, or diagnosis.
 - 1-DAY ACUVUE MOIST's BC, DIA, water content, Dk/t, centre thickness and UV figures come from the global ACUVUE technical specification guide; no Korean official source states them, and the Korean page's UV percentages are image-only, so the Korean wording stays unverified.

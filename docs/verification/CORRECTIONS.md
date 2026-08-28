@@ -66,3 +66,146 @@ Dk/t는 두께에 좌우되는 값인데 그 두께를 공식 자료로 확인�
 
 같은 법인이 한 사이트 안에서 두 이름으로 보이면 안 되고, 허가 원장 검색이 재현되지 않으면
 독자가 허가번호를 스스로 확인할 수 없다. 이 표기는 마이데이 검증에서 검색이 0건을 내며 드러났다.
+
+---
+
+## 2026-08-28 · 정정 3 — 출처에 없는 원문 인용 4건 철회 (감사 C1–C4)
+
+**대상 필드:** `acuvue-oasys-1-day` / `material` · `replacement`, `biofinity` / `replacement`, `dailies-total1` / `replacement`
+
+**무엇이 잘못됐나**
+
+네 필드 모두 `raw`(출처 원문 인용)에 그 출처에 존재하지 않는 문자열이 적혀 있었다.
+값 자체는 틀리지 않았지만, 독자가 링크를 열어 그 문자열을 찾으면 찾을 수 없다. 재현되지 않는 인용이다.
+
+**재확인에서 나온 것 (2026-08-28)**
+
+- `acuvue-oasys-1-day.material` — 근거였던 acuvue.co.kr 제품 페이지에 `senofilcon` 0건, `세노필콘` 0건, `실리콘` 0건(curl·브라우저 렌더링 양쪽). 한국 IFU에도 0건.
+- `acuvue-oasys-1-day.replacement` — 같은 페이지에 `1일 교체` 0건. 있는 것은 `1일 착용`이다. 한국 IFU에는 `착용한 렌즈는 1회(1일) 착용 후 교체하여야 한다`가 있다.
+- `biofinity.replacement` — coopervision.co.kr/contact-lenses/biofinity에 `30일` 자체가 0건. 있는 것은 `교체 주기 / 매월`이다.
+- `dailies-total1.replacement` — total.myalcon.com/kr에 `1일 교체` 0건. 있는 것은 `1회용 렌즈` · `매일착용소프트콘택트렌즈`다. Alcon 미국 전문가 페이지에는 교체주기 행 자체가 없다.
+
+**무엇을 바꿨나**
+
+표시값(`senofilcon A`, `1일`, `30일`, `1일`)은 넷 다 그대로 두고, 근거만 실제로 그 문자열이 인쇄된 자료로 옮겼다.
+
+- `material` — 첫 출처를 ACUVUE Technical Specification Guide (PP2020ACLP4800 v13 · AS112401) 1쪽 `Lens Material` 행으로 교체. `flag`에 `글로벌 공식 자료`, `caution`에 한국 자료에는 재질명 표기가 없다는 사실을 적었다.
+- `acuvue-oasys-1-day.replacement` — 첫 출처를 한국 IFU 문장으로 교체하고, 한국 제품 페이지는 `raw`를 실제 표기 `1일 착용`으로 바로잡아 두 번째 출처로 남겼다.
+- `biofinity.replacement` — 첫 출처를 쿠퍼비전코리아 2023 사양서 3쪽 구면 행 `30 days replacement`로 교체하고, 한국 페이지는 `교체 주기 / 매월`로 바로잡아 두 번째 출처로 남겼다. `caution`에 두 표기가 다르다는 사실을 덧붙였다.
+- `dailies-total1.replacement` — 한국 페이지의 `raw`를 실제 인쇄 문장으로 바꾸고, MFDS 소분류 `매일착용소프트콘택트렌즈`를 두 번째 출처로 추가했다. `caution`에 **미국 전문가 페이지에는 교체주기 행이 아예 없다**는 사실을 그대로 적었다.
+
+**왜 중요한가**
+
+이 사이트가 파는 것은 값이 아니라 값의 출처다. 링크를 열어 확인할 수 없는 인용은 `verified` 표시를 받을 자격이 없다.
+
+---
+
+## 2026-08-28 · 정정 4 — 허가번호 근거를 MFDS 원장으로 이전 (감사 C5–C6)
+
+**대상 필드:** `acuvue-oasys-1-day` / `permit`, `biofinity` / `permit`
+
+**무엇이 잘못됐나**
+
+두 필드 모두 `sourceSummary`와 `caution`이 `MFDS 상세 원장 직접 대조 미완료`라고 스스로 밝히고 있었다.
+그 상태에서 근거로 삼은 제조사 문서의 표기는 화면 표시값과 글자가 달랐다.
+
+- `수허 16-499 호` — 한국 IFU 원문은 `[수입허가번호] 수허16-499 호`로 `수허`와 숫자 사이에 공백이 없다.
+- `수허 08-131` — 한국 전체 제품 목록 각주는 `호` 없이 `수허 08-131 바이오피니티 & 바이오피니티 XR`로 적는다. 같은 각주의 다른 제품은 모두 `…호`다.
+
+**재확인에서 나온 것 (2026-08-28)**
+
+- `itemPermitNo=수허 16-499 호` → **497건**, distinct 신원 1건.
+  `(주)한국존슨앤드존슨비전 | 매일착용소프트콘택트렌즈 | 등급 2 | ACUVUE OASYS Brand Contact Lenses with HydraLuxe | …(아큐브 오아시스 원데이)`.
+  `modelnm=ACUVUE OASYS Brand` 5,824건 전수 집계에서 난시 `수허 10-43 호` · 2주 `수허 08-938 호`와 분리되며, 원데이 구면은 `수허 16-499 호` 하나뿐이다.
+- `itemPermitNo=수허 08-131 호` → **94건**.
+  `쿠퍼비전코리아(주) | 수입업 | 연속착용 소프트 콘택트렌즈 | 등급 3 | Biofinity 64건 · Biofinity XR 30건`, 포장내수량 6.
+  한국 제품 목록이 두 제품을 한 허가번호로 묶은 것과 원장이 일치한다. `modelnm=Biofinity` 4,551건 집계에서 토릭 `수허 10-1406 호` · 에너지스 `수허 17-239 호`와 분리 확인.
+
+**무엇을 바꿨나**
+
+- 두 필드 모두 출처를 **MFDS 원장 먼저, 제조사 문서 나중**의 2건으로 재구성했다. 제조사 문서의 `raw`는 인쇄된 그대로(공백 없음 / `호` 없음) 보존했다.
+- `biofinity.permit`의 **표시값을 `수허 08-131`에서 `수허 08-131 호`로 바꿨다.** 이 저장소에서 이번 감사로 바뀐 유일한 표시값이다.
+- `caution`에서 `MFDS 상세 원장 직접 대조는 미완료` 문구를 제거하고, 번호는 같고 표기만 다르다는 사실로 대체했다.
+- MFDS가 바이오피니티를 **연속착용 소프트 콘택트렌즈 · 등급 3**으로 등록하고 있다는 사실을 원장 출처의 `linkNote`에 남겼다.
+- 표시값 변경은 파일럿 수용 기준 5번과 충돌하므로, `docs/REAL_DATA_PILOT_BRIEF.md`에 `## 수정 기록 (2026-08-28)` 절을 덧붙여 기준 5번을 개정했다. 원문은 고치지 않았다.
+- `site/README.md`의 `Remaining Limitations`에서 두 번호의 원장 대조가 미완료라는 문장을 지웠다. 이제 완료됐다.
+
+**왜 중요한가**
+
+독자가 화면의 문자열을 그대로 MFDS 조회창에 넣었을 때 검색이 재현되어야 한다.
+제조사 문서의 표기 흔들림은 감추지 않고 두 번째 출처에 남겨, 어느 자료가 어떻게 적는지 함께 보이게 했다.
+
+---
+
+## 2026-08-28 · 정정 5 — 요약·의역된 `raw` 8건을 인쇄 원문으로 교체 (감사 C8–C11)
+
+**대상:** `acuvue-oasys-1-day` / `bc` · `dia` · `uv`(2건), `biofinity` / `dkt`(2건) · `uv`, `dailies-total1` / `water`(2건)
+
+**무엇이 잘못됐나**
+
+`raw`는 출처에 인쇄된 문자열이어야 하는데, 위 레코드들은 값을 옮겨 적은 **요약·재배열·번역문**이었다.
+값은 모두 재현됐지만(감사 판정 REPRODUCED-WITH-DIFFERENCE), 인용으로서는 원문이 아니다.
+
+**재확인에서 나온 것 (2026-08-28) — 옛 `raw` → 실제 인쇄 원문**
+
+| 대상 | 저장돼 있던 `raw` | 문서에 인쇄된 원문 |
+| --- | --- | --- |
+| oasys `bc` | `Base Curve 8.5 mm, 9.0 mm` | `Parameters BC (mm) / Dia (mm)` 열의 결합 표기 `8.5/14.3` · `9.0/14.3` |
+| oasys `dia` | `Diameter 14.3 mm` | 위와 같은 결합 표기. `14.3` 단독 인쇄 없음 |
+| oasys `uv` 한국 | `UVB 99% 이상 / UVA 90%` | `자외선 차단 1등급 - UVA 90%, UVB 99% 이상 차단` (각주: 측정 범위 UVA 316~380nm, UVB 280~315nm) |
+| oasys `uv` 글로벌 | `UVB >99.9% / UVA 96%` | `Blocks >99.9% of UVB & 96% of UVA` |
+| biofinity `dkt` 한국 | `Dk/t 170` | `（별첨 1）바이오피니티®의［1．함수율과 2．산소 투과율（Dk/t）］은 아래와 같습니다． - 1．48%／2．170` |
+| biofinity `dkt` 미국 | `Dk/t 171` | `Oxygen transmissibility  171 Dk/t (at -3.00D)` |
+| biofinity `uv` 한국 | `UV 기술 적용 주장` | `UV 차단 기술이 적용되어, 자외선으로부터 눈을 보호합니다.` |
+| dailies `water` 일본 | `표면 함수율 80% 이상 · 표면 약 100% 표기` | `含水率 〜100%` / `レンズコアの含水率は33％、レンズ表面の含水率は80％以上です。` |
+
+문헌 1건도 서지사항이 틀려 있었다. `dailies-total1.water`의 세 번째 출처 제목은
+`Surface water characteristics of daily disposable lens materials`라는 축약형이었으나,
+실제 제목은 `Evaluation of surface water characteristics of novel daily disposable contact lens materials, using refractive index shifts after wear.` (Clin Ophthalmol 2015, doi 10.2147/opth.s90376)다.
+
+**무엇을 바꿨나**
+
+- 위 8건의 `raw`를 인쇄 원문으로 교체하고, `condition`을 문서 안 위치(쪽·행·열·각주)로 정밀화했다.
+- PubMed 문헌은 제목을 정정하고 `raw`를 `nesofilcon A and delefilcon A high surface water lenses`로 바꿨다.
+  **2026-08-28 PubMed 직접 접근은 HTTP 403으로 차단됐고 Europe PMC로 서지사항만 확인했다**는 사실을 `linkNote`에 그대로 적었다.
+- `acuvue-oasys-1-day.uv`의 `conflicts[]` 표시 문자열도 같은 원문으로 맞췄다. 비교표 noscript도 함께 갱신했다.
+- 한국 함수율 근거가 하나도 인용돼 있지 않던 `dailies-total1.water`에 한국 공식 페이지 원문
+  `80% 이상의 표면 함수율로 수분 쿠션이 눈에 닿아 편안한 착용감을 제공`을 네 번째 출처로 추가했다.
+- `dailies-total1.water`의 `caution`을 고쳤다. 미국 전문가 페이지가 실제로는 `-100%`(하이픈)로 인쇄하므로,
+  `80% 이상, 〜100%(일본), -100%(미국 원문 표기)로 서로 다르게 적힙니다`로 세 표기를 모두 밝혔다.
+- `biofinity.uv`에 세 번째 출처와 세 번째 충돌 항목을 추가했다. CooperVision 미국 전문가 페이지의
+  `Product Details` 표에는 UV 행이 없고 본문 UV 차단 표기도 0건이다. `raw`는 `Product Details에 UV 항목 없음`이다.
+
+**왜 중요한가**
+
+`raw`가 요약이면 독자는 원문을 검색해 찾을 수 없고, 값이 어떤 맥락에서 인쇄됐는지도 알 수 없다.
+바이오피니티 Dk/t `170`이 사양표가 아니라 **각주**에 있다는 사실은 요약된 `Dk/t 170`으로는 드러나지 않았다.
+
+---
+
+## 2026-08-28 · 정정 6 — 재검증일 갱신 (감사 C12)
+
+**대상:** 파일럿 3제품에서 이번에 다시 확인한 모든 출처 레코드
+
+**무엇이 잘못됐나**
+
+정정이 필요 없는 레코드들도 2026-08-28에 원문을 다시 열어 확인했는데, `verifiedAt`이 `2026-08-27`에 머물러 있었다.
+확인일이 실제 확인 시점보다 오래된 채로 남으면, 그 값이 언제까지 유효했는지 독자가 알 수 없다.
+
+**무엇을 바꿨나**
+
+- 이번 감사에서 손댄 모든 출처 레코드의 `verifiedAt`을 `2026-08-28`로 올렸다.
+  값과 원문이 그대로 재현된 필드(oasys `water`·`dkt`·`thickness`, dailies `bc`·`dia`·`material`·`dkt`·`thickness`·`uv`·`water` 코어,
+  biofinity `bc`·`dia`·`water`·`material`·`dkt` 사양서·`uv` 사양서)도 포함된다.
+- 같은 문자열이 화면에 인쇄되는 `sourceSummary`의 `2026.08.27 확인` 표기도 함께 `2026.08.28 확인`으로 맞췄다.
+- `dailies-total1.permit`의 `condition`을 재실행 결과로 보강했다:
+  `itemPermitNo=수허 13-112 호 105건 / modelnm=Dailies Total1 495건 중 prdtNmCn=워터렌즈 105건 · 2026-08-28 재실행 일치`.
+  2026-08-27 캡처와 건수·허가번호·포장내수량 분포가 모두 일치했다.
+- `dailies-total1.uv`의 `condition` 검토일도 갱신하고, 일본·한국 페이지에도 UV 표기가 0건이라는 확인 범위를 덧붙였다.
+- 건드리지 않은 레코드(다른 3제품 전체, `biofinity.thickness`)의 `verifiedAt`은 그대로 뒀다.
+
+**함께 갱신한 화면**
+
+`site/products/acuvue-oasys-1-day.html` · `dailies-total1.html` · `biofinity.html`의 정적 `<noscript>` 사양표와
+`site/compare/index.html`의 허가 근거 목록은 `products.js`의 복사본이므로 전부 다시 생성했다.
+6개 제품 × 9개 필드의 값·첫 출처(문서명·주소·기관·확인일)·조건이 `products.js`와 일치하는지 스크립트로 대조해 통과를 확인했다.
