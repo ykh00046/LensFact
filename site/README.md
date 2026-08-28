@@ -44,7 +44,7 @@ The site currently ships with a placeholder origin and a preview-only `robots.tx
    ```
 
    Expected: the twenty-two pages (`index.html`, `products/index.html`, `products/acuvue-oasys-1-day.html`, `products/dailies-total1.html`, `products/biofinity.html`, `products/acuvue-moist-1-day.html`, `products/myday.html`, `products/clariti-1-day.html`, `products/acuvue-oasys-2-week.html`, `products/precision1.html`, `products/biotrue-oneday.html`, `products/acuvue-oasys-max-1-day.html`, `products/dailies-aquacomfort-plus.html`, `products/acuvue-vita.html`, `products/total30.html`, `compare/index.html`, `knowledge/index.html`, `knowledge/water-content-moisture.html`, `about/index.html`, `policy/editorial.html`, `policy/methodology.html`, `policy/privacy.html`), plus `sitemap.xml`, `robots.txt`, and this README.
-2. **Fill in the contact email.** `about/index.html` contains the literal placeholder `문의 이메일: [배포 전 입력]`. Publishing with the placeholder in place is not acceptable.
+2. **Contact email** — done 2026-08-28: `about/index.html` shows `interojo679@gmail.com` as a mailto link.
 3. **Flip `robots.txt`.** Change `Disallow: /` to `Allow: /` and uncomment the `Sitemap:` line once the domain is final and the content is ready to be indexed.
 4. **Register the site with search engines by meta tag only.** Google Search Console and Naver Search Advisor both allow verification through an HTML meta tag; use that method. Do not add a verification script — the site loads no external scripts, and that constraint stays.
 5. **Verify 390px on a real device.** Check the header menu (open, Escape, click outside), the comparison table's horizontal scroll region, and that no page scrolls horizontally. The product pages must be checked too.
