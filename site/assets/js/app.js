@@ -391,6 +391,10 @@ const ADS_ENABLED = false;
   function numericTokens(fieldId, field) {
     if (fieldState(field.state) === "unknown") return [];
     let segments = valueSegments(field.value);
+    // A printed range such as "0.05 mm ~ 0.75 mm (도수에 따라 변함)" is not a single
+    // figure. It can never equal one number typed off a package, so it yields no token
+    // instead of silently matching its lower bound.
+    segments = segments.filter((segment) => !/[~–—]/.test(segment));
     // Core and surface water are measured differently and are never merged, so only
     // the core figure is comparable with a single number printed on a package.
     if (fieldId === "water" && segments.some((segment) => segment.includes("코어"))) {
@@ -756,7 +760,11 @@ const ADS_ENABLED = false;
     { productId: "acuvue-vita", colId: "col-acuvue-vita", label: "아큐브 비타®" },
     { productId: "total30", colId: "col-total30", label: "토탈30®" },
     { productId: "airoptix-plus-hydraglyde", colId: "col-airoptix-plus-hydraglyde", label: "에어옵틱스® 플러스 하이드라글라이드®" },
-    { productId: "proclear-1-day", colId: "col-proclear-1-day", label: "프로클리어® 원데이" }
+    { productId: "proclear-1-day", colId: "col-proclear-1-day", label: "프로클리어® 원데이" },
+    { productId: "biofinity-energys", colId: "col-biofinity-energys", label: "바이오피니티 에너지스™" },
+    { productId: "ultra-one-day", colId: "col-ultra-one-day", label: "울트라 원데이" },
+    { productId: "miru-1day", colId: "col-miru-1day", label: "Miru 1day Menicon Flat Pack" },
+    { productId: "soflens-daily", colId: "col-soflens-daily", label: "소프렌 데일리 근시용" }
   ];
 
   const COMPARE_ROWS = [
@@ -766,7 +774,11 @@ const ADS_ENABLED = false;
         "acuvue-oasys-2-week": "MFDS에 동일 제품의 등록 2건 · 실물 포장 확인 필요",
         "dailies-aquacomfort-plus": "한국 공식 제품 페이지 없음 · MFDS 등록(한국 등록명 아쿠아 렌즈)이 유일한 한국 근거 · 허가 유효성과 현재 판매 여부는 미확인",
         "airoptix-plus-hydraglyde": "한국 공식 제품 페이지 없음 · MFDS 등록(한국 등록명 에어렌즈 하이드라)이 유일한 한국 근거 · 허가 유효성과 현재 판매 여부는 미확인",
-        "proclear-1-day": "한국 목록 각주 07-568호는 MFDS 0건"
+        "proclear-1-day": "한국 목록 각주 07-568호는 MFDS 0건",
+        "biofinity-energys": "바이오피니티 구면·XR의 수허 08-131 호와 다른 별도 등록",
+        "ultra-one-day": "제품명으로는 MFDS 원장에서 조회되지 않음 · 모델명 kalifilcon A로 확인",
+        "miru-1day": "원장 모델명은 1day  Flat Pack(공백 2칸) · 같은 업체의 형제 제품은 별도 번호",
+        "soflens-daily": "수허 09-975 호는 트루핏 원데이와 공유 등록"
       }
     },
     {
@@ -781,7 +793,11 @@ const ADS_ENABLED = false;
         "acuvue-vita": "한국 페이지는 1달 착용으로 표기 · 글로벌 사양은 1 Month DW",
         "total30": "한국 페이지는 한달용으로 표기",
         "airoptix-plus-hydraglyde": "MFDS 등록 분류: 연속착용 소프트 콘택트렌즈(등급 3) · 착용방식은 전문가 판단 · 한국 공식 자료에는 교체주기·착용방식 안내가 없음",
-        "proclear-1-day": "한국 페이지는 교체 주기 매일로 표기 · 착용방식은 매일착용"
+        "proclear-1-day": "한국 페이지는 교체 주기 매일로 표기 · 착용방식은 매일착용",
+        "biofinity-energys": "MFDS 등록 분류: 연속착용 소프트 콘택트렌즈(등급 3) · 착용방식은 전문가 판단",
+        "ultra-one-day": "한국 브랜드 페이지에는 1일 교체 문자열이 없음 · 하루용 투명렌즈로만 분류",
+        "miru-1day": "한국 페이지는 행 라벨이 자료인데 값이 매일 교체 · 1차 근거는 영문 IFU 문장",
+        "soflens-daily": "한국 페이지 상세 이미지는 1일 교체용 · 미국 PI/FG는 착용·교체 일정을 전문가 판단으로 적음"
       }
     },
     {
@@ -801,7 +817,11 @@ const ADS_ENABLED = false;
         "acuvue-vita": "실리콘 하이드로겔 · 한국 공식 자료와 MFDS 원장에 재질명 표기 없음",
         "total30": "워터 그라디언트 실리콘 하이드로겔 · 한국 공식 자료에는 재질 계열 표기조차 없음",
         "airoptix-plus-hydraglyde": "제조사 문서 표기는 표면처리된 플루오로실리콘 함유 하이드로겔 · 한국 공식 자료 자체가 없음",
-        "proclear-1-day": "PC-하이드로겔(하이드로겔 계열) · 실리콘 하이드로겔과 같은 축에서 함수율·Dk/t를 비교하지 않음"
+        "proclear-1-day": "PC-하이드로겔(하이드로겔 계열) · 실리콘 하이드로겔과 같은 축에서 함수율·Dk/t를 비교하지 않음",
+        "biofinity-energys": "실리콘 하이드로겔 · 바이오피니티 구면과 같은 재질명 · 한국 허가 원장에는 재질명 표기 없음",
+        "ultra-one-day": "실리콘 하이드로겔 · 한국 허가 원장에 모델명으로 등재 · 한국 브랜드 페이지 이미지는 kalificon A로 오기",
+        "miru-1day": "하이드로겔(한국 전문가 페이지 명시)",
+        "soflens-daily": "하이드로겔 · 한국 허가 원장에는 재질명 표기 없음"
       }
     },
     { rowId: "row-bc", fieldId: "bc", label: "BC", mono: true },
@@ -823,12 +843,16 @@ const ADS_ENABLED = false;
         "acuvue-vita": "출처가 측정 위치를 표기하지 않음",
         "total30": "코어·표면 분리 표기 · 표면값은 문서별로 90% 이상/약 100%",
         "airoptix-plus-hydraglyde": "미국 사양은 Water Content, 국제 사양은 CORE WATER CONTENT로 라벨이 다름 · 숫자는 같음 · 표면 함수율 표기는 어느 공식 자료에도 없음",
-        "proclear-1-day": "출처가 측정 위치를 표기하지 않음 · 하이드로겔 계열"
+        "proclear-1-day": "출처가 측정 위치를 표기하지 않음 · 하이드로겔 계열",
+        "biofinity-energys": "벌크",
+        "ultra-one-day": "출처가 측정 위치를 표기하지 않음 · 한국 상세 이미지와 미국 공식 사양이 같은 값",
+        "miru-1day": "한국 소비자 페이지는 수분 함량, 한국 전문가 페이지는 함수율로 라벨이 다름 · 숫자는 같음",
+        "soflens-daily": "출처가 측정 위치를 표기하지 않음 · 하이드로겔 계열"
       }
     },
     {
       rowId: "row-dkt", fieldId: "dkt", label: "Dk/t", labelNote: "시험 조건 포함", mono: true,
-      rowNote: "아큐브 다섯 제품 원문만 단위(× 10⁻⁹)를 명기함. 데일리스 토탈원·바이오피니티·마이데이·클래리티 원데이·프리시전원·바이오트루 원데이·데일리스 아쿠아컴포트·토탈30·에어옵틱스 플러스·프로클리어 원데이 원문은 단위를 표기하지 않아 임의로 단위를 붙이지 않음.",
+      rowNote: "아큐브 다섯 제품 원문만 단위(× 10⁻⁹)를 명기함. 데일리스 토탈원·바이오피니티·바이오피니티 에너지스·마이데이·클래리티 원데이·프리시전원·바이오트루 원데이·울트라 원데이·데일리스 아쿠아컴포트·토탈30·에어옵틱스 플러스·프로클리어 원데이 원문은 단위를 표기하지 않아 임의로 단위를 붙이지 않음. 미루 원데이·소프렌 데일리는 어느 공식 자료에도 Dk/t 표기가 없음.",
       notes: {
         "acuvue-oasys-1-day": "-3.00D · 중심 0.085 mm · 35℃ · boundary/edge-corrected Dk",
         "dailies-total1": "-3.00D · 중심 0.09 mm",
@@ -842,7 +866,11 @@ const ADS_ENABLED = false;
         "acuvue-vita": "-3.00D · 중심 0.070 mm · 35℃ · boundary/edge-corrected Dk",
         "total30": "측정법·온도 미표기",
         "airoptix-plus-hydraglyde": "시험도수만 표기 · 측정법·보정·온도 미표기 · 같은 문서의 Dk 110 × 10⁻¹¹은 다른 물리량이며 환산하지 않음",
-        "proclear-1-day": "@-3.00DS · 측정법·보정·온도 미표기 · 중심두께 미확인"
+        "proclear-1-day": "@-3.00DS · 측정법·보정·온도 미표기 · 중심두께 미확인",
+        "biofinity-energys": "한국 페이지 본문 170 · 같은 페이지 각주 110 · 한국 2023 사양서/미국 171 @-3.00D · 세 원문 병기",
+        "ultra-one-day": "@ -3.00D · 측정법·보정·온도 미표기 · 같은 문서군의 Dk 107은 다른 물리량이며 환산하지 않음",
+        "miru-1day": "검토한 한국·글로벌 공식 자료 11종에 Dk/t 행 자체가 없음 · 형제 제품 미루 원데이 업사이드에는 있음",
+        "soflens-daily": "Dk 22 × 10⁻¹¹만 인쇄 · Dk/t 미표기"
       }
     },
     {
@@ -854,7 +882,10 @@ const ADS_ENABLED = false;
         "clariti-1-day": "검토한 한국·글로벌 공식 자료 6종에 중심두께 항목 없음",
         "total30": "미국 전문가 사양 기재",
         "airoptix-plus-hydraglyde": "-3.00D · 미국 전문가 사양 기재 · 미국 페이지만 조건 표기에서 마이너스 부호를 뺌",
-        "proclear-1-day": "검토한 한국·글로벌 공식 자료 6종에 중심두께 항목 없음"
+        "proclear-1-day": "검토한 한국·글로벌 공식 자료 6종에 중심두께 항목 없음",
+        "biofinity-energys": "미국 전문가 페이지 기재 · 바이오피니티 구면 페이지에는 없음",
+        "miru-1day": "검토한 한국·글로벌 공식 자료에 중심두께 항목 없음 · 형제 제품에는 있음",
+        "soflens-daily": "단일 시험도수 값 없음 · 범위 표기"
       }
     },
     {
@@ -872,7 +903,10 @@ const ADS_ENABLED = false;
         "acuvue-vita": "글로벌 기술 사양의 근사값 · 한국 표기 수치는 이미지 전용이라 확인되지 않음",
         "total30": "한국 공식 자료에 UV 표기 자체가 없음 · 차단율 퍼센트가 아니라 등급 표기",
         "airoptix-plus-hydraglyde": "기능 없음으로 단정하지 않음 · 검토한 알콘 공식 자료 4종에 UV·ultraviolet 표기 0건",
-        "proclear-1-day": "한국 사양서의 No가 유일한 명시적 표기 · 글로벌 공식 자료 2종에는 UV 항목 자체가 없음"
+        "proclear-1-day": "한국 사양서의 No가 유일한 명시적 표기 · 글로벌 공식 자료 2종에는 UV 항목 자체가 없음",
+        "ultra-one-day": "투과율 표기(차단율 아님) · 한국 공식 자료에는 UV 수치가 없음",
+        "miru-1day": "기능 없음으로 단정하지 않음 · 형제 제품 미루 원데이 업사이드에는 UV 등급 표기가 있음",
+        "soflens-daily": "기능 없음으로 단정하지 않음 · 검토한 공식 자료 3종에 UV·자외선 표기 0건"
       }
     },
     {
@@ -892,7 +926,11 @@ const ADS_ENABLED = false;
         "acuvue-vita": "MFDS UDI 248건 전수 대조로 허가번호 확인. 물성값은 전부 글로벌 기술 사양이 근거이며 BC·DIA·중심두께·Dk/t 네 값이 아큐브 오아시스® 2주와 같습니다. 교체주기는 한국 페이지가 1달 착용으로만 표기합니다.",
         "total30": "MFDS UDI 136건 전수 대조. 한국 공식 페이지는 수치 없음(워터렌즈 한달용) · 물성값은 미국 전문가 사양 단독 근거",
         "airoptix-plus-hydraglyde": "한국 공식 제품 페이지 없음 · MFDS 등록(에어렌즈 하이드라)으로 유통 식별 · 현재 판매 여부 미확인. MFDS UDI 171건이 한국알콘(주) 단일 신원으로 연결되며 소분류는 연속착용 소프트 콘택트렌즈 등급 3입니다. 물성값은 전부 글로벌 공식 자료가 근거이고 UV는 검토한 네 문서에 표기가 없어 미확인입니다.",
-        "proclear-1-day": "MFDS UDI 95건 전수 대조로 허가번호 확인(매일착용 소프트 콘택트렌즈 등급 2). 화면 표시값은 MFDS 원장 표기이며 쿠퍼비전코리아 전체 제품 목록 각주의 수허 07-568호는 MFDS 조회에서 0건입니다. 하이드로겔 계열이므로 실리콘 하이드로겔과 함수율·Dk/t를 같은 축에서 비교하지 않습니다. 중심두께는 공식 자료 6종에 항목이 없어 미확인입니다."
+        "proclear-1-day": "MFDS UDI 95건 전수 대조로 허가번호 확인(매일착용 소프트 콘택트렌즈 등급 2). 화면 표시값은 MFDS 원장 표기이며 쿠퍼비전코리아 전체 제품 목록 각주의 수허 07-568호는 MFDS 조회에서 0건입니다. 하이드로겔 계열이므로 실리콘 하이드로겔과 함수율·Dk/t를 같은 축에서 비교하지 않습니다. 중심두께는 공식 자료 6종에 항목이 없어 미확인입니다.",
+        "biofinity-energys": "MFDS UDI 65건 전수 집계로 허가번호 확인(연속착용 소프트 콘택트렌즈 등급 3 등록). 바이오피니티 구면·XR의 수허 08-131 호와 다른 별도 등록입니다. BC·DIA·함수율·재질은 바이오피니티 구면과 같은 값이고 다른 것은 광학 디자인과 허가번호입니다. Dk/t는 한국 공식 제품 페이지 한 장이 본문 170과 하단 각주 110으로 서로 다르게 적고 한국 2023 사양서·미국 전문가 페이지·글로벌 사양서는 171이어서 세 원문을 그대로 병기합니다. 중심두께는 미국 전문가 페이지 한 곳에만 기재돼 있고, UV는 한국 페이지와 한국 사양서가 어긋나 충돌로 유지합니다.",
+        "ultra-one-day": "MFDS UDI 180건 전수 대조로 허가번호 확인. 한국명 울트라 원데이 = 미국 INFUSE One-Day · MFDS 원장 모델명 kalifilcon A로 연결 확인(제품명 검색 불가). BC·DIA·함수율·재질은 한국 브랜드 페이지 상세정보 이미지에 인쇄된 값이며 페이지 텍스트 검색으로는 재현되지 않습니다. 같은 이미지가 재질을 kalificon A로 적어 두 표기를 함께 남깁니다. Dk/t 134와 같은 문서군의 Dk 107은 다른 물리량이며 환산하지 않았습니다.",
+        "miru-1day": "MFDS UDI 154건 전수 대조로 허가번호 확인. 한국 유통사 법인명은 원장 표기 (주)매니콘코리아이고 원장 모델명은 1day  Flat Pack(공백 2칸)이라 Miru 1day로는 조회되지 않습니다. 같은 업체 안에서 허가번호 하나가 제품 하나를 뜻하지 않습니다(프리미오와 미루 1M은 수허 15-319 호를 공유). BC·DIA·함수율·재질은 한국 공식 소비자·전문가 페이지가 직접 인쇄한 값입니다. Dk/t·중심두께·UV는 한국·글로벌 공식 자료에 항목이 없음(형제 제품에는 있음). 일본 동계열 제품 자료는 참고 출처로만 남기고 값으로 쓰지 않았습니다.",
+        "soflens-daily": "MFDS UDI 201건 전수 대조로 허가번호 확인. 원장 모델명이 Daily Disposable이어서 SofLens로는 조회되지 않고, 수허 09-975 호는 트루핏 원데이와 공유 등록입니다. BC·DIA·함수율은 한국 브랜드 페이지 상세정보 이미지에 인쇄된 값이며 페이지 텍스트 검색으로는 재현되지 않습니다. 한국 공급 도수가 근시 범위뿐이라 유형을 근시용으로 적었습니다. Dk/t는 표기 자체가 없고(같은 문서의 Dk 22 × 10⁻¹¹은 다른 물리량), 중심두께는 단일 시험도수 값 없이 범위로만 인쇄돼 있으며, UV는 검토한 세 문서 모두 표기가 없어 미확인입니다."
       }
     }
   ];
@@ -912,7 +950,11 @@ const ADS_ENABLED = false;
     { productId: "acuvue-vita", fieldIds: ["permit"] },
     { productId: "total30", fieldIds: ["permit"] },
     { productId: "airoptix-plus-hydraglyde", fieldIds: ["permit"] },
-    { productId: "proclear-1-day", fieldIds: ["permit"] }
+    { productId: "proclear-1-day", fieldIds: ["permit"] },
+    { productId: "biofinity-energys", fieldIds: ["permit"] },
+    { productId: "ultra-one-day", fieldIds: ["permit"] },
+    { productId: "miru-1day", fieldIds: ["permit"] },
+    { productId: "soflens-daily", fieldIds: ["permit"] }
   ];
 
   function compareCell(row, product, column) {
@@ -1169,12 +1211,14 @@ const ADS_ENABLED = false;
   // Summary table row order mirrors the comparison table so the two read the same way.
   const PRODUCT_SUMMARY_FIELDS = ["permit", "replacement", "material", "bc", "dia", "water", "dkt", "thickness", "uv"];
 
-  // Biofinity and AIR OPTIX plus HydraGlyde are the only products on file registered
-  // with MFDS as 연속착용 (grade 3). The registration class is not a replacement cycle,
-  // so the summary row says so next to the value, exactly as the comparison table does.
+  // Biofinity, Biofinity Energys and AIR OPTIX plus HydraGlyde are the only products on
+  // file registered with MFDS as 연속착용 (grade 3). The registration class is not a
+  // replacement cycle, so the summary row says so next to the value, exactly as the
+  // comparison table does.
   const SUMMARY_EXTRA_NOTES = {
     replacement: {
       "biofinity": "MFDS 등록 분류: 연속착용 소프트 콘택트렌즈(등급 3) · 착용방식은 전문가 판단",
+      "biofinity-energys": "MFDS 등록 분류: 연속착용 소프트 콘택트렌즈(등급 3) · 착용방식은 전문가 판단",
       "airoptix-plus-hydraglyde": "MFDS 등록 분류: 연속착용 소프트 콘택트렌즈(등급 3) · 착용방식은 전문가 판단"
     }
   };

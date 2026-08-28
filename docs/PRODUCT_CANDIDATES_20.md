@@ -50,18 +50,18 @@ BC, DIA, 함수율, Dk/t, 중심두께, 허가번호 같은 **수치·식별번�
 | 6 | 토탈30® 워터렌즈 한달용 | TOTAL30 | Alcon | 한국알콘(주) | 1개월 | `TOTAL30` | ✅ 편입 완료 2026-08-28 (한국 판매명 `워터렌즈 한달용` · 한국 공식 페이지에 수치 없음) |
 | 7 | 데일리스® 아쿠아컴포트 플러스 | DAILIES AquaComfort Plus | Alcon | 한국알콘(주) | 1일 | `DAILIES AquaComfort Plus`, `AquaComfort` | ✅ 편입 완료 2026-08-28 (한국 공식 페이지 없음 · MFDS 등록 있음 · 한국 등록명 `아쿠아 렌즈`) |
 | 8 | 에어옵틱스® 플러스 하이드라글라이드 | AIR OPTIX plus HydraGlyde | Alcon | 한국알콘(주) | 1개월 | `AIR OPTIX plus HydraGlyde` (대문자 `AIR OPTIX` + 파스칼 `HydraGlyde`가 유일한 정답 표기. 파스칼 `Air Optix`는 9,464건이 나오지만 **전부 구형 난시용 `수허 06-908 호`**이고 구면은 한 건도 없다. `AirOptix`·`AIROPTIX`·`air optix`·`HYDRAGLYDE`·`lotrafilcon`·`에어옵틱스`는 모두 0건) | ✅ 편입 완료 2026-08-28 (한국 공식 페이지 없음 · MFDS 등록 있음 · 한국 등록명 `에어렌즈 하이드라`) |
-| 9 | 마이데이® | MyDay daily disposable | CooperVision | 쿠퍼비젼코리아(주) | 1일 | `MYDAY` | ✅ 편입 완료 2026-08-28 |
-| 10 | 클래리티® 원데이 | clariti 1 day | CooperVision | 쿠퍼비젼코리아(주) | 1일 | `clariti 1 day`, `clariti` | ✅ 편입 완료 2026-08-28 |
-| 11 | 프로클리어® 원데이 | Proclear 1 day | CooperVision | 쿠퍼비젼코리아(주) | 1일 | `Proclear 1 Day` (**`Day`의 `D`가 대문자**여야 구면 95건이 나온다. 소문자 `Proclear 1 day`는 멀티포컬 114건만 잡고 구면은 0건이다. `PROCLEAR`·`proclear`·`프로클리어`·`Omafilcon`은 모두 0건이므로, 안전한 경로는 업체명 + 부분 문자열 `Proclear`(209건)로 받아 허가번호별로 나누는 것) | ✅ 편입 완료 2026-08-28 |
-| 12 | 바이오피니티® 에너지스 | Biofinity Energys | CooperVision | 쿠퍼비젼코리아(주) | 1개월 | `Biofinity Energys`, `Energys` | — |
+| 9 | 마이데이® | MyDay daily disposable | CooperVision | 쿠퍼비전코리아(주) | 1일 | `MYDAY` | ✅ 편입 완료 2026-08-28 |
+| 10 | 클래리티® 원데이 | clariti 1 day | CooperVision | 쿠퍼비전코리아(주) | 1일 | `clariti 1 day`, `clariti` | ✅ 편입 완료 2026-08-28 |
+| 11 | 프로클리어® 원데이 | Proclear 1 day | CooperVision | 쿠퍼비전코리아(주) | 1일 | `Proclear 1 Day` (**`Day`의 `D`가 대문자**여야 구면 95건이 나온다. 소문자 `Proclear 1 day`는 멀티포컬 114건만 잡고 구면은 0건이다. `PROCLEAR`·`proclear`·`프로클리어`·`Omafilcon`은 모두 0건이므로, 안전한 경로는 업체명 + 부분 문자열 `Proclear`(209건)로 받아 허가번호별로 나누는 것) | ✅ 편입 완료 2026-08-28 |
+| 12 | 바이오피니티® 에너지스 | Biofinity Energys | CooperVision | 쿠퍼비전코리아(주) | 1개월 | `Biofinity Energys` (**파스칼 표기 하나만 유효**. `BIOFINITY ENERGYS`·`biofinity energys`·`Biofinity Energys®`·`에너지스`·`바이오피니티 에너지스`는 모두 0건이고, 업체명 없이 모델명만으로도 0건이다) | ✅ 편입 완료 2026-08-28 (허가번호 `수허 17-239 호`는 구면·XR의 `수허 08-131 호`와 별개) |
 | 13 | 바이오트루® 원데이 근시용 | Biotrue ONEday | Bausch + Lomb | (주)바슈롬코리아 | 1일 | `Biotrue ONEday` | ✅ 편입 완료 2026-08-28 |
-| 14 | 울트라® 원데이 | Bausch + Lomb ULTRA ONE DAY (미국명 **INFUSE**) | Bausch + Lomb | (주)바슈롬코리아 | 1일 | `ULTRA ONE DAY`, `INFUSE`, `kalifilcon` | — |
-| 15 | 소프렌® 데일리 근시용 | SofLens daily disposable | Bausch + Lomb | (주)바슈롬코리아 | 1일 | `SofLens daily disposable`, `SofLens` | — |
+| 14 | 울트라® 원데이 | Bausch + Lomb ULTRA ONE DAY (미국명 **INFUSE**) | Bausch + Lomb | (주)바슈롬코리아 | 1일 | **재질명 `kalifilcon A`로만 찾을 수 있다.** 원장 모델명이 재질명이고 제품명은 조회 폼에 입력란이 없는 `업체 제품 명칭` 칸(`Ultra Oneday, 울트라 원데이`)에만 있다. `ULTRA ONE DAY`·`Ultra Oneday`·`INFUSE`·`Kalifilcon`은 모두 0건이고, 괄호를 붙인 `(kalifilcon A)` 5,160건은 난시용·멀티포컬이므로 **괄호 없는 표기**여야 한다 | ✅ 편입 완료 2026-08-28 (`수허 20-222 호` · 한국명과 미국명을 잇는 유일한 공식 고리가 재질명) |
+| 15 | 소프렌® 데일리 근시용 | SofLens daily disposable | Bausch + Lomb | (주)바슈롬코리아 | 1일 | 모델명 **`Daily Disposable`** + 업체명 `바슈롬`. **원장 모델명에 브랜드명이 없다** — `SofLens` 208건은 전부 소프렌 38·59이고 브랜드는 업체 제품 명칭(`소프렌 데일리, 수분쿠션 렌즈, 저자극 렌즈, 트루핏 원데이, Truefit`)에만 나온다. `hilafilcon`은 0건 | ✅ 편입 완료 2026-08-28 (`수허 09-975 호` · 트루핏 원데이와 공유 등록) |
 | 16 | 울트라® 근시용 | Bausch + Lomb ULTRA | Bausch + Lomb | (주)바슈롬코리아 | 1개월 | `ULTRA`, `Bausch + Lomb ULTRA` | — |
 | 17 | 옵티마® FW | Optima FW | Bausch + Lomb | (주)바슈롬코리아 | 1개월 | `Optima FW`, `Optima` | — |
-| 18 | Miru 1day Menicon Flat Pack | Miru 1day Flat Pack | Menicon | 메니콘코리아(법인명 확인 필요) | 1일 | `Miru 1day`, `Flat Pack` | — |
-| 19 | Miru 1day UpSide | Miru 1day UpSide | Menicon | 메니콘코리아(법인명 확인 필요) | 1일 | `Miru 1day UpSide`, `UpSide` | — |
-| 20 | Miru 1month Menicon | Miru 1month Menicon | Menicon | 메니콘코리아(법인명 확인 필요) | 1개월 | `Miru 1month`, `Miru 1month Menicon` | — |
+| 18 | Miru 1day Menicon Flat Pack | Miru 1day Flat Pack | Menicon | (주)매니콘코리아 | 1일 | 모델명 **`1day  Flat Pack`(공백 2칸)** + 업체명 **`매니콘`**. `Miru 1day`·`1day Flat Pack`(공백 1칸)·`MIRU`·`miru`·`hioxifilcon`·`메니콘`은 모두 0건 | ✅ 편입 완료 2026-08-28 (`수허 15-476 호`) |
+| 19 | Miru 1day UpSide | Miru 1day UpSide | Menicon | (주)매니콘코리아 | 1일 | `Miru UpSide` (원장 모델명) | — (MFDS 등록 확인 완료 · `수허 19-300 호` 65건) |
+| 20 | Miru 1month Menicon | Miru 1month Menicon | Menicon | (주)매니콘코리아 | 1개월 | `Miru 1M` (원장 모델명 · `수허 15-319 호`) | — |
 | 21 | 클라렌 오투오투 원데이 그랩수 플러스 | Clalen O2O2 1Day | (주)인터로조 | (주)인터로조 (국내 제조) | 1일 | `O2O2`, `Clalen`, `클라렌` | — |
 | 22 | 클라렌 오투오투 M 그랩수 | Clalen O2O2 M | (주)인터로조 | (주)인터로조 (국내 제조) | 1개월 | `O2O2 M`, `Clalen`, `클라렌` | — |
 
@@ -83,6 +83,14 @@ BC, DIA, 함수율, Dk/t, 중심두께, 허가번호 같은 **수치·식별번�
 > **허가번호 형식 주의** — 21, 22번은 국내 제조 제품이므로 `수허`(수입허가)가 아니라 `제허` 계열 번호일 가능성이 높다. 검증 단계에서 원문 형식을 그대로 확인한다.
 
 > **한국 판매명 ≠ 글로벌명 대표 사례** — 14번 한국 `울트라 원데이`는 미국에서 `INFUSE`로 판매된다. MVP_BRIEF가 지적한 "한국 판매명·글로벌 제품명·식약처 허가명이 1:1로 대응하지 않는다" 문제의 교과서적 사례다.
+> **2026-08-28 검증 결과 이 대응이 증명됐다.** MFDS 원장 24건 어디에도 `INFUSE`가 없고 미국 공식 문서 어디에도 `ULTRA ONE DAY`가 없다. 두 이름은 어느 방향으로도 이어지지 않으며, 연결 고리는 재질명 `kalifilcon A` 하나뿐이다.
+
+> **Menicon 한국 법인명은 `(주)매니콘코리아`다 — `메`가 아니라 `매`.** 2026-08-28 MFDS UDI 업체명 조회에서 `매니콘`·`매니콘코리아`·`(주)매니콘코리아`는 각 16,401건, `메니콘`·`메니콘코리아`·`(주)메니콘코리아`·`매니콘코리아(주)`·`Menicon`은 각 0건이다.
+> 한국 공식 사이트도 회사 소개 본문은 `주식회사 매니콘 코리아`로 적고 페이지 제목만 `메니콘코리아`다. 브랜드 표기로 `메니콘`을 쓰는 것 자체는 문제가 아니지만, **MFDS 조회를 재현하려면 `매니콘`이어야 한다.**
+
+> **허가번호 하나가 제품 하나를 뜻하지 않는다 (Menicon 사례)** — 2026-08-28 `bplcNm=매니콘` 16,401건 전수 집계 결과:
+> `1day  Flat Pack` = `수허 15-476 호`(154건) · `Miru UpSide` = `수허 19-300 호`(65건) · `Miru 1M`과 `PremiO` = `수허 15-319 호` 공유(308건 / 154건) · `Miru 1MT`와 `PremiO Toric` = `수허 15-405 호` 공유(13,860건 / 1,848건).
+> **19번 Miru 1day UpSide와 프리미오(PremiO)는 MFDS에 등록돼 있다.** 프리미오는 한국 공식 제품 페이지만 없을 뿐 등록 자체는 확인된다(미해결 사항 3).
 
 ---
 
@@ -143,7 +151,7 @@ BC, DIA, 함수율, Dk/t, 중심두께, 허가번호 같은 **수치·식별번�
 
 | # | 한국 공식 제품 페이지 | 한국 사이트 게시 IFU | 글로벌 기술 사양 | 확인 메모 |
 | --- | --- | --- | --- | --- |
-| 18 | ✅ https://www.menicon.co.kr/consumer/products/disposable-lenses/miru-1day-flat-pack | ✅ https://www.menicon.co.kr/hubfs/00%20Global%20official%20website/Professional%20website/Dispo/Miru%20Flat%20Pack/English_IFU_RA1DAYPI002.pdf | ✅ https://www.menicon.com/professional/products/disposable-lenses/miru-1day-flat-pack | 한국 페이지에 `제품 세부 정보` 표가 있다: 소재·수분 함량·기본 커브·직경·Power 범위·렌즈 마킹. **Dk/t와 허가번호는 없다.** 한국 사이트가 올린 IFU가 **영문 문서**라는 점을 표기해야 한다. |
+| 18 | ✅ https://www.menicon.co.kr/consumer/products/disposable-lenses/miru-1day-flat-pack · **전문가용 판 ✅ https://www.menicon.co.kr/professional/products/disposable-lenses/miru-1day-flat-pack (2026-08-28 새로 확인)** | ✅ https://www.menicon.co.kr/hubfs/00%20Global%20official%20website/Professional%20website/Dispo/Miru%20Flat%20Pack/English_IFU_RA1DAYPI002.pdf | ✅ https://www.menicon.com/professional/products/disposable-lenses/miru-1day-flat-pack | 한국 페이지에 `제품 세부 정보` 표가 있다: 소재·수분 함량·기본 커브·직경·Power 범위·렌즈 마킹. **Dk/t와 허가번호는 없다.** 한국 사이트가 올린 IFU가 **영문 문서**라는 점을 표기해야 한다. 전문가용 판은 재질 계열(하이드로겔)까지 밝힌다. 2026-08-28 검증: Dk/t·중심두께·UV는 한국·글로벌 자료 11종에 **행 자체가 없고** 형제 제품 UpSide 페이지에는 세 항목이 모두 있다. |
 | 19 | ✅ https://www.menicon.co.kr/consumer/products/disposable-lenses/miru-1day-upside | ✅ https://www.menicon.co.kr/hubfs/00%20Global%20official%20website/Professional%20website/Dispo/Miru%20UpSide/Downloads/English_IFU_RA1DAYPI002.pdf | ✅ https://www.menicon.com/professional/products/disposable-lenses/miru-1day-upside | 동일. 18번과 IFU 파일명이 같으므로 **실제 문서 내용이 제품별로 다른지 반드시 열어서 확인**한다. |
 | 20 | ✅ https://www.menicon.co.kr/consumer/products/disposable-lenses/miru-1month-menicon | ✅ https://www.menicon.co.kr/hubfs/00%20Global%20official%20website/Professional%20website/Dispo/Miru%201month/English_IFU_RDASRBPI003.pdf | ✅ https://www.menicon.com/professional/products/disposable-lenses/miru-1month-menicon | 동일. |
 
@@ -193,16 +201,16 @@ BC, DIA, 함수율, Dk/t, 중심두께, 허가번호 같은 **수치·식별번�
 | 8 | 6 | 토탈30 | 데일리스 토탈원과 같은 계열의 월간 제품. **함수율 기준(코어/표면) 문제를 한 번 더 드러낸다** (✅ 편입 완료 2026-08-28) |
 | 9 | 16 | 울트라 근시용 | 월간 실리콘 하이드로겔. 바이오피니티와 다른 재질로 월간 축을 넓힌다 |
 | 10 | 11 | 프로클리어 원데이 | 함수율 글이 인용한 탈수·건조감 연구의 재질 계열과 같은 계보. **"덜 탈수돼도 편안함은 같았다"를 제품과 연결**할 수 있다 |
-| 11 | 12 | 바이오피니티 에너지스 | 바이오피니티와 재질 계열은 같고 디자인이 다르다. **같은 재질인데 무엇이 다른가**를 보여주는 자리 |
-| 12 | 14 | 울트라 원데이 | 한국명/미국명 불일치(INFUSE)의 대표 사례 |
+| 11 | 12 | 바이오피니티 에너지스 | 바이오피니티와 재질 계열은 같고 디자인이 다르다. **같은 재질인데 무엇이 다른가**를 보여주는 자리 (✅ 편입 완료 2026-08-28) |
+| 12 | 14 | 울트라 원데이 | 한국명/미국명 불일치(INFUSE)의 대표 사례 (✅ 편입 완료 2026-08-28) |
 
 ### 3순위 (5) — 여기까지가 17종
 
 | 순위 | # | 제품 | 이유 |
 | --- | --- | --- | --- |
 | 13 | 4 | 아큐브 비타 | 월간 아큐브. 한국 IFU 있음. 노출은 위 제품들보다 낮다 (✅ 편입 완료 2026-08-28) |
-| 14 | 15 | 소프렌 데일리 근시용 | 보급형 하이드로겔 원데이. 가격대 축을 넓히지만 한국 공식 수치 출처가 없다 |
-| 15 | 18 | Miru 1day Flat Pack | 한국 페이지에 소재·수분함량·BC·직경 표가 있는 드문 사례. **한국 판매명이 영문 그대로**인 사례이기도 하다 |
+| 14 | 15 | 소프렌 데일리 근시용 | 보급형 하이드로겔 원데이. 가격대 축을 넓히지만 한국 공식 수치 출처가 없다 → **2026-08-28 반증됨.** 한국 브랜드 페이지 상세정보 이미지 안에 BC·DIA·함수율·재질·교체주기가 한국어로 인쇄돼 있었다 (✅ 편입 완료 2026-08-28) |
+| 15 | 18 | Miru 1day Flat Pack | 한국 페이지에 소재·수분함량·BC·직경 표가 있는 드문 사례. **한국 판매명이 영문 그대로**인 사례이기도 하다 (✅ 편입 완료 2026-08-28) |
 | 16 | 20 | Miru 1month Menicon | 월간 축 보강 |
 | 17 | 21 | 클라렌 오투오투 원데이 그랩수 플러스 | 국내 제조사 제품 — `수허`가 아닌 `제허` 계열 허가번호 사례를 다룰 수 있다. **단, 이해관계 공시를 붙이는 조건에서만.** 공시하지 않기로 하면 이 자리는 19번(Miru 1day UpSide)이 대신한다 |
 
@@ -326,13 +334,39 @@ MFDS UDI 조회 화면은 `#searchBtn` 클릭 후 결과 표가 갱신되기까�
 
 ## 미해결 사항
 
-1. **한국 유통사 법인명** — Bausch는 2026-08-28 MFDS UDI 업체명 조회로 `(주)바슈롬코리아`로 확정해 표 A에 반영했다. Menicon은 아직 확정되지 않았다.
+1. ~~**한국 유통사 법인명**~~ → **2026-08-28 해소.** Bausch는 MFDS UDI 업체명 조회로 `(주)바슈롬코리아`, Menicon은 같은 방식으로 **`(주)매니콘코리아`**(`메`가 아니라 `매`)로 확정해 표 A 13~20번에 반영했다. 한글 업체명 조회가 0건일 때는 인코딩 문제이거나 표기 문제이므로 모델명 조회로 업체명을 역추적해 교차 확인한다.
 2. **Alcon 데일리스 아쿠아컴포트 플러스 / 에어옵틱스 플러스 하이드라글라이드**의 한국 유통 여부가 공식 사이트로는 확인되지 않았다. UDI 조회 결과에 따라 후보 승격 또는 제외를 결정한다.
    - **2026-08-28 결론(에어옵틱스 플러스 하이드라글라이드):** MFDS UDI에 등록이 **있고**(`수허 17-148 호` 171건 · 한국알콘(주) 수입업 · 연속착용소프트콘택트렌즈 · 등급 3), 한국 공식 제품 페이지는 **없다**(알콘 코리아 사이트맵 66건 전수 확인 · `air-optix`·`airoptix`·`hydraglyde` 0건). 한국어 IFU도 공개 경로에서 찾지 못했다(알콘 eIFU 포털은 referer 검증·로그인 인증으로 차단). **한국 등록명은 `에어렌즈 하이드라`**(구면 `에어렌즈 하이드라 SMART SHIELD` · 난시용 `에어렌즈 하이드라 난시용 SMART SHIELD` · 다초점 `에어렌즈 하이드라 멀티포컬 SMART SHIELD`)이며 `에어옵틱스 플러스 하이드라글라이드`가 아니다. 이로써 **한국알콘의 `○○렌즈` 작명 규칙이 세 제품에서 연속 확인됐다**: `워터렌즈`(데일리스 토탈원·토탈30), `아쿠아 렌즈`(데일리스 아쿠아컴포트 플러스), `에어렌즈 하이드라`(이 제품). 원장의 `prdtNmCn`은 MFDS 검색 폼에 입력란이 없으므로 모델명으로 조회한 뒤 전수 집계로만 읽을 수 있다. 등록과 현재 판매는 별개이므로 현재 판매 여부와 허가 유효성은 확인하지 못했다. 이 세 가지를 화면에 함께 표시하는 조건으로 편입했다.
    - **2026-08-28 결론(아쿠아컴포트 플러스):** MFDS UDI에 등록이 **있고**(`수허 09-217 호` 58건 · 한국알콘(주) 수입업 · 매일착용 소프트 콘택트렌즈 · 등급 2), 한국 공식 제품 페이지는 **없다**(알콘 코리아 사이트맵 66건 전수 확인). 한국 등록명은 `아쿠아 렌즈`(난시용은 `아쿠아렌즈 난시용`)로 `데일리스 아쿠아컴포트 플러스`가 아니다. 등록과 현재 판매는 별개이므로 현재 판매 여부와 허가 유효성은 확인하지 못했다. 이 세 가지를 화면에 함께 표시하는 조건으로 편입했다.
-3. **Menicon 프리미오(PremiO) 2주 제품**의 한국 공식 페이지를 찾지 못했다. 2주 교체 축을 넓히려면 UDI 조회로 유통 여부를 먼저 확인해야 한다.
+3. **Menicon 프리미오(PremiO) 2주 제품**의 한국 공식 페이지를 찾지 못했다. → **2026-08-28 유통·허가 쪽은 확인됐다.** `PremiO`는 `수허 15-319 호`로 MFDS에 등록돼 있고(154건) 같은 번호를 `Miru 1M`(308건)과 공유한다. `PremiO Toric`은 `Miru 1MT`와 `수허 15-405 호`를 공유한다. 다만 **한국 공식 제품 페이지는 여전히 없어** 값의 근거가 되는 한국 자료가 없다. 2주 교체 축을 넓히려면 이 항목부터 다시 본다. 같은 조회에서 **19번 Miru 1day UpSide도 `수허 19-300 호`로 등록**돼 있음을 확인했다.
 4. **Bausch + Lomb 한국 공식 수치 출처**가 5개 제품 모두에서 확인되지 않았다. 한국 IFU 종이 문서만 존재할 가능성이 있어, 실물 패키지 IFU 확보 경로를 별도로 검토한다.
 5. `https://www.bausch.co.kr` 는 TLS 인증서 오류로 접근 불가. 출처 목록에서 제외한다.
+
+
+## 20번째 제품 — 남은 한 자리 (2026-08-28)
+
+19개 제품이 `site/assets/data/products.js`에 편입됐다. 목표 20종까지 **한 자리**가 남는다.
+
+| 편입 순서 | 제품 | 편입일 |
+| --- | --- | --- |
+| 1~3 | 아큐브 오아시스 원데이 · 데일리스 토탈원 · 바이오피니티 | 파일럿 |
+| 4~15 | 원데이 아큐브 모이스트 · 마이데이 · 클래리티 원데이 · 아큐브 오아시스 2주 · 프리시전원 · 바이오트루 원데이 · 아큐브 오아시스 맥스 원데이 · 데일리스 아쿠아컴포트 플러스 · 아큐브 비타 · 토탈30 · 에어옵틱스 플러스 하이드라글라이드 · 프로클리어 원데이 | 2026-08-28 |
+| 16~19 | **바이오피니티 에너지스 · 울트라 원데이 · 미루 원데이 · 소프렌 데일리** | 2026-08-28 |
+
+남은 후보는 둘이다. **어느 쪽을 택할지는 운영자 결정 사항이며 이 문서는 판단하지 않는다.**
+
+### 후보 A — 클라렌 (21·22번, (주)인터로조)
+
+- **이해관계: 운영자 근무처.** 실으려면 그 제품이 나타나는 **모든 화면에 인라인 공시**가 필요하다(검증 체크리스트 8절).
+- 얻는 것: 국내 제조 제품이므로 `수허`(수입허가)가 아닌 **`제허` 계열 허가번호**를 처음으로 다루게 된다. 현재 19개 제품의 허가번호는 전부 `수허`다.
+- 공시 없이 싣지 않는다. **싣지 않기로 하는 것도 정당한 결정이다.**
+
+### 후보 B — Miru 1day UpSide (19번, Menicon)
+
+- 이해관계 없음. MFDS 등록 확인 완료(`수허 19-300 호` 65건).
+- 한국 공식 전문가 페이지가 **Dk/t `91` · 중심두께 `0.07 mm` · UV `Class 2`를 한국어로 직접 인쇄**한다. 미루 원데이(플랫팩)에서 세 항목이 모두 `unknown`인 것과 정확히 대조된다.
+- 같은 제조사·같은 1일 교체·다른 재질 계열(실리콘 하이드로겔 `midafilcon A` · 함수율 56%)이라, **함수율은 더 낮은데 산소 전달 표기는 더 큰** 짝이 한 표에 들어온다.
+- 주의: 같은 사이트의 `Miru 1month` 한국 전문가 페이지는 중심두께를 `0.8 mm`로 적고 글로벌판은 `0.08 mm`다. **메니콘코리아 페이지 값을 단독 근거로 쓸 때는 자릿수를 글로벌판과 반드시 대조한다.**
 
 
 ## 감독 조정 — 수요 조사와의 대조 (2026-08-28)

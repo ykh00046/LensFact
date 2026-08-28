@@ -4507,5 +4507,1764 @@ window.LENSFACT_PRODUCTS = [
         ]
       }
     ]
+  },
+  {
+    id: "biofinity-energys",
+    slug: "biofinity-energys",
+    aliases: ["바이오피니티 에너지스", "Biofinity Energys", "comfilcon A"],
+    name: "바이오피니티 에너지스™ / Biofinity Energys®",
+    selectorLabel: "바이오피니티 에너지스",
+    maker: "CooperVision",
+    distributor: "쿠퍼비전코리아(주)",
+    type: "근시·원시용 투명 구면 · 비구면 디자인 · 월간 교체",
+    packageSpecs: [
+      { value: "BC 8.6", label: "Base Curve · mm" },
+      { value: "DIA 14.0", label: "Diameter · mm" },
+      { value: "48%", label: "Water content" },
+      { value: "Dk/t 170 / 110 / 171", label: "공식 출처 간 차이" }
+    ],
+    fields: [
+      {
+        id: "bc",
+        value: "8.6 mm",
+        state: "verified",
+        sourceSummary: "쿠퍼비전코리아 제품 사양서(2023 Rev #4)와 글로벌 공식 사양이 일치 · 2026.08.28 확인",
+        caution: "한국 공식 제품 페이지에는 BC 표기가 없어 한국 사양서 PDF가 한국 자료의 유일한 근거입니다. 공식 자료에 기재된 BC는 8.6 하나뿐이며 다른 BC의 유통 여부는 확인하지 못했습니다.",
+        sources: [
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "쿠퍼비전코리아(주)",
+            document: "쿠퍼비전코리아 제품 사양서 (CVK Product Specifications · SA09487 Rev #4 09/2023)",
+            raw: "8.6",
+            url: "https://coopervision.co.kr/sites/coopervision.co.kr/files/CVK%20Product%20Specifications.pdf",
+            condition: "3쪽 Frequently Replaced Product. 연속착용소프트렌즈 표 · Bioﬁnity Energys® 행(값 y0 399.8) · 내면곡률반경 Base Curve (mm) 열(x 435.5–467.7)",
+            linkNote: "같은 표의 바이오피니티 토릭 행은 8.7이므로 좌표로 행을 분리해 확인했다"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "CooperVision US",
+            document: "Biofinity Energys® 미국 전문가용 제품 페이지 Product Details",
+            raw: "Base curve 8.6",
+            url: "https://coopervision.com/practitioner/our-products/biofinity-family/biofinity-energys",
+            condition: "United States 지역 표기 페이지",
+            linkNote: "한국 사양서 값과 일치"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "CooperVision",
+            document: "CooperVision Product Reference Guide (17345-6 05/2026)",
+            raw: "8.6",
+            url: "https://coopervision.com/sites/coopervision.com/files/media-document/coopervision-product-reference-guide-052026.pdf",
+            condition: "3쪽 SPHERE LENSES 표 · Monthly Replacement Lenses 구획 · Bioﬁnity Energys® 행(값 y0 357.5) · Base Curve (mm) 열(x 387.2–410.8)",
+            linkNote: "세 자료 모두 8.6"
+          }
+        ]
+      },
+      {
+        id: "dia",
+        value: "14.0 mm",
+        state: "verified",
+        sourceSummary: "한국 사양서·글로벌 사양서가 14.0, 미국 전문가 페이지는 14로 인쇄 · 2026.08.28 확인",
+        caution: "한국 공식 제품 페이지에는 직경 표기가 없어 한국 사양서 PDF가 한국 자료의 유일한 근거입니다. 미국 전문가 페이지는 같은 값을 14로 적습니다. 소수점 표기만 다르고 값은 같습니다.",
+        sources: [
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "쿠퍼비전코리아(주)",
+            document: "쿠퍼비전코리아 제품 사양서 (CVK Product Specifications · SA09487 Rev #4 09/2023)",
+            raw: "14.0",
+            url: "https://coopervision.co.kr/sites/coopervision.co.kr/files/CVK%20Product%20Specifications.pdf",
+            condition: "3쪽 Bioﬁnity Energys® 행(값 y0 399.8) · 렌즈 직경 Diameter (mm) 열(x 488.6–529.8)",
+            linkNote: "같은 표의 바이오피니티 토릭 행은 14.5이므로 좌표로 행을 분리해 확인했다"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "CooperVision US",
+            document: "Biofinity Energys® 미국 전문가용 제품 페이지 Product Details",
+            raw: "Diameter 14",
+            url: "https://coopervision.com/practitioner/our-products/biofinity-family/biofinity-energys",
+            condition: "United States 지역 표기 페이지 · 소수점 없이 14로 인쇄",
+            linkNote: "인쇄 표기를 그대로 옮겼다. 14.0으로 고쳐 적지 않았다"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "CooperVision",
+            document: "CooperVision Product Reference Guide (17345-6 05/2026)",
+            raw: "14.0",
+            url: "https://coopervision.com/sites/coopervision.com/files/media-document/coopervision-product-reference-guide-052026.pdf",
+            condition: "3쪽 Bioﬁnity Energys® 행(값 y0 357.5) · Dia (mm) 열(x 422.2–443.8)",
+            linkNote: "한국 사양서와 동일 표기"
+          }
+        ]
+      },
+      {
+        id: "water",
+        value: "48%",
+        state: "verified",
+        sourceSummary: "한국 사양서·한국 제품 페이지·한국 제품 목록·글로벌 사양이 모두 48%",
+        caution: "출처가 측정 위치(벌크·코어·표면)를 표기하지 않고 함수율 한 줄만 제시합니다. 코어와 표면을 나눠 표기하는 제품의 숫자와 같은 축에 놓고 비교하지 않습니다.",
+        sources: [
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "쿠퍼비전코리아(주)",
+            document: "쿠퍼비전코리아 제품 사양서 (CVK Product Specifications · SA09487 Rev #4 09/2023)",
+            raw: "48",
+            url: "https://coopervision.co.kr/sites/coopervision.co.kr/files/CVK%20Product%20Specifications.pdf",
+            condition: "3쪽 Bioﬁnity Energys® 행(값 y0 399.8) · 함수율 Water content (%) 열(x 607.4–639.3) · 측정 위치 표기 없음",
+            linkNote: "열 이름이 함수율 Water content (%)이므로 단위는 %"
+          },
+          {
+            sourceType: "한국 공식 페이지·IFU",
+            verifiedAt: "2026-08-28",
+            organization: "쿠퍼비전코리아(주)",
+            document: "바이오피니티 에너지스™ 한국 공식 제품 페이지",
+            raw: "＊（별첨 1）바이오피니티 에너지스™의 ［1．함수율과 2．산소 투과율（Dk/t）］은 아래와 같습니다． - 1．48%, 2．110",
+            url: "https://coopervision.co.kr/contact-lenses/biofinity-energys",
+            condition: "페이지 하단 각주 별첨 1 · 측정 위치 표기 없음",
+            linkNote: "이 각주의 함수율 48%는 다른 출처와 일치한다. 같은 각주의 Dk/t 110은 dkt 필드의 충돌 항목으로 별도 기록했다"
+          },
+          {
+            sourceType: "한국 공식 페이지·IFU",
+            verifiedAt: "2026-08-28",
+            organization: "쿠퍼비전코리아(주)",
+            document: "쿠퍼비전코리아 전체 제품 목록",
+            raw: "- 바이오피니티 [근시용 1. 48%, 2. 170] / [난시용 1. 48%, 2. 110] / [에너지스 1. 48%, 2. 170]",
+            url: "https://coopervision.co.kr/contact-lenses",
+            condition: "각주 별첨 1 · 에너지스 값",
+            linkNote: "근시용·난시용과 구분해 에너지스 값만 사용"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "CooperVision US",
+            document: "Biofinity Energys® 미국 전문가용 제품 페이지 Product Details",
+            raw: "Material / H 2 0 content  comfilcon A / 48%",
+            url: "https://coopervision.com/practitioner/our-products/biofinity-family/biofinity-energys",
+            condition: "재질과 함수율이 한 줄에 함께 표기됨",
+            linkNote: "한국 값과 일치"
+          }
+        ]
+      },
+      {
+        id: "material",
+        value: "comfilcon A",
+        state: "verified",
+        flag: "한국 허가 원장 미기재",
+        sourceSummary: "한국 사양서와 글로벌 사양에서 확인. 한국 페이지는 실리콘 하이드로겔까지만 표기",
+        caution: "MFDS 허가 원장의 모델명은 Biofinity Energys이고 재질명을 담지 않습니다. 재질명은 제조사 사양서로만 확인된 값입니다. 바이오피니티 구면과 같은 재질 계열이지만 허가번호와 광학 디자인은 서로 다른 제품입니다.",
+        sources: [
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "쿠퍼비전코리아(주)",
+            document: "쿠퍼비전코리아 제품 사양서 (CVK Product Specifications · SA09487 Rev #4 09/2023)",
+            raw: "실리콘 하이드로겔 comﬁlcon  A",
+            url: "https://coopervision.co.kr/sites/coopervision.co.kr/files/CVK%20Product%20Specifications.pdf",
+            condition: "3쪽 Bioﬁnity Energys® 행(y0 396.5·403.3) · 렌즈 재질 Material USAN 열(x 554.7–577.6)",
+            linkNote: "PDF는 fi 합자 글리프(U+FB01)로 인쇄돼 추출 문자열이 comﬁlcon  A(공백 2칸)로 나온다. 인쇄된 단어는 comfilcon A"
+          },
+          {
+            sourceType: "한국 공식 페이지·IFU",
+            verifiedAt: "2026-08-28",
+            organization: "쿠퍼비전코리아(주)",
+            document: "바이오피니티 에너지스™ 한국 공식 제품 페이지",
+            raw: "높은 함수율과 산소 투과율을 (* 별첨 1) 갖춘 실리콘 하이드로겔 소재를 적용해 일상적인 착용 환경에서도 편안한 착용감을 염두에 두고 개발되었습니다.",
+            url: "https://coopervision.co.kr/contact-lenses/biofinity-energys",
+            condition: "본문 서술 · 재질명 comfilcon 문자열은 페이지에 0건",
+            linkNote: "한국 페이지는 재질 계열까지만 밝히고 USAN 재질명은 밝히지 않는다"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "CooperVision",
+            document: "CooperVision Product Reference Guide (17345-6 05/2026)",
+            raw: "comﬁlcon A / 48%",
+            url: "https://coopervision.com/sites/coopervision.com/files/media-document/coopervision-product-reference-guide-052026.pdf",
+            condition: "3쪽 Bioﬁnity Energys® 행 · Material/H20 Content 열(x 295.6–336.4) · 같은 행 FDA Group 열은 5C SiHy",
+            linkNote: "실리콘 하이드로겔 계열임을 FDA Group 표기로도 확인"
+          },
+          {
+            sourceType: "MFDS 허가·UDI",
+            verifiedAt: "2026-08-28",
+            organization: "식품의약품안전처",
+            document: "의료기기 UDI 표준코드 조회",
+            raw: "Biofinity Energys",
+            url: "https://emedi.mfds.go.kr/msismext/udi/uif/schStddCdLstView.do",
+            condition: "허가번호 수허 17-239 호 · 모델명 원문 · 재질명 미포함",
+            linkNote: "modelnm=Comfilcon 조회는 0건이다. 이 업체 원장에서 재질명을 담은 모델명은 마이데이 토릭·멀티포컬과 클래리티 계열뿐이다"
+          }
+        ]
+      },
+      {
+        id: "dkt",
+        value: "170 / 110 / 171",
+        state: "conflict",
+        flag: "공식 출처 간 값이 다름",
+        sourceSummary: "한국 제품 페이지 본문 170 · 같은 페이지 각주 110 · 한국 제품 목록 170 · 한국 2023 사양서와 글로벌 사양 171",
+        caution: "한국 공식 제품 페이지 한 장 안에서 본문은 170, 하단 각주는 110으로 서로 다릅니다. 한국 2023 사양서와 글로벌 공식 사양은 -3.00DS 기준 171입니다. 170과 110에는 시험 조건 표기가 없습니다. 세 값을 하나로 정규화하지 않습니다. Dk에서 Dk/t를 계산하지 않았습니다.",
+        conflicts: [
+          { source: "한국 공식 제품 페이지 본문 · 한국 전체 제품 목록 각주", value: "170 · 시험 조건 미표기" },
+          { source: "한국 공식 제품 페이지 하단 별첨 1 각주", value: "110 · 시험 조건 미표기" },
+          { source: "쿠퍼비전코리아 2023 제품 사양서 · 미국 전문가 페이지 · 글로벌 Product Reference Guide 05/2026", value: "171 at -3.00DS" }
+        ],
+        sources: [
+          {
+            sourceType: "한국 공식 페이지·IFU",
+            verifiedAt: "2026-08-28",
+            organization: "쿠퍼비전코리아(주)",
+            document: "바이오피니티 에너지스™ 한국 공식 제품 페이지 (본문)",
+            raw: "높은 산소 투과율로 (Dk/t 170) 눈에 필요한 산소를 충분히 제공하여 , 선명한 시야를 유지합니다 .",
+            url: "https://coopervision.co.kr/contact-lenses/biofinity-energys",
+            condition: "주요 제품 특징 항목 · 시험 도수·단위 표기 없음",
+            linkNote: "curl 원본 HTML과 브라우저 렌더링 innerText 양쪽에서 확인"
+          },
+          {
+            sourceType: "한국 공식 페이지·IFU",
+            verifiedAt: "2026-08-28",
+            organization: "쿠퍼비전코리아(주)",
+            document: "바이오피니티 에너지스™ 한국 공식 제품 페이지 (하단 각주)",
+            raw: "＊（별첨 1）바이오피니티 에너지스™의 ［1．함수율과 2．산소 투과율（Dk/t）］은 아래와 같습니다． - 1．48%, 2．110",
+            url: "https://coopervision.co.kr/contact-lenses/biofinity-energys",
+            condition: "페이지 하단 각주 별첨 1 · 시험 도수·단위 표기 없음",
+            linkNote: "같은 페이지 본문의 170과 다른 숫자다. 두 문자열 모두 curl 원본과 브라우저 렌더링에서 확인했다"
+          },
+          {
+            sourceType: "한국 공식 페이지·IFU",
+            verifiedAt: "2026-08-28",
+            organization: "쿠퍼비전코리아(주)",
+            document: "쿠퍼비전코리아 전체 제품 목록",
+            raw: "- 바이오피니티 [근시용 1. 48%, 2. 170] / [난시용 1. 48%, 2. 110] / [에너지스 1. 48%, 2. 170]",
+            url: "https://coopervision.co.kr/contact-lenses",
+            condition: "각주 별첨 1 · 에너지스 값 · 시험 도수 표기 없음",
+            linkNote: "이 페이지는 에너지스를 170으로 적어 제품 페이지 각주의 110과 어긋난다"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "쿠퍼비전코리아(주)",
+            document: "쿠퍼비전코리아 제품 사양서 (CVK Product Specifications · SA09487 Rev #4 09/2023)",
+            raw: "171",
+            url: "https://coopervision.co.kr/sites/coopervision.co.kr/files/CVK%20Product%20Specifications.pdf",
+            condition: "3쪽 Bioﬁnity Energys® 행(값 y0 399.8) · 산소 투과율 Oxygen transmissibility Dk/t † 열(x 660.1–701.9) · 각주 †: (@-3.00DS) x 10-9 [(cm/sec) x (ml O )/(ml x mmHg)] — 인쇄물에서 -9는 위첨자, O 뒤의 2는 아래첨자",
+            linkNote: "같은 표의 바이오피니티 토릭 행은 116이므로 좌표로 행을 분리해 확인했다. 측정법·온도는 각주에 없음"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "CooperVision US",
+            document: "Biofinity Energys® 미국 전문가용 제품 페이지 Product Details",
+            raw: "Oxygen transmissibility  171 Dk/t (at -3.00D)",
+            url: "https://coopervision.com/practitioner/our-products/biofinity-family/biofinity-energys",
+            condition: "시험 도수만 표기 · 측정법·온도 없음",
+            linkNote: "한국 2023 사양서와 같은 값·같은 시험 도수"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "CooperVision",
+            document: "CooperVision Product Reference Guide (17345-6 05/2026)",
+            raw: "171",
+            url: "https://coopervision.com/sites/coopervision.com/files/media-document/coopervision-product-reference-guide-052026.pdf",
+            condition: "3쪽 Bioﬁnity Energys® 행(값 y0 357.5) · Oxygen Transmissibility DK/t** 열(x 456.6–517.4) · 각주 **: (@-3.00DS) x 10-9 [(cm/sec) x (ml O2)/(ml x mm Hg)].",
+            linkNote: "한국 사양서와 동일한 각주 형식"
+          }
+        ]
+      },
+      {
+        id: "thickness",
+        value: "0.08 mm at -3.00D",
+        state: "verified",
+        flag: "글로벌 공식 자료 단독 근거",
+        sourceSummary: "미국 전문가용 제품 페이지 Center thickness 행에서만 확인 · 한국 자료에는 항목 자체가 없음",
+        caution: "이 값의 근거는 미국 전문가 페이지 한 곳뿐입니다. 한국 사양서·한국 제품 페이지·한국 사용방법 PDF·한국 제품 안내 PDF·글로벌 Product Reference Guide에는 중심두께 항목 자체가 없습니다. Dk/t에서 두께를 역산하지 않았습니다.",
+        sources: [
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "CooperVision US",
+            document: "Biofinity Energys® 미국 전문가용 제품 페이지 Product Details",
+            raw: "Center thickness  0.08 @ -3.00D",
+            url: "https://coopervision.com/practitioner/our-products/biofinity-family/biofinity-energys",
+            condition: "United States 지역 표기 페이지 · 원본 HTML의 label Center thickness / item 0.08 @ -3.00D 로도 확인",
+            linkNote: "같은 사이트의 바이오피니티 구면·XR 전문가 페이지에는 2026.08.28 현재 thickness 문자열이 0건인데, 에너지스 페이지에는 남아 있다"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "쿠퍼비전코리아(주)",
+            document: "쿠퍼비전코리아 제품 사양서 (CVK Product Specifications · SA09487 Rev #4 09/2023)",
+            raw: "중심두께 열 없음 (3쪽 전체에 thickness 0건 · 두께 0건 · 중심 0건)",
+            url: "https://coopervision.co.kr/sites/coopervision.co.kr/files/CVK%20Product%20Specifications.pdf",
+            condition: "3쪽 표 열 구성: 제품명·정점 굴절력·원주 굴절력·원주 축·ADD 도수·디자인·착용기간·내면곡률반경·렌즈 직경·렌즈 재질·함수율·산소 투과율·자외선 투과율·가시성 색조",
+            linkNote: "열 헤더 좌표를 전수 확인한 결과 두께 열이 존재하지 않음. 한국 자료에는 대조할 값이 없다"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "CooperVision",
+            document: "CooperVision Product Reference Guide (17345-6 05/2026)",
+            raw: "thickness 문자열 0건 (7쪽 전문)",
+            url: "https://coopervision.com/sites/coopervision.com/files/media-document/coopervision-product-reference-guide-052026.pdf",
+            condition: "7쪽 전체 텍스트 추출 후 검색",
+            linkNote: "글로벌 공식 사양서에도 중심두께 열이 없어 교차 확인이 되지 않는다"
+          }
+        ]
+      },
+      {
+        id: "replacement",
+        value: "30일",
+        state: "verified",
+        sourceSummary: "쿠퍼비전코리아 2023 제품 사양서 30 days replacement · 한국 페이지 매월 · 글로벌 Monthly",
+        caution: "30일은 교체주기입니다. MFDS는 이 제품을 연속착용소프트콘택트렌즈·등급 3으로 등록하지만 이는 허가 품목 분류이며 수면착용 허용을 뜻하지 않습니다. 한국 제품 페이지는 야간 취침 시 착용하지 않는다고 명시하고, 한국 사용방법 PDF는 매일착용을 권장하며 연속착용은 전문가가 점진적으로 권유할 수 있다고 적습니다. 연속착용 최대 기간 표기는 한국 사양서 14 days/13 nights, 한국 사용방법 PDF 2주까지, 글로벌 사양서 up to 6 nights / 7 days로 서로 다릅니다. 최종 착용방식은 안경사 또는 안과 전문인의 판단이 필요합니다.",
+        sources: [
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "쿠퍼비전코리아(주)",
+            document: "쿠퍼비전코리아 제품 사양서 (CVK Product Specifications · SA09487 Rev #4 09/2023)",
+            raw: "연속착용 소프트렌즈 30 days  replacement Extended wear 14 days/13 nights;",
+            url: "https://coopervision.co.kr/sites/coopervision.co.kr/files/CVK%20Product%20Specifications.pdf",
+            condition: "3쪽 Bioﬁnity Energys® 행(y0 389.3–410.5) · 착용기간 Wear Schedule & Replacement Frequency 열(x 373.1–415.7)",
+            linkNote: "착용방식(연속착용 소프트렌즈 · Extended wear)과 교체주기(30 days replacement)가 한 칸에 함께 인쇄돼 있다. 추출 문자열의 30 days 뒤 공백 2칸은 인쇄물 그대로다"
+          },
+          {
+            sourceType: "한국 공식 페이지·IFU",
+            verifiedAt: "2026-08-28",
+            organization: "쿠퍼비전코리아(주)",
+            document: "바이오피니티 에너지스™ 한국 공식 제품 페이지",
+            raw: "교체 주기 매월",
+            url: "https://coopervision.co.kr/contact-lenses/biofinity-energys",
+            condition: "제품 헤더 표기 · 같은 영역에 교정 근시·원시 표기 · 별도 주의문구 ＊눈에 착용하는 콘택트렌즈로 야간 취침시에는 착용을 하지 않습니다．",
+            linkNote: "이 페이지에는 30일 문자열이 없다. 한국어 표기는 매월이다"
+          },
+          {
+            sourceType: "한국 공식 페이지·IFU",
+            verifiedAt: "2026-08-28",
+            organization: "쿠퍼비전코리아(주)",
+            document: "쿠퍼비전 콘택트렌즈 사용방법 및 사용 시 주의사항 (연속착용 소프트콘택트렌즈)",
+            raw: "• 렌즈 착용과 교체 기간은 안경사나 안과의사에 의해 결정된다. • 매일착용 시에는 한달, 연속착용 시에는 2주까지 연속착용이 가능하다.  그러나 모든 착용자가 최대기간을 착용할 수 있는 것은 아니며 매일착용을 권장한다.",
+            url: "https://coopervision.co.kr/sites/coopervision.co.kr/files/media-document/Biofinity_Energys_patient_instruction.pdf",
+            condition: "1쪽 착용 기간 항목 · 바이오피니티 에너지스™ 한국 공식 제품 페이지의 사용시 주의 사항 링크로 게시된 파일",
+            linkNote: "쿠퍼비전 연속착용 소프트콘택트렌즈 공통 문서이며 제품명·허가번호·수치는 담고 있지 않다. 한국어 교체 표현은 한달이다"
+          },
+          {
+            sourceType: "한국 공식 페이지·IFU",
+            verifiedAt: "2026-08-28",
+            organization: "쿠퍼비전코리아(주)",
+            document: "쿠퍼비전코리아 전체 제품 목록",
+            raw: "한달착용",
+            url: "https://coopervision.co.kr/contact-lenses",
+            condition: "바이오피니티 에너지스™ 제품 카드의 product-tag",
+            linkNote: "같은 목록 하단에 **모든 콘택트렌즈는 야간 취침 시 착용하지 마십시오. 문구가 있다"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "CooperVision US",
+            document: "Biofinity Energys® 미국 전문가용 제품 페이지 Product Details",
+            raw: "Replacement schedule  Monthly / Extended wear  Yes",
+            url: "https://coopervision.com/practitioner/our-products/biofinity-family/biofinity-energys",
+            condition: "교체주기와 연속착용 가부가 별도 항목으로 분리돼 있음",
+            linkNote: "Extended wear Yes는 착용방식 항목이며 수면착용 허용 표시로 옮겨 적지 않는다"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "CooperVision",
+            document: "CooperVision Product Reference Guide (17345-6 05/2026)",
+            raw: "Daily Wear or Extended Wear up to 6 nights / 7 days",
+            url: "https://coopervision.com/sites/coopervision.com/files/media-document/coopervision-product-reference-guide-052026.pdf",
+            condition: "3쪽 SPHERE LENSES 표 Monthly Replacement Lenses 구획 · Bioﬁnity Energys® 행 · Wear Schedule 열(x 237.6–273.1)",
+            linkNote: "구획 이름이 Monthly Replacement Lenses다. 연속착용 기간 표기가 한국 2023 사양서(14 days/13 nights)와 다르다"
+          }
+        ]
+      },
+      {
+        id: "permit",
+        value: "수허 17-239 호",
+        state: "verified",
+        sourceSummary: "MFDS 의료기기 UDI 표준코드 조회 65건 전수 대조 · 쿠퍼비전코리아 전체 제품 목록 표기와 일치",
+        caution: "에너지스는 바이오피니티 구면·XR과 허가번호를 공유하지 않는 별도 등록 제품입니다. 바이오피니티 구면·XR은 수허 08-131 호, 바이오피니티 토릭은 수허 10-1406 호입니다. 한국 제품 목록은 수허 17-239호로, MFDS는 수허 17-239 호로 적어 숫자와 호 사이 공백 표기가 다릅니다. 한국 제품 페이지의 조합 -2026-13-076과 제품 목록의 조합-2026-13-082는 광고 사전심의 번호이며 허가번호가 아닙니다. MFDS 소분류 연속착용소프트콘택트렌즈·등급 3은 허가 품목 분류이며 수면착용 허용을 뜻하지 않습니다.",
+        sources: [
+          {
+            sourceType: "MFDS 허가·UDI",
+            verifiedAt: "2026-08-28",
+            organization: "식품의약품안전처",
+            document: "의료기기 UDI 표준코드 조회",
+            raw: "수허 17-239 호",
+            url: "https://emedi.mfds.go.kr/msismext/udi/uif/schStddCdLstView.do",
+            condition: "bplcNm=쿠퍼비전코리아 · modelnm=Biofinity Energys 조회 65건을 pageSize=500 한 페이지로 전수 집계. distinct 신원 1건(연속착용소프트콘택트렌즈 · 등급 3 · 업체 제품 명칭 디지털 렌즈 · 쿠퍼비전코리아(주) · 수허 17-239 호 · 모델명 Biofinity Energys). 포장내수량 전 행 6. 화면 문구 총 65건이 조회됐습니다.",
+            linkNote: "modelnm=Biofinity 조회 4,551건은 토릭 4,392(수허 10-1406 호) + 에너지스 65(수허 17-239 호) + 구면 64와 XR 30(수허 08-131 호)으로 정확히 나뉜다. 검색 함정: 업체명은 쿠퍼비젼이 아니라 쿠퍼비전코리아(주)여야 하고(쿠퍼비젼코리아 0건), 모델명은 파스칼 표기 Biofinity Energys여야 한다(BIOFINITY ENERGYS·biofinity energys·에너지스·바이오피니티 에너지스·Biofinity Energys® 모두 0건). 업체명 없이 모델명만으로는 0건"
+          },
+          {
+            sourceType: "한국 공식 페이지·IFU",
+            verifiedAt: "2026-08-28",
+            organization: "쿠퍼비전코리아(주)",
+            document: "쿠퍼비전코리아 전체 제품 목록",
+            raw: "수허 17-239호 바이오피니티 에너지스",
+            url: "https://coopervision.co.kr/contact-lenses",
+            condition: "제품 목록 하단 각주 · 같은 각주에 수허 08-131 바이오피니티 & 바이오피니티 XR, 수허 10-1406호 바이오피니티 토릭 & 바이오피니티 토릭 XR이 별도 기재",
+            linkNote: "MFDS 원문과 번호는 같고 공백 표기만 다르다. 이 각주가 에너지스를 바이오피니티·XR과 분리해 적는다는 점이 MFDS 원장과 일치한다"
+          },
+          {
+            sourceType: "한국 공식 페이지·IFU",
+            verifiedAt: "2026-08-28",
+            organization: "쿠퍼비전코리아(주)",
+            document: "쿠퍼비전 콘택트렌즈 사용방법 및 사용 시 주의사항 (연속착용 소프트콘택트렌즈)",
+            raw: "허가번호 표기 없음 (수허·제허·허가 문자열 0건)",
+            url: "https://coopervision.co.kr/sites/coopervision.co.kr/files/media-document/Biofinity_Energys_patient_instruction.pdf",
+            condition: "2쪽 전문 텍스트 추출 후 검색 · 제품명 Biofinity·바이오피니티·에너지스도 모두 0건",
+            linkNote: "이 IFU에는 허가번호·제품명·수치가 모두 없어 허가 근거로 쓸 수 없다"
+          }
+        ]
+      },
+      {
+        id: "uv",
+        value: "공식 자료 간 충돌",
+        state: "conflict",
+        flag: "공식 출처 간 표기가 다름",
+        sourceSummary: "한국 제품 페이지는 UV 차단 기술 적용을 서술 · 한국 2023 사양서는 자외선 투과율 열에 No · 글로벌 자료에는 UV 항목 자체가 없음",
+        caution: "UV 차단이 있다고도 없다고도 단정하지 않습니다. 어느 공식 자료에도 UVA·UVB 차단율 퍼센트나 차단 등급 수치가 없습니다. 자외선 차단 콘택트렌즈는 눈과 주변 부위를 완전히 덮지 못하므로 자외선 차단용 고글이나 선글라스를 대신할 수 없습니다.",
+        conflicts: [
+          { source: "바이오피니티 에너지스™ 한국 공식 제품 페이지", value: "UV 차단 기술이 적용되어 , 자외선으로부터 눈을 보호합니다 ." },
+          { source: "쿠퍼비전코리아 2023 제품 사양서", value: "자외선 투과율 UV Blocking & Class 열 = No" },
+          { source: "미국 전문가 페이지 · 글로벌 Product Reference Guide 05/2026", value: "UV 항목 자체가 없음" }
+        ],
+        sources: [
+          {
+            sourceType: "한국 공식 페이지·IFU",
+            verifiedAt: "2026-08-28",
+            organization: "쿠퍼비전코리아(주)",
+            document: "바이오피니티 에너지스™ 한국 공식 제품 페이지",
+            raw: "UV 차단 기술이 적용되어 , 자외선으로부터 눈을 보호합니다 .",
+            url: "https://coopervision.co.kr/contact-lenses/biofinity-energys",
+            condition: "주요 제품 특징 항목 · 차단율 퍼센트·등급 수치 0건",
+            linkNote: "한국 소비자 페이지는 기능 유무만 서술한다"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "쿠퍼비전코리아(주)",
+            document: "쿠퍼비전코리아 제품 사양서 (CVK Product Specifications · SA09487 Rev #4 09/2023)",
+            raw: "No",
+            url: "https://coopervision.co.kr/sites/coopervision.co.kr/files/CVK%20Product%20Specifications.pdf",
+            condition: "3쪽 Bioﬁnity Energys® 행(값 y0 399.8) · 자외선 투과율 UV Blocking ‡ & Class 열(x 721.0–754.5) · 각주 ‡: UV 흡수 콘택트렌즈는 눈과 주변 부위를 완전히 덮지 않기 때문에, 자외선 흡수 고글 또는 선글라스와 같은 보호용 UV 흡수 안경류를 대체하지 않습니다.",
+            linkNote: "같은 표의 바이오피니티 구면·XR·토릭 행도 모두 No이고, 1쪽 마이데이 행은 Class 2이므로 이 열은 제품마다 실제로 갈린다. 3쪽 열 이름만 자외선 투과율이고 1·2쪽은 자외선 차단 등급이다"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "CooperVision US",
+            document: "Biofinity Energys® 미국 전문가용 제품 페이지 Product Details",
+            raw: "UV 문자열 0건 (UV Blocker 행 없음)",
+            url: "https://coopervision.com/practitioner/our-products/biofinity-family/biofinity-energys",
+            condition: "2026.08.28 공개 HTML 전수 검색",
+            linkNote: "같은 사이트의 마이데이 전문가 페이지에는 UV Blocker* Yes 행이 있으므로, 행이 없다는 것은 표기 자체가 없다는 뜻이다"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "CooperVision",
+            document: "CooperVision Product Reference Guide (17345-6 05/2026)",
+            raw: "Bioﬁnity Energys® 행 Features 목록에 UV blocking 항목 없음 (• Aquaform® Technology · • DigitalBoost® Technology · • Optimum modulus · • High oxygen transmissibility)",
+            url: "https://coopervision.com/sites/coopervision.com/files/media-document/coopervision-product-reference-guide-052026.pdf",
+            condition: "3쪽 Bioﬁnity Energys® 행 Features/Design Technology 열(x 664.5–738.7)",
+            linkNote: "같은 쪽의 Avaira Vitality® 행에는 • UV blocking* 항목이 있다. 쪽 하단의 UV 경고 각주는 그 행에 붙는다"
+          },
+          {
+            sourceType: "한국 공식 페이지·IFU",
+            verifiedAt: "2026-08-28",
+            organization: "쿠퍼비전코리아(주)",
+            document: "쿠퍼비전 콘택트렌즈 사용방법 및 사용 시 주의사항 (연속착용 소프트콘택트렌즈)",
+            raw: "자외선 문자열 0건",
+            url: "https://coopervision.co.kr/sites/coopervision.co.kr/files/media-document/Biofinity_Energys_patient_instruction.pdf",
+            condition: "2쪽 전문 텍스트 추출 후 검색",
+            linkNote: "매일착용판 공통 IFU에는 있던 자외선 차단 경고 항목이 이 연속착용판에는 없다"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "ultra-one-day",
+    slug: "ultra-one-day",
+    aliases: ["울트라 원데이", "Bausch + Lomb ULTRA ONE DAY", "INFUSE One-Day", "kalifilcon A"],
+    name: "울트라 원데이 / Bausch + Lomb ULTRA ONE DAY (미국명 INFUSE® One-Day)",
+    selectorLabel: "울트라 원데이",
+    maker: "Bausch + Lomb",
+    distributor: "(주)바슈롬코리아",
+    type: "근시·원시용 투명 구면 · 1일 교체",
+    packageSpecs: [
+      { value: "BC 8.6", label: "Base Curve · mm" },
+      { value: "DIA 14.2", label: "Diameter · mm" },
+      { value: "55%", label: "Water content" },
+      { value: "134", label: "Dk/t at -3.00D" }
+    ],
+    fields: [
+      {
+        id: "bc",
+        value: "8.6 mm",
+        state: "verified",
+        flag: "한국·글로벌 공식 자료 일치",
+        sourceSummary: "한국 브랜드 페이지 상세 이미지의 사양표와 Bausch + Lomb 미국 공식 사양 4종이 같은 값 · 2026.08.28 확인",
+        caution: "한국 페이지는 이 값을 본문 텍스트가 아니라 상세정보 탭의 이미지 1장 안에 인쇄합니다. 이미지에는 대체 텍스트가 없어 페이지 텍스트 검색으로는 `베이스`·`커브`가 0건입니다. 단위 표기는 한국 `8.6mm`(붙임)와 미국 `8.6 mm`(띄움)로 다릅니다.",
+        sources: [
+          {
+            sourceType: "한국 공식 페이지·IFU",
+            verifiedAt: "2026-08-28",
+            organization: "(주)바슈롬코리아",
+            document: "울트라 원데이 한국 브랜드 제품 페이지 상세정보 이미지",
+            raw: "베이스 커브  8.6mm",
+            url: "https://www.bauschlomb.co.kr/cleardaily/?idx=98",
+            condition: "`제품 상세 안내` 표 2행 좌측 · 이미지 https://cdn.imweb.me/upload/S2023010385e2991530ec3/1618649b99469.jpg (1020×2106px, 대체 텍스트 없음)",
+            linkNote: "페이지 HTML 텍스트에는 이 값이 없다. 이미지를 원본 해상도로 확대해 읽었다"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "Bausch & Lomb Incorporated",
+            document: "Bausch + Lomb INFUSE® Package Insert / Fitting Guide (Rev. 2023-07 · 8191603)",
+            raw: "Base Curve: 8.6mm",
+            url: "https://pi.bausch.com/globalassets/pdf/packageinserts/vision-care/lenses/bausch-lomb-infuse-package-insert-fitting-guide73.pdf",
+            condition: "CONTACT LENS PARAMETERS AVAILABLE 절 · 구면·난시용·멀티포컬 공통 문서에서 BC는 변형별 구분 표기가 없다",
+            linkNote: "같은 절의 Diameter만 14.5mm (Astigmatism)로 난시용을 따로 적는다"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "Bausch + Lomb",
+            document: "BAUSCH + LOMB INFUSE® ONE-DAY Contact Lens Parameters (INF.0007.USA.24)",
+            raw: "8.6 mm",
+            url: "https://ecp.bauschcontactlenses.com/siteassets/pdf/infuse-oneday-contact-lens-parameters.pdf",
+            condition: "BASE CURVE 행 · INFUSE®(구면)·FOR ASTIGMATISM·MULTIFOCAL 3열 모두 8.6 mm",
+            linkNote: "PDF 텍스트 좌표가 한 줄(y=14.0)로 뭉쳐 있어 열 귀속은 구면 전용 웹 페이지와 대조해 확인"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "Bausch + Lomb",
+            document: "INFUSE® One-Day 미국 ECP 제품 페이지 (MTB.0263.USA.22)",
+            raw: "BASE CURVE 8.6 mm",
+            url: "https://ecp.bauschcontactlenses.com/products/infuse-one-day/",
+            condition: "구면 전용 페이지의 INFUSE® contact lens parameters 표",
+            linkNote: "페이지 고지: All information and materials on this site pertain to the U.S. only"
+          }
+        ]
+      },
+      {
+        id: "dia",
+        value: "14.2 mm",
+        state: "verified",
+        flag: "한국·글로벌 공식 자료 일치",
+        sourceSummary: "한국 브랜드 페이지 상세 이미지의 사양표와 Bausch + Lomb 미국 공식 사양 4종이 같은 값 · 2026.08.28 확인",
+        caution: "난시용(울트라 원데이 난시용)은 14.5 mm로 다릅니다. 이 값은 구면 제품의 값입니다.",
+        sources: [
+          {
+            sourceType: "한국 공식 페이지·IFU",
+            verifiedAt: "2026-08-28",
+            organization: "(주)바슈롬코리아",
+            document: "울트라 원데이 한국 브랜드 제품 페이지 상세정보 이미지",
+            raw: "직경  14.2mm",
+            url: "https://www.bauschlomb.co.kr/cleardaily/?idx=98",
+            condition: "`제품 상세 안내` 표 2행 우측 · 상세정보 탭 이미지 안",
+            linkNote: "페이지 HTML 텍스트에는 `직경` 0건, `14.2` 0건이다"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "Bausch & Lomb Incorporated",
+            document: "Bausch + Lomb INFUSE® Package Insert / Fitting Guide (Rev. 2023-07 · 8191603)",
+            raw: "Diameter: 14.2mm",
+            url: "https://pi.bausch.com/globalassets/pdf/packageinserts/vision-care/lenses/bausch-lomb-infuse-package-insert-fitting-guide73.pdf",
+            condition: "CONTACT LENS PARAMETERS AVAILABLE 절 · 바로 아랫줄 14.5mm (Astigmatism)로 난시용과 구분 표기",
+            linkNote: "구면 제품의 값"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "Bausch + Lomb",
+            document: "BAUSCH + LOMB INFUSE® ONE-DAY Contact Lens Parameters (INF.0007.USA.24)",
+            raw: "14.2 mm",
+            url: "https://ecp.bauschcontactlenses.com/siteassets/pdf/infuse-oneday-contact-lens-parameters.pdf",
+            condition: "DIAMETER 행 · 추출 순서 `14.2 mm · 14.5 mm · 14.2 mm` 중 첫 번째(구면) 열",
+            linkNote: "난시용 열 14.5 mm는 미국 파라미터 일람 페이지의 난시용 절에도 단독으로 인쇄돼 열 귀속이 확정된다"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "Bausch + Lomb",
+            document: "INFUSE® One-Day 미국 ECP 제품 페이지 (MTB.0263.USA.22)",
+            raw: "DIAMETER 14.2 mm",
+            url: "https://ecp.bauschcontactlenses.com/products/infuse-one-day/",
+            condition: "구면 전용 페이지의 파라미터 표",
+            linkNote: "미국 한정 고지가 붙은 페이지"
+          }
+        ]
+      },
+      {
+        id: "water",
+        value: "55%",
+        state: "verified",
+        flag: "한국·글로벌 공식 자료 일치",
+        sourceSummary: "한국 브랜드 페이지 상세 이미지의 `함수율 55%`와 Package Insert / Fitting Guide의 측정 조건 문장 · 2026.08.28 확인",
+        caution: "제조사는 이 값을 `식염수에 담근 상태의 중량 기준 55%`로 적습니다. 코어·표면을 나눠 표기하는 제품(데일리스 토탈원 등)의 숫자와 같은 축에 놓고 비교하지 않습니다. 미국 페이지의 `95% maintained for 16 hours`는 사내 자료(Data on file) 기반 광고 문구이므로 값에 포함하지 않았습니다.",
+        sources: [
+          {
+            sourceType: "한국 공식 페이지·IFU",
+            verifiedAt: "2026-08-28",
+            organization: "(주)바슈롬코리아",
+            document: "울트라 원데이 한국 브랜드 제품 페이지 상세정보 이미지",
+            raw: "함수율  55%",
+            url: "https://www.bauschlomb.co.kr/cleardaily/?idx=98",
+            condition: "`제품 상세 안내` 표 1행 우측 · 측정 위치(벌크·코어·표면) 구분 표기는 없다",
+            linkNote: "페이지 HTML 텍스트에는 `함수율` 0건이다. 값은 상세정보 이미지 안에만 있다"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "Bausch & Lomb Incorporated",
+            document: "Bausch + Lomb INFUSE® Package Insert / Fitting Guide (Rev. 2023-07 · 8191603)",
+            raw: "Water Content: 55%",
+            url: "https://pi.bausch.com/globalassets/pdf/packageinserts/vision-care/lenses/bausch-lomb-infuse-package-insert-fitting-guide73.pdf",
+            condition: "DESCRIPTION 절 physical/optical properties 목록 · 같은 절 첫 문장에 `is 55% water by weight when immersed in a saline solution`",
+            linkNote: "pypdf 추출 문자열은 자간 때문에 `W ater Content: 55%`로 나온다. 인쇄된 문자열은 Water Content다"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "Bausch + Lomb",
+            document: "BAUSCH + LOMB INFUSE® ONE-DAY Contact Lens Parameters (INF.0007.USA.24)",
+            raw: "55%",
+            url: "https://ecp.bauschcontactlenses.com/siteassets/pdf/infuse-oneday-contact-lens-parameters.pdf",
+            condition: "WATER CONTENT 행 · 구면·난시용·멀티포컬 3열 모두 55%",
+            linkNote: "측정 위치 구분 표기는 없다"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "Bausch + Lomb",
+            document: "INFUSE® One-Day 미국 ECP 제품 페이지 (MTB.0263.USA.22)",
+            raw: "WATER CONTENT 55%",
+            url: "https://ecp.bauschcontactlenses.com/products/infuse-one-day/",
+            condition: "구면 전용 페이지의 파라미터 표",
+            linkNote: "같은 페이지의 `55% Moisture1 With 95% maintained for 16 hours1`는 광고 문구여서 값으로 옮기지 않았다"
+          }
+        ]
+      },
+      {
+        id: "material",
+        value: "kalifilcon A",
+        state: "verified",
+        flag: "한국 브랜드 페이지 철자 오기 있음",
+        sourceSummary: "MFDS 한국 허가 원장 모델명과 미국 공식 사양이 같은 재질명을 사용 · 2026.08.28 확인",
+        caution: "한국 브랜드 페이지의 상세 이미지는 이 재질을 `kalificon A`로, `l` 하나가 빠진 철자로 인쇄합니다. MFDS 한국 허가 원장과 미국 공식 자료 4종은 모두 `kalifilcon A`이고, MFDS에서 `kalificon`으로 조회하면 0건입니다. 재질이 다르다는 뜻이 아니라 브랜드 페이지의 표기 오류입니다. 이 재질은 실리콘 하이드로겔이며, 같은 `울트라` 이름을 쓰는 월간 제품의 재질 `samfilcon A`와는 다른 재질입니다.",
+        sources: [
+          {
+            sourceType: "MFDS 허가·UDI",
+            verifiedAt: "2026-08-28",
+            organization: "식품의약품안전처",
+            document: "의료기기 UDI 표준코드 조회",
+            raw: "kalifilcon A",
+            url: "https://emedi.mfds.go.kr/msismext/udi/uif/schStddCdLstView.do",
+            condition: "itemPermitNo=수허 20-222 호 조회 180행 전부의 모델명 · 같은 행의 업체 제품 명칭은 `Ultra Oneday, 울트라 원데이`",
+            linkNote: "한국 허가 원장이 재질명을 모델명으로 등재하고 있어, 한국 판매명 `울트라 원데이`와 미국 판매명 `INFUSE® One-Day`를 잇는 유일한 공식 연결 고리다"
+          },
+          {
+            sourceType: "한국 공식 페이지·IFU",
+            verifiedAt: "2026-08-28",
+            organization: "(주)바슈롬코리아",
+            document: "울트라 원데이 한국 브랜드 제품 페이지 상세정보 이미지",
+            raw: "재질  kalificon A (실리콘 하이드로겔)",
+            url: "https://www.bauschlomb.co.kr/cleardaily/?idx=98",
+            condition: "`제품 상세 안내` 표 1행 좌측 · 인쇄된 철자를 그대로 옮긴 것이며 `l`이 빠져 있다",
+            linkNote: "재질 계열 표기 `(실리콘 하이드로겔)`은 미국 일람 페이지의 `Silicone Hydrogel Daily Disposable`과 일치한다"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "Bausch & Lomb Incorporated",
+            document: "Bausch + Lomb INFUSE® Package Insert / Fitting Guide (Rev. 2023-07 · 8191603)",
+            raw: "The Bausch + Lomb INFUSE® lens material, kalifilcon A, is a hydrophilic copolymer of 2-hydroxyethyl methacrylate and N-vinylpyrrolidone",
+            url: "https://pi.bausch.com/globalassets/pdf/packageinserts/vision-care/lenses/bausch-lomb-infuse-package-insert-fitting-guide73.pdf",
+            condition: "DESCRIPTION 절 첫 문장",
+            linkNote: "같은 문서는 제품명을 `Bausch + Lomb INFUSE® (kalifilcon A) One-Day Soft (Hydrophilic) Contact Lens`로 적는다. `ULTRA ONE DAY`라는 문자열은 이 문서에 없다"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "Bausch + Lomb",
+            document: "BAUSCH + LOMB INFUSE® ONE-DAY Contact Lens Parameters (INF.0007.USA.24)",
+            raw: "kalifilcon A",
+            url: "https://ecp.bauschcontactlenses.com/siteassets/pdf/infuse-oneday-contact-lens-parameters.pdf",
+            condition: "MATERIAL 행 · 3열 모두 동일",
+            linkNote: "PDF는 fi 합자 글리프로 인쇄돼 추출 문자열이 kaliﬁlcon A로 나온다. 인쇄된 단어는 kalifilcon A다"
+          }
+        ]
+      },
+      {
+        id: "dkt",
+        value: "134",
+        state: "verified",
+        flag: "글로벌 공식 자료 · 시험 도수 -3.00D",
+        sourceSummary: "미국 ECP 제품 페이지·파라미터 PDF·파라미터 일람 페이지가 모두 `OXYGEN TRANSMISSIBILITY (Dk/t) 134 @ -3.00D` · 2026.08.28 확인",
+        caution: "`-3.00D 기준 Dk/t`입니다. 같은 제조사의 Package Insert는 다른 물리량인 `Oxygen Permeability (Dk)`를 `107 x 10⁻¹¹ … @ 35°C (분극법)`으로 따로 적습니다. Dk와 Dk/t는 두께로 나눈 관계여서 서로 다른 값이며, 본 검증은 둘을 환산하거나 유도하지 않았습니다. 주의: 숫자 `107`은 같은 문서군에서 두 가지 뜻으로 쓰입니다 — 구면 렌즈의 Dk이면서, 난시용 렌즈의 Dk/t(`107 @ -3.00D`)이기도 합니다. 한국 공식 자료에는 Dk·Dk/t 표기가 전혀 없습니다.",
+        sources: [
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "Bausch + Lomb",
+            document: "INFUSE® One-Day 미국 ECP 제품 페이지 (MTB.0263.USA.22)",
+            raw: "OXYGEN TRANSMISSIBILITY (Dk/t) 134 @ -3.00D",
+            url: "https://ecp.bauschcontactlenses.com/products/infuse-one-day/",
+            condition: "구면 전용 페이지의 파라미터 표 · 같은 표의 중심두께는 0.08 mm @ -3.00D · 측정법·온도 표기 없음",
+            linkNote: "같은 페이지 본문의 `134 Dk/t†`에는 각주 `†Oxygen transmissibility @ -3.00D.`가 붙는다"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "Bausch + Lomb",
+            document: "BAUSCH + LOMB INFUSE® ONE-DAY Contact Lens Parameters (INF.0007.USA.24)",
+            raw: "134 @ -3.00D",
+            url: "https://ecp.bauschcontactlenses.com/siteassets/pdf/infuse-oneday-contact-lens-parameters.pdf",
+            condition: "행 라벨 원문 OXYGEN TRANSMISSIBILITY (Dk/t) · 추출 순서 `134 @ -3.00D · 107 @ -3.00D · 134 @ -3.00D` 중 첫 번째(구면) 열",
+            linkNote: "두 번째 열(난시용)의 107 @ -3.00D는 미국 파라미터 일람 페이지의 난시용 절에도 단독으로 인쇄돼 열 귀속이 확정된다"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "Bausch + Lomb",
+            document: "Bausch + Lomb 미국 파라미터 일람 페이지",
+            raw: "OXYGEN TRANSMISSIBILITY (Dk/t) 134 @ -3.00D",
+            url: "https://ecp.bauschcontactlenses.com/products/parameters/",
+            condition: "`INFUSE® One-Day Silicone Hydrogel Daily Disposable` 절 · 같은 페이지의 난시용 절은 107 @ -3.00D",
+            linkNote: "구면과 난시용을 별개 절로 인쇄하는 유일한 웹 자료다"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "Bausch & Lomb Incorporated",
+            document: "Bausch + Lomb INFUSE® Package Insert / Fitting Guide (Rev. 2023-07 · 8191603)",
+            raw: "Oxygen Permeability (Dk):  107 x 10–11 [cm3O2(STP) x cm]/(sec x cm2 x mmHg) @ 35°C (Polarographic Method)",
+            url: "https://pi.bausch.com/globalassets/pdf/packageinserts/vision-care/lenses/bausch-lomb-infuse-package-insert-fitting-guide73.pdf",
+            condition: "DESCRIPTION 절 physical/optical properties 목록 · 분극법 · 35°C · 시험 도수 표기 없음 · 라벨은 Dk이지 Dk/t가 아니다",
+            linkNote: "표시값 134와 다른 물리량이므로 값으로 쓰지 않고 조건 비교용으로만 남긴다. `10–11`의 `–11`과 `cm3`·`cm2`는 인쇄물에서 위첨자다"
+          }
+        ]
+      },
+      {
+        id: "thickness",
+        value: "0.08 mm",
+        state: "verified",
+        flag: "글로벌 공식 자료 · 시험 도수 -3.00D",
+        sourceSummary: "미국 ECP 페이지·파라미터 PDF·파라미터 일람 페이지가 -3.00D 기준 0.08 mm로 일치 · 2026.08.28 확인",
+        caution: "-3.00D 기준 중심두께입니다. 같은 제조사의 Package Insert는 두께를 단일값이 아니라 `0.05mm to 0.75mm (도수에 따라 변함)` 범위로 적고, 자외선 투과 프로파일 각주에서는 `-1.00D에서 공칭 0.08 mm`라고 **다른 시험 도수**로 적습니다. 숫자가 같아도 조건이 다르므로 하나로 합치지 않았습니다. 한국 공식 자료에는 중심두께 항목이 없습니다.",
+        sources: [
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "Bausch + Lomb",
+            document: "INFUSE® One-Day 미국 ECP 제품 페이지 (MTB.0263.USA.22)",
+            raw: "CENTER THICKNESS 0.08 mm @ -3.00D",
+            url: "https://ecp.bauschcontactlenses.com/products/infuse-one-day/",
+            condition: "구면 전용 페이지의 파라미터 표 · Dk/t 134 @ -3.00D와 같은 시험 도수",
+            linkNote: "Dk/t 조건과 연결해 해석"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "Bausch + Lomb",
+            document: "BAUSCH + LOMB INFUSE® ONE-DAY Contact Lens Parameters (INF.0007.USA.24)",
+            raw: "0.08 mm @ -3.00D",
+            url: "https://ecp.bauschcontactlenses.com/siteassets/pdf/infuse-oneday-contact-lens-parameters.pdf",
+            condition: "CENTER THICKNESS 행 · 추출 순서 `0.08 mm @ -3.00D · 0.10 mm @ -3.00D · 0.08 mm @ -3.00D` 중 구면 열 · 난시용은 0.10 mm",
+            linkNote: "난시용 0.10 mm는 미국 파라미터 일람 페이지의 난시용 절에도 단독으로 인쇄된다"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "Bausch & Lomb Incorporated",
+            document: "Bausch + Lomb INFUSE® Package Insert / Fitting Guide (Rev. 2023-07 · 8191603)",
+            raw: "Center Thickness: 0.05mm to 0.75mm (varies with power)",
+            url: "https://pi.bausch.com/globalassets/pdf/packageinserts/vision-care/lenses/bausch-lomb-infuse-package-insert-fitting-guide73.pdf",
+            condition: "CONTACT LENS PARAMETERS AVAILABLE 절 · 단일값이 아니라 도수에 따른 범위",
+            linkNote: "같은 문서의 자외선 프로파일 각주는 `Kalifilcon A (55% water) Soft Contact Lens, -1.00D Power, Nominal Center Thickness 0.08 mm`로 다른 시험 도수를 쓴다"
+          }
+        ]
+      },
+      {
+        id: "replacement",
+        value: "1일",
+        state: "verified",
+        sourceSummary: "제조사 공식 문서 2종의 single-use disposable 표기와 한국 브랜드 페이지의 하루용 분류 · 2026.08.28 확인",
+        caution: "교체주기입니다. 착용방식(착용 시간·수면 착용 여부)은 별도 개념이며 안경사 또는 안과 전문인의 판단이 필요합니다. 미국 파라미터 표의 `Daily wear`는 착용방식 표기이고 교체주기 행은 그 표에 아예 없습니다. MFDS 소분류 `매일착용 소프트 콘택트렌즈`도 착용 구분이지 교체주기가 아닙니다. 한국 상세 이미지의 `활동시간 동안 착용하고 야간 취침 시에 착용하지 않는다`도 착용방식 문장입니다.",
+        sources: [
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "Bausch & Lomb Incorporated",
+            document: "Bausch + Lomb INFUSE® Package Insert / Fitting Guide (Rev. 2023-07 · 8191603)",
+            raw: "The lens is to be prescribed for single-use disposable wear and is to be discarded after each removal.",
+            url: "https://pi.bausch.com/globalassets/pdf/packageinserts/vision-care/lenses/bausch-lomb-infuse-package-insert-fitting-guide73.pdf",
+            condition: "DESCRIPTION 절 마지막 문장 · WEARING SCHEDULE 절 Daily Wear 항목에도 같은 문장 반복",
+            linkNote: "같은 절이 `The wearing and replacement schedules should be determined by the eye care practitioner.`로 시작한다"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "Bausch & Lomb Incorporated",
+            document: "Bausch + Lomb INFUSE® Patient Information Booklet (Rev. 2023-07 · 8191702)",
+            raw: "The lens has been prescribed for single-use disposable wear and is to be discarded after each removal.",
+            url: "https://ecp.bauschcontactlenses.com/siteassets/pdf/infuse-patient-information-booklet.pdf",
+            condition: "INDICATIONS 절 · 이 소책자에는 물성 수치가 전혀 없어 교체 표기만 근거로 쓴다",
+            linkNote: "pi.bausch.com 아래에는 이 소책자가 없고 ECP siteassets 경로에만 있다"
+          },
+          {
+            sourceType: "한국 공식 페이지·IFU",
+            verifiedAt: "2026-08-28",
+            organization: "(주)바슈롬코리아",
+            document: "울트라 원데이 한국 브랜드 제품 페이지",
+            raw: "하루용 투명렌즈/근시용",
+            url: "https://www.bauschlomb.co.kr/cleardaily/?idx=98",
+            condition: "제품 분류 표기 · 상위 카테고리는 `데일리 투명렌즈`",
+            linkNote: "한국 페이지에 `1일 교체`라는 문자열은 없다. 한국 유통 근거로만 사용"
+          },
+          {
+            sourceType: "MFDS 허가·UDI",
+            verifiedAt: "2026-08-28",
+            organization: "식품의약품안전처",
+            document: "의료기기 UDI 표준코드 조회",
+            raw: "매일착용 소프트 콘택트렌즈",
+            url: "https://emedi.mfds.go.kr/msismext/udi/uif/schStddCdLstView.do",
+            condition: "itemPermitNo=수허 20-222 호 · 180행 전부 동일 소분류 · 등급 2",
+            linkNote: "소분류 품목 명칭은 교체주기가 아니라 착용 구분이다. 같은 원장 안에 공백 없는 `매일착용소프트콘택트렌즈` 표기도 함께 존재한다"
+          }
+        ]
+      },
+      {
+        id: "permit",
+        value: "수허 20-222 호",
+        state: "verified",
+        sourceSummary: "MFDS 의료기기 UDI 표준코드 조회 · 2026.08.28 확인",
+        caution: "울트라 원데이 계열은 구면·난시용·멀티포컬의 허가번호가 서로 다릅니다. 이 번호는 구면 제품의 번호입니다. 멀티포컬은 수허 22-32 호, 난시용은 수허 26-23 호입니다. 이름이 비슷한 월간 제품 `울트라`는 재질이 samfilcon A로 다르고 허가번호도 수허 25-122 호·수허 15-1250 호로 별개입니다. 한국 브랜드 페이지의 `제 2009-3220033-00028호`는 의료기기 판매업 신고번호, `62026-I10-12-1425`는 광고 사전심의 번호이며 둘 다 품목 허가번호가 아닙니다.",
+        sources: [
+          {
+            sourceType: "MFDS 허가·UDI",
+            verifiedAt: "2026-08-28",
+            organization: "식품의약품안전처",
+            document: "의료기기 UDI 표준코드 조회",
+            raw: "수허 20-222 호",
+            url: "https://emedi.mfds.go.kr/msismext/udi/uif/schStddCdLstView.do",
+            condition: "bplcNm=바슈롬 30,826건 전수 집계(distinct 신원 24건)에서 업체 제품 명칭이 `Ultra Oneday, 울트라 원데이`인 항목은 이 번호 하나뿐(180행). itemPermitNo=수허 20-222 호 단독 조회는 화면 원문 `총 180건이 조회됐습니다.`이며 distinct UDI-DI도 180으로 행 수와 같다",
+            linkNote: "업체 제품 명칭 원문 `Ultra Oneday, 울트라 원데이` · 모델명 `kalifilcon A` · 업체명 `(주)바슈롬코리아` · 업체구분 `수입업` · 소분류 `매일착용 소프트 콘택트렌즈` · 등급 2 · 포장내수량 5/30/90 각 60행 · 코드체계 GS1"
+          },
+          {
+            sourceType: "한국 공식 페이지·IFU",
+            verifiedAt: "2026-08-28",
+            organization: "(주)바슈롬코리아",
+            document: "울트라 원데이 한국 브랜드 제품 페이지",
+            raw: "허가번호 표기 없음 (`수허`·`허가` 문자열 0건)",
+            url: "https://www.bauschlomb.co.kr/cleardaily/?idx=98",
+            condition: "curl HTML 전문 검색과 상세정보 이미지 판독 양쪽에서 확인",
+            linkNote: "한국어 IFU PDF도 찾지 못해 MFDS UDI가 유일한 허가번호 근거"
+          }
+        ]
+      },
+      {
+        id: "uv",
+        value: "UVB 투과율 5% 미만 (280~315nm) / UVA 투과율 50% 미만 (316~380nm)",
+        state: "verified",
+        flag: "글로벌 공식 자료 · 차단율이 아닌 투과율 표기",
+        sourceSummary: "Package Insert / Fitting Guide 원문. 미국 파라미터 표와 웹 페이지는 체크 표시뿐이고 수치가 없음 · 2026.08.28 확인",
+        caution: "제조사가 인쇄한 값은 `투과율(transmittance)`입니다. 이를 `95% 이상 차단`처럼 차단율로 바꿔 적는 것은 유도이므로 하지 않았습니다. 미국 파라미터 표·ECP 페이지·일람 페이지의 UV PROTECTION 칸은 체크 표시 이미지(대체 텍스트 없음)이고 수치가 없습니다. 한국 자료에는 포장 사진의 `UV PROTECT™` 표시만 있고 수치가 없어 한국 표기값은 확인하지 못했습니다. 자외선 차단 콘택트렌즈는 눈과 주변을 완전히 덮지 못하므로 선글라스나 고글을 대신할 수 없습니다.",
+        sources: [
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "Bausch & Lomb Incorporated",
+            document: "Bausch + Lomb INFUSE® Package Insert / Fitting Guide (Rev. 2023-07 · 8191603)",
+            raw: "The transmittance characteristics are less than 5% in the UVB range of 280nm to 315nm and less than 50% in the UVA range of 316nm to 380nm.",
+            url: "https://pi.bausch.com/globalassets/pdf/packageinserts/vision-care/lenses/bausch-lomb-infuse-package-insert-fitting-guide73.pdf",
+            condition: "DESCRIPTION 절 · 바로 앞 문장 `A benzotriazole UV-absorbing monomer is incorporated into the manufacturing process to block Ultraviolet (UV) radiation.` · 같은 문서 HOW THE LENS WORKS 절에 같은 문장 반복",
+            linkNote: "경고 원문 `UV-absorbing contact lenses are NOT substitutes for protective UV-absorbing eyewear, such as UV-absorbing goggles or sunglasses, because they do not completely cover the eye and surrounding area.` · pypdf 추출에서는 자간 때문에 `UV A range`로 나오지만 인쇄된 문자열은 UVA range다"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "Bausch + Lomb",
+            document: "INFUSE® One-Day 미국 ECP 제품 페이지 (MTB.0263.USA.22)",
+            raw: "UV PROTECTION¶ — 값 칸은 <img src=\"/siteassets/img/check-mark.svg\" alt=\"\">",
+            url: "https://ecp.bauschcontactlenses.com/products/infuse-one-day/",
+            condition: "파라미터 표 UV PROTECTION 행 · 차단율·투과율 수치 0건",
+            linkNote: "값이 이미지이고 대체 텍스트가 비어 있어 표에서는 수치를 얻을 수 없다"
+          },
+          {
+            sourceType: "한국 공식 페이지·IFU",
+            verifiedAt: "2026-08-28",
+            organization: "(주)바슈롬코리아",
+            document: "울트라 원데이 한국 브랜드 제품 페이지 상세정보 이미지",
+            raw: "UV PROTECT™",
+            url: "https://www.bauschlomb.co.kr/cleardaily/?idx=98",
+            condition: "상세정보 이미지 안의 제품 포장 사진에 인쇄된 문구 · `제품 상세 안내` 사양표에는 UV 행이 없다",
+            linkNote: "한국 자료의 UV 수치는 미확인 상태이며 `없음`으로 단정하지 않는다. 페이지 HTML 텍스트에는 `자외선` 0건이다"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "miru-1day",
+    slug: "miru-1day",
+    aliases: ["메니콘 미루 원데이", "Miru 1day", "Miru 1day Menicon Flat Pack", "hioxifilcon A"],
+    name: "Miru 1day Menicon Flat Pack",
+    selectorLabel: "미루 원데이",
+    maker: "Menicon",
+    distributor: "(주)매니콘코리아",
+    type: "근시·원시용 투명 구면 · 1일 교체",
+    packageSpecs: [
+      { value: "BC 8.6", label: "Base Curve · mm" },
+      { value: "DIA 14.2", label: "Diameter · mm" },
+      { value: "57%", label: "Water content" },
+      { value: "Dk/t 미표기", label: "공식 자료에 항목 없음" }
+    ],
+    fields: [
+      {
+        id: "bc",
+        value: "8.6 mm",
+        state: "verified",
+        flag: "한국 공식 원문 확인",
+        sourceSummary: "메니콘코리아 소비자·전문가 제품 페이지 · Menicon 글로벌 전문가 사양 · 2026.08.28 확인",
+        caution: "한국 공식 페이지 두 곳이 8.6mm를 한국어로 직접 인쇄합니다. 다만 미국 지역 사이트(meniconamerica.com)만 8.4 mm, 8.6 mm 두 값을 적고 한국·글로벌·영국·스페인·싱가포르·말레이시아는 모두 8.6 mm 하나입니다. 지역별 공급 파라미터 차이로 보이며 두 값을 합치지 않았습니다. 같은 제품군의 다초점(multifocal)은 제조사 자료에서 8.4mm로 별개이고, 한국 라인업에는 플랫팩 다초점·난시용이 없습니다.",
+        sources: [
+          {
+            sourceType: "한국 공식 페이지·IFU",
+            verifiedAt: "2026-08-28",
+            organization: "(주)매니콘코리아",
+            document: "Miru 1day Flat Pack 한국 공식 소비자 제품 페이지",
+            raw: "기본 커브\n8.6mm",
+            url: "https://www.menicon.co.kr/consumer/products/disposable-lenses/miru-1day-flat-pack",
+            condition: "제품 세부 정보 > 렌즈 매개 변수 표 · 기본 커브 행 · 같은 표의 Power 범위는 +4.00D ~ +0.50D(-0.25D 단계) / -0.50D ~ -6.00D(-0.25D 단계) / -6.50D ~ -10.00D(-0.50D 단계)",
+            linkNote: "한국 공식 페이지가 수치를 직접 인쇄하는 드문 사례. 글로벌 전문가 페이지의 8.6 mm와 값이 같다"
+          },
+          {
+            sourceType: "한국 공식 페이지·IFU",
+            verifiedAt: "2026-08-28",
+            organization: "(주)매니콘코리아",
+            document: "Miru 1day Flat Pack 한국 공식 전문가용 제품 페이지",
+            raw: "기본 커브\n8.6mm",
+            url: "https://www.menicon.co.kr/professional/products/disposable-lenses/miru-1day-flat-pack",
+            condition: "같은 사이트의 professional 판 · 소비자 판과 라벨은 다르지만(함수율/수분 함량, 색상/취급 색조) 숫자는 완전히 동일",
+            linkNote: "docs/PRODUCT_CANDIDATES_20.md 표 B에는 소비자 페이지만 적혀 있었다. 이번 검증에서 새로 확인한 한국 공식 출처"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "Menicon",
+            document: "Miru 1day Flat Pack 글로벌 전문가용 제품 페이지",
+            raw: "Base curve\n8.6 mm",
+            url: "https://www.menicon.com/professional/products/disposable-lenses/miru-1day-flat-pack",
+            condition: "Product details > Lens parameters 표 · Base curve 행 · 페이지 하단 표기는 © 2026 Menicon. All rights reserved. 이며 별도 문서 관리번호는 인쇄하지 않는다",
+            linkNote: "영국·스페인·싱가포르·말레이시아 지역 사이트도 같은 8.6 mm(스페인은 8,6 mm)"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "Menicon",
+            document: "Miru 1day Flat Pack CONVENIENCE Trade Sales Aid (Dec 2024)",
+            raw: "Base curve      sphere & toric \nmultifocal\n8.6mm\n8.4mm",
+            url: "https://www.menicon.com/hubfs/00%20Global%20official%20website/Professional%20website/Dispo/Miru%20Flat%20Pack/J000750%201day%20Miru%20Flat%20Pack%20CONVENIENCE%20Trade%20Sales%20Aid%20-%20Dec%202024.pdf",
+            condition: "11쪽 PDF의 Product Specifications > Parameters 절 · 구면과 난시용은 8.6mm, 다초점만 8.4mm로 구분해 적는다 · 한국 사이트도 같은 파일을 브로셔로 게시(md5 동일)",
+            linkNote: "같은 표가 직경을 구면 14.2mm / 난시용 14.5mm / 다초점 14.4mm로 나눠 적어 구면 값을 잘못 옮길 위험이 낮다"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "Menicon",
+            document: "Miru 1day Flat Pack 미국 지역 사이트 제품 페이지",
+            raw: "Base curve\n8.4 mm, 8.6 mm",
+            url: "https://www.meniconamerica.com/professional/products/disposable-lenses/miru-1day-flat-pack",
+            condition: "같은 표 서식의 미국판 · 같은 페이지의 포장 표기도 30 and 90 lens pack 으로 한국(렌즈 팩 30개)과 다르다",
+            linkNote: "한국 값에 합치지 않고 지역 차이로 병기. 재질·함수율·직경은 미국판도 한국과 동일하다"
+          }
+        ]
+      },
+      {
+        id: "dia",
+        value: "14.2 mm",
+        state: "verified",
+        flag: "한국 공식 원문 확인",
+        sourceSummary: "메니콘코리아 소비자·전문가 제품 페이지 · Menicon 글로벌 전문가 사양 · 2026.08.28 확인",
+        caution: "확인한 8개 지역 공식 페이지와 제조사 사양 자료 전부가 14.2 mm로 같습니다. 같은 제품군의 난시용은 14.5mm, 다초점은 14.4mm로 다르며 한국 라인업에는 두 변형이 없습니다.",
+        sources: [
+          {
+            sourceType: "한국 공식 페이지·IFU",
+            verifiedAt: "2026-08-28",
+            organization: "(주)매니콘코리아",
+            document: "Miru 1day Flat Pack 한국 공식 소비자 제품 페이지",
+            raw: "직경\n14.2mm",
+            url: "https://www.menicon.co.kr/consumer/products/disposable-lenses/miru-1day-flat-pack",
+            condition: "제품 세부 정보 > 렌즈 매개 변수 표 · 직경 행",
+            linkNote: "한국 전문가 페이지도 같은 14.2mm"
+          },
+          {
+            sourceType: "한국 공식 페이지·IFU",
+            verifiedAt: "2026-08-28",
+            organization: "(주)매니콘코리아",
+            document: "Miru 1day Flat Pack 한국 공식 전문가용 제품 페이지",
+            raw: "직경\n14.2mm",
+            url: "https://www.menicon.co.kr/professional/products/disposable-lenses/miru-1day-flat-pack",
+            condition: "professional 판 렌즈 매개 변수 표 · 직경 행",
+            linkNote: "소비자 판과 숫자가 완전히 동일"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "Menicon",
+            document: "Miru 1day Flat Pack 글로벌 전문가용 제품 페이지",
+            raw: "Diameter\n14.2 mm",
+            url: "https://www.menicon.com/professional/products/disposable-lenses/miru-1day-flat-pack",
+            condition: "Product details > Lens parameters 표 · Diameter 행",
+            linkNote: "영문 IFU에는 DIA 기호 정의만 있고 값이 없다"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "Menicon",
+            document: "Miru 1day Flat Pack CONVENIENCE Trade Sales Aid (Dec 2024)",
+            raw: "Diameter        sphere  \ntoric \nmultifocal\n14.2mm\n14.5mm\n14.4mm",
+            url: "https://www.menicon.com/hubfs/00%20Global%20official%20website/Professional%20website/Dispo/Miru%20Flat%20Pack/J000750%201day%20Miru%20Flat%20Pack%20CONVENIENCE%20Trade%20Sales%20Aid%20-%20Dec%202024.pdf",
+            condition: "Product Specifications > Parameters 절 · 구면(sphere) 값이 14.2mm",
+            linkNote: "난시용·다초점 값을 구면에 옮기지 않기 위한 근거"
+          }
+        ]
+      },
+      {
+        id: "water",
+        value: "57%",
+        state: "verified",
+        flag: "한국 공식 원문 확인",
+        sourceSummary: "메니콘코리아 소비자·전문가 제품 페이지 · 영문 IFU · 2026.08.28 확인",
+        caution: "렌즈 전체(벌크) 함수율입니다. 한국 소비자 페이지는 수분 함량, 한국 전문가 페이지는 함수율이라는 서로 다른 라벨로 같은 57%를 적습니다. 한국·글로벌 자료 어디에도 측정법 표기가 없습니다. 데일리스 토탈원·토탈30처럼 코어와 표면을 나눠 적는 워터 그라디언트 계열이 아니라 단일 함수율 표기입니다. 함수율이 높다는 사실만으로 촉촉함이나 산소 전달을 판단할 수 없으며, 이 렌즈는 하이드로겔이라 실리콘 하이드로겔 제품의 함수율과 같은 축에서 비교되지 않습니다.",
+        sources: [
+          {
+            sourceType: "한국 공식 페이지·IFU",
+            verifiedAt: "2026-08-28",
+            organization: "(주)매니콘코리아",
+            document: "Miru 1day Flat Pack 한국 공식 소비자 제품 페이지",
+            raw: "수분 함량\n57%",
+            url: "https://www.menicon.co.kr/consumer/products/disposable-lenses/miru-1day-flat-pack",
+            condition: "제품 세부 정보 > 특성 표 · 수분 함량 행 · 측정법·측정 위치 표기 없음",
+            linkNote: "같은 사이트 전문가 판은 같은 값을 함수율이라는 라벨로 적는다"
+          },
+          {
+            sourceType: "한국 공식 페이지·IFU",
+            verifiedAt: "2026-08-28",
+            organization: "(주)매니콘코리아",
+            document: "Miru 1day Flat Pack 한국 공식 전문가용 제품 페이지",
+            raw: "함수율\n57%",
+            url: "https://www.menicon.co.kr/professional/products/disposable-lenses/miru-1day-flat-pack",
+            condition: "professional 판 특성 표 · 함수율 행",
+            linkNote: "소비자 판의 수분 함량과 라벨만 다르고 값은 같다. 두 표기를 합치지 않고 각각 인용"
+          },
+          {
+            sourceType: "한국 공식 페이지·IFU",
+            verifiedAt: "2026-08-28",
+            organization: "Menicon",
+            document: "Instructions for Use RA1DAYPI002 (Date of Issue 2020-01 · 한국 공식 사이트 게시본)",
+            raw: "hioxifilcon A (57% water) is a blue tinted soft hydrogel contact lens with 57% water content.",
+            url: "https://www.menicon.co.kr/hubfs/00%20Global%20official%20website/Professional%20website/Dispo/Miru%20Flat%20Pack/English_IFU_RA1DAYPI002.pdf",
+            condition: "INTRODUCTION 절 · 이 IFU는 재질명 자체에 (57% water)를 붙여 부른다 · 같은 문서가 Miru 1day UpSide의 midafilcon A (56% water)도 함께 다루므로 재질명으로 갈라 읽어야 한다 · PDF 텍스트 레이어는 단어 사이가 탭 문자로 저장돼 있어 인용은 탭을 공백 하나로 옮겼다",
+            linkNote: "한국 사이트가 게시한 IFU는 한국어가 아니라 영문 문서이며 EU Importer·Authorized Representative만 인쇄돼 있다"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "Menicon",
+            document: "Instructions for Use RA1DAYPI007 (Date of Issue 2024-06 · 글로벌 IFU 라이브러리 현행판)",
+            raw: "• hioxifilcon A (57% water) is a blue tinted soft hydrogel contact lens with 57% water content.",
+            url: "https://www.menicon.com/hubfs/00%20Global%20official%20website/Professional%20website/IFU/Daily/RA1DAYPI007-20240830MEN.pdf",
+            condition: "INTRODUCTION 절 · 2020년판과 같은 문장이며 이 판은 텍스트 레이어가 정상 공백으로 저장돼 있어 교차 확인이 가능하다 · 한국 사이트는 여전히 2020년판을 링크한다",
+            linkNote: "같은 상세 페이지에 EU 22개 언어판이 걸려 있으나 한국어판은 없다"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "Menicon",
+            document: "Miru 1day Flat Pack 글로벌 전문가용 제품 페이지",
+            raw: "Water content\n57%",
+            url: "https://www.menicon.com/professional/products/disposable-lenses/miru-1day-flat-pack",
+            condition: "Product details > Characteristics 표 · Water content 행 · 영국·미국·스페인·싱가포르·말레이시아 지역판도 모두 57%",
+            linkNote: "Trade Sales Aid의 Water content sphere, toric & multifocal 57% 표기와도 일치"
+          }
+        ]
+      },
+      {
+        id: "material",
+        value: "hioxifilcon A",
+        state: "verified",
+        flag: "한국 공식 원문 확인",
+        sourceSummary: "메니콘코리아 소비자·전문가 제품 페이지가 재질명을 직접 인쇄 · 2026.08.28 확인",
+        caution: "하이드로겔입니다. 실리콘 하이드로겔이 아닙니다. 한국 전문가 페이지가 hioxifilcon A(하이드로겔)로 계열을 직접 적고, 영문 IFU도 a blue tinted soft hydrogel contact lens라고 씁니다. 같은 IFU가 함께 다루는 형제 제품 Miru 1day UpSide의 midafilcon A는 실리콘 하이드로겔이므로 두 제품을 섞지 않아야 합니다. MFDS 허가 원장에는 재질명이 들어 있지 않고 재질명으로 조회하면 0건입니다.",
+        sources: [
+          {
+            sourceType: "한국 공식 페이지·IFU",
+            verifiedAt: "2026-08-28",
+            organization: "(주)매니콘코리아",
+            document: "Miru 1day Flat Pack 한국 공식 전문가용 제품 페이지",
+            raw: "소재\nhioxifilcon A(하이드로겔)",
+            url: "https://www.menicon.co.kr/professional/products/disposable-lenses/miru-1day-flat-pack",
+            condition: "제품 세부 정보 > 특성 표 · 소재 행 · 재질명과 재질 계열을 한국어로 함께 인쇄한다",
+            linkNote: "한국 공식 자료가 재질 계열까지 밝히는 사례. 토탈30·프리시전원 한국 페이지에는 재질 표기가 아예 없었다"
+          },
+          {
+            sourceType: "한국 공식 페이지·IFU",
+            verifiedAt: "2026-08-28",
+            organization: "(주)매니콘코리아",
+            document: "Miru 1day Flat Pack 한국 공식 소비자 제품 페이지",
+            raw: "소재\nhioxifilcon A(안구에 직접 부착하여 시력보정용으로 사용하는 친수성 단량체 Hydroxyethyl Methacrylate(HEMA) 및 Glycerol monomethacrylate(GMA)로 구성됨)",
+            url: "https://www.menicon.co.kr/consumer/products/disposable-lenses/miru-1day-flat-pack",
+            condition: "제품 세부 정보 > 특성 표 · 소재 행 · 전문가 판과 달리 구성 단량체를 풀어 적는다 · HTML에서 끝부분 구 · 성 · 됨 · ) 이 각각 span 으로 쪼개져 있어 태그 제거 방식에 따라 구 성 됨 ) 으로 벌어져 보인다",
+            linkNote: "같은 두 단량체(HEMA·GMA)를 메니콘 일본의 동계열 제품 페이지도 구성 모노머로 적는다"
+          },
+          {
+            sourceType: "한국 공식 페이지·IFU",
+            verifiedAt: "2026-08-28",
+            organization: "Menicon",
+            document: "Instructions for Use RA1DAYPI002 (Date of Issue 2020-01 · 한국 공식 사이트 게시본)",
+            raw: "hioxifilcon A (57% water) is a blue tinted soft hydrogel contact lens with 57% water content.",
+            url: "https://www.menicon.co.kr/hubfs/00%20Global%20official%20website/Professional%20website/Dispo/Miru%20Flat%20Pack/English_IFU_RA1DAYPI002.pdf",
+            condition: "INTRODUCTION 절 · 같은 문서가 midafilcon A (56% water) is a blue tinted soft silicone hydrogel contact lens 로 형제 제품을 실리콘 하이드로겔이라 구분해 적는다 · 텍스트 레이어의 탭 문자는 공백 하나로 옮겼다",
+            linkNote: "한 IFU가 두 재질을 함께 다루므로 문장마다 재질명을 보고 갈라 읽어야 한다"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "Menicon",
+            document: "Miru 1day Flat Pack 글로벌 전문가용 제품 페이지",
+            raw: "Material\nhioxifilcon A (hydrogel)",
+            url: "https://www.menicon.com/professional/products/disposable-lenses/miru-1day-flat-pack",
+            condition: "Product details > Characteristics 표 · Material 행 · 영국·미국·싱가포르·말레이시아판도 동일, 스페인판은 hioxifilcon A (hidrogel)",
+            linkNote: "한국 전문가 페이지의 하이드로겔 표기와 일치"
+          },
+          {
+            sourceType: "MFDS 허가·UDI",
+            verifiedAt: "2026-08-28",
+            organization: "식품의약품안전처",
+            document: "의료기기 UDI 표준코드 조회",
+            raw: "1day  Flat Pack",
+            url: "https://emedi.mfds.go.kr/msismext/udi/uif/schStddCdLstView.do",
+            condition: "허가번호 수허 15-476 호의 모델명 원문 · 업체 제품 명칭(prdtNmCn)은 비어 있다 · 원장에 재질명 표기 없음",
+            linkNote: "modelnm=hioxifilcon · Hioxifilcon · HIOXIFILCON 조회 모두 0건. 바이오트루가 nesofilcon A를 모델명으로 함께 등록한 것과 대조된다"
+          }
+        ]
+      },
+      {
+        id: "dkt",
+        value: "공식 자료에서 확인되지 않음",
+        state: "unknown",
+        flag: "확인되지 않음",
+        sourceSummary: "한국·글로벌 공식 자료 11종을 검토했으나 Dk/t 항목 자체가 없음 · 2026.08.28 확인",
+        caution: "표기를 찾지 못했다는 뜻이며 산소가 통하지 않는다는 뜻이 아닙니다. 중요한 것은 부재의 성격입니다. 메니콘은 같은 사이트, 같은 표 서식으로 형제 제품에는 Dk/t를 인쇄합니다. 메니콘코리아 한국 페이지는 Miru 1day UpSide에 Dk/t @ -3.00D 91 × 10-9, Miru 1month Menicon에 161 × 10-9을 한국어로 적습니다. 그런데 이 제품 표에는 Dk/t 행이 아예 없습니다. 한국 소비자·전문가 페이지, 글로벌·영국·미국·스페인·싱가포르·말레이시아 지역 페이지, 영문 IFU 2판, Trade Sales Aid 어디에도 Dk나 oxygen 문자열이 0건입니다. 메니콘 일본이 같은 재질의 자국 승인 제품에 대해 적는 산소투과계수 19.4 × 10-11은 Dk(산소 투과성)이지 Dk/t(산소 전달률)가 아니며, 별개 국가 허가에 도수 범위도 다릅니다. Dk를 두께로 나눠 Dk/t를 만들지 않았습니다.",
+        sources: [
+          {
+            sourceType: "한국 공식 페이지·IFU",
+            verifiedAt: "2026-08-28",
+            organization: "(주)매니콘코리아",
+            document: "Miru 1day Flat Pack 한국 공식 소비자·전문가 제품 페이지",
+            raw: "Dk/t 항목 없음 (Dk·산소·투과 문자열 0건)",
+            url: "https://www.menicon.co.kr/professional/products/disposable-lenses/miru-1day-flat-pack",
+            condition: "두 페이지 HTML 태그 제거 후 전문 검색 · 제품 세부 정보 표의 행 구성은 소재 / 함수율 / 색상 / 디자인 / 제조 / 기본 커브 / 직경 / Power 범위 / 렌즈 마킹 / 자료 / 사용 가능한 패키지 뿐이다",
+            linkNote: "값이 비어 있는 게 아니라 행 자체가 없다"
+          },
+          {
+            sourceType: "한국 공식 페이지·IFU",
+            verifiedAt: "2026-08-28",
+            organization: "(주)매니콘코리아",
+            document: "Miru 1day UpSide 한국 공식 소비자 제품 페이지 (대조군)",
+            raw: "Dk/t @ -3.00D\n91 × 10-9 (cm/sec)･( mLO2/ (mL × mmHg))",
+            url: "https://www.menicon.co.kr/consumer/products/disposable-lenses/miru-1day-upside",
+            condition: "같은 사이트 형제 제품(midafilcon A · 실리콘 하이드로겔)의 같은 표 서식 · 같은 표에 중심 두께 0.07mm 와 UV 필터 클래스 2(UV-A 84% / UV-B 96%) 행도 있다 · Miru 1month Menicon 한국 전문가 페이지는 Dk/t @ -3.00D 161 × 10-9 을 적는다",
+            linkNote: "이 제품의 Dk/t 부재가 한국 자료 부실 때문이 아니라 제품별 선택임을 보여주는 대조 근거. 이 값은 다른 제품의 값이며 본 제품의 값이 아니다"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "Menicon",
+            document: "Miru 1day Flat Pack 글로벌 전문가용 제품 페이지 · Trade Sales Aid (Dec 2024) · IFU RA1DAYPI002 / RA1DAYPI007",
+            raw: "Dk/t 항목 없음 (Dk·oxygen·transmissib 문자열 0건)",
+            url: "https://www.menicon.com/professional/products/disposable-lenses/miru-1day-flat-pack",
+            condition: "글로벌 제품 페이지 HTML 전문 검색 · 11쪽 Trade Sales Aid PDF 전문 검색 · 2쪽 IFU 2판 전문 검색 모두 0건 · 영국·미국·스페인·싱가포르·말레이시아 지역 페이지도 0건",
+            linkNote: "제조사가 이 제품에 대해 Dk도 Dk/t도 공개하지 않는다"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "Menicon",
+            document: "메니콘 일본 Magic 제품 페이지 (규제 판매명 メニコン１ＤＡＹ　フラットパック · 승인번호 22100BZX01098000)",
+            raw: "酸素透過係数\n19.4×10-11 （cm2/sec）・(mLO2/(mL×mmHg))　ISO18369-4",
+            url: "https://www.menicon.co.jp/products/lense/1day/magic/",
+            condition: "物性値 표 · 이 값은 Dk(산소 투과성)이며 Dk/t가 아니다. 같은 사이트의 메니콘1DAY 페이지는 酸素透過率（Dk/t） 26.3 처럼 Dk/t를 따로 표기하므로 제조사가 두 물리량을 구분해 적는다는 사실이 같은 사이트 안에서 확인된다 · 같은 표의 USAN은 hioxifilconA, 含水率 57%, ベースカーブ 8.6mm, 直径 14.2mm 로 한국 값과 일치하지만 球面度数는 -0.50D~-10.00D 로 플러스 도수가 없어 한국·글로벌 공급 범위와 다르다",
+            linkNote: "참고 · 일본 동계열 제품 자료 · 값으로 쓰지 않음 · 일본은 별개 국가 허가이고 메니콘이 두 등록의 렌즈가 동일 사양이라고 밝힌 문서를 확인하지 못했다. 이 값을 본 제품의 Dk/t로 쓰지 않았고 두께로 환산하지도 않았다"
+          }
+        ]
+      },
+      {
+        id: "thickness",
+        value: "공식 자료에서 확인되지 않음",
+        state: "unknown",
+        flag: "확인되지 않음",
+        sourceSummary: "한국·글로벌 공식 자료 11종을 검토했으나 중심두께 항목 자체가 없음 · 2026.08.28 확인",
+        caution: "표기를 찾지 못했다는 뜻이며 값이 없다는 뜻이 아닙니다. Dk/t 항목도 없으므로 두께를 역산할 수도, 두께로 Dk/t를 만들 수도 없습니다. Dk/t와 마찬가지로 메니콘은 형제 제품에는 중심 두께를 인쇄합니다. 메니콘코리아 한국 페이지는 Miru 1day UpSide에 중심 두께 0.07mm를 적지만 이 제품 표에는 그 행이 없습니다. 메니콘 일본이 같은 재질의 자국 승인 제품에 적는 中心厚 0.10mm(-3.00D)는 별개 국가 허가의 값이며 도수 범위도 다르므로 본 제품의 값으로 쓰지 않았습니다.",
+        sources: [
+          {
+            sourceType: "한국 공식 페이지·IFU",
+            verifiedAt: "2026-08-28",
+            organization: "(주)매니콘코리아",
+            document: "Miru 1day Flat Pack 한국 공식 소비자·전문가 제품 페이지",
+            raw: "중심두께 항목 없음 (두께·중심두께 문자열 0건)",
+            url: "https://www.menicon.co.kr/consumer/products/disposable-lenses/miru-1day-flat-pack",
+            condition: "두 페이지 HTML 태그 제거 후 전문 검색 · 제품 세부 정보 표에 중심 두께 행이 없다",
+            linkNote: "미확인을 값 없음으로 단정하지 않음"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "Menicon",
+            document: "Miru 1day Flat Pack 글로벌 전문가용 제품 페이지 · Trade Sales Aid (Dec 2024) · IFU RA1DAYPI002 / RA1DAYPI007",
+            raw: "중심두께 항목 없음 (thickness 문자열은 난시용 디자인 설명 minimal average thickness profile 에만 등장하고 수치가 없음)",
+            url: "https://www.menicon.com/professional/products/disposable-lenses/miru-1day-flat-pack",
+            condition: "글로벌 제품 페이지·11쪽 Trade Sales Aid·2쪽 IFU 2판 전문 검색 · 영국·미국·스페인·싱가포르·말레이시아 지역 페이지도 0건",
+            linkNote: "IFU의 심볼 정의표에는 DIA·BC 기호 설명만 있고 두께 항목이 없다"
+          },
+          {
+            sourceType: "한국 공식 페이지·IFU",
+            verifiedAt: "2026-08-28",
+            organization: "(주)매니콘코리아",
+            document: "Miru 1day UpSide 한국 공식 전문가용 제품 페이지 (대조군)",
+            raw: "중심 두께\n0.07 mm",
+            url: "https://www.menicon.co.kr/professional/products/disposable-lenses/miru-1day-upside",
+            condition: "같은 사이트 형제 제품의 같은 표 서식 · 이 값은 midafilcon A 제품의 값이며 본 제품의 값이 아니다",
+            linkNote: "같은 사이트의 Miru 1month Menicon 전문가 페이지는 중심 두께 0.8 mm 로 적는데 글로벌판은 0.08 mm 다. 메니콘코리아 페이지 값을 단독 근거로 쓸 때 자릿수 검증이 필요하다는 사례"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "Menicon",
+            document: "메니콘 일본 Magic 제품 페이지 (규제 판매명 メニコン１ＤＡＹ　フラットパック · 승인번호 22100BZX01098000)",
+            raw: "中心厚\n0.10mm(-3.00D)",
+            url: "https://www.menicon.co.jp/products/lense/1day/magic/",
+            condition: "製作範囲 近視用 표 · 같은 표의 USAN hioxifilconA · 含水率 57% · ベースカーブ 8.6mm · 直径 14.2mm 는 한국 값과 일치하나 球面度数에 플러스 도수가 없다",
+            linkNote: "참고 · 일본 동계열 제품 자료 · 값으로 쓰지 않음 · 별개 국가 허가의 값이므로 참고 레코드로만 남겼다. 이 값으로 Dk/t를 계산하지 않았다"
+          }
+        ]
+      },
+      {
+        id: "replacement",
+        value: "1일",
+        state: "verified",
+        flag: "한국 공식 원문 확인",
+        sourceSummary: "메니콘코리아 제품 페이지의 매일 교체 표기 · 영문 IFU의 교체 문장 · MFDS 소분류 · 2026.08.28 확인",
+        caution: "1일은 교체주기입니다. 착용방식은 별개이며 안경사 또는 안과 전문인의 판단이 필요합니다. 제조사 IFU는 하루가 끝나면 렌즈를 빼서 버리고 다음 날 아침에 새 렌즈로 바꾸라고 적고, 렌즈를 낀 채 잠들지 말라고 따로 경고합니다. 단회용 렌즈를 재사용하면 눈 문제 위험이 커진다고도 밝힙니다. 한국 페이지의 매일 교체는 착용 일정 블록의 자료라는 행 라벨 아래 있는데, 글로벌 페이지도 같은 자리에 Material이라는 라벨을 붙여 두었습니다. 라벨과 값이 어긋난 템플릿 오류로 보이며, 그래서 교체주기의 1차 근거는 IFU 문장으로 두었습니다.",
+        sources: [
+          {
+            sourceType: "한국 공식 페이지·IFU",
+            verifiedAt: "2026-08-28",
+            organization: "Menicon",
+            document: "Instructions for Use RA1DAYPI002 (Date of Issue 2020-01 · 한국 공식 사이트 게시본)",
+            raw: "WEARING RESTRICTIONS\nRemove and discard the contact lenses at the end of each day and replace with fresh lenses each morning. Reuse of the single-use contact lenses increase the risk of eye problems.",
+            url: "https://www.menicon.co.kr/hubfs/00%20Global%20official%20website/Professional%20website/Dispo/Miru%20Flat%20Pack/English_IFU_RA1DAYPI002.pdf",
+            condition: "WEARING RESTRICTIONS 절 · 같은 문서 INDICATIONS 절은 hioxifilcon A (57% water) is intended for single use daily wear only 로 단회 사용과 낮 시간 착용을 함께 적고, PRECAUTIONS 절은 Do not sleep while still wearing the contact lenses. 로 수면착용을 배제한다 · 텍스트 레이어의 탭 문자는 공백 하나로 옮겼다",
+            linkNote: "한국 사이트가 게시한 IFU이지만 문서 자체는 영문이며 한국 허가 정보는 담고 있지 않다"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "Menicon",
+            document: "Instructions for Use RA1DAYPI007 (Date of Issue 2024-06 · 글로벌 IFU 라이브러리 현행판)",
+            raw: "Remove and discard the contact lenses at the end of each day and replace with fresh lenses each morning. Reuse of the single-use contact lenses increase the risk of eye problems.",
+            url: "https://www.menicon.com/hubfs/00%20Global%20official%20website/Professional%20website/IFU/Daily/RA1DAYPI007-20240830MEN.pdf",
+            condition: "WEARING RESTRICTIONS 절 · 2020년판과 문장이 같고 이 판은 텍스트 레이어가 정상 공백이라 교차 확인이 가능하다",
+            linkNote: "한국 사이트는 2020년판을 링크하고 있고 이 2024년판은 글로벌 IFU 라이브러리에서만 제공된다"
+          },
+          {
+            sourceType: "한국 공식 페이지·IFU",
+            verifiedAt: "2026-08-28",
+            organization: "(주)매니콘코리아",
+            document: "Miru 1day Flat Pack 한국 공식 소비자 제품 페이지",
+            raw: "착용 일정\n자료\n매일 교체",
+            url: "https://www.menicon.co.kr/consumer/products/disposable-lenses/miru-1day-flat-pack",
+            condition: "제품 세부 정보 > 착용 일정 블록 · 행 라벨이 자료로 인쇄돼 있으며 글로벌 페이지의 같은 행 라벨은 Material 이다 · 한국 전문가 페이지도 같은 라벨과 같은 값",
+            linkNote: "라벨 오류를 근거로 값을 의심하지는 않았고, 교체주기 판단의 1차 근거는 IFU 문장으로 두었다"
+          },
+          {
+            sourceType: "MFDS 허가·UDI",
+            verifiedAt: "2026-08-28",
+            organization: "식품의약품안전처",
+            document: "의료기기 UDI 표준코드 조회",
+            raw: "매일착용소프트콘택트렌즈",
+            url: "https://emedi.mfds.go.kr/msismext/udi/uif/schStddCdLstView.do",
+            condition: "허가번호 수허 15-476 호 행의 소분류 품목 명칭 원문 · 등급 2 · 업체구분 수입업 · 이 분류는 착용방식(자는 동안 착용하지 않는 낮 시간 착용)이지 교체주기가 아니다",
+            linkNote: "MFDS 소분류만으로는 1일 교체를 알 수 없다. 교체주기는 제조사 IFU와 한국 페이지가 말한다"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "Menicon",
+            document: "Miru 1day Flat Pack CONVENIENCE Trade Sales Aid (Dec 2024)",
+            raw: "Wear schedule\nModality sphere, toric & multifocal Daily Wear",
+            url: "https://www.menicon.com/hubfs/00%20Global%20official%20website/Professional%20website/Dispo/Miru%20Flat%20Pack/J000750%201day%20Miru%20Flat%20Pack%20CONVENIENCE%20Trade%20Sales%20Aid%20-%20Dec%202024.pdf",
+            condition: "Product Specifications > Wear schedule 절 · Daily Wear 는 착용방식이며 이 문서에는 교체주기 행이 따로 없다 · 한국 사이트도 같은 파일을 브로셔로 게시(md5 동일)",
+            linkNote: "착용방식과 교체주기를 섞지 않기 위해 원문 라벨 그대로 기록"
+          }
+        ]
+      },
+      {
+        id: "permit",
+        value: "수허 15-476 호",
+        state: "verified",
+        flag: "MFDS 원장 대조 완료",
+        sourceSummary: "MFDS 의료기기 UDI 표준코드 조회 154건 전수 대조 · 2026.08.28 확인",
+        caution: "메니콘의 한국 허가는 하나의 번호가 서로 다른 제품 브랜드를 묶는 구조입니다. 이 번호는 1일 교체 구면 플랫팩만의 번호이고, Miru 1day UpSide는 수허 19-300 호로 별개입니다. Miru 1M은 수허 15-319 호를 메니콘 프리미오와 함께 쓰고, Miru 1MT는 수허 15-405 호를 프리미오 토릭과 함께 씁니다. 허가번호 하나가 제품 하나를 뜻하지 않습니다. 한국 공식 제품 페이지에는 허가번호 표기가 전혀 없어 MFDS 원장이 유일한 근거입니다.",
+        sources: [
+          {
+            sourceType: "MFDS 허가·UDI",
+            verifiedAt: "2026-08-28",
+            organization: "식품의약품안전처",
+            document: "의료기기 UDI 표준코드 조회",
+            raw: "수허 15-476 호",
+            url: "https://emedi.mfds.go.kr/msismext/udi/uif/schStddCdLstView.do",
+            condition: "itemPermitNo=수허 15-476 호 단독 조회 154건이 모두 단일 신원((주)매니콘코리아 · 수입업 · 매일착용소프트콘택트렌즈 · 2등급 · 모델명 1day  Flat Pack · 업체 제품 명칭 없음)으로 연결 · distinct UDI-DI 154건 · 포장내수량 6이 77건, 30이 77건 · 코드체계 GS1 · 요양급여 대상 치료재료 여부 N",
+            linkNote: "bplcNm=매니콘 전체 16,401건 전수 집계에서 Miru 1MT 수허 15-405 호 · PremiO Toric 수허 15-405 호 · Miru 1M 수허 15-319 호 · PremiO 수허 15-319 호 · Miru UpSide 수허 19-300 호와 분리 확인. 구면 플랫팩은 154건뿐이다"
+          },
+          {
+            sourceType: "MFDS 허가·UDI",
+            verifiedAt: "2026-08-28",
+            organization: "식품의약품안전처",
+            document: "의료기기 UDI 표준코드 조회 — 업체명 표기 순회 기록",
+            raw: "(주)매니콘코리아",
+            url: "https://emedi.mfds.go.kr/msismext/udi/uif/schStddCdLstView.do",
+            condition: "업체명 조회에서 매니콘 · 매니콘코리아 · (주)매니콘코리아 는 각각 16,401건이고 메니콘 · 메니콘코리아 · 한국메니콘 · (주)메니콘코리아 · 메니콘코리아(주) · 매니콘코리아(주) · 한국매니콘 은 모두 0건 · 영문 Menicon · MENICON · menicon 도 업체명 칸에서 0건 · 대조군 bplcNm=한국알콘 46,382건으로 UTF-8 인코딩 정상 확인",
+            linkNote: "한국 유통사 법인명은 (주)매니콘코리아이며 메가 아니라 매다. 브랜드 한글 표기(메니콘)와 법인 등록명(매니콘)이 다르다"
+          },
+          {
+            sourceType: "MFDS 허가·UDI",
+            verifiedAt: "2026-08-28",
+            organization: "식품의약품안전처",
+            document: "의료기기 UDI 표준코드 조회 — 모델명 표기 순회 기록",
+            raw: "1day  Flat Pack",
+            url: "https://emedi.mfds.go.kr/msismext/udi/uif/schStddCdLstView.do",
+            condition: "등록 모델명에는 Miru 가 없고 1day 와 Flat 사이에 공백이 두 칸이다. 1day Flat Pack(공백 한 칸) · Miru 1day · MIRU 1DAY · Miru Flat Pack · MIRU 1day Flat Pack 조회는 모두 0건 · Flat Pack 조회 154건과 1day  Flat Pack 조회 154건이 같은 집합 · modelnm=Miru 14,233건은 Miru 1MT · Miru 1M · Miru UpSide 뿐이고 플랫팩은 들어 있지 않다",
+            linkNote: "docs/PRODUCT_CANDIDATES_20.md 표 A 18번의 검색 키워드 중 Miru 1day 는 0건이고 Flat Pack 만 맞는다"
+          },
+          {
+            sourceType: "한국 공식 페이지·IFU",
+            verifiedAt: "2026-08-28",
+            organization: "(주)매니콘코리아",
+            document: "Miru 1day Flat Pack 한국 공식 소비자·전문가 제품 페이지",
+            raw: "허가번호 표기 없음 (수허·허가·의료기기·심의 문자열 0건)",
+            url: "https://www.menicon.co.kr/consumer/products/disposable-lenses/miru-1day-flat-pack",
+            condition: "두 페이지 HTML 태그 제거 후 전문 검색 · 한국 사이트가 게시한 IFU는 EU 시장용 영문 문서(Manufacturer: Menicon Co., Ltd. / Authorized Representative: Menicon Holdings B.V. / 심볼 정의표에 EU Importer)로 한국 허가 정보를 담지 않는다 · 온라인 공개 한국어 IFU를 찾지 못했다",
+            linkNote: "이 제품은 한국 IFU 경로가 없어 MFDS UDI가 허가번호의 유일한 근거"
+          }
+        ]
+      },
+      {
+        id: "uv",
+        value: "공식 UV 표기 확인되지 않음",
+        state: "unknown",
+        flag: "확인되지 않음",
+        sourceSummary: "한국·글로벌 공식 자료 11종을 검토했으나 UV 항목 자체가 없음 · 2026.08.28 확인",
+        caution: "UV 차단이 없다고 단정하지 않습니다. 검토한 공식 자료가 이 제품의 UV를 말하지 않는다는 사실만 적습니다. 부재의 성격은 Dk/t와 같습니다. 메니콘코리아 한국 페이지는 형제 제품 Miru 1day UpSide에 UV 필터 클래스 2(UV-A 84% / UV-B 96%)를 한국어로 인쇄하지만 이 제품 표에는 UV 행이 아예 없습니다. 한국 소비자·전문가 페이지, 글로벌·영국·미국·스페인·싱가포르·말레이시아 지역 페이지, 영문 IFU 2판, Trade Sales Aid 전문에서 UV와 자외선이 각각 0건입니다. 메니콘 일본이 같은 재질의 자국 승인 제품에 대해 UV 차단 기능 없음이라고 적기는 하지만, 별개 국가 허가이고 도수 범위도 달라 한국 유통 제품의 UV를 없음으로 단정하는 근거로 쓰지 않았습니다.",
+        sources: [
+          {
+            sourceType: "한국 공식 페이지·IFU",
+            verifiedAt: "2026-08-28",
+            organization: "(주)매니콘코리아",
+            document: "Miru 1day Flat Pack 한국 공식 소비자·전문가 제품 페이지",
+            raw: "UV 항목 없음 (자외선·UV 문자열 0건)",
+            url: "https://www.menicon.co.kr/professional/products/disposable-lenses/miru-1day-flat-pack",
+            condition: "두 페이지 HTML 태그 제거 후 전문 검색 · 제품 세부 정보 표에 UV 필터 행이 없다",
+            linkNote: "미확인을 UV 기능 없음으로 해석하지 않음"
+          },
+          {
+            sourceType: "한국 공식 페이지·IFU",
+            verifiedAt: "2026-08-28",
+            organization: "(주)매니콘코리아",
+            document: "Miru 1day UpSide 한국 공식 소비자 제품 페이지 (대조군)",
+            raw: "UV 필터\n클래스 2(UV-A 84% / UV-B 96%)",
+            url: "https://www.menicon.co.kr/consumer/products/disposable-lenses/miru-1day-upside",
+            condition: "같은 사이트 형제 제품의 같은 표 서식 · 이 값은 midafilcon A 제품의 값이며 본 제품의 값이 아니다 · Miru 1month Menicon 페이지에는 UV 필터 행이 없다",
+            linkNote: "이 제품의 UV 부재가 한국 자료 부실 때문이 아니라 제품별 선택임을 보여주는 대조 근거"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "Menicon",
+            document: "Miru 1day Flat Pack 글로벌 전문가용 제품 페이지 · Trade Sales Aid (Dec 2024) · IFU RA1DAYPI002 / RA1DAYPI007",
+            raw: "UV 항목 없음 (UV 문자열 0건)",
+            url: "https://www.menicon.com/professional/products/disposable-lenses/miru-1day-flat-pack",
+            condition: "글로벌 제품 페이지 HTML · 11쪽 Trade Sales Aid PDF · 2쪽 IFU 2판 전문 검색 모두 0건 · 영국·미국·스페인·싱가포르·말레이시아 지역 페이지도 0건",
+            linkNote: "제조사가 이 제품에 대해 UV 등급도 차단율도 투과율도 공개하지 않는다"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "Menicon",
+            document: "메니콘 일본 Magic 제품 페이지 (규제 판매명 メニコン１ＤＡＹ　フラットパック · 승인번호 22100BZX01098000)",
+            raw: "UVカット機能\nなし",
+            url: "https://www.menicon.co.jp/products/lense/1day/magic/",
+            condition: "製作範囲 近視用 표 · 같은 표의 USAN hioxifilconA · 含水率 57% · ベースカーブ 8.6mm · 直径 14.2mm 는 한국 값과 일치하나 球面度数에 플러스 도수가 없다 · 같은 페이지는 視感透過率 94%以上 ISO18369-3 도 함께 적는데 이는 가시광 투과율이지 자외선 차단이 아니다",
+            linkNote: "참고 · 일본 동계열 제품 자료 · 값으로 쓰지 않음 · 별개 국가 허가의 표기이므로 참고 레코드로만 남겼다. 한국 유통 제품의 UV를 없음으로 단정하지 않았다"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "soflens-daily",
+    slug: "soflens-daily",
+    aliases: ["소프렌 데일리", "소프렌 데일리 근시용", "SofLens daily disposable", "hilafilcon B"],
+    name: "소프렌 데일리 근시용 / SofLens® daily disposable",
+    selectorLabel: "소프렌 데일리",
+    maker: "Bausch + Lomb",
+    distributor: "(주)바슈롬코리아",
+    type: "근시용 투명 구면 · 1일 교체",
+    packageSpecs: [
+      { value: "BC 8.6", label: "Base Curve · mm" },
+      { value: "DIA 14.2", label: "Diameter · mm" },
+      { value: "59%", label: "Water content" },
+      { value: "Dk/t 미표기", label: "Dk 22만 인쇄" }
+    ],
+    fields: [
+      {
+        id: "bc",
+        value: "8.6 mm",
+        state: "verified",
+        sourceSummary: "한국 공식 제품 페이지 사양표와 미국 Package Insert / Fitting Guide가 일치 · 2026.08.28 확인",
+        caution: "한국 공식 값은 제품 페이지 `상세정보`의 이미지 안에 인쇄돼 있습니다. 이미지에 대체 텍스트가 없어 페이지 HTML 텍스트로는 검색되지 않으며, 확인하려면 이미지를 열어 하단 `제품 상세 안내` 표를 봐야 합니다.",
+        sources: [
+          {
+            sourceType: "한국 공식 페이지·IFU",
+            verifiedAt: "2026-08-28",
+            organization: "(주)바슈롬코리아",
+            document: "소프렌 데일리 근시용 한국 브랜드 제품 페이지 · 상세정보 이미지 (effb4f4341da8.jpg · md5 81bfe603ca85c38db27475fdb42e3ec1)",
+            raw: "8.6mm",
+            url: "https://www.bauschlomb.co.kr/cleardaily/?idx=102",
+            condition: "상세정보 탭 `제품 상세 안내` 표 · 행 라벨 원문 `베이스 커브`",
+            linkNote: "이미지 원본 https://cdn.imweb.me/upload/S2023010385e2991530ec3/effb4f4341da8.jpg · 1020×2180px · 육안 확대 판독. 페이지 HTML 본문에는 `8.6` 문자열이 0건이다"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "Bausch & Lomb Incorporated",
+            document: "SofLens® daily disposable Package Insert / Fitting Guide (SL7 494 · 8046303 · effective as of February 2015)",
+            raw: "Base Curve: 8.6mm",
+            url: "https://pi.bausch.com/globalassets/pdf/packageinserts/vision-care/lenses/soflens-daily-disposable-pifg.pdf",
+            condition: "LENS PARAMETERS AVAILABLE 절 · 구면 전용 문서여서 난시용 값을 괄호로 병기하는 줄이 없다",
+            linkNote: "미국 ECP 사이트에는 이 제품의 개별 파라미터 페이지가 없다(soflens-daily-disposable 경로는 404)"
+          }
+        ]
+      },
+      {
+        id: "dia",
+        value: "14.2 mm",
+        state: "verified",
+        sourceSummary: "한국 공식 제품 페이지 사양표와 미국 Package Insert / Fitting Guide가 일치 · 2026.08.28 확인",
+        caution: "한국 공식 값은 제품 페이지 `상세정보` 이미지 안에 인쇄돼 있습니다. 페이지 HTML 텍스트로는 검색되지 않습니다.",
+        sources: [
+          {
+            sourceType: "한국 공식 페이지·IFU",
+            verifiedAt: "2026-08-28",
+            organization: "(주)바슈롬코리아",
+            document: "소프렌 데일리 근시용 한국 브랜드 제품 페이지 · 상세정보 이미지 (effb4f4341da8.jpg · md5 81bfe603ca85c38db27475fdb42e3ec1)",
+            raw: "14.2mm",
+            url: "https://www.bauschlomb.co.kr/cleardaily/?idx=102",
+            condition: "상세정보 탭 `제품 상세 안내` 표 · 행 라벨 원문 `직경`",
+            linkNote: "육안 확대 판독. 페이지 HTML 본문에는 `14.2` 문자열이 0건이다"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "Bausch & Lomb Incorporated",
+            document: "SofLens® daily disposable Package Insert / Fitting Guide (SL7 494 · 8046303 · effective as of February 2015)",
+            raw: "Diameter: 14.2mm",
+            url: "https://pi.bausch.com/globalassets/pdf/packageinserts/vision-care/lenses/soflens-daily-disposable-pifg.pdf",
+            condition: "LENS PARAMETERS AVAILABLE 절",
+            linkNote: "구면 전용 문서"
+          }
+        ]
+      },
+      {
+        id: "water",
+        value: "59%",
+        state: "verified",
+        sourceSummary: "한국 공식 제품 페이지 사양표와 미국 Package Insert / Fitting Guide가 일치 · 2026.08.28 확인",
+        caution: "제조사는 이 값을 `멸균 식염수에 담근 상태의 중량 기준 59%`로 적습니다. 렌즈 전체(벌크) 기준 표기이며, 코어·표면을 나눠 적는 제품(데일리스 토탈원 등)의 숫자와 같은 축에 놓고 비교하지 않습니다. 하이드로겔 계열이므로 실리콘 하이드로겔 제품의 함수율과도 같은 축에서 읽으면 안 됩니다.",
+        sources: [
+          {
+            sourceType: "한국 공식 페이지·IFU",
+            verifiedAt: "2026-08-28",
+            organization: "(주)바슈롬코리아",
+            document: "소프렌 데일리 근시용 한국 브랜드 제품 페이지 · 상세정보 이미지 (effb4f4341da8.jpg · md5 81bfe603ca85c38db27475fdb42e3ec1)",
+            raw: "59%",
+            url: "https://www.bauschlomb.co.kr/cleardaily/?idx=102",
+            condition: "상세정보 탭 `제품 상세 안내` 표 · 행 라벨 원문 `함수율` · 측정 위치(벌크·코어·표면) 구분 표기는 없다",
+            linkNote: "육안 확대 판독. 페이지 HTML 본문에는 `함수율`·`59%` 문자열이 각 0건이다"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "Bausch & Lomb Incorporated",
+            document: "SofLens® daily disposable Package Insert / Fitting Guide (SL7 494 · 8046303 · effective as of February 2015)",
+            raw: "Water Content: 59%",
+            url: "https://pi.bausch.com/globalassets/pdf/packageinserts/vision-care/lenses/soflens-daily-disposable-pifg.pdf",
+            condition: "DESCRIPTION 절 physical / optical properties 목록 · 같은 절 본문에 `is 59% water by weight when immersed in a sterile saline solution`",
+            linkNote: "pypdf 추출 문자열은 자간 때문에 `W ater Content: 59%`로 나온다. 인쇄된 문자열은 Water Content다"
+          }
+        ]
+      },
+      {
+        id: "material",
+        value: "hilafilcon B",
+        state: "verified",
+        sourceSummary: "미국 Package Insert / Fitting Guide의 재질명과 한국 공식 페이지 표기가 같은 이름 · 2026.08.28 확인",
+        caution: "실리콘 하이드로겔이 아니라 하이드로겔(hydrophilic copolymer) 계열입니다. 한국 공식 페이지의 사양표는 첫 글자를 대문자로 쓴 `Hilafilcon B`로, 같은 이미지 안 포장 사진은 `hilafilcon B`로 인쇄합니다. 값의 차이가 아니라 표기 차이입니다. MFDS 허가 원장에는 재질명이 등재돼 있지 않아, 바이오트루 원데이와 달리 한국 허가 원장이 재질명을 뒷받침하지 않습니다.",
+        sources: [
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "Bausch & Lomb Incorporated",
+            document: "SofLens® daily disposable Package Insert / Fitting Guide (SL7 494 · 8046303 · effective as of February 2015)",
+            raw: "The lens is made from the hilafilcon B material, a hydrophilic copolymer of 2-hydroxyethyl methacrylate and N-vinyl pyrrolidone, and is 59% water by weight when immersed in a sterile saline solution.",
+            url: "https://pi.bausch.com/globalassets/pdf/packageinserts/vision-care/lenses/soflens-daily-disposable-pifg.pdf",
+            condition: "DESCRIPTION 절 두 번째 문장",
+            linkNote: "같은 절 첫 문장은 제품명을 `SofLens daily disposable (hilafilcon B) Visibility Tinted Contact Lens`로 적는다"
+          },
+          {
+            sourceType: "한국 공식 페이지·IFU",
+            verifiedAt: "2026-08-28",
+            organization: "(주)바슈롬코리아",
+            document: "소프렌 데일리 근시용 한국 브랜드 제품 페이지 · 상세정보 이미지 (effb4f4341da8.jpg · md5 81bfe603ca85c38db27475fdb42e3ec1)",
+            raw: "Hilafilcon B",
+            url: "https://www.bauschlomb.co.kr/cleardaily/?idx=102",
+            condition: "상세정보 탭 `제품 상세 안내` 표 · 행 라벨 원문 `재질` · 첫 글자가 대문자다",
+            linkNote: "같은 이미지의 포장 사진에는 `SofLens® daily disposable (hilafilcon B)`로 소문자 h가 인쇄돼 있다"
+          },
+          {
+            sourceType: "MFDS 허가·UDI",
+            verifiedAt: "2026-08-28",
+            organization: "식품의약품안전처",
+            document: "의료기기 UDI 표준코드 조회",
+            raw: "재질명 표기 없음 (modelnm=hilafilcon / Hilafilcon / hilafilcon B / HILAFILCON 조회 각 0건)",
+            url: "https://emedi.mfds.go.kr/msismext/udi/uif/schStddCdLstView.do",
+            condition: "bplcNm=바슈롬 고정 · 대소문자 4가지 변형 모두 0건 · 음성 대조 modelnm=ZZZZZ도 0건",
+            linkNote: "바이오트루 원데이는 같은 UDI-DI에 `nesofilcon A`가 모델명으로 등록돼 있었다. 같은 제조사라도 제품마다 등록 방식이 다르다"
+          }
+        ]
+      },
+      {
+        id: "dkt",
+        value: "공식 자료에서 확인되지 않음",
+        state: "unknown",
+        flag: "확인되지 않음",
+        sourceSummary: "검토한 한국·글로벌 공식 자료 어디에도 Dk/t 표기가 없음. 제조사가 인쇄한 것은 Dk 하나뿐",
+        caution: "표기를 찾지 못했다는 뜻이며 값이 없다는 뜻이 아닙니다. 제조사 Package Insert가 인쇄한 값은 `Oxygen Permeability: 22 x 10⁻¹¹ [cm³O₂(STP) x cm]/(sec x cm² x mmHg) @35˚C (분극법)`이며, 이는 산소투과계수 Dk의 단위입니다. Dk를 두께로 나눠 Dk/t를 만드는 유도는 하지 않았습니다. 게다가 이 제품은 단일 시험도수 중심두께도 공개돼 있지 않아 나눌 두께 자체가 없습니다. 다른 제품의 Dk/t 숫자와 이 제품의 22를 같은 열에서 비교하지 마십시오.",
+        sources: [
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "Bausch & Lomb Incorporated",
+            document: "SofLens® daily disposable Package Insert / Fitting Guide (SL7 494 · 8046303 · effective as of February 2015)",
+            raw: "Oxygen Permeability:  22 x 10–11[cm3O2(STP) x cm]/(sec x cm2 x mmHg) @35˚ C (Polarographic Method)",
+            url: "https://pi.bausch.com/globalassets/pdf/packageinserts/vision-care/lenses/soflens-daily-disposable-pifg.pdf",
+            condition: "DESCRIPTION 절 physical / optical properties 목록 · 라벨 원문에 `(Dk)`도 `(Dk/t)`도 붙어 있지 않다 · 문서 전체에서 `Dk` 문자열 0건",
+            linkNote: "`10–11`의 `–11`과 `cm3`·`cm2`는 인쇄물에서 위첨자다. 바이오트루 원데이는 같은 자리에 `Oxygen Permeability (Dk):`라고 적었다"
+          },
+          {
+            sourceType: "한국 공식 페이지·IFU",
+            verifiedAt: "2026-08-28",
+            organization: "(주)바슈롬코리아",
+            document: "소프렌 데일리 근시용 한국 브랜드 제품 페이지 · 상세정보 이미지 (effb4f4341da8.jpg · md5 81bfe603ca85c38db27475fdb42e3ec1)",
+            raw: "산소 관련 항목 없음 (`제품 상세 안내` 표의 행은 재질·함수율·베이스 커브·직경·도수범위·착용 주기·포장 단위 7개뿐)",
+            url: "https://www.bauschlomb.co.kr/cleardaily/?idx=102",
+            condition: "이미지 육안 확대 판독 · 페이지 HTML 본문에도 `Dk`·`산소` 문자열 각 0건",
+            linkNote: "한국어 IFU·사양서 PDF는 찾지 못했다"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "Bausch + Lomb",
+            document: "Bausch + Lomb Contact Lens Parameters (미국 ECP 파라미터 일람)",
+            raw: "Find lens parameters for Bausch + Lomb brands in one place, including INFUSE®, Biotrue® ONEday, and ULTRA®.",
+            url: "https://ecp.bauschcontactlenses.com/products/parameters/",
+            condition: "수록 제품은 INFUSE·Biotrue ONEday·ULTRA 계열뿐 · `SofLens`·`hilafilcon` 문자열 0건",
+            linkNote: "개별 제품 경로 /products/soflens-daily-disposable/ 는 HTTP 404. 바이오트루에서 Dk/t 값을 얻었던 문서가 이 제품에는 존재하지 않는다"
+          }
+        ]
+      },
+      {
+        id: "thickness",
+        value: "0.05 mm ~ 0.75 mm (도수에 따라 변함)",
+        state: "verified",
+        flag: "글로벌 공식 자료 · 단일 시험도수 값 없음",
+        sourceSummary: "미국 Package Insert / Fitting Guide가 인쇄한 유일한 중심두께 표기 · 2026.08.28 확인",
+        caution: "제조사가 인쇄한 값은 도수 전 구간을 덮는 범위 하나뿐이며, `-3.00D 기준` 같은 단일 시험도수 값은 어떤 공식 자료에도 없습니다. 따라서 다른 제품의 단일 시험도수 중심두께 숫자와 직접 비교할 수 없습니다. 한국 공식 페이지의 사양표에도 중심두께 항목이 없습니다.",
+        sources: [
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "Bausch & Lomb Incorporated",
+            document: "SofLens® daily disposable Package Insert / Fitting Guide (SL7 494 · 8046303 · effective as of February 2015)",
+            raw: "Center Thickness: 0.05mm to 0.75mm (varies with power)",
+            url: "https://pi.bausch.com/globalassets/pdf/packageinserts/vision-care/lenses/soflens-daily-disposable-pifg.pdf",
+            condition: "LENS PARAMETERS AVAILABLE 절 · 단일값이 아니라 도수에 따른 범위",
+            linkNote: "바이오트루 원데이는 별도의 ECP 웹 페이지·파라미터 PDF가 `0.10 mm @ -3.00D`를 인쇄했지만, 이 제품에는 그 문서가 없다"
+          },
+          {
+            sourceType: "한국 공식 페이지·IFU",
+            verifiedAt: "2026-08-28",
+            organization: "(주)바슈롬코리아",
+            document: "소프렌 데일리 근시용 한국 브랜드 제품 페이지 · 상세정보 이미지 (effb4f4341da8.jpg · md5 81bfe603ca85c38db27475fdb42e3ec1)",
+            raw: "중심두께 항목 없음",
+            url: "https://www.bauschlomb.co.kr/cleardaily/?idx=102",
+            condition: "`제품 상세 안내` 표 7개 행에 두께 항목이 없음 · 이미지 육안 확대 판독",
+            linkNote: "페이지 HTML 본문에도 두께 관련 문자열이 0건이다"
+          }
+        ]
+      },
+      {
+        id: "replacement",
+        value: "1일",
+        state: "verified",
+        sourceSummary: "한국 공식 제품 페이지의 `1일 교체용` 표기와 미국 공식 문서 2종의 single-use disposable 표기 · 2026.08.28 확인",
+        caution: "교체주기입니다. 착용방식(착용 시간·수면 착용 여부)은 별도 개념이며 안경사 또는 안과 전문인의 판단이 필요합니다. MFDS 소분류 `매일착용 소프트 콘택트렌즈`는 착용 구분이지 교체주기가 아닙니다. 미국 Package Insert의 `Daily Wear` 절 제목도 착용방식 표기입니다.",
+        sources: [
+          {
+            sourceType: "한국 공식 페이지·IFU",
+            verifiedAt: "2026-08-28",
+            organization: "(주)바슈롬코리아",
+            document: "소프렌 데일리 근시용 한국 브랜드 제품 페이지 · 상세정보 이미지 (effb4f4341da8.jpg · md5 81bfe603ca85c38db27475fdb42e3ec1)",
+            raw: "1일 교체용",
+            url: "https://www.bauschlomb.co.kr/cleardaily/?idx=102",
+            condition: "상세정보 탭 `제품 상세 안내` 표 · 행 라벨 원문 `착용 주기`",
+            linkNote: "같은 이미지의 고지 원문은 `매일착용소프트콘택트렌즈 / 무수정체안 및 질병이 없는 수정체안의 굴절이상(근시)의 교정을 위해 사용하는 일회용 단일초점렌즈`다"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "Bausch & Lomb Incorporated",
+            document: "SofLens® daily disposable Package Insert / Fitting Guide (SL7 494 · 8046303 · effective as of February 2015)",
+            raw: "The lens is to be prescribed for single-use disposable wear, and is to be discarded after each removal.",
+            url: "https://pi.bausch.com/globalassets/pdf/packageinserts/vision-care/lenses/soflens-daily-disposable-pifg.pdf",
+            condition: "INDICATIONS 절 마지막 문장 · WEARING SCHEDULE 절에도 같은 문장 반복",
+            linkNote: "같은 절이 `The wearing and replacement schedules should be determined by the eye care professional.`로 시작한다"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "Bausch & Lomb Incorporated",
+            document: "SofLens® daily disposable Patient Information Booklet (SL7 495 · 8046405 · Effective as of February 2015)",
+            raw: "Your Bausch + Lomb SofLens® daily disposable (hilafilcon B) Visibility Tinted Contact Lenses have been prescribed for single-use disposable wear, and should be discarded each time lenses are removed from your eyes.",
+            url: "https://pi.bausch.com/globalassets/pdf/packageinserts/vision-care/lenses/soflens-daily-disposable-pib.pdf",
+            condition: "INTRODUCTION 절",
+            linkNote: "이 소책자에는 물성 수치가 전혀 없다(Water·Dk·thickness·59 각 0건). 교체 표기 근거로만 사용"
+          },
+          {
+            sourceType: "MFDS 허가·UDI",
+            verifiedAt: "2026-08-28",
+            organization: "식품의약품안전처",
+            document: "의료기기 UDI 표준코드 조회",
+            raw: "매일착용 소프트 콘택트렌즈",
+            url: "https://emedi.mfds.go.kr/msismext/udi/uif/schStddCdLstView.do",
+            condition: "itemPermitNo=수허 09-975 호 · 201행 전부 동일 소분류 · 등급 2",
+            linkNote: "소분류 품목 명칭은 교체주기가 아니라 착용 구분이다. 표기에 공백이 있어(`매일착용 소프트 콘택트렌즈`) 바이오트루 원데이의 `매일착용소프트콘택트렌즈`와 문자열이 다르다"
+          }
+        ]
+      },
+      {
+        id: "permit",
+        value: "수허 09-975 호",
+        state: "verified",
+        sourceSummary: "MFDS 의료기기 UDI 표준코드 조회 · 2026.08.28 확인",
+        caution: "소프렌 계열은 제품마다 허가번호가 다릅니다. 이 번호는 소프렌 데일리 구면(근시용)의 번호이며, 난시용은 수허 11-407 호, 소프렌 59는 수허 06-1131 호, 소프렌 38은 수허 01-919 호입니다. 또한 이 허가는 소프렌 데일리 전용이 아니라 `트루핏 원데이(Truefit)`와 함께 묶여 있어, 번호만으로 소프렌 데일리 단독 품목을 분리할 수 없습니다. 한국 브랜드 페이지의 `제 2009-3220033-00028호`는 의료기기 판매업 신고번호이고, 상세 이미지의 `62026-I10-12-1415`는 의료기기 광고 사전심의 번호입니다. 둘 다 품목 허가번호가 아닙니다.",
+        sources: [
+          {
+            sourceType: "MFDS 허가·UDI",
+            verifiedAt: "2026-08-28",
+            organization: "식품의약품안전처",
+            document: "의료기기 UDI 표준코드 조회",
+            raw: "수허 09-975 호",
+            url: "https://emedi.mfds.go.kr/msismext/udi/uif/schStddCdLstView.do",
+            condition: "bplcNm=바슈롬 · modelnm=Daily 조회 573건 전수 집계에서 구면은 201건이 모두 이 번호(난시용 372건은 수허 11-407 호). itemPermitNo=수허 09-975 호 단독 조회는 201행이며 distinct UDI-DI도 201, 업체명·업체구분·소분류·등급·모델명·업체 제품 명칭이 전부 동일",
+            linkNote: "업체 제품 명칭 원문 `소프렌 데일리, 수분쿠션 렌즈, 저자극 렌즈, 트루핏 원데이, Truefit` · 모델명 원문 `Daily Disposable`(브랜드명 SofLens가 들어 있지 않다) · 업체명 `(주)바슈롬코리아` · 업체구분 `수입업` · 등급 2 · 포장내수량 10/30/90"
+          },
+          {
+            sourceType: "MFDS 허가·UDI",
+            verifiedAt: "2026-08-28",
+            organization: "식품의약품안전처",
+            document: "의료기기 UDI 표준코드 조회 — 모델명 `SofLens` 조회 결과",
+            raw: "SofLens 38(polymacon) / SofLens 59",
+            url: "https://emedi.mfds.go.kr/msismext/udi/uif/schStddCdLstView.do",
+            condition: "bplcNm=바슈롬 · modelnm=SofLens 조회 208건 전수 집계 · distinct 2건(수허 01-919 호 옵티마 FW·소프렌 38 156건 / 수허 06-1131 호 소프렌 59 52건)",
+            linkNote: "`SofLens`로 조회하면 이 제품은 나오지 않는다. 원장 모델명이 `Daily Disposable`이기 때문이다. 이름이 비슷한 소프렌 38·59의 번호를 데일리에 붙이면 안 된다"
+          },
+          {
+            sourceType: "한국 공식 페이지·IFU",
+            verifiedAt: "2026-08-28",
+            organization: "(주)바슈롬코리아",
+            document: "소프렌 데일리 근시용 한국 브랜드 제품 페이지",
+            raw: "허가번호 표기 없음 (`수허`·`허가`(허가번호 표기) 문자열 0건)",
+            url: "https://www.bauschlomb.co.kr/cleardaily/?idx=102",
+            condition: "curl HTML 전문 검색과 상세정보 이미지 육안 판독 양쪽에서 확인",
+            linkNote: "한국어 IFU PDF도 찾지 못해 MFDS UDI가 유일한 허가번호 근거"
+          }
+        ]
+      },
+      {
+        id: "uv",
+        value: "공식 자료에서 확인되지 않음",
+        state: "unknown",
+        flag: "확인되지 않음",
+        sourceSummary: "검토한 한국·글로벌 공식 자료 3종 어디에도 UV 관련 문장·수치가 없음",
+        caution: "표기를 찾지 못했다는 뜻이며 `UV 차단이 없다`고 단정한 것이 아닙니다. 같은 제조사의 바이오트루 원데이 Package Insert는 같은 DESCRIPTION 절에 자외선 흡수 단량체 문단과 투과율 수치를 인쇄하지만, 이 제품의 문서에는 그 문단 자체가 없고 착색 안료(Reactive Blue Dye 246)만 언급합니다. 환자용 소책자에도 다른 제품에는 있는 UV 경고문이 없습니다.",
+        sources: [
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "Bausch & Lomb Incorporated",
+            document: "SofLens® daily disposable Package Insert / Fitting Guide (SL7 494 · 8046303 · effective as of February 2015)",
+            raw: "This lens is tinted blue with Reactive Blue Dye 246.",
+            url: "https://pi.bausch.com/globalassets/pdf/packageinserts/vision-care/lenses/soflens-daily-disposable-pifg.pdf",
+            condition: "DESCRIPTION 절 · 이 문장 앞뒤에 자외선 관련 문장이 없다 · 문서 전문에서 `UV` 0건, `ultraviolet` 0건, `UV-absorbing` 0건",
+            linkNote: "`transmittance`는 `Light Transmittance: C.I.E. Y value - approximately 95%` 1건뿐이며 가시광 투과율이지 자외선 투과율이 아니다"
+          },
+          {
+            sourceType: "제조사 기술·전문가 사양",
+            verifiedAt: "2026-08-28",
+            organization: "Bausch & Lomb Incorporated",
+            document: "SofLens® daily disposable Patient Information Booklet (SL7 495 · 8046405 · Effective as of February 2015)",
+            raw: "UV·ultraviolet 문자열 0건 (UV 경고 문단 없음)",
+            url: "https://pi.bausch.com/globalassets/pdf/packageinserts/vision-care/lenses/soflens-daily-disposable-pib.pdf",
+            condition: "12쪽 전문 검색",
+            linkNote: "바이오트루 원데이 환자용 소책자에는 `WARNING: UV absorbing contact lenses are NOT substitutes for protective UV absorbing eyewear …` 경고가 있다. 이 문서에는 없다"
+          },
+          {
+            sourceType: "한국 공식 페이지·IFU",
+            verifiedAt: "2026-08-28",
+            organization: "(주)바슈롬코리아",
+            document: "소프렌 데일리 근시용 한국 브랜드 제품 페이지 · 상세정보 이미지 (effb4f4341da8.jpg · md5 81bfe603ca85c38db27475fdb42e3ec1)",
+            raw: "UV·자외선 표기 없음 (`자외선` 0건 · `제품 상세 안내` 표에 UV 행 없음)",
+            url: "https://www.bauschlomb.co.kr/cleardaily/?idx=102",
+            condition: "curl HTML 전문 검색과 상세정보 이미지 육안 확대 판독 양쪽에서 확인",
+            linkNote: "한국 표기 자체가 존재하지 않는다"
+          }
+        ]
+      }
+    ]
   }
 ];
