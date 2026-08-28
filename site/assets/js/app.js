@@ -543,7 +543,7 @@ const ADS_ENABLED = false;
       ? `입력한 ${entries.length}개 항목이 모두 같은 값으로 적힌 제품입니다. 표기가 같다는 사실만 확인한 결과이며 적합성 판단이 아닙니다. 순서는 수록 순서입니다.`
       : (partial
         ? `입력한 ${entries.length}개 항목이 모두 같은 제품은 없습니다. 가장 많은 항목이 같은 제품을 표기 일치 개수와 함께 보여 드립니다. 적합성 판단이 아닙니다.`
-        : "현재 수록된 6개 제품 가운데 입력한 값과 같은 표기가 있는 제품이 없습니다.");
+        : `현재 수록된 ${products.length}개 제품 가운데 입력한 값과 같은 표기가 있는 제품이 없습니다.`);
     const list = shown.length ? `<ul class="match-list">${shown.map((row) => matchItem(row, entries, partial)).join("")}</ul>` : "";
     return `<section class="input-result-matches">
       <h4>입력한 표기와 같은 값이 적힌 제품</h4>
@@ -743,14 +743,23 @@ const ADS_ENABLED = false;
     { productId: "biofinity", colId: "col-biofinity", label: "바이오피니티®" },
     { productId: "acuvue-moist-1-day", colId: "col-acuvue-moist-1-day", label: "원데이 아큐브 모이스트®" },
     { productId: "myday", colId: "col-myday", label: "마이데이®" },
-    { productId: "clariti-1-day", colId: "col-clariti-1-day", label: "클래리티® 원데이" }
+    { productId: "clariti-1-day", colId: "col-clariti-1-day", label: "클래리티® 원데이" },
+    { productId: "acuvue-oasys-2-week", colId: "col-acuvue-oasys-2-week", label: "아큐브 오아시스® 2주" },
+    { productId: "precision1", colId: "col-precision1", label: "프리시전원®" },
+    { productId: "biotrue-oneday", colId: "col-biotrue-oneday", label: "바이오트루 원데이®" }
   ];
 
   const COMPARE_ROWS = [
-    { rowId: "row-permit", fieldId: "permit", label: "한국 수입허가번호", mono: true },
+    {
+      rowId: "row-permit", fieldId: "permit", label: "한국 수입허가번호", mono: true,
+      notes: { "acuvue-oasys-2-week": "MFDS에 동일 제품의 등록 2건 · 실물 포장 확인 필요" }
+    },
     {
       rowId: "row-replacement", fieldId: "replacement", label: "교체주기",
-      notes: { "biofinity": "연속착용 여부와 별도" }
+      notes: {
+        "biofinity": "연속착용 여부와 별도",
+        "acuvue-oasys-2-week": "한국 공식 자료는 2주 착용으로만 표기 · 글로벌 사양은 교체주기와 착용방식을 따로 적음"
+      }
     },
     {
       rowId: "row-material", fieldId: "material", label: "재질", mono: true,
@@ -760,7 +769,10 @@ const ADS_ENABLED = false;
         "biofinity": "실리콘 하이드로겔",
         "acuvue-moist-1-day": "하이드로겔",
         "myday": "실리콘 하이드로겔",
-        "clariti-1-day": "한국 2023 사양서 인쇄 표기 vs 글로벌 사양·MFDS 모델명"
+        "clariti-1-day": "한국 2023 사양서 인쇄 표기 vs 글로벌 사양·MFDS 모델명",
+        "acuvue-oasys-2-week": "실리콘 하이드로겔 · 한국 공식 자료에는 재질명 표기 없음",
+        "precision1": "실리콘 하이드로겔 · 한국 공식 자료는 재질 계열까지만 표기",
+        "biotrue-oneday": "하이드로겔 · 상표명 HyperGel®과 구분"
       }
     },
     { rowId: "row-bc", fieldId: "bc", label: "BC", mono: true },
@@ -773,17 +785,23 @@ const ADS_ENABLED = false;
         "biofinity": "벌크",
         "acuvue-moist-1-day": "출처가 측정 위치를 표기하지 않음",
         "myday": "출처가 측정 위치를 표기하지 않음",
-        "clariti-1-day": "출처가 측정 위치를 표기하지 않음"
+        "clariti-1-day": "출처가 측정 위치를 표기하지 않음",
+        "acuvue-oasys-2-week": "출처가 측정 위치를 표기하지 않음",
+        "precision1": "코어·표면 분리 표기",
+        "biotrue-oneday": "출처가 측정 위치를 표기하지 않음"
       }
     },
     {
       rowId: "row-dkt", fieldId: "dkt", label: "Dk/t", labelNote: "시험 조건 포함", mono: true,
-      rowNote: "아큐브 두 제품 원문만 단위(× 10⁻⁹)를 명기함. 데일리스 토탈원·바이오피니티·마이데이·클래리티 원데이 원문은 단위를 표기하지 않아 임의로 단위를 붙이지 않음.",
+      rowNote: "아큐브 세 제품 원문만 단위(× 10⁻⁹)를 명기함. 데일리스 토탈원·바이오피니티·마이데이·클래리티 원데이·프리시전원·바이오트루 원데이 원문은 단위를 표기하지 않아 임의로 단위를 붙이지 않음.",
       notes: {
         "acuvue-oasys-1-day": "-3.00D · 중심 0.085 mm · 35℃ · boundary/edge-corrected Dk",
         "dailies-total1": "-3.00D · 중심 0.09 mm",
         "acuvue-moist-1-day": "-3.00D · 중심 0.084 mm · 35℃ · boundary/edge-corrected Dk",
-        "myday": "@-3.00DS · 측정법·보정·온도 조건 미표기 · 중심두께 미확인"
+        "myday": "@-3.00DS · 측정법·보정·온도 조건 미표기 · 중심두께 미확인",
+        "acuvue-oasys-2-week": "-3.00D · 중심 0.070 mm · 35℃ · boundary/edge-corrected Dk",
+        "precision1": "측정법·온도 미표기",
+        "biotrue-oneday": "제조사 문서 3종이 같은 숫자 42를 Dk와 Dk/t로 달리 표기 · 환산하지 않음"
       }
     },
     {
@@ -801,7 +819,10 @@ const ADS_ENABLED = false;
         "dailies-total1": "기능 없음으로 단정하지 않음",
         "acuvue-moist-1-day": "글로벌 기술 사양의 근사값 · 한국 표기 수치는 확인되지 않음",
         "myday": "차단율 퍼센트가 아니라 등급 표기 · 등급 기준은 사양서에 정의되지 않음",
-        "clariti-1-day": "차단율 퍼센트가 어느 공식 자료에도 없음 · Class 2는 한국 사양서의 등급 표기"
+        "clariti-1-day": "차단율 퍼센트가 어느 공식 자료에도 없음 · Class 2는 한국 사양서의 등급 표기",
+        "acuvue-oasys-2-week": "글로벌 기술 사양의 근사값 · 한국 표기 수치는 확인되지 않음",
+        "precision1": "한국 공식 자료는 등급만 표기 · 차단율은 글로벌 사양의 등급 기준선",
+        "biotrue-oneday": "투과율 표기(차단율 아님)"
       }
     },
     {
@@ -812,7 +833,10 @@ const ADS_ENABLED = false;
         "biofinity": "MFDS UDI 원장 94건 전수 대조로 허가번호 확인(연속착용 소프트 콘택트렌즈 등급 3 등록). Dk/t와 UV 충돌을 보류 상태로 유지. 중심두께는 2026-08-28 재확인에서 근거를 찾지 못해 철회.",
         "acuvue-moist-1-day": "MFDS UDI 조회로 허가번호 확인. BC·DIA·함수율·Dk/t·UV는 글로벌 기술 사양이 유일한 근거이며 한국 표기는 미확인.",
         "myday": "MFDS UDI 174건 전수 대조로 허가번호 확인. 중심두께는 공식 자료에 항목이 없어 미확인.",
-        "clariti-1-day": "MFDS UDI 17,003건 전수 집계로 허가번호 확인. 같은 제품 명칭의 별도 등록 수허 19-346 호는 따로 표기. 재질명과 Dk/t는 한국 2023 사양서와 글로벌 사양이 달라 병기. 중심두께는 공식 자료에 항목이 없어 미확인."
+        "clariti-1-day": "MFDS UDI 17,003건 전수 집계로 허가번호 확인. 같은 제품 명칭의 별도 등록 수허 19-346 호는 따로 표기. 재질명과 Dk/t는 한국 2023 사양서와 글로벌 사양이 달라 병기. 중심두께는 공식 자료에 항목이 없어 미확인.",
+        "acuvue-oasys-2-week": "MFDS UDI에서 동일한 고유식별자 377개에 허가번호 2건이 연결돼 하나로 좁히지 못했습니다. 물성값은 글로벌 기술 사양이 유일한 근거이며 한국 공식 자료에는 파라미터 표가 없습니다.",
+        "precision1": "MFDS UDI 186건 전수 대조로 허가번호 확인. 한국 공식 자료에 수치가 하나도 없어 물성값은 전부 글로벌 공식 자료가 근거입니다. Dk/t는 측정법·온도가 표기되지 않았습니다.",
+        "biotrue-oneday": "MFDS UDI 378행 대조로 허가번호 확인. 재질명은 한국 허가 원장에 모델명으로 등재. Dk/t는 제조사 문서끼리 같은 숫자를 Dk와 Dk/t로 달리 불러 충돌로 유지."
       }
     }
   ];
@@ -823,7 +847,10 @@ const ADS_ENABLED = false;
     { productId: "biofinity", fieldIds: ["permit"] },
     { productId: "acuvue-moist-1-day", fieldIds: ["permit"] },
     { productId: "myday", fieldIds: ["permit"] },
-    { productId: "clariti-1-day", fieldIds: ["permit"] }
+    { productId: "clariti-1-day", fieldIds: ["permit"] },
+    { productId: "acuvue-oasys-2-week", fieldIds: ["permit"] },
+    { productId: "precision1", fieldIds: ["permit"] },
+    { productId: "biotrue-oneday", fieldIds: ["permit"] }
   ];
 
   function compareCell(row, product, column) {
@@ -1166,6 +1193,13 @@ const ADS_ENABLED = false;
     list.innerHTML = products.map(productCard).join("");
   }
 
+  // The "현재 수록된 N개 제품" copy is derived from the data, never typed by hand.
+  // The static HTML keeps a matching number so the no-JS reading stays correct.
+  function initProductCounts() {
+    if (!products.length) return;
+    qsa("[data-product-count]").forEach((node) => { node.textContent = String(products.length); });
+  }
+
   function initAdSlots() {
     qsa("[data-ad-slot]").forEach((slot) => {
       if (!ADS_ENABLED) {
@@ -1191,6 +1225,7 @@ const ADS_ENABLED = false;
     initCompareTable();
     initProductPage();
     initProductIndex();
+    initProductCounts();
     initAdSlots();
   });
 })();

@@ -40,30 +40,36 @@ BC, DIA, 함수율, Dk/t, 중심두께, 허가번호 같은 **수치·식별번�
 
 ## 표 A — 후보 제품 신원 (22건)
 
-| # | 한국 판매명 | 글로벌/영문명 | 제조사 | 한국 유통사(확인 필요) | 교체주기 | MFDS UDI 검색 키워드(모델명) |
-| --- | --- | --- | --- | --- | --- | --- |
-| 1 | 원데이 아큐브® 모이스트® | 1-DAY ACUVUE MOIST | Johnson & Johnson Vision | (주)한국존슨앤드존슨비전 | 1일 | `1-DAY ACUVUE MOIST`, `ACUVUE MOIST` |
-| 2 | 아큐브® 오아시스 맥스 원데이 | ACUVUE OASYS MAX 1-Day | Johnson & Johnson Vision | (주)한국존슨앤드존슨비전 | 1일 | `OASYS MAX 1-Day`, `OASYS MAX` |
-| 3 | 아큐브® 오아시스 (2주) | ACUVUE OASYS with HYDRACLEAR PLUS | Johnson & Johnson Vision | (주)한국존슨앤드존슨비전 | 2주 | `ACUVUE OASYS`, `HYDRACLEAR` |
-| 4 | 아큐브® 비타 | ACUVUE VITA | Johnson & Johnson Vision | (주)한국존슨앤드존슨비전 | 1개월 | `ACUVUE VITA`, `VITA` |
-| 5 | 프리시전원® | PRECISION1 | Alcon | 한국알콘(주) | 1일 | `PRECISION1`, `Precision 1` |
-| 6 | 토탈30® 워터렌즈 한달용 | TOTAL30 | Alcon | 한국알콘(주) | 1개월 | `TOTAL30`, `Total 30` |
-| 7 | 데일리스® 아쿠아컴포트 플러스 | DAILIES AquaComfort Plus | Alcon | 한국알콘(주) | 1일 | `DAILIES AquaComfort Plus`, `AquaComfort` |
-| 8 | 에어옵틱스® 플러스 하이드라글라이드 | AIR OPTIX plus HydraGlyde | Alcon | 한국알콘(주) | 1개월 | `AIR OPTIX plus HydraGlyde`, `AIR OPTIX` |
-| 9 | 마이데이® | MyDay daily disposable | CooperVision | 쿠퍼비젼코리아(주) | 1일 | `MyDay`, `MyDay daily disposable` |
-| 10 | 클래리티® 원데이 | clariti 1 day | CooperVision | 쿠퍼비젼코리아(주) | 1일 | `clariti 1 day`, `clariti` |
-| 11 | 프로클리어® 원데이 | Proclear 1 day | CooperVision | 쿠퍼비젼코리아(주) | 1일 | `Proclear 1 day`, `Proclear` |
-| 12 | 바이오피니티® 에너지스 | Biofinity Energys | CooperVision | 쿠퍼비젼코리아(주) | 1개월 | `Biofinity Energys`, `Energys` |
-| 13 | 바이오트루® 원데이 근시용 | Biotrue ONEday | Bausch + Lomb | 바슈롬코리아(법인명 확인 필요) | 1일 | `Biotrue ONEday`, `Biotrue` |
-| 14 | 울트라® 원데이 | Bausch + Lomb ULTRA ONE DAY (미국명 **INFUSE**) | Bausch + Lomb | 바슈롬코리아(법인명 확인 필요) | 1일 | `ULTRA ONE DAY`, `INFUSE`, `kalifilcon` |
-| 15 | 소프렌® 데일리 근시용 | SofLens daily disposable | Bausch + Lomb | 바슈롬코리아(법인명 확인 필요) | 1일 | `SofLens daily disposable`, `SofLens` |
-| 16 | 울트라® 근시용 | Bausch + Lomb ULTRA | Bausch + Lomb | 바슈롬코리아(법인명 확인 필요) | 1개월 | `ULTRA`, `Bausch + Lomb ULTRA` |
-| 17 | 옵티마® FW | Optima FW | Bausch + Lomb | 바슈롬코리아(법인명 확인 필요) | 1개월 | `Optima FW`, `Optima` |
-| 18 | Miru 1day Menicon Flat Pack | Miru 1day Flat Pack | Menicon | 메니콘코리아(법인명 확인 필요) | 1일 | `Miru 1day`, `Flat Pack` |
-| 19 | Miru 1day UpSide | Miru 1day UpSide | Menicon | 메니콘코리아(법인명 확인 필요) | 1일 | `Miru 1day UpSide`, `UpSide` |
-| 20 | Miru 1month Menicon | Miru 1month Menicon | Menicon | 메니콘코리아(법인명 확인 필요) | 1개월 | `Miru 1month`, `Miru 1month Menicon` |
-| 21 | 클라렌 오투오투 원데이 그랩수 플러스 | Clalen O2O2 1Day | (주)인터로조 | (주)인터로조 (국내 제조) | 1일 | `O2O2`, `Clalen`, `클라렌` |
-| 22 | 클라렌 오투오투 M 그랩수 | Clalen O2O2 M | (주)인터로조 | (주)인터로조 (국내 제조) | 1개월 | `O2O2 M`, `Clalen`, `클라렌` |
+| # | 한국 판매명 | 글로벌/영문명 | 제조사 | 한국 유통사(확인 필요) | 교체주기 | MFDS UDI 검색 키워드(모델명) | 편입 상태 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | 원데이 아큐브® 모이스트® | 1-DAY ACUVUE MOIST | Johnson & Johnson Vision | (주)한국존슨앤드존슨비전 | 1일 | `1-DAY ACUVUE MOIST`, `ACUVUE MOIST` | ✅ 편입 완료 2026-08-28 |
+| 2 | 아큐브® 오아시스 맥스 원데이 | ACUVUE OASYS MAX 1-Day | Johnson & Johnson Vision | (주)한국존슨앤드존슨비전 | 1일 | `OASYS MAX 1-Day`, `OASYS MAX` | — |
+| 3 | 아큐브® 오아시스 (2주) | ACUVUE OASYS with HYDRACLEAR PLUS | Johnson & Johnson Vision | (주)한국존슨앤드존슨비전 | 2주 | `ACUVUE OASYS`, `HYDRACLEAR` | ✅ 편입 완료 2026-08-28 |
+| 4 | 아큐브® 비타 | ACUVUE VITA | Johnson & Johnson Vision | (주)한국존슨앤드존슨비전 | 1개월 | `ACUVUE VITA`, `VITA` | — |
+| 5 | 프리시전원® | PRECISION1 | Alcon | 한국알콘(주) | 1일 | `Precision1` | ✅ 편입 완료 2026-08-28 |
+| 6 | 토탈30® 워터렌즈 한달용 | TOTAL30 | Alcon | 한국알콘(주) | 1개월 | `TOTAL30`, `Total 30` | — |
+| 7 | 데일리스® 아쿠아컴포트 플러스 | DAILIES AquaComfort Plus | Alcon | 한국알콘(주) | 1일 | `DAILIES AquaComfort Plus`, `AquaComfort` | — |
+| 8 | 에어옵틱스® 플러스 하이드라글라이드 | AIR OPTIX plus HydraGlyde | Alcon | 한국알콘(주) | 1개월 | `AIR OPTIX plus HydraGlyde`, `AIR OPTIX` | — |
+| 9 | 마이데이® | MyDay daily disposable | CooperVision | 쿠퍼비젼코리아(주) | 1일 | `MYDAY` | ✅ 편입 완료 2026-08-28 |
+| 10 | 클래리티® 원데이 | clariti 1 day | CooperVision | 쿠퍼비젼코리아(주) | 1일 | `clariti 1 day`, `clariti` | ✅ 편입 완료 2026-08-28 |
+| 11 | 프로클리어® 원데이 | Proclear 1 day | CooperVision | 쿠퍼비젼코리아(주) | 1일 | `Proclear 1 day`, `Proclear` | — |
+| 12 | 바이오피니티® 에너지스 | Biofinity Energys | CooperVision | 쿠퍼비젼코리아(주) | 1개월 | `Biofinity Energys`, `Energys` | — |
+| 13 | 바이오트루® 원데이 근시용 | Biotrue ONEday | Bausch + Lomb | (주)바슈롬코리아 | 1일 | `Biotrue ONEday` | ✅ 편입 완료 2026-08-28 |
+| 14 | 울트라® 원데이 | Bausch + Lomb ULTRA ONE DAY (미국명 **INFUSE**) | Bausch + Lomb | (주)바슈롬코리아 | 1일 | `ULTRA ONE DAY`, `INFUSE`, `kalifilcon` | — |
+| 15 | 소프렌® 데일리 근시용 | SofLens daily disposable | Bausch + Lomb | (주)바슈롬코리아 | 1일 | `SofLens daily disposable`, `SofLens` | — |
+| 16 | 울트라® 근시용 | Bausch + Lomb ULTRA | Bausch + Lomb | (주)바슈롬코리아 | 1개월 | `ULTRA`, `Bausch + Lomb ULTRA` | — |
+| 17 | 옵티마® FW | Optima FW | Bausch + Lomb | (주)바슈롬코리아 | 1개월 | `Optima FW`, `Optima` | — |
+| 18 | Miru 1day Menicon Flat Pack | Miru 1day Flat Pack | Menicon | 메니콘코리아(법인명 확인 필요) | 1일 | `Miru 1day`, `Flat Pack` | — |
+| 19 | Miru 1day UpSide | Miru 1day UpSide | Menicon | 메니콘코리아(법인명 확인 필요) | 1일 | `Miru 1day UpSide`, `UpSide` | — |
+| 20 | Miru 1month Menicon | Miru 1month Menicon | Menicon | 메니콘코리아(법인명 확인 필요) | 1개월 | `Miru 1month`, `Miru 1month Menicon` | — |
+| 21 | 클라렌 오투오투 원데이 그랩수 플러스 | Clalen O2O2 1Day | (주)인터로조 | (주)인터로조 (국내 제조) | 1일 | `O2O2`, `Clalen`, `클라렌` | — |
+| 22 | 클라렌 오투오투 M 그랩수 | Clalen O2O2 M | (주)인터로조 | (주)인터로조 (국내 제조) | 1개월 | `O2O2 M`, `Clalen`, `클라렌` | — |
+
+> **MFDS UDI 모델명 검색은 대소문자와 ® 기호를 구분한다** — 2026-08-28 검증에서 확인해 표 A의 키워드를 고쳤다.
+> 5번은 `PRECISION1`(전부 대문자)·`Precision 1`(공백) 모두 0건이고 정답 표기는 **`Precision1`**이다. 대문자 `PRECISION` 조회 4,460건은 전부 일주일용 PRECISION7 계열이라 이 제품이 잡히지 않는다.
+> 9번의 정답 표기는 **`MYDAY`**다. 13번은 ®를 뺀 **`Biotrue ONEday`**로 조회한다.
+> 3번은 두 등록이 ® 유무로 갈린다: `ACUVUE® OASYS® Brand Contact Lenses with HYDRACLEAR® PLUS`는 `수허 05-310 호`만, ® 없는 같은 문자열은 `수허 08-938 호`만 반환하고, 부분 문자열 `HYDRACLEAR`가 둘 다 잡는 유일한 키워드다.
+> 13~17번 한국 유통사 법인명은 MFDS UDI 업체명 조회로 **`(주)바슈롬코리아`**로 확정했다.
 
 > **이해관계: 운영자 근무처** — 21, 22번 (주)인터로조 / 클라렌.
 > 사이트 편집 원칙상 **인라인 공시 또는 제외**가 필요하다. 어느 쪽을 택할지는 운영자 결정 사항이며, 이 문서는 후보로만 올려둔다.
@@ -300,7 +306,7 @@ BC, DIA, 함수율, Dk/t, 중심두께, 허가번호 같은 **수치·식별번�
 
 ## 미해결 사항
 
-1. **한국 유통사 법인명**이 J&J·Bausch·Menicon 3곳에서 확정되지 않았다. MFDS UDI 업체명 조회로 정식 법인명을 확정한 뒤 표 A를 갱신한다.
+1. **한국 유통사 법인명** — Bausch는 2026-08-28 MFDS UDI 업체명 조회로 `(주)바슈롬코리아`로 확정해 표 A에 반영했다. Menicon은 아직 확정되지 않았다.
 2. **Alcon 데일리스 아쿠아컴포트 플러스 / 에어옵틱스 플러스 하이드라글라이드**의 한국 유통 여부가 공식 사이트로는 확인되지 않았다. UDI 조회 결과에 따라 후보 승격 또는 제외를 결정한다.
 3. **Menicon 프리미오(PremiO) 2주 제품**의 한국 공식 페이지를 찾지 못했다. 2주 교체 축을 넓히려면 UDI 조회로 유통 여부를 먼저 확인해야 한다.
 4. **Bausch + Lomb 한국 공식 수치 출처**가 5개 제품 모두에서 확인되지 않았다. 한국 IFU 종이 문서만 존재할 가능성이 있어, 실물 패키지 IFU 확보 경로를 별도로 검토한다.

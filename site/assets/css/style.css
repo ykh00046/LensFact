@@ -1511,6 +1511,11 @@ div.label-item:hover {
 
 /* Denser cards (product list) stay two per row instead of leaving an orphan. */
 @media (min-width: 1025px) {
+  /* Nine preset buttons read as a 3x3 block on desktop; narrower widths keep two columns. */
+  .product-selector {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
   .cards-grid.cards-wide {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
