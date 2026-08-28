@@ -78,6 +78,70 @@
       </div>
     </section>
 
+    <section class="section alt" id="input-decoder" aria-labelledby="input-decoder-title">
+      <div class="wrap decoder-layout">
+        <div>
+          <p class="section-kicker">포장 숫자 해석</p>
+          <h2 id="input-decoder-title">내 포장지 숫자 입력</h2>
+          <p class="lead">상자나 블리스터에 적힌 숫자를 그대로 옮겨 적으면, 각 표기의 뜻과 주의할 점을 보여 드리고 현재 수록된 6개 제품의 공식 표기와 같은 값이 있는지 대조합니다.</p>
+          <form class="input-decoder-form" data-input-decoder novalidate>
+            <div class="input-grid">
+              <div class="input-field">
+                <label for="in-bc">BC <span class="input-unit">베이스커브 · mm</span></label>
+                <input id="in-bc" type="number" inputmode="decimal" step="0.1" min="8.0" max="9.5" placeholder="8.6" data-input-field="bc" aria-describedby="in-bc-hint in-bc-error">
+                <p class="input-hint" id="in-bc-hint">8.0 – 9.5 범위의 숫자</p>
+                <p class="input-error" id="in-bc-error" data-error-for="bc" hidden></p>
+              </div>
+              <div class="input-field">
+                <label for="in-dia">DIA <span class="input-unit">전체 지름 · mm</span></label>
+                <input id="in-dia" type="number" inputmode="decimal" step="0.1" min="13.0" max="15.0" placeholder="14.0" data-input-field="dia" aria-describedby="in-dia-hint in-dia-error">
+                <p class="input-hint" id="in-dia-hint">13.0 – 15.0 범위의 숫자. 착색 지름이 아닌 전체 지름입니다.</p>
+                <p class="input-error" id="in-dia-error" data-error-for="dia" hidden></p>
+              </div>
+              <div class="input-field">
+                <label for="in-water">함수율 <span class="input-unit">%</span></label>
+                <input id="in-water" type="number" inputmode="decimal" step="1" min="20" max="80" placeholder="48" data-input-field="water" aria-describedby="in-water-hint in-water-error">
+                <p class="input-hint" id="in-water-hint">20 – 80 범위의 숫자. % 기호는 빼고 적습니다.</p>
+                <p class="input-error" id="in-water-error" data-error-for="water" hidden></p>
+              </div>
+              <div class="input-field">
+                <label for="in-dkt">Dk/t <span class="input-unit">선택 입력</span></label>
+                <input id="in-dkt" type="number" inputmode="decimal" step="0.1" min="0" placeholder="171" data-input-field="dkt" aria-describedby="in-dkt-hint in-dkt-error">
+                <p class="input-hint" id="in-dkt-hint">0보다 큰 숫자. 단위와 시험 조건은 빼고 숫자만 적습니다.</p>
+                <p class="input-error" id="in-dkt-error" data-error-for="dkt" hidden></p>
+              </div>
+              <div class="input-field">
+                <label for="in-material">재질명 <span class="input-unit">선택 입력</span></label>
+                <input id="in-material" type="text" autocomplete="off" placeholder="senofilcon A" data-input-field="material" aria-describedby="in-material-hint in-material-error">
+                <p class="input-hint" id="in-material-hint">포장지에 적힌 재질명을 그대로 적습니다. 예: senofilcon A</p>
+                <p class="input-error" id="in-material-error" data-error-for="material" hidden></p>
+              </div>
+              <div class="input-field">
+                <label for="in-replacement">교체주기 <span class="input-unit">선택 입력</span></label>
+                <select id="in-replacement" data-input-field="replacement" aria-describedby="in-replacement-hint in-replacement-error">
+                  <option value="">모름</option>
+                  <option value="1일">1일</option>
+                  <option value="2주">2주</option>
+                  <option value="1개월">1개월</option>
+                </select>
+                <p class="input-hint" id="in-replacement-hint">포장지에 적힌 교체주기입니다. 하루 중 착용시간과는 다른 정보입니다.</p>
+                <p class="input-error" id="in-replacement-error" data-error-for="replacement" hidden></p>
+              </div>
+            </div>
+            <p class="input-note">입력한 값은 이 브라우저 화면 안에서만 계산됩니다. 저장하지 않고, 어디로도 전송하지 않습니다.</p>
+            <p class="input-error input-form-error" data-input-form-error hidden></p>
+            <div class="actions">
+              <button class="button" type="submit">입력한 표기 확인하기</button>
+              <button class="text-button" type="button" data-input-reset>해석 지우기</button>
+            </div>
+          </form>
+        </div>
+        <section class="detail-panel input-result" data-input-result aria-live="polite" aria-label="입력한 표기 해석 결과">
+          <p class="detail-empty">포장지에 적힌 숫자를 한 개 이상 입력하면 표기의 뜻과 수록 제품 대조 결과가 여기에 나타납니다.</p>
+        </section>
+      </div>
+    </section>
+
     <section class="section" id="decoder" aria-labelledby="decoder-title">
       <div class="wrap decoder-layout">
         <div>

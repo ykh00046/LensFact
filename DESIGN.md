@@ -60,6 +60,17 @@ LensFact feels like a calm evidence desk for consumer lens-package labels: white
 - States: hover = ink; active page = weight 700 plus coral inset underline; two-tone focus ring (coral outline + ink halo); `aria-expanded` synced by JS; Escape and outside click close the mobile menu.
 - Accessibility: 44px minimum touch targets, `aria-controls` on the menu button.
 
+### Input Decoder
+- Purpose: the reader types the figures printed on their own package instead of picking one of the preset products. It sits between the hero and the preset Product Selector, on the ivory `.section.alt` surface so the two decoders read as separate steps.
+- Structure: a `<form>` on the left of `.decoder-layout`, an evidence-panel result on the right. Six fields in one `auto-fit minmax(12.5rem, 1fr)` grid: BC, DIA, 함수율, Dk/t (number inputs, `inputmode="decimal"`), 재질명 (text), 교체주기 (select, default 모름). Every field is optional; at least one must be filled.
+- Field anatomy: bold label plus muted `.input-unit` qualifier, a 3rem white control, a `.input-hint` line and a hidden `.input-error` slot, both referenced from the control through `aria-describedby`.
+- Privacy: a one-line `.input-note` under the fields states that values are computed in the page only — no storage, no network. The code keeps that promise; nothing is written to `localStorage` and no request is made.
+- Result panel: reuses `.detail-panel` (pale blue). One `.input-result-field` per filled entry — code, label, typed value, 뜻, 주의할 점 from `fields.js` — followed by a bold `.input-placement` sentence computed from `products.js`: how many of the products on file print the same figure, or, when none do, the recorded range plus the nearest recorded figure with its product count.
+- Match list: `입력한 표기와 같은 값이 적힌 제품` lists products matching ALL filled fields; when none match all, it lists the products matching the most fields and labels each with `N개 항목 중 M개 일치`. Order is the repository order, never a ranking. Each item links to the product page and shows the matching values as state chips (`status-verified` / `status-conflict`); a conflict chip keeps both source values and adds `출처 간 값이 다름` with the per-source lines. `unknown` never counts as a match.
+- Language: placement only. `추천`, `적합`, `좋다`, `나쁘다`, `순위` never appear; the single permitted use of 적합 is the disclaimer that this is not a suitability judgement. A fixed `.input-boundary` note closes every result.
+- States: value parsing handles the printed forms in `products.js` — `8.5 mm / 9.0 mm` (split on `/`), `170 / 171` (either), `121 × 10⁻⁹` (the exponent is a unit, not a figure), and `코어 33% / 표면 80% 이상` (core only, annotated `코어 기준`). Numeric matching is exact (±0.0).
+- Accessibility: every control has a `<label>`; hints and errors are wired with `aria-describedby`; out-of-range and empty-submit errors render inline (never `alert()`) and set `aria-invalid`; the result region is `aria-live="polite"` and focus moves to its `tabindex="-1"` heading after submit. `해석 지우기` resets the form, the errors, and the panel.
+
 ### Decoder Field Row
 - Structure: button row with code, label, value, optional flag. The four package-label tiles in the hero are also buttons (`aria-pressed`) that select the matching field and scroll to the decoder.
 - Variants: main visible fields and disclosed full fields.

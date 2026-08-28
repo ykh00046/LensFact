@@ -300,8 +300,11 @@ const ADS_ENABLED = false;
     if (!products.length) return;
     initProductSelector();
 
+    // The primary hero action now opens the form where the reader types the figures
+    // printed on their own package; the preset selector stays one scroll further down.
     qsa("[data-decoder-start]").forEach((button) => {
       button.addEventListener("click", () => {
+        if (scrollToInputDecoder()) return;
         scrollToDecoder();
         const firstRow = qs("[data-field-id]");
         firstRow?.click();
@@ -328,6 +331,334 @@ const ADS_ENABLED = false;
         toggleHidden(morePanel, !open);
       });
     }
+  }
+
+  /* ---------------------------------------------------------------------------
+   * Input decoder
+   *
+   * The user types the figures printed on their own package. Nothing is stored,
+   * nothing is sent: every sentence below is computed from products.js at render
+   * time. The output is a placement statement ("the same figure is printed on N
+   * of the products on file"), never a recommendation, ranking, or suitability
+   * judgement.
+   * ------------------------------------------------------------------------ */
+
+  const INPUT_FIELDS = [
+    { id: "bc", kind: "number", unit: " mm", decimals: 1, min: 8, max: 9.5, rangeText: "8.0에서 9.5 사이" },
+    { id: "dia", kind: "number", unit: " mm", decimals: 1, min: 13, max: 15, rangeText: "13.0에서 15.0 사이" },
+    { id: "water", kind: "number", unit: "%", decimals: null, min: 20, max: 80, rangeText: "20에서 80 사이" },
+    { id: "dkt", kind: "number", unit: "", decimals: null, min: 0, exclusiveMin: true, rangeText: "0보다 큰" },
+    { id: "material", kind: "text" },
+    { id: "replacement", kind: "choice" }
+  ];
+
+  // Package wording differs from the wording in the official specifications.
+  const REPLACEMENT_EQUIVALENTS = { "1일": ["1일", "매일"], "2주": ["2주", "14일"], "1개월": ["1개월", "30일", "한 달"] };
+
+  const INPUT_BOUNDARY = "같은 숫자라도 재질·디자인·피팅에 따라 착용 상태는 다르며, 최종 도수·피팅은 안경사 또는 안과 전문인에게 확인해야 합니다.";
+
+  function inputSpec(fieldId) {
+    return INPUT_FIELDS.find((spec) => spec.id === fieldId) || null;
+  }
+
+  function fieldCode(fieldId) {
+    return (fieldCopy[fieldId] || {}).code || fieldId;
+  }
+
+  function formatInputNumber(value, spec) {
+    const rounded = Math.round(value * 1000) / 1000;
+    return spec.decimals === null ? String(rounded) : rounded.toFixed(spec.decimals);
+  }
+
+  function formatInputValue(value, spec) {
+    return `${formatInputNumber(value, spec)}${spec.unit || ""}`;
+  }
+
+  function sameNumber(left, right) {
+    return Math.abs(Math.round(left * 1000) - Math.round(right * 1000)) < 1;
+  }
+
+  function normalizeText(value) {
+    return String(value ?? "").toLowerCase().replace(/\s+/g, " ").trim();
+  }
+
+  function valueSegments(value) {
+    return String(value ?? "").split("/").map((part) => part.trim()).filter(Boolean);
+  }
+
+  // Product figures are stored as printed strings: "8.5 mm / 9.0 mm", "170 / 171",
+  // "121 × 10⁻⁹", "코어 33% / 표면 80% 이상". Each printed figure becomes one token.
+  function numericTokens(fieldId, field) {
+    if (fieldState(field.state) === "unknown") return [];
+    let segments = valueSegments(field.value);
+    // Core and surface water are measured differently and are never merged, so only
+    // the core figure is comparable with a single number printed on a package.
+    if (fieldId === "water" && segments.some((segment) => segment.includes("코어"))) {
+      segments = segments.filter((segment) => segment.includes("코어"));
+    }
+    const tokens = [];
+    segments.forEach((segment) => {
+      // The × 10⁻⁹ exponent is a unit, not part of the printed figure.
+      const found = segment.split(/[×x]/)[0].match(/-?\d+(?:\.\d+)?/);
+      if (!found) return;
+      const number = Number(found[0]);
+      if (!Number.isFinite(number)) return;
+      tokens.push({ number, note: segment.includes("코어") ? "코어 기준" : "" });
+    });
+    return tokens;
+  }
+
+  function productField(product, fieldId) {
+    return product.fields.find((candidate) => candidate.id === fieldId) || null;
+  }
+
+  // An unknown field never counts as a match: "not found" is not "not present".
+  function fieldMatch(spec, entry, product) {
+    const field = productField(product, spec.id);
+    if (!field || fieldState(field.state) === "unknown") return null;
+    if (spec.kind === "number") {
+      const hit = numericTokens(spec.id, field).find((token) => sameNumber(token.number, entry.number));
+      return hit ? { field, note: hit.note } : null;
+    }
+    if (spec.kind === "text") {
+      const needle = normalizeText(entry.raw);
+      if (!needle) return null;
+      const segments = valueSegments(field.value).map(normalizeText);
+      const aliases = (product.aliases || []).map(normalizeText);
+      const hit = segments.some((segment) => segment === needle || segment.includes(needle)) || aliases.some((alias) => alias === needle);
+      return hit ? { field, note: "" } : null;
+    }
+    const wanted = REPLACEMENT_EQUIVALENTS[entry.raw] || [entry.raw];
+    const segments = valueSegments(field.value);
+    const hit = segments.some((segment) => wanted.some((candidate) => segment.includes(candidate)));
+    return hit ? { field, note: "" } : null;
+  }
+
+  function productNameWithNote(product, note) {
+    return note ? `${product.selectorLabel} · ${note}` : product.selectorLabel;
+  }
+
+  // Every recorded figure for one field, deduplicated, with how many products print it.
+  function recordedNumbers(spec) {
+    const table = new Map();
+    products.forEach((product) => {
+      const field = productField(product, spec.id);
+      if (!field) return;
+      const seen = new Set();
+      numericTokens(spec.id, field).forEach((token) => {
+        const key = Math.round(token.number * 1000);
+        if (seen.has(key)) return;
+        seen.add(key);
+        table.set(key, { number: token.number, count: (table.get(key)?.count || 0) + 1 });
+      });
+    });
+    return Array.from(table.values()).sort((left, right) => left.number - right.number);
+  }
+
+  function recordedTexts(spec) {
+    const values = [];
+    products.forEach((product) => {
+      const field = productField(product, spec.id);
+      if (!field || fieldState(field.state) === "unknown") return;
+      valueSegments(field.value).forEach((segment) => {
+        if (!values.includes(segment)) values.push(segment);
+      });
+    });
+    return values;
+  }
+
+  // The neutral placement sentence. It states where the typed figure sits among the
+  // figures on file; it never says the figure is good, better, or suitable.
+  function placementSentence(spec, entry, matched) {
+    const total = products.length;
+    if (matched.length) {
+      const names = matched.map((item) => productNameWithNote(item.product, item.hit.note)).join(", ");
+      return `${fieldCode(spec.id)} ${entry.label} — 현재 수록된 ${total}개 제품 중 ${matched.length}개(${names})에 같은 값이 적혀 있습니다.`;
+    }
+    if (spec.kind === "number") {
+      const recorded = recordedNumbers(spec);
+      if (!recorded.length) return `${fieldCode(spec.id)} ${entry.label} — 현재 수록된 제품에는 대조할 수 있는 표기가 없습니다.`;
+      const low = formatInputNumber(recorded[0].number, spec);
+      const high = formatInputValue(recorded[recorded.length - 1].number, spec);
+      const smallest = Math.min(...recorded.map((item) => Math.abs(item.number - entry.number)));
+      const nearest = recorded
+        .filter((item) => Math.abs(Math.abs(item.number - entry.number) - smallest) < 1e-9)
+        .map((item) => `${formatInputValue(item.number, spec)} (${item.count}개 제품)`)
+        .join(", ");
+      const range = recorded.length === 1 ? `수록 표기 ${high}` : `수록 범위 ${low}–${high}`;
+      return `${fieldCode(spec.id)} ${entry.label} — 현재 수록된 제품에는 같은 값이 없습니다 · ${range} · 가장 가까운 표기: ${nearest}`;
+    }
+    const recorded = recordedTexts(spec);
+    const listed = recorded.length ? ` · 수록된 표기: ${recorded.join(", ")}` : "";
+    return `${fieldCode(spec.id)} ${entry.label} — 현재 수록된 제품에는 같은 표기가 없습니다.${listed}`;
+  }
+
+  function inputFieldBlock(spec, entry, matched) {
+    const copy = fieldCopy[spec.id] || {};
+    const caution = copy.caution ? `<div class="info-block"><div class="info-label">주의할 점</div><p>${escapeHtml(copy.caution)}</p></div>` : "";
+    return `<section class="input-result-field">
+      <div class="detail-title">
+        <div><div class="detail-code">${escapeHtml(copy.code || spec.id)}</div><div>${escapeHtml(copy.label || "")}</div></div>
+        <div class="detail-value" data-state="verified">${escapeHtml(entry.label)}</div>
+      </div>
+      <div class="info-block"><div class="info-label">뜻</div><p>${escapeHtml(copy.meaning || "")}</p></div>
+      ${caution}
+      <p class="input-placement">${text(placementSentence(spec, entry, matched))}</p>
+    </section>`;
+  }
+
+  function matchChip(spec, hit) {
+    const state = fieldState(hit.field.state);
+    const notes = [];
+    if (hit.note) notes.push(hit.note);
+    if (state === "conflict") {
+      notes.push("출처 간 값이 다름");
+      (hit.field.conflicts || []).forEach((conflict) => notes.push(`${conflict.source}: ${conflict.value}`));
+    }
+    const noteMarkup = notes.length ? `<span class="cell-note${state === "conflict" ? " warn" : ""}">${text(notes.join(" · "))}</span>` : "";
+    return `<li><span class="status-label status-${state}">${escapeHtml(fieldCode(spec.id))} ${text(hit.field.value)}</span>${noteMarkup}</li>`;
+  }
+
+  function matchItem(row, entries, partial) {
+    const href = internalHref(`./products/${row.product.slug || row.product.id}.html`);
+    const countNote = partial ? `<span class="cell-note">${entries.length}개 항목 중 ${row.hits.length}개 일치</span>` : "";
+    const chips = row.hits.map((item) => matchChip(item.spec, item.hit)).join("");
+    return `<li class="match-item">
+      <a href="${escapeHtml(href)}">${escapeHtml(row.product.name)}</a>
+      ${countNote}
+      <ul class="match-values">${chips}</ul>
+    </li>`;
+  }
+
+  function matchListMarkup(entries) {
+    const rows = products.map((product) => ({
+      product,
+      hits: entries.map((entry) => ({ spec: entry.spec, hit: fieldMatch(entry.spec, entry, product) })).filter((item) => item.hit)
+    }));
+    const full = rows.filter((row) => row.hits.length === entries.length && entries.length > 0);
+    const best = Math.max(0, ...rows.map((row) => row.hits.length));
+    const partial = !full.length && best > 0;
+    const shown = full.length ? full : (partial ? rows.filter((row) => row.hits.length === best) : []);
+    const lead = full.length
+      ? `입력한 ${entries.length}개 항목이 모두 같은 값으로 적힌 제품입니다. 표기가 같다는 사실만 확인한 결과이며 적합성 판단이 아닙니다. 순서는 수록 순서입니다.`
+      : (partial
+        ? `입력한 ${entries.length}개 항목이 모두 같은 제품은 없습니다. 가장 많은 항목이 같은 제품을 표기 일치 개수와 함께 보여 드립니다. 적합성 판단이 아닙니다.`
+        : "현재 수록된 6개 제품 가운데 입력한 값과 같은 표기가 있는 제품이 없습니다.");
+    const list = shown.length ? `<ul class="match-list">${shown.map((row) => matchItem(row, entries, partial)).join("")}</ul>` : "";
+    return `<section class="input-result-matches">
+      <h4>입력한 표기와 같은 값이 적힌 제품</h4>
+      <p class="cell-note">${escapeHtml(lead)}</p>
+      ${list}
+    </section>`;
+  }
+
+  function renderInputResult(panel, entries) {
+    const blocks = entries.map((entry) => {
+      const matched = products
+        .map((product) => ({ product, hit: fieldMatch(entry.spec, entry, product) }))
+        .filter((item) => item.hit);
+      return inputFieldBlock(entry.spec, entry, matched);
+    }).join("");
+
+    panel.innerHTML = `<h3 class="input-result-title" id="input-result-title" tabindex="-1">입력한 표기 해석</h3>
+      ${blocks}
+      ${matchListMarkup(entries)}
+      <p class="input-boundary">${escapeHtml(INPUT_BOUNDARY)}</p>`;
+    qs("#input-result-title", panel)?.focus({ preventScroll: true });
+  }
+
+  function initInputDecoder() {
+    const form = qs("[data-input-decoder]");
+    const panel = qs("[data-input-result]");
+    if (!form || !panel || !products.length) return;
+
+    const emptyMarkup = panel.innerHTML;
+    const formError = qs("[data-input-form-error]", form);
+    const inputs = qsa("[data-input-field]", form);
+
+    function showError(fieldId, message) {
+      const slot = qs(`[data-error-for="${fieldId}"]`, form);
+      if (!slot) return;
+      slot.textContent = message;
+      toggleHidden(slot, !message);
+      const control = inputs.find((item) => item.dataset.inputField === fieldId);
+      control?.setAttribute("aria-invalid", message ? "true" : "false");
+    }
+
+    function clearErrors() {
+      INPUT_FIELDS.forEach((spec) => showError(spec.id, ""));
+      if (formError) {
+        formError.textContent = "";
+        toggleHidden(formError, true);
+      }
+    }
+
+    function readEntries() {
+      const entries = [];
+      const invalid = [];
+      inputs.forEach((control) => {
+        const spec = inputSpec(control.dataset.inputField);
+        if (!spec) return;
+        const raw = String(control.value || "").trim();
+        if (!raw) return;
+        if (spec.kind !== "number") {
+          entries.push({ spec, raw, label: raw });
+          return;
+        }
+        const number = Number(raw);
+        if (!Number.isFinite(number)) {
+          invalid.push({ spec, message: `숫자만 입력할 수 있습니다. ${spec.rangeText} 숫자를 적어 주세요.` });
+          return;
+        }
+        const tooLow = spec.exclusiveMin ? number <= spec.min : number < spec.min;
+        const tooHigh = typeof spec.max === "number" && number > spec.max;
+        if (tooLow || tooHigh) {
+          invalid.push({ spec, message: `${spec.rangeText} 숫자를 입력해 주세요. 입력한 값: ${raw}` });
+          return;
+        }
+        entries.push({ spec, raw, number, label: formatInputValue(number, spec) });
+      });
+      return { entries, invalid };
+    }
+
+    function reset() {
+      form.reset();
+      clearErrors();
+      panel.innerHTML = emptyMarkup;
+    }
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      clearErrors();
+      const { entries, invalid } = readEntries();
+      if (invalid.length) {
+        invalid.forEach((item) => showError(item.spec.id, item.message));
+        const first = inputs.find((control) => control.dataset.inputField === invalid[0].spec.id);
+        first?.focus();
+        return;
+      }
+      if (!entries.length) {
+        if (formError) {
+          formError.textContent = "한 개 이상의 항목을 입력해 주세요. 포장지에 적힌 숫자 하나만 있어도 해석할 수 있습니다.";
+          toggleHidden(formError, false);
+        }
+        inputs[0]?.focus();
+        return;
+      }
+      renderInputResult(panel, entries);
+    });
+
+    qsa("[data-input-reset]", form).forEach((button) => button.addEventListener("click", reset));
+    inputs.forEach((control) => control.addEventListener("input", () => showError(control.dataset.inputField, "")));
+  }
+
+  function scrollToInputDecoder() {
+    const section = qs("#input-decoder");
+    if (!section) return false;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    section.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+    qs("[data-input-decoder] [data-input-field]")?.focus({ preventScroll: true });
+    return true;
   }
 
   function openDisclosureFor(target) {
@@ -853,6 +1184,7 @@ const ADS_ENABLED = false;
 
   document.addEventListener("DOMContentLoaded", () => {
     initMenu();
+    initInputDecoder();
     initDecoder();
     initArticleDisclosure();
     initArticleList();

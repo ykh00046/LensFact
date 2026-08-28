@@ -668,6 +668,161 @@ h3,
   margin: 0;
 }
 
+/* Input decoder: the reader types the figures printed on their own package.
+   The form reuses the field-row rhythm; the result reuses the evidence panel. */
+.input-decoder-form {
+  margin-block-start: var(--space-6);
+}
+
+.input-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12.5rem, 1fr));
+  gap: var(--space-5);
+}
+
+.input-field {
+  display: grid;
+  align-content: start;
+  gap: var(--space-1);
+  min-inline-size: 0;
+}
+
+.input-field label {
+  font-weight: 700;
+}
+
+.input-unit {
+  color: var(--color-muted);
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.input-field input,
+.input-field select {
+  min-block-size: 3rem;
+  inline-size: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-white);
+  padding-inline: var(--space-3);
+  color: var(--color-ink);
+  font: inherit;
+}
+
+.input-field input[aria-invalid="true"] {
+  border-color: var(--color-warn);
+}
+
+.input-hint {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.84rem;
+  line-height: 1.55;
+}
+
+.input-error {
+  margin: 0;
+  color: var(--color-warn);
+  font-size: 0.86rem;
+  font-weight: 600;
+  line-height: 1.55;
+}
+
+.input-error[hidden] {
+  display: none;
+}
+
+.input-note {
+  margin-block: var(--space-5) 0;
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
+.input-form-error {
+  margin-block-start: var(--space-3);
+  font-size: 0.95rem;
+}
+
+.input-result {
+  min-block-size: 0;
+}
+
+.input-result-title {
+  margin-block: 0 var(--space-5);
+  font-size: 1.3rem;
+  line-height: 1.42;
+}
+
+.input-result-field + .input-result-field,
+.input-result-matches {
+  margin-block-start: var(--space-6);
+  border-block-start: 1px solid rgba(5, 18, 48, 0.12);
+  padding-block-start: var(--space-5);
+}
+
+.input-result-field .detail-title {
+  margin-block-end: var(--space-3);
+}
+
+.input-result-field .detail-code {
+  font-size: 1.3rem;
+}
+
+.input-placement {
+  margin: 0;
+  font-weight: 600;
+}
+
+.input-result-matches h4 {
+  margin-block: 0 var(--space-2);
+  font-size: 1.05rem;
+  line-height: 1.45;
+}
+
+.match-list {
+  display: grid;
+  gap: var(--space-3);
+  margin-block: var(--space-4) 0;
+  padding: 0;
+  list-style: none;
+}
+
+.match-item {
+  display: grid;
+  gap: var(--space-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-white);
+  padding: var(--space-4);
+}
+
+.match-item > a {
+  font-weight: 700;
+}
+
+.match-values {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.match-values > li {
+  display: grid;
+  gap: 0;
+  min-inline-size: 0;
+}
+
+.input-boundary {
+  margin-block: var(--space-6) 0;
+  border-radius: var(--radius-md);
+  background: var(--color-white);
+  padding: var(--space-4);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
 /* Product page summary reuses the comparison table inside the 45rem column. */
 .spec-summary.compare-table,
 .spec-summary.compare-table td {
