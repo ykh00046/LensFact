@@ -416,13 +416,61 @@ const ADS_ENABLED = false;
       if (!found) return;
       const number = Number(found[0]);
       if (!Number.isFinite(number)) return;
-      tokens.push({ number, note: segment.includes("코어") ? "코어 기준" : "" });
+      // `raw` keeps the digits exactly as printed ("9.0", "0.070"), so a value can be
+      // shown back in the maker's own spelling while it is grouped by its number.
+      tokens.push({ number, raw: found[0], note: segment.includes("코어") ? "코어 기준" : "" });
     });
     return tokens;
   }
 
+  // Fields whose printed value is a slash-separated list of figures. A UV entry is a
+  // printed sentence that can contain its own slash, so it is never split into parts.
+  const VALUE_SPLIT_EXEMPT = ["uv"];
+  const NUMERIC_VALUE_FIELDS = ["bc", "dia", "water", "dkt", "thickness"];
+  const VALUE_UNITS = { bc: " mm", dia: " mm", water: "%", dkt: "", thickness: " mm" };
+
+  // One shared reading of a stored value, used by the input decoder's matcher, the term
+  // pages' value distribution and the product list's spec deep links, so the three can
+  // never disagree about what a product prints. `key` is the string a URL parameter has
+  // to equal; `label` is how the same value is printed on screen.
+  function fieldValues(fieldId, field) {
+    if (!field || fieldState(field.state) === "unknown") return [];
+    if (NUMERIC_VALUE_FIELDS.includes(fieldId)) {
+      const tokens = numericTokens(fieldId, field);
+      if (tokens.length) {
+        return tokens.map((token) => {
+          const number = Math.round(token.number * 1000) / 1000;
+          return { key: String(number), label: `${token.raw ?? number}${VALUE_UNITS[fieldId] || ""}`, note: token.note };
+        });
+      }
+    }
+    // A printed range such as "0.05 mm ~ 0.75 mm (도수에 따라 변함)" yields no figure but is
+    // still the value the official document prints, so it keeps its own text.
+    const segments = VALUE_SPLIT_EXEMPT.includes(fieldId)
+      ? [String(field.value ?? "").trim()]
+      : valueSegments(field.value);
+    return segments.filter(Boolean).map((segment) => ({ key: segment, label: segment, note: "" }));
+  }
+
+  // A conflicted field matches either of its recorded values; an unknown field never
+  // matches, because "not found" is not "not present".
+  function matchesFieldValue(fieldId, field, wanted) {
+    const values = fieldValues(fieldId, field);
+    if (!values.length) return false;
+    const raw = String(wanted ?? "").trim();
+    if (!raw) return false;
+    if (NUMERIC_VALUE_FIELDS.includes(fieldId)) {
+      const number = Number(raw);
+      if (Number.isFinite(number)) {
+        return values.some((value) => Number.isFinite(Number(value.key)) && sameNumber(Number(value.key), number));
+      }
+    }
+    const needle = normalizeText(raw);
+    return values.some((value) => normalizeText(value.key) === needle || normalizeText(value.label) === needle);
+  }
+
   function productField(product, fieldId) {
-    return product.fields.find((candidate) => candidate.id === fieldId) || null;
+    return (product.fields || []).find((candidate) => candidate.id === fieldId) || null;
   }
 
   // An unknown field never counts as a match: "not found" is not "not present".
@@ -759,10 +807,17 @@ const ADS_ENABLED = false;
     revealFootnoteTarget(window.location.hash);
   }
 
+  // "term" is a hub topic that the term pages already answer: the card links there
+  // instead of standing as 준비 중. Topics with no page yet stay pending.
   function articleCard(article) {
-    const title = article.status === "live" ? `<a href="${escapeHtml(internalHref(article.href))}">${escapeHtml(article.title)}</a>` : escapeHtml(article.title);
-    const meta = article.status === "live" ? `<span>${escapeHtml(article.verifiedAt)}</span><span>출처 ${escapeHtml(article.sources)}건</span>` : '<span class="status-label status-pending">준비 중</span>';
-    const pending = article.status === "live" ? "" : " card-pending";
+    const linked = article.status === "live" || article.status === "term";
+    const title = linked ? `<a href="${escapeHtml(internalHref(article.href))}">${escapeHtml(article.title)}</a>` : escapeHtml(article.title);
+    const meta = article.status === "live"
+      ? `<span>${escapeHtml(article.verifiedAt)}</span><span>출처 ${escapeHtml(article.sources)}건</span>`
+      : (article.status === "term"
+        ? `<span>용어 설명</span><span>수록 ${products.length || 20}개 제품 값 분포</span>`
+        : '<span class="status-label status-pending">준비 중</span>');
+    const pending = linked ? "" : " card-pending";
     return `<article class="card${pending}"><div class="category">${escapeHtml(article.category)}</div><h3>${title}</h3><p>${escapeHtml(article.lead)}</p><div class="card-meta">${meta}</div></article>`;
   }
 
@@ -1043,11 +1098,16 @@ const ADS_ENABLED = false;
   function compareRow(row, byId, columns) {
     const labelNote = row.labelNote ? `<br><span class="cell-note">${escapeHtml(row.labelNote)}</span>` : "";
     const describedBy = row.rowNote ? ` aria-describedby="compare-note-${escapeHtml(row.rowId)}"` : "";
+    // Every spec row header leads to that term's page, where the same value is explained
+    // and every product printing it is listed. The 확인 메모 row has no term, so it stays text.
+    const label = row.fieldId && fieldCopy[row.fieldId]
+      ? `<a href="${escapeHtml(internalHref(`../terms/${row.fieldId}.html`))}">${escapeHtml(row.label)}</a>`
+      : escapeHtml(row.label);
     const cells = columns.map((column) => {
       const product = byId[column.productId];
       return product ? compareCell(row, product, column) : `<td headers="${row.rowId} ${column.colId}" data-label="${escapeHtml(column.label)}"></td>`;
     }).join("");
-    return `<tr><th id="${row.rowId}" scope="row"${describedBy}>${escapeHtml(row.label)}${labelNote}</th>${cells}</tr>`;
+    return `<tr><th id="${row.rowId}" scope="row"${describedBy}>${label}${labelNote}</th>${cells}</tr>`;
   }
 
   function compareHeadRow(columns, byId) {
@@ -1158,6 +1218,14 @@ const ADS_ENABLED = false;
 
     function syncPicker() {
       const atMax = selected.length >= COMPARE_MAX;
+      if (hint) {
+        // Arriving from a product page opens one column; the hint has to say that more
+        // products are added here rather than leaving the single column looking final.
+        const base = `현재 ${columns.length}개 제품 중 최대 ${COMPARE_MAX}개를 골라 같은 항목으로 비교합니다.`;
+        hint.textContent = selected.length <= 1
+          ? `${base} 지금은 1개 제품만 열려 있습니다. 아래에서 비교할 제품을 더 선택하세요.`
+          : base;
+      }
       qsa("[data-compare-pick]", options || document).forEach((input) => {
         const checked = selected.includes(input.value);
         input.checked = checked;
@@ -1180,7 +1248,6 @@ const ADS_ENABLED = false;
     }
 
     if (picker && options) {
-      if (hint) hint.textContent = `현재 ${columns.length}개 제품 중 최대 ${COMPARE_MAX}개를 골라 같은 항목으로 비교합니다.`;
       options.innerHTML = columns.map((column) => comparePickerOption(byId[column.productId])).join("");
       // Only the table re-renders on change, so focus stays on the checkbox that was used.
       options.addEventListener("change", (event) => {
@@ -1340,6 +1407,157 @@ const ADS_ENABLED = false;
     if (specs) specs.innerHTML = product.fields.map(productSpecSection).join("");
   }
 
+  // --- Term pages ------------------------------------------------------------------
+  // One page per field, rendered from fields.js (what the word means) and products.js
+  // (what the twenty products on file actually print). No page states a new fact.
+
+  const TERM_FIELD_IDS = ["bc", "dia", "water", "material", "dkt", "thickness", "replacement", "permit", "uv"];
+
+  function latestFieldVerifiedAt(fieldId) {
+    const dates = [];
+    products.forEach((product) => {
+      (productField(product, fieldId)?.sources || []).forEach((source) => { if (source.verifiedAt) dates.push(source.verifiedAt); });
+    });
+    return dates.length ? displayDate(dates.sort().pop()) : "";
+  }
+
+  // Products grouped by every value they print for one field. A conflicted product is
+  // listed under each of its recorded values, exactly as the deep-link filter matches it.
+  function termDistribution(fieldId) {
+    const groups = new Map();
+    const unknown = [];
+    products.forEach((product) => {
+      const field = productField(product, fieldId);
+      const values = fieldValues(fieldId, field);
+      if (!values.length) {
+        unknown.push({ product, field, note: "" });
+        return;
+      }
+      const seen = new Set();
+      values.forEach((value) => {
+        if (seen.has(value.key)) return;
+        seen.add(value.key);
+        if (!groups.has(value.key)) groups.set(value.key, { key: value.key, label: value.label, entries: [] });
+        groups.get(value.key).entries.push({ product, field, note: value.note });
+      });
+    });
+    const rows = Array.from(groups.values()).sort((left, right) => {
+      const a = Number(left.key);
+      const b = Number(right.key);
+      const aNumeric = Number.isFinite(a);
+      const bNumeric = Number.isFinite(b);
+      if (aNumeric && bNumeric) return a - b;
+      // Printed ranges and sentences sort after the plain figures, never between them.
+      if (aNumeric !== bNumeric) return aNumeric ? -1 : 1;
+      return String(left.label).localeCompare(String(right.label), "ko");
+    });
+    return { rows, unknown };
+  }
+
+  function termEntryMarkup(entry) {
+    const product = entry.product;
+    const href = internalHref(`../products/${product.slug || product.id}.html`);
+    const conflicted = fieldState(entry.field?.state) === "conflict";
+    const notes = [];
+    if (entry.note) notes.push(entry.note);
+    if (conflicted) notes.push(`공식 출처 간 충돌 · 원문 표기 ${entry.field.value}`);
+    const note = notes.length ? `<span class="cell-note${conflicted ? " warn" : ""}">${text(notes.join(" · "))}</span>` : "";
+    return `<li><a href="${escapeHtml(href)}">${escapeHtml(product.selectorLabel)}</a>${coiChip(product)}${note}</li>`;
+  }
+
+  function termRowMarkup(fieldId, row, index, prefix) {
+    const rowId = `${prefix}term-row-${index}`;
+    const conflicted = row.entries.some((entry) => fieldState(entry.field?.state) === "conflict");
+    const listLink = SPEC_FILTER_FIELDS.includes(fieldId)
+      ? `<a class="term-list-link" href="${escapeHtml(internalHref(`../products/index.html?${fieldId}=${encodeURIComponent(row.key)}`))}">이 값으로 목록 보기</a>`
+      : "";
+    return `<tr>
+      <th id="${rowId}" scope="row"><span class="mono${conflicted ? " warn" : ""}">${text(row.label)}</span></th>
+      <td headers="${rowId} ${prefix}term-col-count" data-label="제품 수">${row.entries.length}개</td>
+      <td headers="${rowId} ${prefix}term-col-products" data-label="제품"><ul class="term-product-list">${row.entries.map(termEntryMarkup).join("")}</ul>${listLink}</td>
+    </tr>`;
+  }
+
+  function termUnknownRowMarkup(unknown, prefix) {
+    const rowId = `${prefix}term-row-unknown`;
+    return `<tr>
+      <th id="${rowId}" scope="row"><span class="status-label status-unknown">확인되지 않음</span></th>
+      <td headers="${rowId} ${prefix}term-col-count" data-label="제품 수">${unknown.length}개</td>
+      <td headers="${rowId} ${prefix}term-col-products" data-label="제품"><ul class="term-product-list">${unknown.map(termEntryMarkup).join("")}</ul><span class="cell-note">공식 자료에서 값을 찾지 못했다는 기록이며, 값이 없다는 뜻이 아닙니다.</span></td>
+    </tr>`;
+  }
+
+  function termDistributionMarkup(fieldId, prefix = "") {
+    const code = fieldCode(fieldId);
+    const { rows, unknown } = termDistribution(fieldId);
+    const captionId = `${prefix}term-caption`;
+    const verifiedAt = latestFieldVerifiedAt(fieldId);
+    const body = rows.map((row, index) => termRowMarkup(fieldId, row, index, prefix)).join("")
+      + (unknown.length ? termUnknownRowMarkup(unknown, prefix) : "");
+    return `<p class="table-caption" id="${captionId}">수록 ${products.length}개 제품이 ${escapeHtml(code)} 항목에 적고 있는 값${verifiedAt ? ` · 확인일 ${verifiedAt}` : ""}</p>
+      <div class="table-scroll" tabindex="0" aria-label="${escapeHtml(`${code} 값 분포표. 좁은 화면에서는 값별 카드로 표시됩니다.`)}">
+        <table class="compare-table term-table" aria-labelledby="${captionId}">
+          <thead>
+            <tr>
+              <th id="${prefix}term-col-value" scope="col">값</th>
+              <th id="${prefix}term-col-count" scope="col">제품 수</th>
+              <th id="${prefix}term-col-products" scope="col">제품</th>
+            </tr>
+          </thead>
+          <tbody>${body}</tbody>
+        </table>
+      </div>`;
+  }
+
+  function termMeaningMarkup(fieldId) {
+    const copy = fieldCopy[fieldId] || {};
+    const caution = copy.caution ? `<div class="info-block"><div class="info-label">주의할 점</div><p>${escapeHtml(copy.caution)}</p></div>` : "";
+    return `<div class="info-block"><div class="info-label">뜻</div><p>${escapeHtml(copy.meaning || "")}</p></div>${caution}`;
+  }
+
+  function initTermPage() {
+    const main = qs("[data-term-page]");
+    if (!main) return;
+    const fieldId = main.dataset.termPage;
+    const copy = fieldCopy[fieldId];
+    if (!copy) return;
+
+    const title = qs("[data-term-title]", main);
+    if (title) title.textContent = `${copy.label} — ${copy.code}`;
+
+    const meaning = qs("[data-term-meaning]", main);
+    if (meaning) meaning.innerHTML = termMeaningMarkup(fieldId);
+
+    if (!products.length) return;
+    const eyebrow = qs("[data-term-eyebrow]", main);
+    const verifiedAt = latestFieldVerifiedAt(fieldId);
+    if (eyebrow && verifiedAt) eyebrow.textContent = `용어 설명 · 확인일 ${verifiedAt}`;
+    const distribution = qs("[data-term-distribution]", main);
+    if (distribution) distribution.innerHTML = termDistributionMarkup(fieldId, "");
+  }
+
+  function termIndexMarkup() {
+    return TERM_FIELD_IDS.map((fieldId) => {
+      const copy = fieldCopy[fieldId] || {};
+      const { rows, unknown } = termDistribution(fieldId);
+      const meta = products.length
+        ? `<div class="card-meta"><span>값 ${rows.length}가지</span><span>확인되지 않음 ${unknown.length}개</span></div>`
+        : "";
+      return `<article class="card">
+        <div class="category">${escapeHtml(copy.code || fieldId)}</div>
+        <h3><a href="${escapeHtml(internalHref(`./${fieldId}.html`))}">${escapeHtml(copy.label || fieldId)}</a></h3>
+        <p>${escapeHtml(copy.meaning || "")}</p>
+        ${meta}
+      </article>`;
+    }).join("");
+  }
+
+  function initTermIndex() {
+    const list = qs("[data-term-index]");
+    if (!list || !Object.keys(fieldCopy).length) return;
+    list.innerHTML = termIndexMarkup();
+  }
+
   // Card preview uses whole field values (never the shortened package-tile text),
   // so a split value such as 코어/표면 함수율 is never truncated into one number.
   const CARD_PREVIEW_FIELDS = ["bc", "dia", "water"];
@@ -1377,18 +1595,63 @@ const ADS_ENABLED = false;
     return normalized;
   }
 
+  // Spec deep links: ?bc=8.6&dia=14.0&water=48&dkt=170&material=comfilcon%20A&replacement=1일
+  // Every term page links into the list this way, so the parameter names are the field ids.
+  const SPEC_FILTER_FIELDS = ["bc", "dia", "water", "dkt", "material", "replacement"];
+  const SEARCH_PARAM = "q";
+
   function filterProducts(candidates, filters = {}) {
     const query = normalizeSearchText(filters.search);
     const maker = String(filters.maker || "").trim();
     const replacement = normalizeReplacement(filters.replacement);
+    const specs = SPEC_FILTER_FIELDS
+      .map((fieldId) => ({ fieldId, wanted: String(filters.specs?.[fieldId] ?? "").trim() }))
+      .filter((spec) => spec.wanted);
     return candidates.filter((product) => {
       const searchable = [product.name, ...(product.aliases || []), product.maker, product.distributor]
         .map(normalizeSearchText).join(" ");
       const replacementField = product.fields?.find((field) => field.id === "replacement");
       return (!query || searchable.includes(query))
         && (!maker || product.maker === maker)
-        && (!replacement || normalizeReplacement(replacementField?.value) === replacement);
+        && (!replacement || normalizeReplacement(replacementField?.value) === replacement)
+        && specs.every((spec) => matchesFieldValue(spec.fieldId, productField(product, spec.fieldId), spec.wanted));
     });
+  }
+
+  function readSpecFilters() {
+    const specs = {};
+    let query = "";
+    try {
+      const params = new URL(window.location.href).searchParams;
+      SPEC_FILTER_FIELDS.forEach((fieldId) => {
+        const value = (params.get(fieldId) || "").trim();
+        if (value) specs[fieldId] = value;
+      });
+      query = (params.get(SEARCH_PARAM) || "").trim();
+    } catch {
+      // A file:// context can refuse URL parsing; the unfiltered list still renders.
+    }
+    return { specs, query };
+  }
+
+  // The address bar keeps whatever the reader can see above the grid, so a filtered list
+  // stays linkable and a removed chip disappears from the URL as well.
+  function writeSpecFilters(specs, query) {
+    try {
+      const url = new URL(window.location.href);
+      SPEC_FILTER_FIELDS.concat(SEARCH_PARAM).forEach((key) => url.searchParams.delete(key));
+      SPEC_FILTER_FIELDS.forEach((fieldId) => { if (specs[fieldId]) url.searchParams.set(fieldId, specs[fieldId]); });
+      if (query) url.searchParams.set(SEARCH_PARAM, query);
+      const search = url.searchParams.toString();
+      window.history.replaceState(null, "", `${url.pathname}${search ? `?${search}` : ""}${url.hash}`);
+    } catch {
+      // History is unavailable in some file:// contexts; the filter still applies.
+    }
+  }
+
+  function specChip(fieldId, value) {
+    const code = fieldCode(fieldId);
+    return `<button class="spec-chip" type="button" data-spec-chip="${escapeHtml(fieldId)}" aria-label="${escapeHtml(`${code} ${value} 조건 지우기`)}">${escapeHtml(code)} ${escapeHtml(value)}<span class="spec-chip-remove" aria-hidden="true">×</span></button>`;
   }
 
   function initProductIndex() {
@@ -1407,25 +1670,56 @@ const ADS_ENABLED = false;
     const replacement = qs("[data-product-replacement]", controls);
     const status = qs("[data-product-result-status]", controls);
     const noResults = qs("[data-product-no-results]");
+    const chips = qs("[data-spec-chips]");
     controls.hidden = false;
     qsa("input, select, button", controls).forEach((control) => { control.disabled = false; });
+
+    const state = readSpecFilters();
+    const specs = state.specs;
+    if (state.query && search) search.value = state.query;
+
+    function renderChips() {
+      if (!chips) return;
+      const active = SPEC_FILTER_FIELDS.filter((fieldId) => specs[fieldId]);
+      chips.innerHTML = active.length
+        ? `<span class="spec-chip-label">사양 조건</span>${active.map((fieldId) => specChip(fieldId, specs[fieldId])).join("")}`
+        : "";
+      toggleHidden(chips, !active.length);
+    }
+
     const apply = () => {
-      const matches = filterProducts(products, { search: search?.value, maker: maker?.value, replacement: replacement?.value });
+      const matches = filterProducts(products, { search: search?.value, maker: maker?.value, replacement: replacement?.value, specs });
       const ids = new Set(matches.map(({ id }) => id));
       cards.forEach((card, id) => { card.hidden = !ids.has(id); });
       if (status) status.textContent = `전체 ${products.length}개 중 ${matches.length}개 제품`;
       if (noResults) noResults.hidden = matches.length !== 0;
+      renderChips();
+      writeSpecFilters(specs, String(search?.value || "").trim());
     };
     controls.addEventListener("input", apply);
     controls.addEventListener("change", apply);
+    chips?.addEventListener("click", (event) => {
+      const chip = event.target.closest("[data-spec-chip]");
+      if (!chip) return;
+      delete specs[chip.dataset.specChip];
+      apply();
+      search?.focus();
+    });
     qs("[data-product-reset]", controls)?.addEventListener("click", () => {
       if (search) search.value = "";
       if (maker) maker.value = "";
       if (replacement) replacement.value = "";
+      SPEC_FILTER_FIELDS.forEach((fieldId) => { delete specs[fieldId]; });
       apply();
       search?.focus();
     });
     apply();
+
+    // The header 검색 link lands on #product-search; the controls are only enabled here,
+    // so the focus has to be moved after they stop being disabled.
+    const focusSearch = () => { if (window.location.hash === "#product-search") search?.focus(); };
+    window.addEventListener("hashchange", focusSearch);
+    focusSearch();
   }
 
   // The "현재 수록된 N개 제품" copy is derived from the data, never typed by hand.
@@ -1460,6 +1754,8 @@ const ADS_ENABLED = false;
     initCompareTable();
     initProductPage();
     initProductIndex();
+    initTermPage();
+    initTermIndex();
     initProductCounts();
     initAdSlots();
   });

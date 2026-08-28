@@ -82,7 +82,10 @@ a:hover {
 .aside-box a,
 .eyebrow a,
 .compare-table thead th a,
+.compare-table tbody th a,
 .compare-table td a,
+.term-product-list a,
+.term-list-link,
 .footer-inner a {
   text-decoration: underline;
   text-decoration-color: var(--color-coral);
@@ -829,6 +832,38 @@ h3,
   min-inline-size: 0;
 }
 
+/* Term page value distribution: three narrow columns, so it reuses the comparison table
+   without the 61rem minimum that the twenty-product table needs. */
+.term-table.compare-table,
+.term-table.compare-table td {
+  min-inline-size: 0;
+}
+
+.term-table [headers~="term-col-count"],
+.term-table [headers~="ns-term-col-count"] {
+  white-space: nowrap;
+}
+
+.term-product-list {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding-inline-start: 0;
+  list-style: none;
+}
+
+.term-list-link {
+  display: inline-block;
+  margin-block-start: var(--space-3);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+/* The card CTA holds a primary and a secondary action side by side. */
+.card .actions {
+  margin-block-start: var(--space-4);
+}
+
 .spec-summary td:last-child {
   white-space: nowrap;
 }
@@ -971,6 +1006,43 @@ div.label-item:hover {
 .product-filter-reset { min-block-size: 3rem; white-space: nowrap; }
 .product-result-status { grid-column: 1 / -1; margin: 0; color: var(--color-muted); font-size: 0.9rem; font-weight: 600; }
 .product-no-results { border: 1px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-blue); padding: var(--space-5); color: var(--color-body); }
+
+/* Spec deep links (?bc=8.6) arrive from a term page. Each active condition is shown as a
+   removable chip above the grid so the reader can see why the list is short and drop it. */
+.spec-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-block-end: var(--space-5);
+}
+
+.spec-chip-row[hidden] { display: none; }
+
+.spec-chip-label {
+  color: var(--color-muted);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.spec-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-block-size: 2.75rem;
+  border: 1px solid var(--color-coral);
+  border-radius: 999px;
+  background: var(--color-coral-soft);
+  color: var(--color-ink);
+  padding-inline: var(--space-4);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.spec-chip-remove {
+  font-size: 1.1rem;
+  line-height: 1;
+}
 
 .card {
   border: 1px solid var(--color-border);

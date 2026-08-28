@@ -29,9 +29,9 @@ test("product index scope and metadata consistently describe 20 identified produ
 
 test("deployment checklist derives the 32-file DOMAIN-TBD expectation", () => {
   const readme = read("site/README.md");
-  assert.match(readme, /29 HTML pages/);
+  assert.match(readme, /39 HTML pages/);
   assert.match(readme, /README, `robots\.txt`, and `sitemap\.xml`/);
-  assert.match(readme, /32 files/);
+  assert.match(readme, /42 files/);
   assert.match(readme, /grep -rIl DOMAIN-TBD site\/ \| wc -l/);
 });
 

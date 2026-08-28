@@ -23,7 +23,7 @@ vm.runInContext(fs.readFileSync(path.join(root, "site/assets/data/products.js"),
 
 const appSource = fs.readFileSync(path.join(root, "site/assets/js/app.js"), "utf8").replace(
   /\}\)\(\);\s*$/,
-  "globalThis.__productFilter = { filterProducts, normalizeSearchText, normalizeReplacement };\n})();"
+  "globalThis.__productFilter = { filterProducts, normalizeSearchText, normalizeReplacement, fieldValues };\n})();"
 );
 vm.runInContext(appSource, context);
 
@@ -59,6 +59,42 @@ test("manufacturer, replacement, and search filters combine with AND", () => {
     maker: "Alcon",
     replacement: "1개월"
   }).length, 0);
+});
+
+test("spec deep links match the exact printed figure and combine with the other filters", () => {
+  const bc86 = filter.filterProducts(products, { specs: { bc: "8.6" } });
+  assert.equal(bc86.length, 9);
+  assert.ok(bc86.every(({ id }) => id !== "acuvue-oasys-1-day"));
+  // 8.60 and 8.6 are the same printed figure; 8.65 is not on file.
+  assert.equal(filter.filterProducts(products, { specs: { bc: "8.60" } }).length, 9);
+  assert.equal(filter.filterProducts(products, { specs: { bc: "8.65" } }).length, 0);
+
+  assert.deepEqual(
+    Array.from(filter.filterProducts(products, { specs: { bc: "8.6", dia: "14.0" } }), ({ id }) => id),
+    ["biofinity", "biofinity-energys"]
+  );
+  assert.deepEqual(
+    Array.from(filter.filterProducts(products, { maker: "CooperVision", specs: { material: "comfilcon A" } }), ({ id }) => id),
+    ["biofinity", "biofinity-energys"]
+  );
+  assert.equal(filter.filterProducts(products, { maker: "Alcon", specs: { material: "comfilcon A" } }).length, 0);
+});
+
+test("a conflicted field matches either recorded value and an unknown field matches none", () => {
+  // Biofinity's Dk/t is recorded as "170 / 171"; both figures stay reachable.
+  for (const value of ["170", "171"]) {
+    assert.ok(filter.filterProducts(products, { specs: { dkt: value } }).some(({ id }) => id === "biofinity"));
+  }
+  // clariti 1 day's material disagrees between official sources.
+  for (const value of ["somofilcon A", "stenfilcon A"]) {
+    assert.ok(filter.filterProducts(products, { specs: { material: value } }).some(({ id }) => id === "clariti-1-day"));
+  }
+  // Miru 1day and SofLens daily have no Dk/t on file: "not found" never matches a number.
+  const unknownDkt = products.filter((product) => !filter.fieldValues("dkt", product.fields.find((field) => field.id === "dkt")).length);
+  assert.deepEqual(Array.from(unknownDkt, ({ id }) => id), ["miru-1day", "soflens-daily"]);
+  for (const value of ["0", "22", "170"]) {
+    assert.ok(filter.filterProducts(products, { specs: { dkt: value } }).every(({ id }) => id !== "miru-1day"));
+  }
 });
 
 test("empty state behaves as reset and restores all 20 products", () => {
