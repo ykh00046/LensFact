@@ -111,6 +111,15 @@ const ADS_ENABLED = false;
     return { verified: "공식 원문 확인", conflict: "공식 출처 간 충돌", unknown: "공식 자료에서 미확인" }[fieldState(state)];
   }
 
+  // Conflict-of-interest disclosure. One product on file is manufactured by the site
+  // operator's employer. Every screen that shows such a product carries the same visible
+  // label; the product page adds a banner that links to the disclosure on the about page.
+  const COI_LABEL = "운영자 근무처 제품 · 이해관계 공시";
+
+  function coiChip(product) {
+    return product?.coi ? `<span class="coi-chip">${escapeHtml(COI_LABEL)}</span>` : "";
+  }
+
   function resolvedField(field) {
     const copy = fieldCopy[field.id] || {};
     return { ...copy, ...field, caution: field.caution || copy.caution || "", meaning: field.meaning || copy.meaning || "" };
@@ -529,11 +538,15 @@ const ADS_ENABLED = false;
     // A product-level caveat (no Korean official page) travels with the product name,
     // so a match found here is never read as "confirmed on sale in Korea".
     const flagNote = row.product.flag ? `<span class="cell-note warn">${escapeHtml(row.product.flag)}</span>` : "";
+    // The conflict-of-interest label travels with the product name here too, so a match
+    // is never read without the disclosure.
+    const coiNote = coiChip(row.product);
     const chips = row.hits.map((item) => matchChip(item.spec, item.hit)).join("");
     return `<li class="match-item">
       <a href="${escapeHtml(href)}">${escapeHtml(row.product.name)}</a>
       ${countNote}
       ${flagNote}
+      ${coiNote}
       <ul class="match-values">${chips}</ul>
     </li>`;
   }
@@ -764,12 +777,15 @@ const ADS_ENABLED = false;
     { productId: "biofinity-energys", colId: "col-biofinity-energys", label: "바이오피니티 에너지스™" },
     { productId: "ultra-one-day", colId: "col-ultra-one-day", label: "울트라 원데이" },
     { productId: "miru-1day", colId: "col-miru-1day", label: "Miru 1day Menicon Flat Pack" },
-    { productId: "soflens-daily", colId: "col-soflens-daily", label: "소프렌 데일리 근시용" }
+    { productId: "soflens-daily", colId: "col-soflens-daily", label: "소프렌 데일리 근시용" },
+    { productId: "clalen-1day", colId: "col-clalen-1day", label: "클라렌 오투오투 원데이 그랩수 플러스" }
   ];
 
   const COMPARE_ROWS = [
     {
-      rowId: "row-permit", fieldId: "permit", label: "한국 수입허가번호", mono: true,
+      // 수허 is an import permit and 제허 a domestic manufacturing permit. The row label
+      // no longer says 수입 because one product on file carries the 제허 prefix.
+      rowId: "row-permit", fieldId: "permit", label: "한국 허가번호", labelNote: "수허(수입)·제허(제조)", mono: true,
       notes: {
         "acuvue-oasys-2-week": "MFDS에 동일 제품의 등록 2건 · 실물 포장 확인 필요",
         "dailies-aquacomfort-plus": "한국 공식 제품 페이지 없음 · MFDS 등록(한국 등록명 아쿠아 렌즈)이 유일한 한국 근거 · 허가 유효성과 현재 판매 여부는 미확인",
@@ -778,7 +794,8 @@ const ADS_ENABLED = false;
         "biofinity-energys": "바이오피니티 구면·XR의 수허 08-131 호와 다른 별도 등록",
         "ultra-one-day": "제품명으로는 MFDS 원장에서 조회되지 않음 · 모델명 kalifilcon A로 확인",
         "miru-1day": "원장 모델명은 1day  Flat Pack(공백 2칸) · 같은 업체의 형제 제품은 별도 번호",
-        "soflens-daily": "수허 09-975 호는 트루핏 원데이와 공유 등록"
+        "soflens-daily": "수허 09-975 호는 트루핏 원데이와 공유 등록",
+        "clalen-1day": "제조허가(제허) · 수입허가(수허)와 접두사가 다름"
       }
     },
     {
@@ -797,7 +814,8 @@ const ADS_ENABLED = false;
         "biofinity-energys": "MFDS 등록 분류: 연속착용 소프트 콘택트렌즈(등급 3) · 착용방식은 전문가 판단",
         "ultra-one-day": "한국 브랜드 페이지에는 1일 교체 문자열이 없음 · 하루용 투명렌즈로만 분류",
         "miru-1day": "한국 페이지는 행 라벨이 자료인데 값이 매일 교체 · 1차 근거는 영문 IFU 문장",
-        "soflens-daily": "한국 페이지 상세 이미지는 1일 교체용 · 미국 PI/FG는 착용·교체 일정을 전문가 판단으로 적음"
+        "soflens-daily": "한국 페이지 상세 이미지는 1일 교체용 · 미국 PI/FG는 착용·교체 일정을 전문가 판단으로 적음",
+        "clalen-1day": "한국 페이지는 행 라벨이 타입인데 값이 하루용 · 상세 이미지는 착용주기 1일 착용"
       }
     },
     {
@@ -821,10 +839,11 @@ const ADS_ENABLED = false;
         "biofinity-energys": "실리콘 하이드로겔 · 바이오피니티 구면과 같은 재질명 · 한국 허가 원장에는 재질명 표기 없음",
         "ultra-one-day": "실리콘 하이드로겔 · 한국 허가 원장에 모델명으로 등재 · 한국 브랜드 페이지 이미지는 kalificon A로 오기",
         "miru-1day": "하이드로겔(한국 전문가 페이지 명시)",
-        "soflens-daily": "하이드로겔 · 한국 허가 원장에는 재질명 표기 없음"
+        "soflens-daily": "하이드로겔 · 한국 허가 원장에는 재질명 표기 없음",
+        "clalen-1day": "USAN 재질명 미공개"
       }
     },
-    { rowId: "row-bc", fieldId: "bc", label: "BC", mono: true },
+    { rowId: "row-bc", fieldId: "bc", label: "BC", mono: true, notes: { "clalen-1day": "원문에 단위 표기 없음" } },
     { rowId: "row-dia", fieldId: "dia", label: "DIA", mono: true },
     {
       rowId: "row-water", fieldId: "water", label: "함수율", labelNote: "벌크·코어·표면", mono: true,
@@ -847,12 +866,13 @@ const ADS_ENABLED = false;
         "biofinity-energys": "벌크",
         "ultra-one-day": "출처가 측정 위치를 표기하지 않음 · 한국 상세 이미지와 미국 공식 사양이 같은 값",
         "miru-1day": "한국 소비자 페이지는 수분 함량, 한국 전문가 페이지는 함수율로 라벨이 다름 · 숫자는 같음",
-        "soflens-daily": "출처가 측정 위치를 표기하지 않음 · 하이드로겔 계열"
+        "soflens-daily": "출처가 측정 위치를 표기하지 않음 · 하이드로겔 계열",
+        "clalen-1day": "출처가 측정 위치를 표기하지 않음 · 자료마다 라벨이 함수율·수분함유량으로 다름"
       }
     },
     {
       rowId: "row-dkt", fieldId: "dkt", label: "Dk/t", labelNote: "시험 조건 포함", mono: true,
-      rowNote: "아큐브 다섯 제품 원문만 단위(× 10⁻⁹)를 명기함. 데일리스 토탈원·바이오피니티·바이오피니티 에너지스·마이데이·클래리티 원데이·프리시전원·바이오트루 원데이·울트라 원데이·데일리스 아쿠아컴포트·토탈30·에어옵틱스 플러스·프로클리어 원데이 원문은 단위를 표기하지 않아 임의로 단위를 붙이지 않음. 미루 원데이·소프렌 데일리는 어느 공식 자료에도 Dk/t 표기가 없음.",
+      rowNote: "아큐브 다섯 제품 원문만 단위(× 10⁻⁹)를 명기함. 데일리스 토탈원·바이오피니티·바이오피니티 에너지스·마이데이·클래리티 원데이·프리시전원·바이오트루 원데이·울트라 원데이·데일리스 아쿠아컴포트·토탈30·에어옵틱스 플러스·프로클리어 원데이·클라렌 오투오투 원데이 원문은 단위를 표기하지 않아 임의로 단위를 붙이지 않음. 미루 원데이·소프렌 데일리는 어느 공식 자료에도 Dk/t 표기가 없음.",
       notes: {
         "acuvue-oasys-1-day": "-3.00D · 중심 0.085 mm · 35℃ · boundary/edge-corrected Dk",
         "dailies-total1": "-3.00D · 중심 0.09 mm",
@@ -870,7 +890,8 @@ const ADS_ENABLED = false;
         "biofinity-energys": "한국 페이지 본문 170 · 같은 페이지 각주 110 · 한국 2023 사양서/미국 171 @-3.00D · 세 원문 병기",
         "ultra-one-day": "@ -3.00D · 측정법·보정·온도 미표기 · 같은 문서군의 Dk 107은 다른 물리량이며 환산하지 않음",
         "miru-1day": "검토한 한국·글로벌 공식 자료 11종에 Dk/t 행 자체가 없음 · 형제 제품 미루 원데이 업사이드에는 있음",
-        "soflens-daily": "Dk 22 × 10⁻¹¹만 인쇄 · Dk/t 미표기"
+        "soflens-daily": "Dk 22 × 10⁻¹¹만 인쇄 · Dk/t 미표기",
+        "clalen-1day": "시험도수만 표기 · 측정법·보정·온도 미표기 · 중심두께 미확인 · 같은 이미지의 표 라벨은 산소전달률"
       }
     },
     {
@@ -885,7 +906,8 @@ const ADS_ENABLED = false;
         "proclear-1-day": "검토한 한국·글로벌 공식 자료 6종에 중심두께 항목 없음",
         "biofinity-energys": "미국 전문가 페이지 기재 · 바이오피니티 구면 페이지에는 없음",
         "miru-1day": "검토한 한국·글로벌 공식 자료에 중심두께 항목 없음 · 형제 제품에는 있음",
-        "soflens-daily": "단일 시험도수 값 없음 · 범위 표기"
+        "soflens-daily": "단일 시험도수 값 없음 · 범위 표기",
+        "clalen-1day": "검토한 한국 공식 자료 4종과 MFDS 원장에 중심두께 항목 없음"
       }
     },
     {
@@ -906,7 +928,8 @@ const ADS_ENABLED = false;
         "proclear-1-day": "한국 사양서의 No가 유일한 명시적 표기 · 글로벌 공식 자료 2종에는 UV 항목 자체가 없음",
         "ultra-one-day": "투과율 표기(차단율 아님) · 한국 공식 자료에는 UV 수치가 없음",
         "miru-1day": "기능 없음으로 단정하지 않음 · 형제 제품 미루 원데이 업사이드에는 UV 등급 표기가 있음",
-        "soflens-daily": "기능 없음으로 단정하지 않음 · 검토한 공식 자료 3종에 UV·자외선 표기 0건"
+        "soflens-daily": "기능 없음으로 단정하지 않음 · 검토한 공식 자료 3종에 UV·자외선 표기 0건",
+        "clalen-1day": "차단율은 상세 이미지 한 곳에만 인쇄 · Class 1의 규격 출처와 측정 파장 범위 미표기"
       }
     },
     {
@@ -930,7 +953,8 @@ const ADS_ENABLED = false;
         "biofinity-energys": "MFDS UDI 65건 전수 집계로 허가번호 확인(연속착용 소프트 콘택트렌즈 등급 3 등록). 바이오피니티 구면·XR의 수허 08-131 호와 다른 별도 등록입니다. BC·DIA·함수율·재질은 바이오피니티 구면과 같은 값이고 다른 것은 광학 디자인과 허가번호입니다. Dk/t는 한국 공식 제품 페이지 한 장이 본문 170과 하단 각주 110으로 서로 다르게 적고 한국 2023 사양서·미국 전문가 페이지·글로벌 사양서는 171이어서 세 원문을 그대로 병기합니다. 중심두께는 미국 전문가 페이지 한 곳에만 기재돼 있고, UV는 한국 페이지와 한국 사양서가 어긋나 충돌로 유지합니다.",
         "ultra-one-day": "MFDS UDI 180건 전수 대조로 허가번호 확인. 한국명 울트라 원데이 = 미국 INFUSE One-Day · MFDS 원장 모델명 kalifilcon A로 연결 확인(제품명 검색 불가). BC·DIA·함수율·재질은 한국 브랜드 페이지 상세정보 이미지에 인쇄된 값이며 페이지 텍스트 검색으로는 재현되지 않습니다. 같은 이미지가 재질을 kalificon A로 적어 두 표기를 함께 남깁니다. Dk/t 134와 같은 문서군의 Dk 107은 다른 물리량이며 환산하지 않았습니다.",
         "miru-1day": "MFDS UDI 154건 전수 대조로 허가번호 확인. 한국 유통사 법인명은 원장 표기 (주)매니콘코리아이고 원장 모델명은 1day  Flat Pack(공백 2칸)이라 Miru 1day로는 조회되지 않습니다. 같은 업체 안에서 허가번호 하나가 제품 하나를 뜻하지 않습니다(프리미오와 미루 1M은 수허 15-319 호를 공유). BC·DIA·함수율·재질은 한국 공식 소비자·전문가 페이지가 직접 인쇄한 값입니다. Dk/t·중심두께·UV는 한국·글로벌 공식 자료에 항목이 없음(형제 제품에는 있음). 일본 동계열 제품 자료는 참고 출처로만 남기고 값으로 쓰지 않았습니다.",
-        "soflens-daily": "MFDS UDI 201건 전수 대조로 허가번호 확인. 원장 모델명이 Daily Disposable이어서 SofLens로는 조회되지 않고, 수허 09-975 호는 트루핏 원데이와 공유 등록입니다. BC·DIA·함수율은 한국 브랜드 페이지 상세정보 이미지에 인쇄된 값이며 페이지 텍스트 검색으로는 재현되지 않습니다. 한국 공급 도수가 근시 범위뿐이라 유형을 근시용으로 적었습니다. Dk/t는 표기 자체가 없고(같은 문서의 Dk 22 × 10⁻¹¹은 다른 물리량), 중심두께는 단일 시험도수 값 없이 범위로만 인쇄돼 있으며, UV는 검토한 세 문서 모두 표기가 없어 미확인입니다."
+        "soflens-daily": "MFDS UDI 201건 전수 대조로 허가번호 확인. 원장 모델명이 Daily Disposable이어서 SofLens로는 조회되지 않고, 수허 09-975 호는 트루핏 원데이와 공유 등록입니다. BC·DIA·함수율은 한국 브랜드 페이지 상세정보 이미지에 인쇄된 값이며 페이지 텍스트 검색으로는 재현되지 않습니다. 한국 공급 도수가 근시 범위뿐이라 유형을 근시용으로 적었습니다. Dk/t는 표기 자체가 없고(같은 문서의 Dk 22 × 10⁻¹¹은 다른 물리량), 중심두께는 단일 시험도수 값 없이 범위로만 인쇄돼 있으며, UV는 검토한 세 문서 모두 표기가 없어 미확인입니다.",
+        "clalen-1day": "MFDS 제허 21-680 호(제조허가) 397건 전수 대조. 수치 근거는 clalen.com 제품 상세 이미지 1장(텍스트 없음) · 페이지 운영 법인은 (주)메디엔토이며 제조사 연결은 interojo.com 링크와 원장 모델명 일치로 확인 · 운영자 근무처 제품"
       }
     }
   ];
@@ -954,13 +978,14 @@ const ADS_ENABLED = false;
     { productId: "biofinity-energys", fieldIds: ["permit"] },
     { productId: "ultra-one-day", fieldIds: ["permit"] },
     { productId: "miru-1day", fieldIds: ["permit"] },
-    { productId: "soflens-daily", fieldIds: ["permit"] }
+    { productId: "soflens-daily", fieldIds: ["permit"] },
+    { productId: "clalen-1day", fieldIds: ["permit"] }
   ];
 
   function compareCell(row, product, column) {
     const headers = `${row.rowId} ${column.colId}`;
     const cellAttributes = `headers="${headers}" data-label="${escapeHtml(column.label)}" data-product="${escapeHtml(product.id)}"`;
-    if (row.memo) return `<td ${cellAttributes}>${text(row.memo[product.id] || "")}</td>`;
+    if (row.memo) return `<td ${cellAttributes}>${text(row.memo[product.id] || "")}${coiChip(product)}</td>`;
 
     const field = product.fields.find((candidate) => candidate.id === row.fieldId);
     if (!field) return `<td ${cellAttributes}><span class="status-label status-unknown">${escapeHtml(stateLabel("unknown"))}</span></td>`;
@@ -1004,7 +1029,7 @@ const ADS_ENABLED = false;
     const cells = columns.map((column) => {
       const product = byId[column.productId];
       const href = internalHref(`../products/${product?.slug || column.productId}.html`);
-      return `<th id="${escapeHtml(column.colId)}" scope="col"><a href="${escapeHtml(href)}">${escapeHtml(column.label)}</a></th>`;
+      return `<th id="${escapeHtml(column.colId)}" scope="col"><a href="${escapeHtml(href)}">${escapeHtml(column.label)}</a>${coiChip(product)}</th>`;
     }).join("");
     return `<tr><th id="col-item" scope="col">항목</th>${cells}</tr>`;
   }
@@ -1223,6 +1248,10 @@ const ADS_ENABLED = false;
     }
   };
 
+  // The permit row header carries the same prefix note as the comparison table, because
+  // 수허 (import) and 제허 (domestic manufacture) now both appear on the site.
+  const SUMMARY_LABEL_NOTES = { permit: "수허(수입)·제허(제조)" };
+
   function summaryRow(product, fieldId) {
     const field = product.fields.find((candidate) => candidate.id === fieldId);
     if (!field) return "";
@@ -1234,9 +1263,10 @@ const ADS_ENABLED = false;
     const noteLines = [condition, extra].filter(Boolean).map((line) => text(line));
     const note = noteLines.length ? `<span class="cell-note">${noteLines.join("<br>")}</span>` : "";
     const valueClass = { conflict: "mono warn", unknown: "status-label status-unknown", verified: "mono" }[state];
+    const labelNote = SUMMARY_LABEL_NOTES[item.id] ? `<br>${escapeHtml(SUMMARY_LABEL_NOTES[item.id])}` : "";
     const anchorLabel = `${item.code} ${item.label} 출처 보기`;
     return `<tr>
-      <th id="${rowId}" scope="row">${escapeHtml(item.code)}<br><span class="cell-note">${escapeHtml(item.label)}</span></th>
+      <th id="${rowId}" scope="row">${escapeHtml(item.code)}<br><span class="cell-note">${escapeHtml(item.label)}${labelNote}</span></th>
       <td headers="${rowId} summary-col-value" data-label="공식 표기 값"><span class="${valueClass}">${text(item.value)}</span>${note}</td>
       <td headers="${rowId} summary-col-state" data-label="상태"><span class="status-label status-${state}">${escapeHtml(stateLabel(item.state))}</span></td>
       <td headers="${rowId} summary-col-source" data-label="출처"><a href="#spec-${escapeHtml(item.id)}" aria-label="${escapeHtml(anchorLabel)}">출처 보기</a></td>
@@ -1298,11 +1328,13 @@ const ADS_ENABLED = false;
       return `<span>${escapeHtml(copy.code || fieldId)} ${text(field.value)}</span>`;
     }).join("");
     const flagNote = product.flag ? `<p class="cell-note warn">${escapeHtml(product.flag)}</p>` : "";
+    const coiNote = product.coi ? `<p>${coiChip(product)}</p>` : "";
     return `<article class="card">
       <div class="category">${escapeHtml(product.type)}</div>
       <h3><a href="${escapeHtml(href)}">${escapeHtml(product.name)}</a></h3>
       <p>${escapeHtml(product.maker)} / ${escapeHtml(product.distributor)}</p>
       ${flagNote}
+      ${coiNote}
       <div class="card-meta">${specs}</div>
     </article>`;
   }

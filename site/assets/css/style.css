@@ -1411,6 +1411,53 @@ div.label-item:hover {
   color: var(--color-warn);
 }
 
+/* Conflict-of-interest disclosure. One product on file is made by the operator's
+   employer, so the same label is shown wherever that product appears: a banner on its
+   product page, a chip in the comparison header, memo cell, product card and match list,
+   and a short mark on the home preset button. */
+.coi-banner {
+  display: block;
+  margin-block-start: var(--space-4);
+  border: 1px solid var(--color-coral);
+  border-radius: var(--radius-md);
+  background: var(--color-coral-soft);
+  padding: var(--space-4);
+  color: var(--color-warn);
+  font-size: 0.94rem;
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+.coi-banner a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.coi-chip {
+  display: inline-block;
+  margin-block-start: var(--space-1);
+  border: 1px solid var(--color-coral);
+  border-radius: var(--radius-sm);
+  background: var(--color-coral-soft);
+  padding: 0.05rem var(--space-2);
+  color: var(--color-warn);
+  font-family: "Pretendard Variable", Pretendard, "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1.55;
+}
+
+.coi-mark {
+  margin-inline-start: 0.3rem;
+  border-radius: var(--radius-sm);
+  background: var(--color-coral-soft);
+  padding: 0 0.25rem;
+  color: var(--color-warn);
+  font-size: 0.62em;
+  font-weight: 700;
+}
+
 [data-ad-slot] {
   display: none;
 }
@@ -1520,8 +1567,9 @@ div.label-item:hover {
 
 /* Denser cards (product list) stay two per row instead of leaving an orphan. */
 @media (min-width: 1025px) {
-  /* Nineteen preset buttons read as a 3-wide block (7 rows) on desktop; narrower widths
-     keep two columns and 640px and below keeps one, so every button stays ≥44px tall. */
+  /* Twenty preset buttons read as a 3-wide block (7 rows) on desktop; narrower widths
+     keep two columns and 640px and below keeps one, so every button stays ≥44px tall.
+     Five columns would shrink the longest Korean label below a comfortable target. */
   .product-selector {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
