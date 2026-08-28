@@ -528,39 +528,186 @@ const ADS_ENABLED = false;
     return `<td ${cellAttributes}>${value}${noteMarkup}</td>`;
   }
 
-  function compareRow(row, byId) {
+  function compareRow(row, byId, columns) {
     const labelNote = row.labelNote ? `<br><span class="cell-note">${escapeHtml(row.labelNote)}</span>` : "";
     const describedBy = row.rowNote ? ` aria-describedby="compare-note-${escapeHtml(row.rowId)}"` : "";
-    const cells = COMPARE_COLUMNS.map((column) => {
+    const cells = columns.map((column) => {
       const product = byId[column.productId];
       return product ? compareCell(row, product, column) : `<td headers="${row.rowId} ${column.colId}" data-label="${escapeHtml(column.label)}"></td>`;
     }).join("");
     return `<tr><th id="${row.rowId}" scope="row"${describedBy}>${escapeHtml(row.label)}${labelNote}</th>${cells}</tr>`;
   }
 
-  function initCompareTable() {
-    const body = qs("[data-compare-body]");
-    if (!body || !products.length) return;
-    const byId = {};
-    products.forEach((product) => { byId[product.id] = product; });
-    body.innerHTML = COMPARE_ROWS.map((row) => compareRow(row, byId)).join("");
-    toggleHidden(qs("[data-compare-live]"), false);
+  function compareHeadRow(columns, byId) {
+    const cells = columns.map((column) => {
+      const product = byId[column.productId];
+      const href = internalHref(`../products/${product?.slug || column.productId}.html`);
+      return `<th id="${escapeHtml(column.colId)}" scope="col"><a href="${escapeHtml(href)}">${escapeHtml(column.label)}</a></th>`;
+    }).join("");
+    return `<tr><th id="col-item" scope="col">항목</th>${cells}</tr>`;
+  }
 
-    const notes = qs("[data-compare-notes]");
-    if (notes) {
-      const noteRows = COMPARE_ROWS.filter((row) => row.rowNote);
-      notes.innerHTML = noteRows.map((row) => `<span class="table-footnote-item" id="compare-note-${escapeHtml(row.rowId)}">${escapeHtml(row.label)}: ${text(row.rowNote)}</span>`).join("");
-      toggleHidden(notes, !noteRows.length);
+  // The picker keeps the table readable: at most four columns fit the 1120px wrap,
+  // and the selection lives in the URL so one comparison stays linkable.
+  const COMPARE_MAX = 4;
+  const COMPARE_DEFAULT_COUNT = 3;
+  const COMPARE_PARAM = "p";
+
+  // Declared column order first, then any product that has no declared column yet.
+  function compareColumns(byId) {
+    const columns = [];
+    const seen = new Set();
+    COMPARE_COLUMNS.forEach((column) => {
+      if (!byId[column.productId] || seen.has(column.productId)) return;
+      columns.push(column);
+      seen.add(column.productId);
+    });
+    products.forEach((product) => {
+      if (seen.has(product.id)) return;
+      columns.push({ productId: product.id, colId: `col-${product.id}`, label: product.name });
+      seen.add(product.id);
+    });
+    return columns;
+  }
+
+  function readCompareSelection(order) {
+    const known = new Set(order);
+    let raw = "";
+    try {
+      raw = new URL(window.location.href).searchParams.get(COMPARE_PARAM) || "";
+    } catch {
+      raw = "";
+    }
+    const picked = [];
+    raw.split(",").forEach((value) => {
+      const id = value.trim();
+      if (!id || !known.has(id) || picked.includes(id) || picked.length >= COMPARE_MAX) return;
+      picked.push(id);
+    });
+    return picked.length ? picked : order.slice(0, COMPARE_DEFAULT_COUNT);
+  }
+
+  function writeCompareSelection(selected) {
+    try {
+      const url = new URL(window.location.href);
+      url.searchParams.delete(COMPARE_PARAM);
+      const rest = url.searchParams.toString();
+      // Built by hand so the shared link keeps readable commas instead of %2C.
+      const search = `?${COMPARE_PARAM}=${selected.join(",")}${rest ? `&${rest}` : ""}`;
+      window.history.replaceState(null, "", `${url.pathname}${search}${url.hash}`);
+    } catch {
+      // History is unavailable in some file:// contexts; the selection still applies.
     }
   }
 
-  function initPermitSources() {
+  function comparePickerOption(product) {
+    const inputId = `compare-pick-${escapeHtml(product.id)}`;
+    return `<label class="picker-option" for="${inputId}">
+      <input type="checkbox" id="${inputId}" value="${escapeHtml(product.id)}" data-compare-pick>
+      <span class="picker-text"><span class="picker-name">${escapeHtml(product.selectorLabel || product.name)}</span><span class="picker-maker">${escapeHtml(product.maker)}</span></span>
+    </label>`;
+  }
+
+  function initCompareTable() {
+    const head = qs("[data-compare-head]");
+    const body = qs("[data-compare-body]");
+    if (!head || !body || !products.length) return;
+
+    const byId = {};
+    products.forEach((product) => { byId[product.id] = product; });
+    const columns = compareColumns(byId);
+    if (!columns.length) return;
+    const columnById = {};
+    columns.forEach((column) => { columnById[column.productId] = column; });
+    const order = columns.map((column) => column.productId);
+
+    const picker = qs("[data-compare-picker]");
+    const options = qs("[data-picker-options]");
+    const hint = qs("[data-picker-hint]");
+    const limit = qs("[data-picker-limit]");
+    const status = qs("[data-compare-status]");
+    const caption = qs("#compare-caption");
+    const notes = qs("[data-compare-notes]");
+
+    let selected = readCompareSelection(order);
+
+    function renderTable() {
+      const active = selected.map((id) => columnById[id]).filter(Boolean);
+      head.innerHTML = compareHeadRow(active, byId);
+      body.innerHTML = COMPARE_ROWS.map((row) => compareRow(row, byId, active)).join("");
+      if (caption) caption.textContent = `선택한 ${active.length}개 제품 공식 사양`;
+      if (notes) {
+        const noteRows = COMPARE_ROWS.filter((row) => row.rowNote);
+        notes.innerHTML = noteRows.map((row) => `<span class="table-footnote-item" id="compare-note-${escapeHtml(row.rowId)}">${escapeHtml(row.label)}: ${text(row.rowNote)}</span>`).join("");
+        toggleHidden(notes, !noteRows.length);
+      }
+      renderPermitSources(selected);
+    }
+
+    function syncPicker() {
+      const atMax = selected.length >= COMPARE_MAX;
+      qsa("[data-compare-pick]", options || document).forEach((input) => {
+        const checked = selected.includes(input.value);
+        input.checked = checked;
+        input.disabled = !checked && atMax;
+      });
+      if (limit) {
+        const message = atMax
+          ? `최대 ${COMPARE_MAX}개까지 비교할 수 있습니다. 다른 제품을 보려면 선택을 하나 해제하세요.`
+          : (selected.length <= 1 ? "최소 1개는 선택해야 합니다." : "");
+        limit.textContent = message;
+        toggleHidden(limit, !message);
+      }
+      if (status) status.textContent = `${selected.length}개 제품 비교 중`;
+    }
+
+    function apply() {
+      renderTable();
+      syncPicker();
+      writeCompareSelection(selected);
+    }
+
+    if (picker && options) {
+      if (hint) hint.textContent = `현재 ${columns.length}개 제품 중 최대 ${COMPARE_MAX}개를 골라 같은 항목으로 비교합니다.`;
+      options.innerHTML = columns.map((column) => comparePickerOption(byId[column.productId])).join("");
+      // Only the table re-renders on change, so focus stays on the checkbox that was used.
+      options.addEventListener("change", (event) => {
+        const input = event.target.closest("[data-compare-pick]");
+        if (!input) return;
+        const id = input.value;
+        if (input.checked) {
+          if (selected.length >= COMPARE_MAX || !columnById[id] || selected.includes(id)) {
+            input.checked = selected.includes(id);
+            return;
+          }
+          selected = selected.concat(id);
+        } else {
+          if (selected.length <= 1) {
+            input.checked = true;
+            syncPicker();
+            return;
+          }
+          selected = selected.filter((candidate) => candidate !== id);
+        }
+        apply();
+      });
+      toggleHidden(picker, false);
+    }
+
+    toggleHidden(qs("[data-compare-live]"), false);
+    if (status) toggleHidden(status, false);
+    apply();
+  }
+
+  function renderPermitSources(ids) {
     const list = qs("[data-permit-sources]");
     if (!list || !products.length) return;
+    const order = ids && ids.length ? ids : PERMIT_EVIDENCE.map((entry) => entry.productId);
     const items = [];
-    PERMIT_EVIDENCE.forEach((entry) => {
-      const product = products.find((candidate) => candidate.id === entry.productId);
+    order.forEach((productId) => {
+      const product = products.find((candidate) => candidate.id === productId);
       if (!product) return;
+      const entry = PERMIT_EVIDENCE.find((candidate) => candidate.productId === productId) || { fieldIds: ["permit"] };
       entry.fieldIds.forEach((fieldId) => {
         const field = product.fields.find((candidate) => candidate.id === fieldId);
         (field?.sources || []).forEach((source) => {
@@ -710,7 +857,6 @@ const ADS_ENABLED = false;
     initArticleDisclosure();
     initArticleList();
     initCompareTable();
-    initPermitSources();
     initProductPage();
     initProductIndex();
     initAdSlots();

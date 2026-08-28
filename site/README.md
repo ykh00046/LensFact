@@ -11,7 +11,7 @@ This directory is the web root. Every internal link is relative, so the site wor
 - `products/<slug>.html`: one page per product (`acuvue-oasys-1-day`, `dailies-total1`, `biofinity`, `acuvue-moist-1-day`, `myday`, `clariti-1-day`). Thin HTML shell plus `<main data-product-page="<id>">`; `initProductPage()` renders every field with its full source list open, and a `<noscript>` table carries all values and the first source per field for crawlers and no-JS readers.
 - `knowledge/index.html`: content hub with one completed article and seven clearly marked pending topics.
 - `knowledge/water-content-moisture.html`: evidence-based article about water content and perceived moisture.
-- `compare/index.html`: accessible six-product official-spec comparison rendered from `assets/data/products.js`, with a `<noscript>` static fallback.
+- `compare/index.html`: accessible official-spec comparison rendered from `assets/data/products.js`. A checkbox picker (`fieldset` "비교할 제품 선택") chooses up to 4 products (default: the first 3); the selection persists in the URL query `?p=<id>,<id>` so a comparison is linkable, and `<noscript>` keeps the full all-product table and evidence list.
 - `about/index.html`: what the site does and does not do, operator conflict-of-interest disclosure, contact.
 - `policy/editorial.html`: editorial policy, evidence states, medical boundary, correction procedure.
 - `policy/methodology.html`: source hierarchy, meaning of `raw`/`condition`/`verifiedAt`, why values are not merged.

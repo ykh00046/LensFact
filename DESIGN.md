@@ -86,7 +86,13 @@ LensFact feels like a calm evidence desk for consumer lens-package labels: white
 
 ### Comparison Table
 - Structure: one semantic table with row and product column headers; values reference both through `headers`.
-- Structure details: caption sits above the scroll region; the Dk/t unit note is a footnote referenced by `aria-describedby`; rows and the permit-evidence list render from `products.js`.
+- Structure details: caption sits above the scroll region; the Dk/t unit note is a footnote referenced by `aria-describedby`; head, rows, and the permit-evidence list render from `products.js`.
+- Product picker: a `fieldset`/`legend` ("비교할 제품 선택") of real checkboxes sits above the caption, one per product in the declared column order. Default is the first three products; at most four may be selected (unchecked boxes go `disabled` with a visible "최대 4개" hint) and at least one must stay selected (visible "최소 1개" hint). The picker is JS-only and stays hidden without JS.
+- Selection state: the selected ids live in the URL query `?p=<id>,<id>` via `history.replaceState`, so a comparison is shareable and future "A vs B" pages can deep-link. Unknown ids are ignored; an empty or absent `p` falls back to the default three.
+- Live region: an `aria-live="polite"` status line announces "N개 제품 비교 중". Only the table, caption, and evidence list re-render on change, so focus stays on the checkbox that was used.
+- Counts: no page copy hard-codes the product count. The caption renders "선택한 N개 제품 공식 사양" and the picker hint renders "현재 N개 제품 중 최대 4개" from the data at render time.
+- No-JS: `<noscript>` keeps the full all-product table and the full permit-evidence list for SEO and no-JS readers.
+- Column width: with at most four product columns the table fits the 1120px wrap without horizontal scroll (item column 9rem, product columns min 13rem); `.table-scroll` stays as the safety net for the noscript full table and narrow desktops.
 - Responsive state: above 640px the table stays intact inside a keyboard-focusable horizontal scroll region with a sticky, edge-shadowed first column; at 640px and below it transposes to per-row cards (`data-label` per cell) with no horizontal scroll.
 - Evidence states: `conflict` uses coral/warn; `unknown` is neutral (border, muted text on white) so a missing value never reads as an alarm.
 

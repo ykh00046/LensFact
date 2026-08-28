@@ -1014,6 +1014,91 @@ div.label-item:hover {
   margin-block: 0;
 }
 
+.compare-picker {
+  margin-block-end: var(--space-5);
+}
+
+.picker-fieldset {
+  margin: 0;
+  min-inline-size: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-white);
+  padding: var(--space-3) var(--space-5) var(--space-5);
+}
+
+.picker-fieldset legend {
+  padding-inline: var(--space-2);
+  color: var(--color-ink);
+  font-weight: 700;
+}
+
+.picker-hint,
+.picker-limit {
+  margin: 0 0 var(--space-3);
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
+.picker-limit {
+  margin-block: var(--space-3) 0;
+  color: var(--color-warn);
+  font-weight: 600;
+}
+
+.picker-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  gap: var(--space-1) var(--space-3);
+}
+
+.picker-option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-block-size: 2.75rem;
+  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-3);
+  cursor: pointer;
+}
+
+.picker-option:has(input:checked) {
+  background: var(--color-blue);
+}
+
+.picker-option:has(input:disabled) {
+  color: var(--color-muted);
+  cursor: not-allowed;
+}
+
+.picker-option input {
+  flex: none;
+  inline-size: 1.15rem;
+  block-size: 1.15rem;
+  accent-color: var(--color-ink);
+}
+
+.picker-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.picker-name {
+  font-weight: 600;
+}
+
+.picker-maker {
+  color: var(--color-muted);
+  font-size: 0.82rem;
+}
+
+.compare-status {
+  margin-block: 0 var(--space-3);
+  color: var(--color-muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
 .table-caption {
   margin-block-end: var(--space-3);
   color: var(--color-muted);
@@ -1053,7 +1138,7 @@ div.label-item:hover {
 }
 
 .compare-table {
-  min-inline-size: 68rem;
+  min-inline-size: 61rem;
 }
 
 .compare-table thead th {
@@ -1065,7 +1150,7 @@ div.label-item:hover {
   position: sticky;
   inset-inline-start: 0;
   z-index: 1;
-  inline-size: 12rem;
+  inline-size: 9rem;
   border-inline-end: 1px solid var(--color-border);
   background: var(--color-ivory);
   box-shadow: 0.25rem 0 0.5rem -0.25rem rgba(5, 18, 48, 0.14);
@@ -1082,7 +1167,7 @@ div.label-item:hover {
 }
 
 .compare-table td {
-  min-inline-size: 18rem;
+  min-inline-size: 13rem;
 }
 
 .cell-note {
