@@ -81,6 +81,8 @@ a:hover {
 .card p a,
 .aside-box a,
 .eyebrow a,
+.compare-table thead th a,
+.compare-table td a,
 .footer-inner a {
   text-decoration: underline;
   text-decoration-color: var(--color-coral);
@@ -455,7 +457,7 @@ h3,
 
 .product-selector {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--space-2);
   margin-block: var(--space-6) var(--space-2);
 }
@@ -660,6 +662,43 @@ h3,
   padding-block-start: var(--space-4);
   color: var(--color-muted);
   font-size: 0.94rem;
+}
+
+.detail-title h3 {
+  margin: 0;
+}
+
+/* Product page summary reuses the comparison table inside the 45rem column. */
+.spec-summary.compare-table,
+.spec-summary.compare-table td {
+  min-inline-size: 0;
+}
+
+.spec-summary td:last-child {
+  white-space: nowrap;
+}
+
+.spec-summary.compare-table .status-label {
+  white-space: nowrap;
+}
+
+/* Product page: one evidence panel per field, stacked and always open. */
+.product-specs {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.product-specs .detail-panel {
+  min-block-size: 0;
+}
+
+/* Static package card (product pages) reuses the tile look without the button affordance. */
+div.label-item {
+  cursor: default;
+}
+
+div.label-item:hover {
+  border-color: var(--color-border);
 }
 
 .compare-table {
@@ -1228,6 +1267,13 @@ h3,
 
 .doc-shell {
   max-inline-size: 45rem;
+}
+
+/* Denser cards (product list) stay two per row instead of leaving an orphan. */
+@media (min-width: 1025px) {
+  .cards-grid.cards-wide {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 1024px) {

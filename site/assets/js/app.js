@@ -116,13 +116,14 @@ const ADS_ENABLED = false;
     return { ...copy, ...field, caution: field.caution || copy.caution || "", meaning: field.meaning || copy.meaning || "" };
   }
 
-  function sourceBlock(source, index) {
+  function sourceBlock(source, index, scope = "decoder") {
     const url = externalUrl(source.url);
+    const recordId = `source-record-${escapeHtml(scope)}-${index}`;
     const urlMarkup = url === "#" ? "확인 가능한 주소 없음" : `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">원문 링크 열기</a>`;
     const sourceType = source.sourceType ? `<div><dt>출처 유형</dt><dd>${escapeHtml(source.sourceType)}</dd></div>` : "";
     const verifiedAt = source.verifiedAt ? `<div><dt>확인일</dt><dd>${displayDate(source.verifiedAt)}</dd></div>` : "";
-    return `<section class="source-record" aria-labelledby="source-record-${index}">
-      <h4 id="source-record-${index}">출처 ${index + 1} · ${escapeHtml(source.organization)}</h4>
+    return `<section class="source-record" aria-labelledby="${recordId}">
+      <h4 id="${recordId}">출처 ${index + 1} · ${escapeHtml(source.organization)}</h4>
       <dl class="source-definition">
         ${sourceType}
         <div><dt>기관·제조사</dt><dd>${escapeHtml(source.organization)}</dd></div>
@@ -148,13 +149,19 @@ const ADS_ENABLED = false;
     return region;
   }
 
+  function conflictBlock(item) {
+    if (!item.conflicts?.length) return "";
+    const conflictNote = '<p class="conflict-note">두 값을 임의로 하나로 정리하지 않고 출처별 값을 그대로 보여 드립니다.</p>';
+    const items = item.conflicts.map((conflict) => `<div class="conflict-item"><span>${escapeHtml(conflict.source)}</span><strong>${text(conflict.value)}</strong></div>`).join("");
+    return `<div class="info-block"><div class="info-label warn">출처별 원문값</div><div class="conflict-grid">${items}</div>${conflictNote}</div>`;
+  }
+
   function renderDetail(field) {
     const panel = qs("[data-decoder-detail]");
     if (!panel) return;
     const item = resolvedField(field);
     const state = fieldState(item.state);
-    const conflictNote = '<p class="conflict-note">두 값을 임의로 하나로 정리하지 않고 출처별 값을 그대로 보여 드립니다.</p>';
-    const conflicts = item.conflicts?.length ? `<div class="info-block"><div class="info-label warn">출처별 원문값</div><div class="conflict-grid">${item.conflicts.map((conflict) => `<div class="conflict-item"><span>${escapeHtml(conflict.source)}</span><strong>${text(conflict.value)}</strong></div>`).join("")}</div>${conflictNote}</div>` : "";
+    const conflicts = conflictBlock(item);
 
     panel.innerHTML = `<div class="detail-title">
         <div><div class="detail-code">${escapeHtml(item.code)}</div><div>${escapeHtml(item.label)}</div></div>
@@ -165,7 +172,7 @@ const ADS_ENABLED = false;
       <div class="info-block"><div class="info-label">주의할 점</div><p>${escapeHtml(item.caution)}</p></div>
       <div class="source-summary">${escapeHtml(item.sourceSummary)}</div>
       <button class="disclosure-button" type="button" data-source-toggle aria-expanded="false" aria-controls="decoder-source-panel">출처 보기</button>
-      <div class="source-panel" id="decoder-source-panel" hidden>${item.sources.map(sourceBlock).join("")}${conflicts}</div>`;
+      <div class="source-panel" id="decoder-source-panel" hidden>${item.sources.map((source, index) => sourceBlock(source, index, "decoder")).join("")}${conflicts}</div>`;
 
     detailLiveRegion().textContent = `${item.code} ${item.label} · ${item.value} · ${stateLabel(item.state)} · ${item.meaning}`;
 
@@ -400,9 +407,10 @@ const ADS_ENABLED = false;
   }
 
   const COMPARE_COLUMNS = [
-    { productId: "acuvue-oasys-1-day", colId: "col-acuvue", label: "아큐브 오아시스 원데이®" },
-    { productId: "dailies-total1", colId: "col-total1", label: "데일리스 토탈원®" },
-    { productId: "biofinity", colId: "col-biofinity", label: "바이오피니티®" }
+    { productId: "acuvue-oasys-1-day", colId: "col-acuvue-oasys-1-day", label: "아큐브 오아시스 원데이®" },
+    { productId: "dailies-total1", colId: "col-dailies-total1", label: "데일리스 토탈원®" },
+    { productId: "biofinity", colId: "col-biofinity", label: "바이오피니티®" },
+    { productId: "acuvue-moist-1-day", colId: "col-acuvue-moist-1-day", label: "원데이 아큐브 모이스트®" }
   ];
 
   const COMPARE_ROWS = [
@@ -416,7 +424,8 @@ const ADS_ENABLED = false;
       notes: {
         "acuvue-oasys-1-day": "실리콘 하이드로겔",
         "dailies-total1": "워터 그라디언트 실리콘 하이드로겔",
-        "biofinity": "실리콘 하이드로겔"
+        "biofinity": "실리콘 하이드로겔",
+        "acuvue-moist-1-day": "하이드로겔"
       }
     },
     { rowId: "row-bc", fieldId: "bc", label: "BC", mono: true },
@@ -426,28 +435,37 @@ const ADS_ENABLED = false;
       notes: {
         "acuvue-oasys-1-day": "벌크",
         "dailies-total1": "코어와 표면은 측정 위치와 방법이 달라 하나의 값으로 합치지 않음. 표면은 공식 자료에 따라 약 100%로도 표기됨",
-        "biofinity": "벌크"
+        "biofinity": "벌크",
+        "acuvue-moist-1-day": "출처가 측정 위치를 표기하지 않음"
       }
     },
     {
       rowId: "row-dkt", fieldId: "dkt", label: "Dk/t", labelNote: "시험 조건 포함", mono: true,
-      rowNote: "아큐브 원문만 단위(× 10⁻⁹)를 명기함. 다른 두 제품 원문은 단위를 표기하지 않아 임의로 단위를 붙이지 않음.",
+      rowNote: "아큐브 두 제품 원문만 단위(× 10⁻⁹)를 명기함. 데일리스 토탈원과 바이오피니티 원문은 단위를 표기하지 않아 임의로 단위를 붙이지 않음.",
       notes: {
         "acuvue-oasys-1-day": "-3.00D · 중심 0.085 mm · 35℃ · boundary/edge-corrected Dk",
-        "dailies-total1": "-3.00D · 중심 0.09 mm"
+        "dailies-total1": "-3.00D · 중심 0.09 mm",
+        "acuvue-moist-1-day": "-3.00D · 중심 0.084 mm · 35℃ · boundary/edge-corrected Dk"
       }
     },
-    { rowId: "row-thickness", fieldId: "thickness", label: "중심두께", mono: true, useCondition: true },
+    {
+      rowId: "row-thickness", fieldId: "thickness", label: "중심두께", mono: true, useCondition: true,
+      notes: { "acuvue-moist-1-day": "-3.00D" }
+    },
     {
       rowId: "row-uv", fieldId: "uv", label: "UV", chip: true,
-      notes: { "dailies-total1": "기능 없음으로 단정하지 않음" }
+      notes: {
+        "dailies-total1": "기능 없음으로 단정하지 않음",
+        "acuvue-moist-1-day": "글로벌 기술 사양의 근사값 · 한국 표기 수치는 확인되지 않음"
+      }
     },
     {
       rowId: "row-note", label: "확인 메모",
       memo: {
         "acuvue-oasys-1-day": "한국 IFU로 허가번호 확인. MFDS 상세 원장 직접 대조는 미완료.",
         "dailies-total1": "MFDS UDI 조회에서 제품 연결 105건 확인. 코어와 표면 함수율을 합치지 않음.",
-        "biofinity": "MFDS 상세 원장 직접 대조는 미완료. Dk/t와 UV 충돌을 보류 상태로 유지."
+        "biofinity": "MFDS 상세 원장 직접 대조는 미완료. Dk/t와 UV 충돌을 보류 상태로 유지.",
+        "acuvue-moist-1-day": "MFDS UDI 조회로 허가번호 확인. BC·DIA·함수율·Dk/t·UV는 글로벌 기술 사양이 유일한 근거이며 한국 표기는 미확인."
       }
     }
   ];
@@ -455,7 +473,8 @@ const ADS_ENABLED = false;
   const PERMIT_EVIDENCE = [
     { productId: "acuvue-oasys-1-day", fieldIds: ["permit"] },
     { productId: "dailies-total1", fieldIds: ["permit", "replacement"] },
-    { productId: "biofinity", fieldIds: ["permit"] }
+    { productId: "biofinity", fieldIds: ["permit"] },
+    { productId: "acuvue-moist-1-day", fieldIds: ["permit"] }
   ];
 
   function compareCell(row, product, column) {
@@ -476,10 +495,10 @@ const ADS_ENABLED = false;
     let note = "";
     if (field.conflicts?.length) {
       note = field.conflicts.map((conflict) => `${escapeHtml(conflict.source)}: ${text(conflict.value)}`).join("<br>");
-    } else if (row.useCondition) {
-      note = text(field.sources?.[0]?.condition || "");
     } else if (row.notes?.[product.id]) {
       note = text(row.notes[product.id]);
+    } else if (row.useCondition) {
+      note = text(field.sources?.[0]?.condition || "");
     }
     const noteMarkup = note ? `<span class="cell-note${conflicted ? " warn" : ""}">${note}</span>` : "";
     return `<td ${cellAttributes}>${value}${noteMarkup}</td>`;
@@ -530,6 +549,121 @@ const ADS_ENABLED = false;
     list.innerHTML = items.join("");
   }
 
+  // Product pages render every field open: the evidence is the page, not a disclosure.
+  function productSpecSection(field) {
+    const item = resolvedField(field);
+    const state = fieldState(item.state);
+    const panelId = `spec-${escapeHtml(item.id)}`;
+    const headingId = `${panelId}-title`;
+    const condition = item.sources?.[0]?.condition || "";
+    const flag = item.flag ? `<span class="status-label status-pending">${escapeHtml(item.flag)}</span>` : "";
+    const conditionMarkup = condition ? `<p class="cell-note">측정·확인 조건 · ${text(condition)}</p>` : "";
+    const caution = item.caution ? `<div class="info-block"><div class="info-label">주의할 점</div><p>${escapeHtml(item.caution)}</p></div>` : "";
+    const sources = item.sources || [];
+    return `<section class="detail-panel" id="${panelId}" aria-labelledby="${headingId}">
+      <div class="detail-title">
+        <div><h3 class="detail-code" id="${headingId}">${escapeHtml(item.code)}</h3><div>${escapeHtml(item.label)}</div></div>
+        <div class="detail-value" data-state="${state}">${text(item.value)}</div>
+      </div>
+      <div class="pill-row"><span class="status-label status-${state}">${escapeHtml(stateLabel(item.state))}</span>${flag}</div>
+      ${conditionMarkup}
+      <div class="info-block"><div class="info-label">뜻</div><p>${escapeHtml(item.meaning)}</p></div>
+      ${caution}
+      ${conflictBlock(item)}
+      <div class="source-summary">${escapeHtml(item.sourceSummary)} · 출처 ${sources.length}건</div>
+      <div class="source-panel">${sources.map((source, index) => sourceBlock(source, index, item.id)).join("")}</div>
+    </section>`;
+  }
+
+  // Summary table row order mirrors the comparison table so the two read the same way.
+  const PRODUCT_SUMMARY_FIELDS = ["permit", "replacement", "material", "bc", "dia", "water", "dkt", "thickness", "uv"];
+
+  function summaryRow(product, fieldId) {
+    const field = product.fields.find((candidate) => candidate.id === fieldId);
+    if (!field) return "";
+    const item = resolvedField(field);
+    const state = fieldState(item.state);
+    const rowId = `summary-${escapeHtml(item.id)}`;
+    const condition = item.sources?.[0]?.condition || "";
+    const note = condition ? `<span class="cell-note">${text(condition)}</span>` : "";
+    const valueClass = state === "conflict" ? "mono warn" : "mono";
+    const anchorLabel = `${item.code} ${item.label} 출처 보기`;
+    return `<tr>
+      <th id="${rowId}" scope="row">${escapeHtml(item.code)}<br><span class="cell-note">${escapeHtml(item.label)}</span></th>
+      <td headers="${rowId} summary-col-value" data-label="공식 표기 값"><span class="${valueClass}">${text(item.value)}</span>${note}</td>
+      <td headers="${rowId} summary-col-state" data-label="상태"><span class="status-label status-${state}">${escapeHtml(stateLabel(item.state))}</span></td>
+      <td headers="${rowId} summary-col-source" data-label="출처"><a href="#spec-${escapeHtml(item.id)}" aria-label="${escapeHtml(anchorLabel)}">출처 보기</a></td>
+    </tr>`;
+  }
+
+  function latestVerifiedAt(product) {
+    const dates = [];
+    product.fields.forEach((field) => (field.sources || []).forEach((source) => { if (source.verifiedAt) dates.push(source.verifiedAt); }));
+    return dates.length ? displayDate(dates.sort().pop()) : "";
+  }
+
+  function productSummaryTable(product) {
+    const rows = PRODUCT_SUMMARY_FIELDS.map((fieldId) => summaryRow(product, fieldId)).join("");
+    return `<p class="table-caption" id="spec-summary-caption">${escapeHtml(product.name)} 공식 표기 값과 상태 · 확인일 ${latestVerifiedAt(product)}</p>
+      <div class="table-scroll" tabindex="0" aria-label="${escapeHtml(product.selectorLabel)} 사양 요약표. 좁은 화면에서는 항목별 카드로 표시됩니다.">
+        <table class="compare-table spec-summary" aria-labelledby="spec-summary-caption">
+          <thead>
+            <tr>
+              <th id="summary-col-item" scope="col">항목</th>
+              <th id="summary-col-value" scope="col">공식 표기 값</th>
+              <th id="summary-col-state" scope="col">상태</th>
+              <th id="summary-col-source" scope="col">출처</th>
+            </tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>`;
+  }
+
+  function initProductPage() {
+    const main = qs("[data-product-page]");
+    if (!main || !products.length) return;
+    const product = products.find((candidate) => candidate.id === main.dataset.productPage);
+    if (!product) return;
+
+    const aliasList = qs("[data-product-aliases]", main);
+    if (aliasList && product.aliases?.length) {
+      aliasList.innerHTML = product.aliases.map((alias) => `<li>${escapeHtml(alias)}</li>`).join("");
+    }
+
+    const summary = qs("[data-product-summary]", main);
+    if (summary) summary.innerHTML = productSummaryTable(product);
+
+    const specs = qs("[data-product-specs]", main);
+    if (specs) specs.innerHTML = product.fields.map(productSpecSection).join("");
+  }
+
+  // Card preview uses whole field values (never the shortened package-tile text),
+  // so a split value such as 코어/표면 함수율 is never truncated into one number.
+  const CARD_PREVIEW_FIELDS = ["bc", "dia", "water"];
+
+  function productCard(product) {
+    const href = internalHref(`./${product.slug || product.id}.html`);
+    const specs = CARD_PREVIEW_FIELDS.map((fieldId) => {
+      const field = product.fields.find((candidate) => candidate.id === fieldId);
+      if (!field) return "";
+      const copy = fieldCopy[fieldId] || {};
+      return `<span>${escapeHtml(copy.code || fieldId)} ${text(field.value)}</span>`;
+    }).join("");
+    return `<article class="card">
+      <div class="category">${escapeHtml(product.type)}</div>
+      <h3><a href="${escapeHtml(href)}">${escapeHtml(product.name)}</a></h3>
+      <p>${escapeHtml(product.maker)} / ${escapeHtml(product.distributor)}</p>
+      <div class="card-meta">${specs}</div>
+    </article>`;
+  }
+
+  function initProductIndex() {
+    const list = qs("[data-product-index]");
+    if (!list || !products.length) return;
+    list.innerHTML = products.map(productCard).join("");
+  }
+
   function initAdSlots() {
     qsa("[data-ad-slot]").forEach((slot) => {
       if (!ADS_ENABLED) {
@@ -553,6 +687,8 @@ const ADS_ENABLED = false;
     initArticleList();
     initCompareTable();
     initPermitSources();
+    initProductPage();
+    initProductIndex();
     initAdSlots();
   });
 })();
