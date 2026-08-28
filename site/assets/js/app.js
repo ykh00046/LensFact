@@ -754,7 +754,9 @@ const ADS_ENABLED = false;
     { productId: "acuvue-oasys-max-1-day", colId: "col-acuvue-oasys-max-1-day", label: "아큐브® 오아시스 MAX 원데이" },
     { productId: "dailies-aquacomfort-plus", colId: "col-dailies-aquacomfort-plus", label: "데일리스 아쿠아컴포트 플러스®" },
     { productId: "acuvue-vita", colId: "col-acuvue-vita", label: "아큐브 비타®" },
-    { productId: "total30", colId: "col-total30", label: "토탈30®" }
+    { productId: "total30", colId: "col-total30", label: "토탈30®" },
+    { productId: "airoptix-plus-hydraglyde", colId: "col-airoptix-plus-hydraglyde", label: "에어옵틱스® 플러스 하이드라글라이드®" },
+    { productId: "proclear-1-day", colId: "col-proclear-1-day", label: "프로클리어® 원데이" }
   ];
 
   const COMPARE_ROWS = [
@@ -762,16 +764,24 @@ const ADS_ENABLED = false;
       rowId: "row-permit", fieldId: "permit", label: "한국 수입허가번호", mono: true,
       notes: {
         "acuvue-oasys-2-week": "MFDS에 동일 제품의 등록 2건 · 실물 포장 확인 필요",
-        "dailies-aquacomfort-plus": "한국 공식 제품 페이지 없음 · MFDS 등록(한국 등록명 아쿠아 렌즈)이 유일한 한국 근거 · 허가 유효성과 현재 판매 여부는 미확인"
+        "dailies-aquacomfort-plus": "한국 공식 제품 페이지 없음 · MFDS 등록(한국 등록명 아쿠아 렌즈)이 유일한 한국 근거 · 허가 유효성과 현재 판매 여부는 미확인",
+        "airoptix-plus-hydraglyde": "한국 공식 제품 페이지 없음 · MFDS 등록(한국 등록명 에어렌즈 하이드라)이 유일한 한국 근거 · 허가 유효성과 현재 판매 여부는 미확인",
+        "proclear-1-day": "한국 목록 각주 07-568호는 MFDS 0건"
       }
     },
     {
       rowId: "row-replacement", fieldId: "replacement", label: "교체주기",
+      // MFDS registers Biofinity and AIR OPTIX plus HydraGlyde as 연속착용 (grade 3) while
+      // every other product on file is 매일착용 (grade 2). The class is a registration
+      // category, not a replacement cycle, so it is stated in the cell rather than merged
+      // into the value.
       notes: {
-        "biofinity": "연속착용 여부와 별도",
+        "biofinity": "연속착용 여부와 별도 · MFDS 등록 분류: 연속착용 소프트 콘택트렌즈(등급 3) · 착용방식은 전문가 판단",
         "acuvue-oasys-2-week": "한국 공식 자료는 2주 착용으로만 표기 · 글로벌 사양은 교체주기와 착용방식을 따로 적음",
         "acuvue-vita": "한국 페이지는 1달 착용으로 표기 · 글로벌 사양은 1 Month DW",
-        "total30": "한국 페이지는 한달용으로 표기"
+        "total30": "한국 페이지는 한달용으로 표기",
+        "airoptix-plus-hydraglyde": "MFDS 등록 분류: 연속착용 소프트 콘택트렌즈(등급 3) · 착용방식은 전문가 판단 · 한국 공식 자료에는 교체주기·착용방식 안내가 없음",
+        "proclear-1-day": "한국 페이지는 교체 주기 매일로 표기 · 착용방식은 매일착용"
       }
     },
     {
@@ -789,7 +799,9 @@ const ADS_ENABLED = false;
         "acuvue-oasys-max-1-day": "실리콘 하이드로겔 · 한국 공식 자료와 MFDS 원장에 재질명 표기 없음",
         "dailies-aquacomfort-plus": "하이드로겔 · 한국 공식 자료 자체가 없음",
         "acuvue-vita": "실리콘 하이드로겔 · 한국 공식 자료와 MFDS 원장에 재질명 표기 없음",
-        "total30": "워터 그라디언트 실리콘 하이드로겔 · 한국 공식 자료에는 재질 계열 표기조차 없음"
+        "total30": "워터 그라디언트 실리콘 하이드로겔 · 한국 공식 자료에는 재질 계열 표기조차 없음",
+        "airoptix-plus-hydraglyde": "제조사 문서 표기는 표면처리된 플루오로실리콘 함유 하이드로겔 · 한국 공식 자료 자체가 없음",
+        "proclear-1-day": "PC-하이드로겔(하이드로겔 계열) · 실리콘 하이드로겔과 같은 축에서 함수율·Dk/t를 비교하지 않음"
       }
     },
     { rowId: "row-bc", fieldId: "bc", label: "BC", mono: true },
@@ -809,12 +821,14 @@ const ADS_ENABLED = false;
         "acuvue-oasys-max-1-day": "출처가 측정 위치를 표기하지 않음",
         "dailies-aquacomfort-plus": "미국 사양은 Water Content, 국제 사양은 CORE WATER CONTENT로 라벨이 다름 · 숫자는 같음",
         "acuvue-vita": "출처가 측정 위치를 표기하지 않음",
-        "total30": "코어·표면 분리 표기 · 표면값은 문서별로 90% 이상/약 100%"
+        "total30": "코어·표면 분리 표기 · 표면값은 문서별로 90% 이상/약 100%",
+        "airoptix-plus-hydraglyde": "미국 사양은 Water Content, 국제 사양은 CORE WATER CONTENT로 라벨이 다름 · 숫자는 같음 · 표면 함수율 표기는 어느 공식 자료에도 없음",
+        "proclear-1-day": "출처가 측정 위치를 표기하지 않음 · 하이드로겔 계열"
       }
     },
     {
       rowId: "row-dkt", fieldId: "dkt", label: "Dk/t", labelNote: "시험 조건 포함", mono: true,
-      rowNote: "아큐브 다섯 제품 원문만 단위(× 10⁻⁹)를 명기함. 데일리스 토탈원·바이오피니티·마이데이·클래리티 원데이·프리시전원·바이오트루 원데이·데일리스 아쿠아컴포트·토탈30 원문은 단위를 표기하지 않아 임의로 단위를 붙이지 않음.",
+      rowNote: "아큐브 다섯 제품 원문만 단위(× 10⁻⁹)를 명기함. 데일리스 토탈원·바이오피니티·마이데이·클래리티 원데이·프리시전원·바이오트루 원데이·데일리스 아쿠아컴포트·토탈30·에어옵틱스 플러스·프로클리어 원데이 원문은 단위를 표기하지 않아 임의로 단위를 붙이지 않음.",
       notes: {
         "acuvue-oasys-1-day": "-3.00D · 중심 0.085 mm · 35℃ · boundary/edge-corrected Dk",
         "dailies-total1": "-3.00D · 중심 0.09 mm",
@@ -826,7 +840,9 @@ const ADS_ENABLED = false;
         "acuvue-oasys-max-1-day": "-3.00D · 중심 0.085 mm · 35℃ · boundary/edge-corrected Dk",
         "dailies-aquacomfort-plus": "시험도수만 표기 · 측정법·온도 미표기 · 같은 문서의 Dk 26 × 10⁻¹¹과 다른 물리량이며 환산하지 않음",
         "acuvue-vita": "-3.00D · 중심 0.070 mm · 35℃ · boundary/edge-corrected Dk",
-        "total30": "측정법·온도 미표기"
+        "total30": "측정법·온도 미표기",
+        "airoptix-plus-hydraglyde": "시험도수만 표기 · 측정법·보정·온도 미표기 · 같은 문서의 Dk 110 × 10⁻¹¹은 다른 물리량이며 환산하지 않음",
+        "proclear-1-day": "@-3.00DS · 측정법·보정·온도 미표기 · 중심두께 미확인"
       }
     },
     {
@@ -836,7 +852,9 @@ const ADS_ENABLED = false;
         "biofinity": "2026-08-28 재확인에서 항목 없음 · 이전 기록의 0.08 mm는 철회",
         "myday": "검토한 공식 자료 6종에 중심두께 항목 없음",
         "clariti-1-day": "검토한 한국·글로벌 공식 자료 6종에 중심두께 항목 없음",
-        "total30": "미국 전문가 사양 기재"
+        "total30": "미국 전문가 사양 기재",
+        "airoptix-plus-hydraglyde": "-3.00D · 미국 전문가 사양 기재 · 미국 페이지만 조건 표기에서 마이너스 부호를 뺌",
+        "proclear-1-day": "검토한 한국·글로벌 공식 자료 6종에 중심두께 항목 없음"
       }
     },
     {
@@ -852,7 +870,9 @@ const ADS_ENABLED = false;
         "acuvue-oasys-max-1-day": "한국 표기와 글로벌 표기가 달라 두 원문을 병기 · 등급과 차단율의 대응 관계는 어느 공식 자료에도 없음",
         "dailies-aquacomfort-plus": "기능 없음으로 단정하지 않음 · 검토한 알콘 공식 자료 4종에 UV 표기 없음",
         "acuvue-vita": "글로벌 기술 사양의 근사값 · 한국 표기 수치는 이미지 전용이라 확인되지 않음",
-        "total30": "한국 공식 자료에 UV 표기 자체가 없음 · 차단율 퍼센트가 아니라 등급 표기"
+        "total30": "한국 공식 자료에 UV 표기 자체가 없음 · 차단율 퍼센트가 아니라 등급 표기",
+        "airoptix-plus-hydraglyde": "기능 없음으로 단정하지 않음 · 검토한 알콘 공식 자료 4종에 UV·ultraviolet 표기 0건",
+        "proclear-1-day": "한국 사양서의 No가 유일한 명시적 표기 · 글로벌 공식 자료 2종에는 UV 항목 자체가 없음"
       }
     },
     {
@@ -870,7 +890,9 @@ const ADS_ENABLED = false;
         "acuvue-oasys-max-1-day": "MFDS UDI 508건 전수 집계로 허가번호 확인. 공식 사양에서 BC·DIA·함수율·재질·Dk/t·중심두께 여섯 값이 아큐브 오아시스 원데이와 완전히 동일하며, 차이는 UV 표기·기술명·포장 구성뿐입니다. 값이 같다는 사실이 같은 제품이라는 뜻은 아닙니다. UV는 한국 표기와 글로벌 표기가 달라 병기합니다.",
         "dailies-aquacomfort-plus": "한국 공식 제품 페이지 없음 · MFDS 등록(아쿠아 렌즈)으로 유통 식별 · 현재 판매 여부 미확인. MFDS UDI 58건에서 한국알콘(주) 단일 신원으로 확인했고, 허가 유효성은 공개 조회 경로가 없어 확인하지 못했습니다. 물성값은 전부 글로벌 공식 자료가 근거입니다.",
         "acuvue-vita": "MFDS UDI 248건 전수 대조로 허가번호 확인. 물성값은 전부 글로벌 기술 사양이 근거이며 BC·DIA·중심두께·Dk/t 네 값이 아큐브 오아시스® 2주와 같습니다. 교체주기는 한국 페이지가 1달 착용으로만 표기합니다.",
-        "total30": "MFDS UDI 136건 전수 대조. 한국 공식 페이지는 수치 없음(워터렌즈 한달용) · 물성값은 미국 전문가 사양 단독 근거"
+        "total30": "MFDS UDI 136건 전수 대조. 한국 공식 페이지는 수치 없음(워터렌즈 한달용) · 물성값은 미국 전문가 사양 단독 근거",
+        "airoptix-plus-hydraglyde": "한국 공식 제품 페이지 없음 · MFDS 등록(에어렌즈 하이드라)으로 유통 식별 · 현재 판매 여부 미확인. MFDS UDI 171건이 한국알콘(주) 단일 신원으로 연결되며 소분류는 연속착용 소프트 콘택트렌즈 등급 3입니다. 물성값은 전부 글로벌 공식 자료가 근거이고 UV는 검토한 네 문서에 표기가 없어 미확인입니다.",
+        "proclear-1-day": "MFDS UDI 95건 전수 대조로 허가번호 확인(매일착용 소프트 콘택트렌즈 등급 2). 화면 표시값은 MFDS 원장 표기이며 쿠퍼비전코리아 전체 제품 목록 각주의 수허 07-568호는 MFDS 조회에서 0건입니다. 하이드로겔 계열이므로 실리콘 하이드로겔과 함수율·Dk/t를 같은 축에서 비교하지 않습니다. 중심두께는 공식 자료 6종에 항목이 없어 미확인입니다."
       }
     }
   ];
@@ -888,7 +910,9 @@ const ADS_ENABLED = false;
     { productId: "acuvue-oasys-max-1-day", fieldIds: ["permit"] },
     { productId: "dailies-aquacomfort-plus", fieldIds: ["permit"] },
     { productId: "acuvue-vita", fieldIds: ["permit"] },
-    { productId: "total30", fieldIds: ["permit"] }
+    { productId: "total30", fieldIds: ["permit"] },
+    { productId: "airoptix-plus-hydraglyde", fieldIds: ["permit"] },
+    { productId: "proclear-1-day", fieldIds: ["permit"] }
   ];
 
   function compareCell(row, product, column) {
@@ -1145,6 +1169,16 @@ const ADS_ENABLED = false;
   // Summary table row order mirrors the comparison table so the two read the same way.
   const PRODUCT_SUMMARY_FIELDS = ["permit", "replacement", "material", "bc", "dia", "water", "dkt", "thickness", "uv"];
 
+  // Biofinity and AIR OPTIX plus HydraGlyde are the only products on file registered
+  // with MFDS as 연속착용 (grade 3). The registration class is not a replacement cycle,
+  // so the summary row says so next to the value, exactly as the comparison table does.
+  const SUMMARY_EXTRA_NOTES = {
+    replacement: {
+      "biofinity": "MFDS 등록 분류: 연속착용 소프트 콘택트렌즈(등급 3) · 착용방식은 전문가 판단",
+      "airoptix-plus-hydraglyde": "MFDS 등록 분류: 연속착용 소프트 콘택트렌즈(등급 3) · 착용방식은 전문가 판단"
+    }
+  };
+
   function summaryRow(product, fieldId) {
     const field = product.fields.find((candidate) => candidate.id === fieldId);
     if (!field) return "";
@@ -1152,7 +1186,9 @@ const ADS_ENABLED = false;
     const state = fieldState(item.state);
     const rowId = `summary-${escapeHtml(item.id)}`;
     const condition = item.sources?.[0]?.condition || "";
-    const note = condition ? `<span class="cell-note">${text(condition)}</span>` : "";
+    const extra = SUMMARY_EXTRA_NOTES[fieldId]?.[product.id] || "";
+    const noteLines = [condition, extra].filter(Boolean).map((line) => text(line));
+    const note = noteLines.length ? `<span class="cell-note">${noteLines.join("<br>")}</span>` : "";
     const valueClass = { conflict: "mono warn", unknown: "status-label status-unknown", verified: "mono" }[state];
     const anchorLabel = `${item.code} ${item.label} 출처 보기`;
     return `<tr>
