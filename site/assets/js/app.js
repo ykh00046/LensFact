@@ -21,6 +21,22 @@ const ADS_ENABLED = false;
     return String(value ?? "").replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#039;");
   }
 
+  const SUPERSCRIPT_MAP = { "⁻": "-", "⁺": "+", "⁰": "0", "¹": "1", "²": "2", "³": "3", "⁴": "4", "⁵": "5", "⁶": "6", "⁷": "7", "⁸": "8", "⁹": "9" };
+
+  // Display-only: the mono fallback stack renders unicode superscripts poorly, so
+  // render them as <sup> markup. The stored data is never modified.
+  function superscriptMarkup(escaped) {
+    return escaped.replace(/[⁺⁻⁰¹²³⁴-⁹]+/g, (run) => `<sup>${Array.from(run).map((char) => SUPERSCRIPT_MAP[char] || "").join("")}</sup>`);
+  }
+
+  function text(value) {
+    return superscriptMarkup(escapeHtml(value));
+  }
+
+  function displayDate(value) {
+    return escapeHtml(value).replaceAll("-", ".");
+  }
+
   function externalUrl(value) {
     try {
       const url = new URL(String(value));
@@ -103,35 +119,55 @@ const ADS_ENABLED = false;
   function sourceBlock(source, index) {
     const url = externalUrl(source.url);
     const urlMarkup = url === "#" ? "확인 가능한 주소 없음" : `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">원문 링크 열기</a>`;
+    const sourceType = source.sourceType ? `<div><dt>출처 유형</dt><dd>${escapeHtml(source.sourceType)}</dd></div>` : "";
+    const verifiedAt = source.verifiedAt ? `<div><dt>확인일</dt><dd>${displayDate(source.verifiedAt)}</dd></div>` : "";
     return `<section class="source-record" aria-labelledby="source-record-${index}">
       <h4 id="source-record-${index}">출처 ${index + 1} · ${escapeHtml(source.organization)}</h4>
       <dl class="source-definition">
+        ${sourceType}
+        <div><dt>기관·제조사</dt><dd>${escapeHtml(source.organization)}</dd></div>
         <div><dt>문서명</dt><dd>${escapeHtml(source.document)}</dd></div>
-        <div><dt>원문 표기</dt><dd>${escapeHtml(source.raw)}</dd></div>
+        <div><dt>원문 표기</dt><dd>${text(source.raw)}</dd></div>
         <div><dt>주소</dt><dd>${urlMarkup}</dd></div>
-        <div><dt>확인일</dt><dd>2026.08.27</dd></div>
-        <div><dt>측정·확인 조건</dt><dd>${escapeHtml(source.condition)}</dd></div>
-        <div><dt>제품 연결</dt><dd>${escapeHtml(source.linkNote)}</dd></div>
+        ${verifiedAt}
+        <div><dt>측정·확인 조건</dt><dd>${text(source.condition)}</dd></div>
+        <div><dt>제품 연결</dt><dd>${text(source.linkNote)}</dd></div>
       </dl>
     </section>`;
+  }
+
+  function detailLiveRegion() {
+    let region = qs("[data-detail-live]");
+    if (!region) {
+      region = document.createElement("div");
+      region.className = "visually-hidden";
+      region.setAttribute("aria-live", "polite");
+      region.setAttribute("data-detail-live", "");
+      document.body.appendChild(region);
+    }
+    return region;
   }
 
   function renderDetail(field) {
     const panel = qs("[data-decoder-detail]");
     if (!panel) return;
     const item = resolvedField(field);
-    const conflicts = item.conflicts?.length ? `<div class="info-block"><div class="info-label warn">출처별 원문값</div><div class="conflict-grid">${item.conflicts.map((conflict) => `<div class="conflict-item"><span>${escapeHtml(conflict.source)}</span><strong>${escapeHtml(conflict.value)}</strong></div>`).join("")}</div></div>` : "";
+    const state = fieldState(item.state);
+    const conflictNote = '<p class="conflict-note">두 값을 임의로 하나로 정리하지 않고 출처별 값을 그대로 보여 드립니다.</p>';
+    const conflicts = item.conflicts?.length ? `<div class="info-block"><div class="info-label warn">출처별 원문값</div><div class="conflict-grid">${item.conflicts.map((conflict) => `<div class="conflict-item"><span>${escapeHtml(conflict.source)}</span><strong>${text(conflict.value)}</strong></div>`).join("")}</div>${conflictNote}</div>` : "";
 
     panel.innerHTML = `<div class="detail-title">
         <div><div class="detail-code">${escapeHtml(item.code)}</div><div>${escapeHtml(item.label)}</div></div>
-        <div class="detail-value">${escapeHtml(item.value)}</div>
+        <div class="detail-value" data-state="${state}">${text(item.value)}</div>
       </div>
-      <div class="status-label status-${fieldState(item.state)}">${escapeHtml(stateLabel(item.state))}</div>
+      <div class="status-label status-${state}">${escapeHtml(stateLabel(item.state))}</div>
       <div class="info-block"><div class="info-label">뜻</div><p>${escapeHtml(item.meaning)}</p></div>
       <div class="info-block"><div class="info-label">주의할 점</div><p>${escapeHtml(item.caution)}</p></div>
       <div class="source-summary">${escapeHtml(item.sourceSummary)}</div>
       <button class="disclosure-button" type="button" data-source-toggle aria-expanded="false" aria-controls="decoder-source-panel">출처 보기</button>
       <div class="source-panel" id="decoder-source-panel" hidden>${item.sources.map(sourceBlock).join("")}${conflicts}</div>`;
+
+    detailLiveRegion().textContent = `${item.code} ${item.label} · ${item.value} · ${stateLabel(item.state)} · ${item.meaning}`;
 
     const toggle = qs("[data-source-toggle]", panel);
     const sourcePanel = qs("#decoder-source-panel", panel);
@@ -147,24 +183,31 @@ const ADS_ENABLED = false;
     const item = resolvedField(field);
     const flag = item.flag ? `<span class="field-flag">${escapeHtml(item.flag)}</span>` : "";
     return `<button class="field-row" type="button" data-field-id="${escapeHtml(item.id)}" aria-pressed="false">
-      <span class="field-code">${escapeHtml(item.code)}</span><span class="field-label">${escapeHtml(item.label)}<br>${escapeHtml(item.teaser)}</span><span class="field-value">${escapeHtml(item.value)}</span>${flag}
+      <span class="field-code">${escapeHtml(item.code)}</span><span class="field-label">${escapeHtml(item.label)}<br>${escapeHtml(item.teaser)}</span><span class="field-value">${text(item.value)}</span>${flag}
     </button>`;
   }
 
-  function bindFieldRows() {
-    const rows = qsa("[data-field-id]");
-    rows.forEach((row) => {
-      row.addEventListener("click", () => {
-        activeFieldId = row.dataset.fieldId;
-        rows.forEach((item) => setPressed(item, item === row));
-        const field = activeProduct.fields.find((candidate) => candidate.id === activeFieldId);
-        if (field) renderDetail(field);
-      });
-    });
+  function syncPackageButtons(fieldId) {
+    qsa("[data-package-field]").forEach((button) => setPressed(button, button.dataset.packageField === fieldId));
   }
 
-  function findFieldRow(fieldId) {
-    return qsa("[data-field-id]").find((row) => row.dataset.fieldId === fieldId) || null;
+  function activateField(fieldId) {
+    const rows = qsa("[data-field-id]");
+    const row = rows.find((candidate) => candidate.dataset.fieldId === fieldId);
+    if (!row || !activeProduct) return false;
+    activeFieldId = fieldId;
+    if (row.closest("#all-fields")) revealExtraFields();
+    rows.forEach((item) => setPressed(item, item === row));
+    syncPackageButtons(fieldId);
+    const field = activeProduct.fields.find((candidate) => candidate.id === fieldId);
+    if (field) renderDetail(field);
+    return true;
+  }
+
+  function bindFieldRows() {
+    qsa("[data-field-id]").forEach((row) => {
+      row.addEventListener("click", () => activateField(row.dataset.fieldId));
+    });
   }
 
   function revealExtraFields() {
@@ -176,6 +219,9 @@ const ADS_ENABLED = false;
     toggleHidden(morePanel, false);
   }
 
+  // Package-label tiles map positionally onto the first four decoder fields.
+  const PACKAGE_FIELD_IDS = ["bc", "dia", "water", "dkt"];
+
   function renderPackage(product) {
     const name = qs("[data-package-name]");
     const type = qs("[data-package-type]");
@@ -185,7 +231,16 @@ const ADS_ENABLED = false;
     name.textContent = product.name;
     type.textContent = product.type;
     maker.textContent = `${product.maker} / ${product.distributor}`;
-    grid.innerHTML = product.packageSpecs.map((spec) => `<div class="label-item"><strong>${escapeHtml(spec.value)}</strong><span>${escapeHtml(spec.label)}</span></div>`).join("");
+    grid.innerHTML = product.packageSpecs.map((spec, index) => {
+      const fieldId = PACKAGE_FIELD_IDS[index];
+      return `<button class="label-item" type="button" data-package-field="${escapeHtml(fieldId || "")}" aria-pressed="false"><strong>${text(spec.value)}</strong><span>${escapeHtml(spec.label)}</span></button>`;
+    }).join("");
+    qsa("[data-package-field]", grid).forEach((button) => {
+      button.addEventListener("click", () => {
+        if (!activateField(button.dataset.packageField)) return;
+        scrollToDecoder();
+      });
+    });
   }
 
   function renderProduct(product) {
@@ -204,11 +259,8 @@ const ADS_ENABLED = false;
 
     const selectedIndex = product.fields.findIndex((field) => field.id === activeFieldId);
     const selectedField = selectedIndex >= 0 ? product.fields[selectedIndex] : product.fields[0];
-    activeFieldId = selectedField.id;
     if (selectedIndex >= 3) revealExtraFields();
-    const selectedButton = findFieldRow(activeFieldId);
-    if (selectedButton) setPressed(selectedButton, true);
-    renderDetail(selectedField);
+    activateField(selectedField.id);
   }
 
   function initProductSelector() {
@@ -271,6 +323,32 @@ const ADS_ENABLED = false;
     }
   }
 
+  function openDisclosureFor(target) {
+    if (!target) return;
+    const panel = target.closest(".source-panel");
+    if (!panel || !panel.hidden) return;
+    const button = qs(`[aria-controls="${panel.id}"]`);
+    if (button) {
+      setExpanded(button, true);
+      button.textContent = "출처 닫기";
+    }
+    toggleHidden(panel, false);
+  }
+
+  function revealFootnoteTarget(hash) {
+    if (!hash || !hash.startsWith("#source-")) return;
+    let target = null;
+    try {
+      target = qs(hash);
+    } catch {
+      return;
+    }
+    if (!target) return;
+    openDisclosureFor(target);
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+  }
+
   function initArticleDisclosure() {
     qsa("[data-disclosure]").forEach((button) => {
       const target = qs(`#${button.getAttribute("aria-controls")}`);
@@ -282,12 +360,26 @@ const ADS_ENABLED = false;
         toggleHidden(target, !open);
       });
     });
+
+    document.addEventListener("click", (event) => {
+      const anchor = event.target.closest('a[href^="#source-"]');
+      if (!anchor) return;
+      const hash = `#${anchor.getAttribute("href").slice(1)}`;
+      if (!qs(hash)) return;
+      event.preventDefault();
+      revealFootnoteTarget(hash);
+      if (window.location.hash !== hash) window.history.replaceState(null, "", hash);
+    });
+
+    window.addEventListener("hashchange", () => revealFootnoteTarget(window.location.hash));
+    revealFootnoteTarget(window.location.hash);
   }
 
   function articleCard(article) {
     const title = article.status === "live" ? `<a href="${escapeHtml(internalHref(article.href))}">${escapeHtml(article.title)}</a>` : escapeHtml(article.title);
     const meta = article.status === "live" ? `<span>${escapeHtml(article.verifiedAt)}</span><span>출처 ${escapeHtml(article.sources)}건</span>` : '<span class="status-label status-pending">준비 중</span>';
-    return `<article class="card"><div class="category">${escapeHtml(article.category)}</div><h3>${title}</h3><p>${escapeHtml(article.lead)}</p><div class="card-meta">${meta}</div></article>`;
+    const pending = article.status === "live" ? "" : " card-pending";
+    return `<article class="card${pending}"><div class="category">${escapeHtml(article.category)}</div><h3>${title}</h3><p>${escapeHtml(article.lead)}</p><div class="card-meta">${meta}</div></article>`;
   }
 
   function initArticleList() {
@@ -308,9 +400,9 @@ const ADS_ENABLED = false;
   }
 
   const COMPARE_COLUMNS = [
-    { productId: "acuvue-oasys-1-day", colId: "col-acuvue" },
-    { productId: "dailies-total1", colId: "col-total1" },
-    { productId: "biofinity", colId: "col-biofinity" }
+    { productId: "acuvue-oasys-1-day", colId: "col-acuvue", label: "아큐브 오아시스 원데이®" },
+    { productId: "dailies-total1", colId: "col-total1", label: "데일리스 토탈원®" },
+    { productId: "biofinity", colId: "col-biofinity", label: "바이오피니티®" }
   ];
 
   const COMPARE_ROWS = [
@@ -366,40 +458,41 @@ const ADS_ENABLED = false;
     { productId: "biofinity", fieldIds: ["permit"] }
   ];
 
-  function compareCell(row, product, colId) {
-    const headers = `${row.rowId} ${colId}`;
-    if (row.memo) return `<td headers="${headers}">${escapeHtml(row.memo[product.id] || "")}</td>`;
+  function compareCell(row, product, column) {
+    const headers = `${row.rowId} ${column.colId}`;
+    const cellAttributes = `headers="${headers}" data-label="${escapeHtml(column.label)}" data-product="${escapeHtml(product.id)}"`;
+    if (row.memo) return `<td ${cellAttributes}>${text(row.memo[product.id] || "")}</td>`;
 
     const field = product.fields.find((candidate) => candidate.id === row.fieldId);
-    if (!field) return `<td headers="${headers}"><span class="status-label status-unknown">${escapeHtml(stateLabel("unknown"))}</span></td>`;
+    if (!field) return `<td ${cellAttributes}><span class="status-label status-unknown">${escapeHtml(stateLabel("unknown"))}</span></td>`;
 
     const state = fieldState(field.state);
     const conflicted = state === "conflict";
     const valueClass = [row.mono ? "mono" : "", row.mono && conflicted ? "warn" : ""].filter(Boolean).join(" ");
     const value = row.chip
-      ? `<span class="status-label status-${state}">${escapeHtml(field.value)}</span>`
-      : `<span${valueClass ? ` class="${valueClass}"` : ""}>${escapeHtml(field.value)}</span>`;
+      ? `<span class="status-label status-${state}">${text(field.value)}</span>`
+      : `<span${valueClass ? ` class="${valueClass}"` : ""}>${text(field.value)}</span>`;
 
     let note = "";
     if (field.conflicts?.length) {
-      note = field.conflicts.map((conflict) => `${escapeHtml(conflict.source)}: ${escapeHtml(conflict.value)}`).join("<br>");
+      note = field.conflicts.map((conflict) => `${escapeHtml(conflict.source)}: ${text(conflict.value)}`).join("<br>");
     } else if (row.useCondition) {
-      note = escapeHtml(field.sources?.[0]?.condition || "");
+      note = text(field.sources?.[0]?.condition || "");
     } else if (row.notes?.[product.id]) {
-      note = escapeHtml(row.notes[product.id]);
+      note = text(row.notes[product.id]);
     }
     const noteMarkup = note ? `<span class="cell-note${conflicted ? " warn" : ""}">${note}</span>` : "";
-    return `<td headers="${headers}">${value}${noteMarkup}</td>`;
+    return `<td ${cellAttributes}>${value}${noteMarkup}</td>`;
   }
 
   function compareRow(row, byId) {
     const labelNote = row.labelNote ? `<br><span class="cell-note">${escapeHtml(row.labelNote)}</span>` : "";
-    const rowNote = row.rowNote ? `<span class="cell-note">${escapeHtml(row.rowNote)}</span>` : "";
+    const describedBy = row.rowNote ? ` aria-describedby="compare-note-${escapeHtml(row.rowId)}"` : "";
     const cells = COMPARE_COLUMNS.map((column) => {
       const product = byId[column.productId];
-      return product ? compareCell(row, product, column.colId) : `<td headers="${row.rowId} ${column.colId}"></td>`;
+      return product ? compareCell(row, product, column) : `<td headers="${row.rowId} ${column.colId}" data-label="${escapeHtml(column.label)}"></td>`;
     }).join("");
-    return `<tr><th id="${row.rowId}" scope="row">${escapeHtml(row.label)}${labelNote}${rowNote}</th>${cells}</tr>`;
+    return `<tr><th id="${row.rowId}" scope="row"${describedBy}>${escapeHtml(row.label)}${labelNote}</th>${cells}</tr>`;
   }
 
   function initCompareTable() {
@@ -409,6 +502,13 @@ const ADS_ENABLED = false;
     products.forEach((product) => { byId[product.id] = product; });
     body.innerHTML = COMPARE_ROWS.map((row) => compareRow(row, byId)).join("");
     toggleHidden(qs("[data-compare-live]"), false);
+
+    const notes = qs("[data-compare-notes]");
+    if (notes) {
+      const noteRows = COMPARE_ROWS.filter((row) => row.rowNote);
+      notes.innerHTML = noteRows.map((row) => `<span class="table-footnote-item" id="compare-note-${escapeHtml(row.rowId)}">${escapeHtml(row.label)}: ${text(row.rowNote)}</span>`).join("");
+      toggleHidden(notes, !noteRows.length);
+    }
   }
 
   function initPermitSources() {
@@ -439,7 +539,10 @@ const ADS_ENABLED = false;
       }
       slot.classList.add("ad-slot");
       slot.setAttribute("role", "complementary");
-      slot.textContent = "광고 예약 영역";
+      const label = slot.dataset.adLabel || "";
+      const size = slot.dataset.adSize || "";
+      const description = [label, size].filter(Boolean).join(" · ") || "광고 예약 영역";
+      slot.innerHTML = `<span class="ad-slot-label">광고</span><span>${escapeHtml(description)}</span>`;
     });
   }
 

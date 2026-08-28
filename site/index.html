@@ -12,6 +12,8 @@
   <meta property="og:url" content="https://DOMAIN-TBD/index.html">
   <meta property="og:locale" content="ko_KR">
   <meta name="twitter:card" content="summary">
+  <meta name="theme-color" content="#FFFFFF">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='7'%20fill='%23051230'/%3E%3Ctext%20x='16'%20y='22'%20font-family='system-ui,sans-serif'%20font-size='14'%20font-weight='700'%20fill='%23FFFFFF'%20text-anchor='middle'%3ELF%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="./assets/css/style.css">
   <script src="./assets/data/fields.js" defer></script>
   <script src="./assets/data/products.js" defer></script>
@@ -27,9 +29,6 @@
         <a href="./compare/index.html">공식 사양 비교</a>
         <a href="./knowledge/index.html">렌즈 상식</a>
         <a href="./about/index.html">소개</a>
-        <a href="./policy/editorial.html">편집방침</a>
-        <a href="./policy/methodology.html">근거·방법론</a>
-        <a href="./policy/privacy.html">개인정보처리방침</a>
       </nav>
       <button class="menu-toggle" type="button" data-menu-toggle aria-label="메뉴 열기" aria-expanded="false" aria-controls="mobile-nav"><span aria-hidden="true"></span></button>
     </div>
@@ -61,7 +60,7 @@
             <li>판매·추천하지 않으며, 최종 피팅은 전문가에게 확인합니다</li>
           </ul>
         </div>
-        <div class="package-card" aria-label="선택한 제품의 주요 사양">
+        <section class="package-card" aria-label="선택한 제품의 주요 사양">
           <div class="package-head">
             <strong data-package-name>아큐브 오아시스 원데이®</strong>
             <span data-package-type>근시·원시용 투명 구면 · 1일 교체</span>
@@ -73,7 +72,7 @@
             <div class="label-item"><strong>Dk/t 121</strong><span>-3.00D · 35℃</span></div>
           </div>
           <p class="sample-note" data-package-maker>Johnson &amp; Johnson Vision / (주)한국존슨앤드존슨비전</p>
-        </div>
+        </section>
       </div>
     </section>
 
@@ -93,7 +92,7 @@
           <button class="disclosure-button" type="button" data-more-fields aria-expanded="false" aria-controls="all-fields">포장지 표기 전체 보기 (재질, Dk/t, 중심두께, 교체주기, 허가, UV)</button>
           <div class="extra-fields" id="all-fields" data-extra-fields hidden></div>
         </div>
-        <section class="detail-panel" id="decoder-detail" data-decoder-detail aria-live="polite" aria-label="선택한 표기 상세">
+        <section class="detail-panel" id="decoder-detail" data-decoder-detail aria-label="선택한 표기 상세">
           <p class="detail-empty">라벨의 숫자나 자주 찾는 숫자를 누르면 상세 상태가 열립니다.</p>
         </section>
       </div>
@@ -122,8 +121,8 @@
 
   <footer class="site-footer">
     <div class="wrap footer-inner">
-      <strong>LENSFACT 렌즈팩트</strong>
-      <span>최종 적합성·도수·피팅은 안경사 또는 안과 전문인에게 확인하세요.</span>
+      <span class="footer-boundary">최종 적합성·도수·피팅은 안경사 또는 안과 전문인에게 확인하세요.</span>
+      <span class="footer-brand">LENSFACT 렌즈팩트<br>독립 정보 서비스 · 판매하지 않습니다</span>
     </div>
     <nav class="wrap footer-links" aria-label="사이트 정보">
       <a href="./about/index.html">소개</a>
