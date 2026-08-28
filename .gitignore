@@ -1,0 +1,16 @@
+# LensFact repo hygiene
+
+# tool state
+docs/.bkit-memory.json
+docs/.pdca-status.json
+.omo/
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+desktop.ini
+.thumbnail
+**/.thumbnail
+
+# logs
+*.log
