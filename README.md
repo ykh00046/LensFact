@@ -25,6 +25,8 @@ AdSense는 초기 범위에서 비활성화합니다. 빌드, 운영, 검색 발
 
 - `docs/MVP_BRIEF.md` — 검증형 MVP의 범위와 지키는 경계
 - `docs/REAL_DATA_PILOT_BRIEF.md` — 실데이터 3개 제품 파일럿의 수집·검증 절차
+- `docs/DEMAND_RESEARCH_2026-08-28.md` — 검색 수요·SERP 빈자리 조사와 상위 10개 타깃 쿼리(검색량은 사용자가 채움)
+- `docs/PRODUCT_CANDIDATES_20.md` — 3→20 제품 확장 후보와 공식 출처 URL, 검증 착수 순서(값은 미검증)
 - `docs/V4_CONTENT_DESIGN_ACCEPTANCE.md` — 최종 홈·콘텐츠 시스템 수용 기록
 - `docs/V3_DESIGN_ACCEPTANCE_REVIEW.md` — V3 디자인 수용 검토와 남은 과제
 - `docs/VIDEO_REFERENCE_ADSENSE_REALITY.md` — 바이브코딩 사이트 실패·검색·수익화 사례 검증과 적용 원칙
