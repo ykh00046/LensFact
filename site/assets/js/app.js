@@ -411,7 +411,8 @@ const ADS_ENABLED = false;
     { productId: "dailies-total1", colId: "col-dailies-total1", label: "데일리스 토탈원®" },
     { productId: "biofinity", colId: "col-biofinity", label: "바이오피니티®" },
     { productId: "acuvue-moist-1-day", colId: "col-acuvue-moist-1-day", label: "원데이 아큐브 모이스트®" },
-    { productId: "myday", colId: "col-myday", label: "마이데이®" }
+    { productId: "myday", colId: "col-myday", label: "마이데이®" },
+    { productId: "clariti-1-day", colId: "col-clariti-1-day", label: "클래리티® 원데이" }
   ];
 
   const COMPARE_ROWS = [
@@ -427,7 +428,8 @@ const ADS_ENABLED = false;
         "dailies-total1": "워터 그라디언트 실리콘 하이드로겔",
         "biofinity": "실리콘 하이드로겔",
         "acuvue-moist-1-day": "하이드로겔",
-        "myday": "실리콘 하이드로겔"
+        "myday": "실리콘 하이드로겔",
+        "clariti-1-day": "한국 2023 사양서 인쇄 표기 vs 글로벌 사양·MFDS 모델명"
       }
     },
     { rowId: "row-bc", fieldId: "bc", label: "BC", mono: true },
@@ -439,12 +441,13 @@ const ADS_ENABLED = false;
         "dailies-total1": "코어와 표면은 측정 위치와 방법이 달라 하나의 값으로 합치지 않음. 표면은 공식 자료에 따라 약 100%로도 표기됨",
         "biofinity": "벌크",
         "acuvue-moist-1-day": "출처가 측정 위치를 표기하지 않음",
-        "myday": "출처가 측정 위치를 표기하지 않음"
+        "myday": "출처가 측정 위치를 표기하지 않음",
+        "clariti-1-day": "출처가 측정 위치를 표기하지 않음"
       }
     },
     {
       rowId: "row-dkt", fieldId: "dkt", label: "Dk/t", labelNote: "시험 조건 포함", mono: true,
-      rowNote: "아큐브 두 제품 원문만 단위(× 10⁻⁹)를 명기함. 데일리스 토탈원·바이오피니티·마이데이 원문은 단위를 표기하지 않아 임의로 단위를 붙이지 않음.",
+      rowNote: "아큐브 두 제품 원문만 단위(× 10⁻⁹)를 명기함. 데일리스 토탈원·바이오피니티·마이데이·클래리티 원데이 원문은 단위를 표기하지 않아 임의로 단위를 붙이지 않음.",
       notes: {
         "acuvue-oasys-1-day": "-3.00D · 중심 0.085 mm · 35℃ · boundary/edge-corrected Dk",
         "dailies-total1": "-3.00D · 중심 0.09 mm",
@@ -457,7 +460,8 @@ const ADS_ENABLED = false;
       notes: {
         "acuvue-moist-1-day": "-3.00D",
         "biofinity": "2026-08-28 재확인에서 항목 없음 · 이전 기록의 0.08 mm는 철회",
-        "myday": "검토한 공식 자료 6종에 중심두께 항목 없음"
+        "myday": "검토한 공식 자료 6종에 중심두께 항목 없음",
+        "clariti-1-day": "검토한 한국·글로벌 공식 자료 6종에 중심두께 항목 없음"
       }
     },
     {
@@ -465,7 +469,8 @@ const ADS_ENABLED = false;
       notes: {
         "dailies-total1": "기능 없음으로 단정하지 않음",
         "acuvue-moist-1-day": "글로벌 기술 사양의 근사값 · 한국 표기 수치는 확인되지 않음",
-        "myday": "차단율 퍼센트가 아니라 등급 표기 · 등급 기준은 사양서에 정의되지 않음"
+        "myday": "차단율 퍼센트가 아니라 등급 표기 · 등급 기준은 사양서에 정의되지 않음",
+        "clariti-1-day": "차단율 퍼센트가 어느 공식 자료에도 없음 · Class 2는 한국 사양서의 등급 표기"
       }
     },
     {
@@ -475,7 +480,8 @@ const ADS_ENABLED = false;
         "dailies-total1": "MFDS UDI 조회에서 제품 연결 105건 확인. 코어와 표면 함수율을 합치지 않음.",
         "biofinity": "MFDS 상세 원장 직접 대조는 미완료. Dk/t와 UV 충돌을 보류 상태로 유지. 중심두께는 2026-08-28 재확인에서 근거를 찾지 못해 철회.",
         "acuvue-moist-1-day": "MFDS UDI 조회로 허가번호 확인. BC·DIA·함수율·Dk/t·UV는 글로벌 기술 사양이 유일한 근거이며 한국 표기는 미확인.",
-        "myday": "MFDS UDI 174건 전수 대조로 허가번호 확인. 중심두께는 공식 자료에 항목이 없어 미확인."
+        "myday": "MFDS UDI 174건 전수 대조로 허가번호 확인. 중심두께는 공식 자료에 항목이 없어 미확인.",
+        "clariti-1-day": "MFDS UDI 17,003건 전수 집계로 허가번호 확인. 같은 제품 명칭의 별도 등록 수허 19-346 호는 따로 표기. 재질명과 Dk/t는 한국 2023 사양서와 글로벌 사양이 달라 병기. 중심두께는 공식 자료에 항목이 없어 미확인."
       }
     }
   ];
@@ -485,7 +491,8 @@ const ADS_ENABLED = false;
     { productId: "dailies-total1", fieldIds: ["permit", "replacement"] },
     { productId: "biofinity", fieldIds: ["permit"] },
     { productId: "acuvue-moist-1-day", fieldIds: ["permit"] },
-    { productId: "myday", fieldIds: ["permit"] }
+    { productId: "myday", fieldIds: ["permit"] },
+    { productId: "clariti-1-day", fieldIds: ["permit"] }
   ];
 
   function compareCell(row, product, column) {
@@ -505,10 +512,15 @@ const ADS_ENABLED = false;
       : `<span${valueClass ? ` class="${valueClass}"` : ""}>${text(field.value)}</span>`;
 
     let note = "";
+    // A conflicted cell keeps both source values; a row note for the same product is
+    // appended rather than dropped, so the reason for the conflict stays visible.
+    const productNote = row.notes?.[product.id] ? text(row.notes[product.id]) : "";
     if (field.conflicts?.length) {
-      note = field.conflicts.map((conflict) => `${escapeHtml(conflict.source)}: ${text(conflict.value)}`).join("<br>");
-    } else if (row.notes?.[product.id]) {
-      note = text(row.notes[product.id]);
+      const lines = field.conflicts.map((conflict) => `${escapeHtml(conflict.source)}: ${text(conflict.value)}`);
+      if (productNote) lines.push(productNote);
+      note = lines.join("<br>");
+    } else if (productNote) {
+      note = productNote;
     } else if (row.useCondition) {
       note = text(field.sources?.[0]?.condition || "");
     }
