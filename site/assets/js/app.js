@@ -1364,10 +1364,68 @@ const ADS_ENABLED = false;
     </article>`;
   }
 
+  function normalizeSearchText(value) {
+    return String(value || "").normalize("NFKC").toLocaleLowerCase("ko-KR")
+      .replace(/[^\p{L}\p{N}]+/gu, "").trim();
+  }
+
+  function normalizeReplacement(value) {
+    const normalized = normalizeSearchText(value);
+    if (["1달", "30일", "한달", "1개월"].includes(normalized)) return "1개월";
+    if (normalized === "1일") return "1일";
+    if (normalized === "2주") return "2주";
+    return normalized;
+  }
+
+  function filterProducts(candidates, filters = {}) {
+    const query = normalizeSearchText(filters.search);
+    const maker = String(filters.maker || "").trim();
+    const replacement = normalizeReplacement(filters.replacement);
+    return candidates.filter((product) => {
+      const searchable = [product.name, ...(product.aliases || []), product.maker, product.distributor]
+        .map(normalizeSearchText).join(" ");
+      const replacementField = product.fields?.find((field) => field.id === "replacement");
+      return (!query || searchable.includes(query))
+        && (!maker || product.maker === maker)
+        && (!replacement || normalizeReplacement(replacementField?.value) === replacement);
+    });
+  }
+
   function initProductIndex() {
     const list = qs("[data-product-index]");
     if (!list || !products.length) return;
-    list.innerHTML = products.map(productCard).join("");
+    const controls = qs("[data-product-filters]");
+    if (!controls) return;
+    const cards = new Map();
+    qsa("article.card", list).forEach((card) => {
+      const href = qs("h3 a", card)?.getAttribute("href") || "";
+      const id = href.split("/").pop()?.replace(/\.html(?:[?#].*)?$/, "");
+      if (id) cards.set(id, card);
+    });
+    const search = qs("[data-product-search]", controls);
+    const maker = qs("[data-product-maker]", controls);
+    const replacement = qs("[data-product-replacement]", controls);
+    const status = qs("[data-product-result-status]", controls);
+    const noResults = qs("[data-product-no-results]");
+    controls.hidden = false;
+    qsa("input, select, button", controls).forEach((control) => { control.disabled = false; });
+    const apply = () => {
+      const matches = filterProducts(products, { search: search?.value, maker: maker?.value, replacement: replacement?.value });
+      const ids = new Set(matches.map(({ id }) => id));
+      cards.forEach((card, id) => { card.hidden = !ids.has(id); });
+      if (status) status.textContent = `전체 ${products.length}개 중 ${matches.length}개 제품`;
+      if (noResults) noResults.hidden = matches.length !== 0;
+    };
+    controls.addEventListener("input", apply);
+    controls.addEventListener("change", apply);
+    qs("[data-product-reset]", controls)?.addEventListener("click", () => {
+      if (search) search.value = "";
+      if (maker) maker.value = "";
+      if (replacement) replacement.value = "";
+      apply();
+      search?.focus();
+    });
+    apply();
   }
 
   // The "현재 수록된 N개 제품" copy is derived from the data, never typed by hand.

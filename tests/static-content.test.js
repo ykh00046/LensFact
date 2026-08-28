@@ -34,3 +34,35 @@ test("deployment checklist derives the 32-file DOMAIN-TBD expectation", () => {
   assert.match(readme, /32 files/);
   assert.match(readme, /grep -rIl DOMAIN-TBD site\/ \| wc -l/);
 });
+
+test("home presents exactly three cautious, linked evidence examples", () => {
+  const html = read("site/index.html");
+  const section = html.match(/<section[^>]+data-evidence-examples[\s\S]*?<\/section>/)?.[0] || "";
+
+  assert.ok(section, "evidence section should exist");
+  assert.equal((section.match(/<article\b/g) || []).length, 3);
+  assert.match(section, /products\/dailies-total1\.html/);
+  assert.match(section, /products\/biofinity\.html/);
+  assert.match(section, /products\/biofinity-energys\.html/);
+  assert.match(section, /코어 33%/);
+  assert.match(section, /표면 80% 이상/);
+  assert.match(section, /170[^<]*\/[^<]*171/);
+  assert.match(section, /170[^<]*\/[^<]*110[^<]*\/[^<]*171/);
+  assert.match(section, /측정 위치/);
+  assert.match(section, /출처|조건/);
+  assert.match(section, /차이를[^<]*(보존|그대로)/);
+  assert.doesNotMatch(section, /출처가 틀렸|우승|추천 제품|순위를 매깁니다/);
+});
+
+test("product controls are progressive and static cards remain complete", () => {
+  const html = read("site/products/index.html");
+  const controlsAt = html.indexOf("data-product-filters");
+  const gridAt = html.indexOf("data-product-index");
+
+  assert.ok(controlsAt > -1 && controlsAt < gridAt);
+  assert.match(html, /data-product-filters[^>]*hidden/);
+  assert.match(html, /aria-live="polite"/);
+  assert.match(html, /data-product-no-results[^>]*hidden/);
+  const grid = html.match(/<div class="cards-grid cards-wide" data-product-index>[\s\S]*?<\/div>\s*<section class="source-section"/)?.[0] || "";
+  assert.equal((grid.match(/<article class="card">/g) || []).length, 20);
+});

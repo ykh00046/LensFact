@@ -58,6 +58,14 @@
 
     <section class="section">
       <div class="wrap">
+        <div class="product-filters" data-product-filters hidden role="search" aria-label="제품 검색 및 필터">
+          <div class="product-filter-field product-filter-search"><label for="product-search">제품 검색</label><input id="product-search" type="search" autocomplete="off" placeholder="제품명, 별칭, 제조사 또는 유통사" data-product-search disabled></div>
+          <div class="product-filter-field"><label for="product-maker">제조사</label><select id="product-maker" data-product-maker disabled><option value="">전체 제조사</option><option>Johnson &amp; Johnson Vision</option><option>Alcon</option><option>CooperVision</option><option>Bausch + Lomb</option><option>Menicon</option><option>(주)인터로조</option></select></div>
+          <div class="product-filter-field"><label for="product-replacement">교체주기</label><select id="product-replacement" data-product-replacement disabled><option value="">전체 교체주기</option><option value="1일">1일</option><option value="2주">2주</option><option value="1개월">1개월</option></select></div>
+          <button class="text-button product-filter-reset" type="button" data-product-reset disabled>필터 초기화</button>
+          <p class="product-result-status" data-product-result-status aria-live="polite" aria-atomic="true">전체 20개 중 20개 제품</p>
+        </div>
+        <p class="product-no-results" data-product-no-results role="status" aria-live="polite" hidden>조건에 맞는 제품이 없습니다. 검색어나 필터를 바꿔 보세요.</p>
         <div class="cards-grid cards-wide" data-product-index>
           <article class="card">
             <div class="category">근시·원시용 투명 구면 · 1일 교체</div>
