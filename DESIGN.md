@@ -52,17 +52,21 @@ LensFact feels like a calm evidence desk for consumer lens-package labels: white
 - Article body width: 720px (45rem measure cap below 1024px); article aside width: 300px; article grid gap 100px.
 - Breakpoints: 1024px, 900px (mobile menu switch), and 640px.
 - Major sections use 64-96px vertical rhythm on desktop and 40-56px on mobile.
-- Radius ladder: `--radius-sm` 8px (small buttons, chips), `--radius` 10px (buttons, field rows), `--radius-md` 14px (cards, callouts, source panel), `--radius-lg` 16px (package card, detail panel, feature cards).
+- Radius ladder: `--radius-sm` 8px (small buttons, chips), `--radius` 10px (buttons, form controls), `--radius-md` 14px (cards, callouts, source panel), `--radius-lg` 16px (package card, detail panel, feature cards).
 
 ## 5. Components
 
 ### Header
-- Structure: skip link, brand anchor, four nav links (렌즈 숫자 해석 · 공식 사양 비교 · 렌즈 상식 · 소개), mobile menu button, collapsible mobile nav carrying all links including policy pages. Policy links otherwise live in the footer only.
+- Structure: skip link, brand anchor, six nav links (포장 숫자 해석 · 제품 · 검색 · 공식 사양 비교 · 렌즈 상식 · 소개), mobile menu button, collapsible mobile nav carrying all links including policy pages. Policy links otherwise live in the footer only.
+- Destinations: 포장 숫자 해석 goes to `decoder/index.html`, not to the home page. The brand anchor is the only link back home, so the home page carries no nav `aria-current`. Every page whose section has a nav entry marks it (two copies, desktop and mobile; the policy pages carry one, because they appear in the mobile nav only). The home page and the ten `terms/` pages mark none — home because the brand anchor is the link home, the terms pages because the nav has no 용어 entry. The label is 포장 숫자 해석 in both the desktop and the mobile nav on every page.
 - States: hover = ink; active page = weight 700 plus coral inset underline; two-tone focus ring (coral outline + ink halo); `aria-expanded` synced by JS; Escape and outside click close the mobile menu.
-- Accessibility: 44px minimum touch targets, `aria-controls` on the menu button.
+- Accessibility: 44px minimum touch targets, `aria-controls` on the menu button. Below 900px the desktop nav is hidden and the menu button needs JavaScript, so every page's `<head>` carries a `<noscript><style>` block that hides the dead toggle and lays the mobile nav out in flow — without it a reader with JavaScript off would see no nav links at all.
 
 ### Input Decoder
-- Purpose: the reader types the figures printed on their own package instead of picking one of the preset products. It sits between the hero and the preset Product Selector, on the ivory `.section.alt` surface so the two decoders read as separate steps.
+- Location: `decoder/index.html`, the whole reason that page exists. It is the destination of the home page's first router card and of the 해석 links on the compare, knowledge, water-content and product-index pages. It was on the home page until 2026-08-29; the home page is now a router and holds no form.
+- Purpose: the reader types the figures printed on their own package and gets each figure's meaning plus a factual placement against the recorded products. There is no preset-product path any more, so this form is the only spec-input surface on the site.
+- Coverage gap: `INPUT_FIELDS` has six fields, `fields.js` has nine. 중심두께, 허가번호 and UV have no input control, so the page carries a visible 표기 뜻 전체 보기 block linking all nine `terms/<field>.html` pages and marking the three that cannot be typed in. A `<noscript>` block repeats those links and states that the form needs JavaScript, because the inputs have no `name` attributes and a no-JS submit would only reload the page empty. So that the dead control cannot be pressed at all, the markup ships every control `disabled` and the result panel `hidden`, exactly as `products/index.html` ships its filters; `initInputDecoder()` enables them at startup, and only once it has data to answer with.
+- Match links: the form declares `data-product-base` (`../products/` on the decoder page) and `app.js` reads it, so the product links in the match list resolve from whatever depth the form is placed at. The attribute defaults to `./products/` when absent.
 - Structure: a `<form>` on the left of `.decoder-layout`, an evidence-panel result on the right. Six fields in one `auto-fit minmax(12.5rem, 1fr)` grid: BC, DIA, 함수율, Dk/t (number inputs, `inputmode="decimal"`), 재질명 (text), 교체주기 (select, default 모름). Every field is optional; at least one must be filled.
 - Field anatomy: bold label plus muted `.input-unit` qualifier, a 3rem white control, a `.input-hint` line and a hidden `.input-error` slot, both referenced from the control through `aria-describedby`.
 - Privacy: a one-line `.input-note` under the fields states that values are computed in the page only — no storage, no network. The code keeps that promise; nothing is written to `localStorage` and no request is made.
@@ -72,20 +76,20 @@ LensFact feels like a calm evidence desk for consumer lens-package labels: white
 - States: value parsing handles the printed forms in `products.js` — `8.5 mm / 9.0 mm` (split on `/`), `170 / 171` (either), `121 × 10⁻⁹` (the exponent is a unit, not a figure), and `코어 33% / 표면 80% 이상` (core only, annotated `코어 기준`). Numeric matching is exact (±0.0).
 - Accessibility: every control has a `<label>`; hints and errors are wired with `aria-describedby`; out-of-range and empty-submit errors render inline (never `alert()`) and set `aria-invalid`; the result region is `aria-live="polite"` and focus moves to its `tabindex="-1"` heading after submit. `해석 지우기` resets the form, the errors, and the panel.
 
-### Decoder Field Row
-- Structure: button row with code, label, value, optional flag. The four package-label tiles in the hero are also buttons (`aria-pressed`) that select the matching field and scroll to the decoder.
-- Variants: main visible fields and disclosed full fields.
-- States: selected row uses soft coral fill and coral left rule; focus ring uses coral.
-- Accessibility: rows are buttons with `aria-pressed`; the detail region is always visible and updates on selection.
+### Home Router Card
+- Purpose: the home page is a router, not a tool. Three cards send the reader to the three things the site can actually do: 포장 숫자 해석 (`decoder/index.html`), 제품 찾기 (`products/index.html#product-search`), 제품 비교 (`compare/index.html`).
+- Structure: `section.hero` (h1 + lead) then a labelled `section` whose h2 is `.visually-hidden`, holding a `.cards-grid` of three `article.card.router-card`. Each card is an h3 title link plus one factual sentence. Nothing else sits above the footer.
+- Links: static `<a href>`, never a `<button>`, and the card is never wrapped in a link (see Article Card). `.router-card h3 a` is a block-level `flex` with `min-block-size: 2.75rem`, which is the 44px target at the default root size; being `flex` rather than `inline-flex` makes the tap target span the card's content width instead of stopping at the label.
+- Trust line: one `.router-note` paragraph carrying `data-evidence-summary`, so its `[data-summary-value="unknown"]` count is refreshed from `products.js` at runtime and its static fallback is asserted against the computed value in `tests/static-content.test.js`. It keeps the 최종 피팅은 전문가에게 확인하세요 clause.
+- Reuse only: `.router-card` and `.router-note` add tap area and spacing. No new colour, border or type treatment enters the system.
 
-### Product Selector
-- Structure: three repository-owned product buttons above the field rows.
-- States: selected product uses soft coral fill, coral border, and `aria-pressed=true`.
-- Behavior: click, Enter/Space, and arrow keys update the package card, field values, and source detail as one state change.
-- Accessibility: all three buttons stay in the Tab order (no roving tabindex); arrow keys move selection; focus remains visible.
+### Retired: Decoder Field Row and Product Selector (2026-08-29)
+- The home page used to carry a preset decoder: twenty product buttons (with the `.coi-mark` 공시 badge on the operator-employer product), a field-row list and a detail panel. The home rewrite removed it, so neither component appears in any page any more.
+- What replaced them: package-label reading is now the Input Decoder on `decoder/index.html`, per-product values live on `products/<slug>.html`, and per-field values live on `terms/<field>.html`. The conflict-of-interest disclosure still runs on the product page as the `.coi-banner` under the h1, and on the products index, the comparison table, the decoder page's match list and the term-page value lists as the `.coi-chip` label.
+- Their CSS rules and their JavaScript were removed from `style.css` and `app.js` on 2026-08-29 (`.hero-grid`, `.trust-list`, `.product-selector`, `.product-button`, `.selector-help`, `.field-list`, `.field-row`, `.field-code`, `.field-label`, `.field-value`, `.field-flag`, `.extra-fields`, `.coi-mark`). The `.coi-mark` badge went with them: the disclosure now renders as the `.coi-chip` used by the product, list, comparison, decoder-match and term-value surfaces.
 
 ### Evidence Panel
-- Structure: detail region (code, value, meaning, caution, source summary, source disclosure) plus a separate visually-hidden `aria-live` status region that announces only code · value · state · meaning.
+- Structure: detail region (code, value, meaning, caution, source summary, source disclosure), rendered once on product and term pages. The separate visually-hidden `aria-live` status region went with the home decoder on 2026-08-29: the surfaces that remain render once and have no state change to announce, and `app.js` now contains no `aria-live` at all. The only live regions left on the site are the decoder result panel, the comparison status line and the product-list result status, none of them visually hidden.
 - States: value color follows state (ink verified, muted unknown, warn conflict); conflict lists end with the "값을 합치지 않습니다" note.
 - Source records render eight rows: 출처 유형, 기관·제조사, 문서명, 원문 표기, 주소, 확인일 (per source), 측정·확인 조건, 제품 연결.
 - Accessibility: disclosure button controls a source block and exposes conflicts side by side.

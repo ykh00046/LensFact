@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>LensFact 렌즈팩트 | 포장 숫자 해석</title>
-  <meta name="description" content="한국에서 유통되는 투명 구면 렌즈 20개의 포장 표기를 공식 자료와 함께 확인합니다.">
+  <title>LensFact 렌즈팩트 | 콘택트렌즈 포장 숫자 확인</title>
+  <meta name="description" content="한국에서 유통되는 콘택트렌즈(투명 구면) 20개의 포장 표기를 공식 자료·출처와 함께 확인합니다.">
   <link rel="canonical" href="https://DOMAIN-TBD/index.html">
-  <meta property="og:title" content="LensFact 렌즈팩트 | 포장 숫자 해석">
-  <meta property="og:description" content="한국에서 유통되는 투명 구면 렌즈 20개의 포장 표기를 공식 자료와 함께 확인합니다.">
+  <meta property="og:title" content="LensFact 렌즈팩트 | 콘택트렌즈 포장 숫자 확인">
+  <meta property="og:description" content="한국에서 유통되는 콘택트렌즈(투명 구면) 20개의 포장 표기를 공식 자료·출처와 함께 확인합니다.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://DOMAIN-TBD/index.html">
   <meta property="og:locale" content="ko_KR">
@@ -16,9 +16,13 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='7'%20fill='%23051230'/%3E%3Ctext%20x='16'%20y='22'%20font-family='system-ui,sans-serif'%20font-size='14'%20font-weight='700'%20fill='%23FFFFFF'%20text-anchor='middle'%3ELF%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="./assets/fonts/pretendard/pretendard-dynamic-subset.css">
   <link rel="stylesheet" href="./assets/css/style.css">
+  <noscript><style>/* Without JavaScript the menu button can never open anything, so the mobile nav
+       stays expanded in flow instead of hiding behind a dead toggle. */
+    @media (max-width: 900px) { .menu-toggle { display: none; } .mobile-nav[hidden] { position: static; display: grid; } }</style></noscript>
   <script src="./assets/data/fields.js" defer></script>
   <script src="./assets/data/products.js" defer></script>
   <script src="./assets/js/app.js" defer></script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"LensFact 렌즈팩트","alternateName":"LensFact","url":"https://DOMAIN-TBD/","description":"한국에서 유통되는 콘택트렌즈(투명 구면) 20개의 포장 표기를 공식 자료·출처와 함께 확인합니다.","inLanguage":"ko-KR"}</script>
 </head>
 <body>
   <a class="skip-link" href="#main">본문으로 건너뛰기</a>
@@ -26,7 +30,7 @@
     <div class="wrap header-inner">
       <a class="brand" href="./index.html" aria-label="LensFact 홈"><span class="brand-mark">LF</span>렌즈팩트</a>
       <nav class="nav desktop-nav" aria-label="주요 메뉴">
-        <a href="./index.html" aria-current="page">렌즈 숫자 해석</a>
+        <a href="./decoder/index.html">포장 숫자 해석</a>
         <a href="./products/index.html">제품</a>
         <a href="./products/index.html#product-search">검색</a>
         <a href="./compare/index.html">공식 사양 비교</a>
@@ -36,7 +40,7 @@
       <button class="menu-toggle" type="button" data-menu-toggle aria-label="메뉴 열기" aria-expanded="false" aria-controls="mobile-nav"><span aria-hidden="true"></span></button>
     </div>
     <nav class="nav mobile-nav" id="mobile-nav" aria-label="모바일 메뉴" hidden>
-      <a href="./index.html" aria-current="page">렌즈 숫자 해석</a>
+      <a href="./decoder/index.html">포장 숫자 해석</a>
       <a href="./products/index.html">제품</a>
       <a href="./products/index.html#product-search">검색</a>
       <a href="./compare/index.html">공식 사양 비교</a>
@@ -48,187 +52,32 @@
     </nav>
   </header>
 
-  <main id="main">
+  <main class="router-main" id="main">
     <section class="hero">
-      <div class="wrap hero-grid">
-        <div>
-          <p class="eyebrow">공식 자료를 출처로 확인합니다</p>
-          <h1>공식 표기 차이, 어디서 왜 다른지 확인하세요.</h1>
-          <p class="lead">공식 사양과 라벨도 값이나 정의가 다를 수 있습니다. LensFact는 하나로 합치지 않고 출처와 측정 조건을 함께 보여드립니다.</p>
-          <dl class="evidence-summary" data-evidence-summary aria-label="검증 상태 요약">
-            <div><dt>제품</dt><dd><span data-summary-value="products">20</span>개</dd></div>
-            <div><dt>필드</dt><dd><span data-summary-value="fields">180</span>개</dd></div>
-            <div><dt>확인</dt><dd><span data-summary-value="verified">157</span>개</dd></div>
-            <div><dt>충돌</dt><dd><span data-summary-value="conflict">10</span>개</dd></div>
-            <div><dt>공식 자료에서 미확인</dt><dd><span data-summary-value="unknown">13</span>개</dd></div>
-            <div><dt>필드 연결 출처</dt><dd><span data-summary-value="sources">498</span>건</dd></div>
-          </dl>
-          <div class="actions">
-            <button class="button" type="button" data-decoder-start>포장 숫자 해석하기</button>
-            <button class="text-button" type="button" data-first-product>첫 제품부터 보기</button>
-          </div>
-          <ul class="trust-list" aria-label="서비스 원칙">
-            <li>공식 자료를 출처로 확인합니다</li>
-            <li>확인할 수 없는 값은 그대로 미확인으로 표시합니다</li>
-            <li>판매·추천하지 않으며, 최종 피팅은 전문가에게 확인합니다</li>
-          </ul>
-        </div>
-        <section class="package-card" aria-label="선택한 제품의 주요 사양">
-          <div class="package-head">
-            <strong data-package-name>아큐브 오아시스 원데이®</strong>
-            <span data-package-type>근시·원시용 투명 구면 · 1일 교체</span>
-          </div>
-          <div class="label-grid" data-package-specs>
-            <div class="label-item"><strong>BC 8.5 / 9.0</strong><span>Base Curve · mm</span></div>
-            <div class="label-item"><strong>DIA 14.3</strong><span>Diameter · mm</span></div>
-            <div class="label-item"><strong>38%</strong><span>Water content</span></div>
-            <div class="label-item"><strong>Dk/t 121</strong><span>-3.00D · 35℃</span></div>
-          </div>
-          <p class="sample-note" data-package-maker>Johnson &amp; Johnson Vision / (주)한국존슨앤드존슨비전</p>
-        </section>
-      </div>
-    </section>
-
-    <section class="section" data-evidence-examples aria-labelledby="evidence-examples-title">
       <div class="wrap">
-        <p class="section-kicker">같은 제품, 다른 공식 표기</p>
-        <h2 id="evidence-examples-title">차이를 지우지 않고 근거와 함께 보존합니다</h2>
-        <p class="lead">공식 출처마다 측정 위치, 시험 조건, 확인 기준이 달라 값이 다르게 제시될 수 있습니다. LensFact는 어느 하나를 정답으로 고르지 않고 그 차이가 생긴 맥락을 나란히 보여드립니다.</p>
-        <div class="cards-grid evidence-example-grid">
-          <article class="card"><div class="category">함수율 · 측정 위치 차이</div><h3><a href="./products/dailies-total1.html">DAILIES TOTAL1</a></h3><p><strong>코어 33% / 표면 80% 이상</strong></p><p>렌즈 중심부와 표면이라는 측정 위치가 다릅니다. 서로 다른 위치의 값을 하나로 합치지 않습니다.</p></article>
-          <article class="card"><div class="category">Dk/t · 출처와 조건 차이</div><h3><a href="./products/biofinity.html">Biofinity</a></h3><p><strong>170 / 171</strong></p><p>공식 출처와 확인 조건의 차이를 그대로 보존하고, 각 값의 근거를 제품 페이지에서 함께 제시합니다.</p></article>
-          <article class="card"><div class="category">Dk/t · 출처와 조건 차이</div><h3><a href="./products/biofinity-energys.html">Biofinity Energys</a></h3><p><strong>170 / 110 / 171</strong></p><p>서로 다른 공식 출처와 조건에서 확인된 세 값을 합치거나 순위를 매기지 않고 그대로 보존합니다.</p></article>
-        </div>
+        <h1>콘택트렌즈 포장 숫자, 무엇부터 확인할까요?</h1>
+        <p class="lead">한국에서 유통되는 렌즈 <span data-product-count>20</span>개의 공식 표기를 출처·확인일과 함께 봅니다.</p>
       </div>
     </section>
 
-    <section class="section alt" id="input-decoder" aria-labelledby="input-decoder-title">
-      <div class="wrap decoder-layout">
-        <div>
-          <p class="section-kicker">포장 숫자 해석</p>
-          <h2 id="input-decoder-title">내 포장지 숫자 입력</h2>
-          <p class="lead">상자나 블리스터에 적힌 숫자를 그대로 옮겨 적으면, 각 표기의 뜻과 주의할 점을 보여 드리고 현재 수록된 <span data-product-count>20</span>개 제품의 공식 표기와 같은 값이 있는지 대조합니다.</p>
-          <form class="input-decoder-form" data-input-decoder novalidate>
-            <div class="input-grid">
-              <div class="input-field">
-                <label for="in-bc">BC <span class="input-unit">베이스커브 · mm</span></label>
-                <input id="in-bc" type="number" inputmode="decimal" step="0.1" min="8.0" max="9.5" placeholder="8.6" data-input-field="bc" aria-describedby="in-bc-hint in-bc-error">
-                <p class="input-hint" id="in-bc-hint">8.0 – 9.5 범위의 숫자</p>
-                <p class="input-error" id="in-bc-error" data-error-for="bc" hidden></p>
-              </div>
-              <div class="input-field">
-                <label for="in-dia">DIA <span class="input-unit">전체 지름 · mm</span></label>
-                <input id="in-dia" type="number" inputmode="decimal" step="0.1" min="13.0" max="15.0" placeholder="14.0" data-input-field="dia" aria-describedby="in-dia-hint in-dia-error">
-                <p class="input-hint" id="in-dia-hint">13.0 – 15.0 범위의 숫자. 착색 지름이 아닌 전체 지름입니다.</p>
-                <p class="input-error" id="in-dia-error" data-error-for="dia" hidden></p>
-              </div>
-              <div class="input-field">
-                <label for="in-water">함수율 <span class="input-unit">%</span></label>
-                <input id="in-water" type="number" inputmode="decimal" step="1" min="20" max="80" placeholder="48" data-input-field="water" aria-describedby="in-water-hint in-water-error">
-                <p class="input-hint" id="in-water-hint">20 – 80 범위의 숫자. % 기호는 빼고 적습니다.</p>
-                <p class="input-error" id="in-water-error" data-error-for="water" hidden></p>
-              </div>
-              <div class="input-field">
-                <label for="in-dkt">Dk/t <span class="input-unit">선택 입력</span></label>
-                <input id="in-dkt" type="number" inputmode="decimal" step="0.1" min="0" placeholder="171" data-input-field="dkt" aria-describedby="in-dkt-hint in-dkt-error">
-                <p class="input-hint" id="in-dkt-hint">0보다 큰 숫자. 단위와 시험 조건은 빼고 숫자만 적습니다.</p>
-                <p class="input-error" id="in-dkt-error" data-error-for="dkt" hidden></p>
-              </div>
-              <div class="input-field">
-                <label for="in-material">재질명 <span class="input-unit">선택 입력</span></label>
-                <input id="in-material" type="text" autocomplete="off" placeholder="senofilcon A" data-input-field="material" aria-describedby="in-material-hint in-material-error">
-                <p class="input-hint" id="in-material-hint">포장지에 적힌 재질명을 그대로 적습니다. 예: senofilcon A</p>
-                <p class="input-error" id="in-material-error" data-error-for="material" hidden></p>
-              </div>
-              <div class="input-field">
-                <label for="in-replacement">교체주기 <span class="input-unit">선택 입력</span></label>
-                <select id="in-replacement" data-input-field="replacement" aria-describedby="in-replacement-hint in-replacement-error">
-                  <option value="">모름</option>
-                  <option value="1일">1일</option>
-                  <option value="2주">2주</option>
-                  <option value="1개월">1개월</option>
-                </select>
-                <p class="input-hint" id="in-replacement-hint">포장지에 적힌 교체주기입니다. 하루 중 착용시간과는 다른 정보입니다.</p>
-                <p class="input-error" id="in-replacement-error" data-error-for="replacement" hidden></p>
-              </div>
-            </div>
-            <p class="input-note">입력한 값은 이 브라우저 화면 안에서만 계산됩니다. 저장하지 않고, 어디로도 전송하지 않습니다.</p>
-            <p class="input-error input-form-error" data-input-form-error hidden></p>
-            <div class="actions">
-              <button class="button" type="submit">입력한 표기 확인하기</button>
-              <button class="text-button" type="button" data-input-reset>해석 지우기</button>
-            </div>
-          </form>
-        </div>
-        <section class="detail-panel input-result" data-input-result aria-live="polite" aria-label="입력한 표기 해석 결과">
-          <p class="detail-empty">포장지에 적힌 숫자를 한 개 이상 입력하면 표기의 뜻과 수록 제품 대조 결과가 여기에 나타납니다.</p>
-        </section>
-      </div>
-    </section>
-
-    <section class="section" id="decoder" aria-labelledby="decoder-title">
-      <div class="wrap decoder-layout">
-        <div>
-          <p class="section-kicker">제품 선택</p>
-          <h2 id="decoder-title">포장지 표기를 하나씩 눌러 확인합니다</h2>
-          <p class="lead">뜻, 주의할 점, 출처 요약을 먼저 보고 필요한 경우 원문 표기와 측정 조건을 펼쳐 볼 수 있습니다.</p>
-          <div class="product-selector" role="group" aria-label="해석할 제품 선택">
-            <button class="product-button" type="button" data-product-id="acuvue-oasys-1-day" aria-pressed="true">아큐브 오아시스 원데이</button>
-            <button class="product-button" type="button" data-product-id="dailies-total1" aria-pressed="false">데일리스 토탈원</button>
-            <button class="product-button" type="button" data-product-id="biofinity" aria-pressed="false">바이오피니티</button>
-            <button class="product-button" type="button" data-product-id="acuvue-moist-1-day" aria-pressed="false">원데이 아큐브 모이스트</button>
-            <button class="product-button" type="button" data-product-id="myday" aria-pressed="false">마이데이</button>
-            <button class="product-button" type="button" data-product-id="clariti-1-day" aria-pressed="false">클래리티 원데이</button>
-            <button class="product-button" type="button" data-product-id="acuvue-oasys-2-week" aria-pressed="false">아큐브 오아시스 2주</button>
-            <button class="product-button" type="button" data-product-id="precision1" aria-pressed="false">프리시전원</button>
-            <button class="product-button" type="button" data-product-id="biotrue-oneday" aria-pressed="false">바이오트루 원데이</button>
-            <button class="product-button" type="button" data-product-id="acuvue-oasys-max-1-day" aria-pressed="false">아큐브 오아시스 맥스 원데이</button>
-            <button class="product-button" type="button" data-product-id="dailies-aquacomfort-plus" aria-pressed="false">데일리스 아쿠아컴포트</button>
-            <button class="product-button" type="button" data-product-id="acuvue-vita" aria-pressed="false">아큐브 비타</button>
-            <button class="product-button" type="button" data-product-id="total30" aria-pressed="false">토탈30</button>
-            <button class="product-button" type="button" data-product-id="airoptix-plus-hydraglyde" aria-pressed="false">에어옵틱스 플러스</button>
-            <button class="product-button" type="button" data-product-id="proclear-1-day" aria-pressed="false">프로클리어 원데이</button>
-            <button class="product-button" type="button" data-product-id="biofinity-energys" aria-pressed="false">바이오피니티 에너지스</button>
-            <button class="product-button" type="button" data-product-id="ultra-one-day" aria-pressed="false">울트라 원데이</button>
-            <button class="product-button" type="button" data-product-id="miru-1day" aria-pressed="false">미루 원데이</button>
-            <button class="product-button" type="button" data-product-id="soflens-daily" aria-pressed="false">소프렌 데일리</button>
-            <button class="product-button" type="button" data-product-id="clalen-1day" aria-pressed="false">클라렌 오투오투 원데이<sup class="coi-mark" role="img" aria-label="운영자 근무처 제품 · 이해관계 공시">공시</sup></button>
-          </div>
-          <p class="selector-help">스무 제품 버튼 모두 Tab으로 이동할 수 있고 Enter 또는 Space로 선택합니다. 화살표 키로도 제품을 바꿀 수 있습니다. 선택하면 포장 카드, 값, 상세 출처가 함께 바뀝니다. 클라렌 오투오투 원데이 버튼의 <span class="mono">공시</span> 표시는 운영자 근무처 제품이라는 이해관계 공시이며, <a href="./about/index.html#coi">소개의 이해관계 공개</a>에서 설명합니다.</p>
-          <div class="field-list" data-main-fields aria-label="주요 포장 표기"></div>
-          <button class="disclosure-button" type="button" data-more-fields aria-expanded="false" aria-controls="all-fields">포장지 표기 전체 보기 (재질, Dk/t, 중심두께, 교체주기, 허가, UV)</button>
-          <div class="extra-fields" id="all-fields" data-extra-fields hidden></div>
-        </div>
-        <section class="detail-panel" id="decoder-detail" data-decoder-detail aria-label="선택한 표기 상세">
-          <p class="detail-empty">라벨의 숫자나 자주 찾는 숫자를 누르면 상세 상태가 열립니다.</p>
-        </section>
-      </div>
-    </section>
-
-    <section class="section alt" aria-labelledby="next-title">
+    <section class="section" aria-labelledby="paths-title">
       <div class="wrap">
-        <h2 id="next-title">이어서 확인할 수 있습니다</h2>
+        <h2 class="visually-hidden" id="paths-title">확인을 시작하는 세 가지 방법</h2>
         <div class="cards-grid">
-          <article class="card">
-            <div class="category">제품 공식 사양</div>
-            <h3><a href="./products/index.html">제품 목록 전체 보기</a></h3>
-            <p>공식 사양을 확인한 스무 제품의 BC, DIA, 함수율을 카드로 훑고 각 제품 페이지로 이동합니다.</p>
+          <article class="card router-card">
+            <h3><a href="./decoder/index.html">포장 숫자 해석</a></h3>
+            <p>포장지 숫자를 넣어 뜻과 값을 대조합니다.</p>
           </article>
-          <article class="card">
-            <div class="category">공식 사양 비교</div>
-            <h3><a href="./compare/index.html">렌즈 20개 공식 사양 비교하기</a></h3>
-            <p>같은 항목을 나란히 놓고 공식 표기와 확인일을 함께 봅니다. 점수는 매기지 않습니다.</p>
+          <article class="card router-card">
+            <h3><a href="./products/index.html#product-search">제품 찾기</a></h3>
+            <p>제품명·제조사로 공식 사양을 확인합니다.</p>
           </article>
-          <article class="card">
-            <div class="category">렌즈 상식</div>
-            <h3><a href="./knowledge/water-content-moisture.html">함수율이 높으면 더 촉촉한 렌즈일까요?</a></h3>
-            <p>함수율을 착용 중 촉촉함과 같은 뜻으로 볼 수 없는 이유를 공식 자료와 연구로 확인합니다.</p>
+          <article class="card router-card">
+            <h3><a href="./compare/index.html">제품 비교</a></h3>
+            <p>두 제품의 공식 표기를 나란히 봅니다.</p>
           </article>
         </div>
-        <div class="actions">
-          <a class="text-button" href="./knowledge/index.html">렌즈 상식</a>
-          <a class="text-button" href="./policy/methodology.html">근거·방법론</a>
-        </div>
+        <p class="lead router-note" data-evidence-summary>공식 자료를 출처와 함께 확인하고, 확인하지 못한 값은 미확인 <span data-summary-value="unknown">13</span>개로 그대로 남깁니다. 최종 피팅은 전문가에게 확인하세요.</p>
       </div>
     </section>
   </main>

@@ -16,6 +16,9 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='7'%20fill='%23051230'/%3E%3Ctext%20x='16'%20y='22'%20font-family='system-ui,sans-serif'%20font-size='14'%20font-weight='700'%20fill='%23FFFFFF'%20text-anchor='middle'%3ELF%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="../assets/fonts/pretendard/pretendard-dynamic-subset.css">
   <link rel="stylesheet" href="../assets/css/style.css">
+  <noscript><style>/* Without JavaScript the menu button can never open anything, so the mobile nav
+       stays expanded in flow instead of hiding behind a dead toggle. */
+    @media (max-width: 900px) { .menu-toggle { display: none; } .mobile-nav[hidden] { position: static; display: grid; } }</style></noscript>
   <script src="../assets/data/fields.js" defer></script>
   <script src="../assets/data/products.js" defer></script>
   <script src="../assets/js/app.js" defer></script>
@@ -27,7 +30,7 @@
     <div class="wrap header-inner">
       <a class="brand" href="../index.html" aria-label="LensFact 홈"><span class="brand-mark">LF</span>렌즈팩트</a>
       <nav class="nav desktop-nav" aria-label="주요 메뉴">
-        <a href="../index.html">렌즈 숫자 해석</a>
+        <a href="../decoder/index.html">포장 숫자 해석</a>
         <a href="../products/index.html" aria-current="page">제품</a>
         <a href="../products/index.html#product-search">검색</a>
         <a href="../compare/index.html">공식 사양 비교</a>
@@ -37,7 +40,7 @@
       <button class="menu-toggle" type="button" data-menu-toggle aria-label="메뉴 열기" aria-expanded="false" aria-controls="mobile-nav"><span aria-hidden="true"></span></button>
     </div>
     <nav class="nav mobile-nav" id="mobile-nav" aria-label="모바일 메뉴" hidden>
-      <a href="../index.html">렌즈 숫자 해석</a>
+      <a href="../decoder/index.html">포장 숫자 해석</a>
       <a href="../products/index.html" aria-current="page">제품</a>
       <a href="../products/index.html#product-search">검색</a>
       <a href="../compare/index.html">공식 사양 비교</a>
@@ -66,10 +69,27 @@
       </div>
     </section>
 
-    <section class="section">
+    <section class="section" data-evidence-examples aria-labelledby="evidence-examples-title">
+      <div class="wrap">
+        <p class="section-kicker">같은 제품, 다른 공식 표기</p>
+        <h2 id="evidence-examples-title">차이를 지우지 않고 근거와 함께 보존합니다</h2>
+        <p class="lead">공식 출처마다 측정 위치, 시험 조건, 확인 기준이 달라 값이 다르게 제시될 수 있습니다. LensFact는 어느 하나를 정답으로 고르지 않고 그 차이가 생긴 맥락을 나란히 보여드립니다.</p>
+        <div class="cards-grid">
+          <article class="card"><div class="category">함수율 · 측정 위치 차이</div><h3><a href="./dailies-total1.html">DAILIES TOTAL1</a></h3><p><strong>코어 33% / 표면 80% 이상</strong></p><p>렌즈 중심부와 표면이라는 측정 위치가 다릅니다. 서로 다른 위치의 값을 하나로 합치지 않습니다.</p></article>
+          <article class="card"><div class="category">Dk/t · 출처와 조건 차이</div><h3><a href="./biofinity.html">Biofinity</a></h3><p><strong>170 / 171</strong></p><p>공식 출처와 확인 조건의 차이를 그대로 보존하고, 각 값의 근거를 제품 페이지에서 함께 제시합니다.</p></article>
+          <article class="card"><div class="category">Dk/t · 출처와 조건 차이</div><h3><a href="./biofinity-energys.html">Biofinity Energys</a></h3><p><strong>170 / 110 / 171</strong></p><p>서로 다른 공식 출처와 조건에서 확인된 세 값을 합치거나 순위를 매기지 않고 그대로 보존합니다.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- The header 검색 link and the home router card land on #product-search. The
+         filter wrapper below is hidden until app.js enables it, and a display:none
+         element cannot be scrolled to, so the anchor sits on the section itself and
+         a reader without JavaScript still arrives at the product list. -->
+    <section class="section" id="product-search">
       <div class="wrap">
         <div class="product-filters" data-product-filters hidden role="search" aria-label="제품 검색 및 필터">
-          <div class="product-filter-field product-filter-search"><label for="product-search">제품 검색</label><input id="product-search" type="search" autocomplete="off" placeholder="제품명, 별칭, 제조사 또는 유통사" data-product-search disabled></div>
+          <div class="product-filter-field product-filter-search"><label for="product-search-input">제품 검색</label><input id="product-search-input" type="search" autocomplete="off" placeholder="제품명, 별칭, 제조사 또는 유통사" data-product-search disabled></div>
           <div class="product-filter-field"><label for="product-maker">제조사</label><select id="product-maker" data-product-maker disabled><option value="">전체 제조사</option><option>Johnson &amp; Johnson Vision</option><option>Alcon</option><option>CooperVision</option><option>Bausch + Lomb</option><option>Menicon</option><option>(주)인터로조</option></select></div>
           <div class="product-filter-field"><label for="product-replacement">교체주기</label><select id="product-replacement" data-product-replacement disabled><option value="">전체 교체주기</option><option value="1일">1일</option><option value="2주">2주</option><option value="1개월">1개월</option></select></div>
           <div class="product-filter-field"><label for="product-status">검증 상태</label><select id="product-status" data-product-status disabled><option value="">전체</option><option value="conflict">충돌 있음</option><option value="unknown">미확인 있음</option><option value="verified">전체 필드 확인</option></select></div>
@@ -208,7 +228,7 @@
           <h2 id="next-title">이어서 확인할 수 있습니다</h2>
           <div class="cta-grid">
             <article class="card"><h3>스무 제품 공식 사양 비교</h3><p>같은 항목을 나란히 놓고 공식 표기와 확인일을 함께 봅니다. 점수는 매기지 않습니다.</p><a class="button" href="../compare/index.html">비교표 열기</a></article>
-            <article class="card"><h3>포장 숫자 해석하기</h3><p>BC, DIA, 함수율 같은 표기의 뜻과 주의할 점을 제품별로 확인합니다.</p><a class="text-button" href="../index.html#decoder">해석기로 이동</a></article>
+            <article class="card"><h3>포장 숫자 해석하기</h3><p>BC, DIA, 함수율 같은 숫자를 넣어 뜻과 공식 표기를 대조합니다.</p><a class="text-button" href="../decoder/index.html">해석기로 이동</a></article>
           </div>
         </section>
       </div>

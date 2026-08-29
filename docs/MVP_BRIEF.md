@@ -64,7 +64,8 @@
 
 ## Information architecture
 
-- Home / decoder
+- Home (router: 포장 숫자 해석 · 제품 찾기 · 제품 비교)
+- Package/spec decoder (`/decoder/`)
 - Compare official specs
 - How to read a package
 - Lens myths
@@ -97,4 +98,4 @@ Each concept must make the following obvious within five seconds:
 1. This site explains lens-package numbers.
 2. It uses sources rather than reviews or sponsorship.
 3. It does not prescribe or sell lenses.
-4. The primary action is entering or selecting specifications.
+4. The primary action is choosing one of three paths — 포장 숫자 해석, 제품 찾기, 제품 비교. Specification input is not on the home page; it lives at `/decoder/`, the first of those three paths. (Revised 2026-08-29: the home page was a decoder and is now a router, so "entering or selecting specifications" no longer describes the first screen.)

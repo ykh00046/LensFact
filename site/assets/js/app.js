@@ -6,8 +6,6 @@ const ADS_ENABLED = false;
   const products = window.LENSFACT_PRODUCTS || [];
   const fieldCopy = window.LENSFACT_FIELD_COPY || {};
   const articles = window.LENSFACT_ARTICLES || [];
-  let activeProduct = null;
-  let activeFieldId = null;
 
   function qs(selector, root = document) {
     return root.querySelector(selector);
@@ -146,200 +144,11 @@ const ADS_ENABLED = false;
     </section>`;
   }
 
-  function detailLiveRegion() {
-    let region = qs("[data-detail-live]");
-    if (!region) {
-      region = document.createElement("div");
-      region.className = "visually-hidden";
-      region.setAttribute("aria-live", "polite");
-      region.setAttribute("data-detail-live", "");
-      document.body.appendChild(region);
-    }
-    return region;
-  }
-
   function conflictBlock(item) {
     if (!item.conflicts?.length) return "";
     const conflictNote = '<p class="conflict-note">두 값을 임의로 하나로 정리하지 않고 출처별 값을 그대로 보여 드립니다.</p>';
     const items = item.conflicts.map((conflict) => `<div class="conflict-item"><span>${escapeHtml(conflict.source)}</span><strong>${text(conflict.value)}</strong></div>`).join("");
     return `<div class="info-block"><div class="info-label warn">출처별 원문값</div><div class="conflict-grid">${items}</div>${conflictNote}</div>`;
-  }
-
-  function renderDetail(field) {
-    const panel = qs("[data-decoder-detail]");
-    if (!panel) return;
-    const item = resolvedField(field);
-    const state = fieldState(item.state);
-    const conflicts = conflictBlock(item);
-
-    panel.innerHTML = `<div class="detail-title">
-        <div><div class="detail-code">${escapeHtml(item.code)}</div><div>${escapeHtml(item.label)}</div></div>
-        <div class="detail-value" data-state="${state}">${text(item.value)}</div>
-      </div>
-      <div class="status-label status-${state}">${escapeHtml(stateLabel(item.state))}</div>
-      <div class="info-block"><div class="info-label">뜻</div><p>${escapeHtml(item.meaning)}</p></div>
-      <div class="info-block"><div class="info-label">주의할 점</div><p>${escapeHtml(item.caution)}</p></div>
-      <div class="source-summary">${escapeHtml(item.sourceSummary)}</div>
-      <button class="disclosure-button" type="button" data-source-toggle aria-expanded="false" aria-controls="decoder-source-panel">출처 보기</button>
-      <div class="source-panel" id="decoder-source-panel" hidden>${item.sources.map((source, index) => sourceBlock(source, index, "decoder")).join("")}${conflicts}</div>`;
-
-    detailLiveRegion().textContent = `${item.code} ${item.label} · ${item.value} · ${stateLabel(item.state)} · ${item.meaning}`;
-
-    const toggle = qs("[data-source-toggle]", panel);
-    const sourcePanel = qs("#decoder-source-panel", panel);
-    toggle.addEventListener("click", () => {
-      const open = toggle.getAttribute("aria-expanded") !== "true";
-      setExpanded(toggle, open);
-      toggle.textContent = open ? "출처 닫기" : "출처 보기";
-      toggleHidden(sourcePanel, !open);
-    });
-  }
-
-  function fieldButton(field) {
-    const item = resolvedField(field);
-    const flag = item.flag ? `<span class="field-flag">${escapeHtml(item.flag)}</span>` : "";
-    return `<button class="field-row" type="button" data-field-id="${escapeHtml(item.id)}" aria-pressed="false">
-      <span class="field-code">${escapeHtml(item.code)}</span><span class="field-label">${escapeHtml(item.label)}<br>${escapeHtml(item.teaser)}</span><span class="field-value">${text(item.value)}</span>${flag}
-    </button>`;
-  }
-
-  function syncPackageButtons(fieldId) {
-    qsa("[data-package-field]").forEach((button) => setPressed(button, button.dataset.packageField === fieldId));
-  }
-
-  function activateField(fieldId) {
-    const rows = qsa("[data-field-id]");
-    const row = rows.find((candidate) => candidate.dataset.fieldId === fieldId);
-    if (!row || !activeProduct) return false;
-    activeFieldId = fieldId;
-    if (row.closest("#all-fields")) revealExtraFields();
-    rows.forEach((item) => setPressed(item, item === row));
-    syncPackageButtons(fieldId);
-    const field = activeProduct.fields.find((candidate) => candidate.id === fieldId);
-    if (field) renderDetail(field);
-    return true;
-  }
-
-  function bindFieldRows() {
-    qsa("[data-field-id]").forEach((row) => {
-      row.addEventListener("click", () => activateField(row.dataset.fieldId));
-    });
-  }
-
-  function revealExtraFields() {
-    const moreButton = qs("[data-more-fields]");
-    const morePanel = qs("#all-fields");
-    if (!moreButton || !morePanel || moreButton.getAttribute("aria-expanded") === "true") return;
-    setExpanded(moreButton, true);
-    moreButton.textContent = "표기 접기";
-    toggleHidden(morePanel, false);
-  }
-
-  // Package-label tiles map positionally onto the first four decoder fields.
-  const PACKAGE_FIELD_IDS = ["bc", "dia", "water", "dkt"];
-
-  function renderPackage(product) {
-    const name = qs("[data-package-name]");
-    const type = qs("[data-package-type]");
-    const maker = qs("[data-package-maker]");
-    const grid = qs("[data-package-specs]");
-    if (!name || !type || !maker || !grid) return;
-    name.textContent = product.name;
-    type.textContent = product.type;
-    maker.textContent = `${product.maker} / ${product.distributor}`;
-    grid.innerHTML = product.packageSpecs.map((spec, index) => {
-      const fieldId = PACKAGE_FIELD_IDS[index];
-      return `<button class="label-item" type="button" data-package-field="${escapeHtml(fieldId || "")}" aria-pressed="false"><strong>${text(spec.value)}</strong><span>${escapeHtml(spec.label)}</span></button>`;
-    }).join("");
-    qsa("[data-package-field]", grid).forEach((button) => {
-      button.addEventListener("click", () => {
-        if (!activateField(button.dataset.packageField)) return;
-        scrollToDecoder();
-      });
-    });
-  }
-
-  function renderProduct(product) {
-    activeProduct = product;
-    qsa("[data-product-id]").forEach((button) => {
-      setPressed(button, button.dataset.productId === product.id);
-    });
-    renderPackage(product);
-
-    const main = qs("[data-main-fields]");
-    const extra = qs("[data-extra-fields]");
-    if (!main || !extra) return;
-    main.innerHTML = product.fields.slice(0, 3).map(fieldButton).join("");
-    extra.innerHTML = product.fields.slice(3).map(fieldButton).join("");
-    bindFieldRows();
-
-    const selectedIndex = product.fields.findIndex((field) => field.id === activeFieldId);
-    const selectedField = selectedIndex >= 0 ? product.fields[selectedIndex] : product.fields[0];
-    if (selectedIndex >= 3) revealExtraFields();
-    activateField(selectedField.id);
-  }
-
-  function initProductSelector() {
-    const buttons = qsa("[data-product-id]");
-    if (!buttons.length || !products.length) return;
-    buttons.forEach((button, index) => {
-      button.addEventListener("click", () => {
-        const product = products.find((candidate) => candidate.id === button.dataset.productId);
-        if (product) renderProduct(product);
-      });
-      button.addEventListener("keydown", (event) => {
-        if (!["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(event.key)) return;
-        event.preventDefault();
-        const direction = event.key === "ArrowRight" || event.key === "ArrowDown" ? 1 : -1;
-        const nextButton = buttons[(index + direction + buttons.length) % buttons.length];
-        nextButton.click();
-        nextButton.focus();
-      });
-    });
-    renderProduct(products[0]);
-  }
-
-  function scrollToDecoder() {
-    const decoder = qs("#decoder");
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    decoder?.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
-  }
-
-  function initDecoder() {
-    if (!products.length) return;
-    initProductSelector();
-
-    // The primary hero action now opens the form where the reader types the figures
-    // printed on their own package; the preset selector stays one scroll further down.
-    qsa("[data-decoder-start]").forEach((button) => {
-      button.addEventListener("click", () => {
-        if (scrollToInputDecoder()) return;
-        scrollToDecoder();
-        const firstRow = qs("[data-field-id]");
-        firstRow?.click();
-        firstRow?.focus({ preventScroll: true });
-      });
-    });
-
-    qsa("[data-first-product]").forEach((button) => {
-      button.addEventListener("click", () => {
-        const firstProductButton = qs("[data-product-id]");
-        firstProductButton?.click();
-        scrollToDecoder();
-        firstProductButton?.focus({ preventScroll: true });
-      });
-    });
-
-    const moreButton = qs("[data-more-fields]");
-    const morePanel = qs("#all-fields");
-    if (moreButton && morePanel) {
-      moreButton.addEventListener("click", () => {
-        const open = moreButton.getAttribute("aria-expanded") !== "true";
-        setExpanded(moreButton, open);
-        moreButton.textContent = open ? "표기 접기" : "포장지 표기 전체 보기 (재질, Dk/t, 중심두께, 교체주기, 허가, UV)";
-        toggleHidden(morePanel, !open);
-      });
-    }
   }
 
   /* ---------------------------------------------------------------------------
@@ -602,8 +411,18 @@ const ADS_ENABLED = false;
     return `<li><span class="status-label status-${state}">${escapeHtml(fieldCode(spec.id))} ${text(hit.field.value)}</span>${noteMarkup}</li>`;
   }
 
+  // The input decoder lives on more than one page depth, so the match links cannot
+  // assume "./products/". The form declares its own base with data-product-base and
+  // the home-relative default is used when the attribute (or the form) is absent.
+  function inputProductBase() {
+    const form = qs("[data-input-decoder]");
+    const raw = String(form?.getAttribute("data-product-base") || "").trim() || "./products/";
+    if (raw.includes("://") || raw.startsWith("//") || /^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(raw)) return "./products/";
+    return raw.endsWith("/") ? raw : `${raw}/`;
+  }
+
   function matchItem(row, entries, partial) {
-    const href = internalHref(`./products/${row.product.slug || row.product.id}.html`);
+    const href = internalHref(`${inputProductBase()}${row.product.slug || row.product.id}.html`);
     const countNote = partial ? `<span class="cell-note">${entries.length}개 항목 중 ${row.hits.length}개 일치</span>` : "";
     // A product-level caveat (no Korean official page) travels with the product name,
     // so a match found here is never read as "confirmed on sale in Korea".
@@ -665,6 +484,13 @@ const ADS_ENABLED = false;
     const form = qs("[data-input-decoder]");
     const panel = qs("[data-input-result]");
     if (!form || !panel || !products.length) return;
+
+    // Without JavaScript the form can produce nothing: the controls carry no name
+    // attributes, so a submit would only reload the page and discard what was typed.
+    // The markup therefore ships every control disabled and the result panel hidden,
+    // and both are turned on only here, once the decoder can actually answer.
+    qsa("input, select, button", form).forEach((control) => { control.disabled = false; });
+    panel.hidden = false;
 
     const emptyMarkup = panel.innerHTML;
     const formError = qs("[data-input-form-error]", form);
@@ -744,15 +570,6 @@ const ADS_ENABLED = false;
 
     qsa("[data-input-reset]", form).forEach((button) => button.addEventListener("click", reset));
     inputs.forEach((control) => control.addEventListener("input", () => showError(control.dataset.inputField, "")));
-  }
-
-  function scrollToInputDecoder() {
-    const section = qs("#input-decoder");
-    if (!section) return false;
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    section.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
-    qs("[data-input-decoder] [data-input-field]")?.focus({ preventScroll: true });
-    return true;
   }
 
   function openDisclosureFor(target) {
@@ -1189,10 +1006,6 @@ const ADS_ENABLED = false;
     return columns;
   }
 
-  function readCompareSelection(order) {
-    return parseCompareUrl(window.location.href, order).selected;
-  }
-
   function writeCompareSelection(selected, view = "all") {
     try {
       window.history.replaceState(null, "", serializeCompareUrl(window.location.href, selected, view));
@@ -1616,30 +1429,6 @@ const ADS_ENABLED = false;
     list.innerHTML = termIndexMarkup();
   }
 
-  // Card preview uses whole field values (never the shortened package-tile text),
-  // so a split value such as 코어/표면 함수율 is never truncated into one number.
-  const CARD_PREVIEW_FIELDS = ["bc", "dia", "water"];
-
-  function productCard(product) {
-    const href = internalHref(`./${product.slug || product.id}.html`);
-    const specs = CARD_PREVIEW_FIELDS.map((fieldId) => {
-      const field = product.fields.find((candidate) => candidate.id === fieldId);
-      if (!field) return "";
-      const copy = fieldCopy[fieldId] || {};
-      return `<span>${escapeHtml(copy.code || fieldId)} ${text(field.value)}</span>`;
-    }).join("");
-    const flagNote = product.flag ? `<p class="cell-note warn">${escapeHtml(product.flag)}</p>` : "";
-    const coiNote = product.coi ? `<p>${coiChip(product)}</p>` : "";
-    return `<article class="card">
-      <div class="category">${escapeHtml(product.type)}</div>
-      <h3><a href="${escapeHtml(href)}">${escapeHtml(product.name)}</a></h3>
-      <p>${escapeHtml(product.maker)} / ${escapeHtml(product.distributor)}</p>
-      ${flagNote}
-      ${coiNote}
-      <div class="card-meta">${specs}</div>
-    </article>`;
-  }
-
   function normalizeSearchText(value) {
     return String(value || "").normalize("NFKC").toLocaleLowerCase("ko-KR")
       .replace(/[^\p{L}\p{N}]+/gu, "").trim();
@@ -1818,7 +1607,10 @@ const ADS_ENABLED = false;
     // so the focus has to be moved after they stop being disabled.
     const focusSearch = () => { if (window.location.hash === "#product-search") search?.focus(); };
     window.addEventListener("hashchange", focusSearch);
-    focusSearch();
+    // Chrome resets focus to <body> after its own fragment handling, so the initial
+    // focus has to run after load rather than on DOMContentLoaded.
+    if (document.readyState === "complete") window.setTimeout(focusSearch, 0);
+    else window.addEventListener("load", () => window.setTimeout(focusSearch, 0), { once: true });
   }
 
   function summarizeEvidence(candidates) {
@@ -1871,7 +1663,6 @@ const ADS_ENABLED = false;
   document.addEventListener("DOMContentLoaded", () => {
     initMenu();
     initInputDecoder();
-    initDecoder();
     initArticleDisclosure();
     initArticleList();
     initCompareTable();

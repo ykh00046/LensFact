@@ -259,13 +259,6 @@ button {
   padding-block-start: var(--space-6);
 }
 
-.hero-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(20rem, 0.88fr);
-  align-items: center;
-  gap: clamp(2rem, 6vw, 5rem);
-}
-
 .eyebrow {
   margin: 0 0 var(--space-4);
   color: var(--color-muted);
@@ -363,30 +356,6 @@ h3,
   box-shadow: inset 0 -0.125rem 0 var(--color-coral);
 }
 
-.trust-list {
-  display: grid;
-  gap: var(--space-2);
-  margin: var(--space-8) 0 0;
-  padding: 0;
-  color: var(--color-muted);
-  list-style: none;
-}
-
-.trust-list li {
-  display: flex;
-  gap: var(--space-2);
-}
-
-.trust-list li::before {
-  inline-size: 0.4rem;
-  block-size: 0.4rem;
-  flex: 0 0 auto;
-  margin-block-start: 0.75em;
-  border-radius: 50%;
-  background: var(--color-coral);
-  content: "";
-}
-
 .package-card {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
@@ -458,46 +427,6 @@ h3,
   font-size: 0.88rem;
 }
 
-.product-selector {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-2);
-  margin-block: var(--space-6) var(--space-2);
-}
-
-.product-button {
-  min-block-size: 3rem;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius);
-  background: var(--color-white);
-  color: var(--color-ink);
-  padding: var(--space-2) var(--space-3);
-  font-weight: 700;
-  line-height: 1.35;
-  cursor: pointer;
-  transition: background-color 180ms ease, border-color 180ms ease, transform 180ms ease;
-}
-
-.product-button:hover {
-  border-color: var(--color-coral);
-}
-
-.product-button[aria-pressed="true"] {
-  border-color: var(--color-coral);
-  background: var(--color-coral-soft);
-  box-shadow: inset 0 -0.2rem 0 var(--color-coral);
-}
-
-.product-button:active {
-  transform: translateY(1px);
-}
-
-.selector-help {
-  margin-block-end: var(--space-5);
-  color: var(--color-muted);
-  font-size: 0.88rem;
-}
-
 .section {
   padding-block: clamp(2.75rem, 7vw, 5rem);
 }
@@ -519,67 +448,6 @@ h3,
   font-weight: 700;
 }
 
-.field-list {
-  display: grid;
-  gap: var(--space-2);
-}
-
-.field-row {
-  display: grid;
-  grid-template-columns: 5.2rem minmax(0, 1fr) auto;
-  align-items: center;
-  gap: var(--space-3);
-  min-block-size: 4rem;
-  inline-size: 100%;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius);
-  background: var(--color-white);
-  color: var(--color-ink);
-  padding: var(--space-3) var(--space-4);
-  text-align: start;
-  cursor: pointer;
-  transition: background-color 180ms ease, border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
-}
-
-.field-row:hover {
-  border-color: var(--color-coral);
-}
-
-.field-row[aria-pressed="true"] {
-  border-color: var(--color-coral);
-  background: var(--color-coral-soft);
-  box-shadow: inset 0.2rem 0 0 var(--color-coral);
-}
-
-.field-row:active {
-  transform: translateY(1px);
-}
-
-.field-code {
-  font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
-  font-size: 1.05rem;
-  font-weight: 600;
-}
-
-.field-label {
-  color: var(--color-muted);
-  font-size: 0.9rem;
-  line-height: 1.35;
-}
-
-.field-value {
-  font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
-  font-weight: 600;
-  text-align: end;
-}
-
-.field-flag {
-  grid-column: 2 / 4;
-  color: var(--color-warn);
-  font-size: 0.86rem;
-  font-weight: 700;
-}
-
 .disclosure-button {
   display: inline-flex;
   align-items: center;
@@ -595,16 +463,9 @@ h3,
   cursor: pointer;
 }
 
-.extra-fields[hidden],
 .source-panel[hidden],
 .mobile-nav[hidden] {
   display: none;
-}
-
-.extra-fields {
-  display: grid;
-  gap: var(--space-2);
-  margin-block-start: var(--space-2);
 }
 
 .detail-panel {
@@ -671,8 +532,8 @@ h3,
   margin: 0;
 }
 
-/* Input decoder: the reader types the figures printed on their own package.
-   The form reuses the field-row rhythm; the result reuses the evidence panel. */
+/* Input decoder (decoder/index.html): the reader types the figures printed on their
+   own package. The result panel reuses the evidence panel styling below. */
 .input-decoder-form {
   margin-block-start: var(--space-6);
 }
@@ -1079,6 +940,19 @@ div.label-item:hover {
 
 .card p {
   color: var(--color-secondary);
+}
+
+/* Home path router. The card is not wrapped in a link (DESIGN.md 5), so the
+   heading link carries its own tap target: 2.75rem is 44px at the default
+   16px root size, and the text stays vertically centred inside it. */
+.router-card h3 a {
+  display: flex;
+  align-items: center;
+  min-block-size: 2.75rem;
+}
+
+.router-note {
+  margin-block-start: var(--space-6);
 }
 
 .card-pending {
@@ -1600,16 +1474,6 @@ div.label-item:hover {
   line-height: 1.55;
 }
 
-.coi-mark {
-  margin-inline-start: 0.3rem;
-  border-radius: var(--radius-sm);
-  background: var(--color-coral-soft);
-  padding: 0 0.25rem;
-  color: var(--color-warn);
-  font-size: 0.62em;
-  font-weight: 700;
-}
-
 [data-ad-slot] {
   display: none;
 }
@@ -1719,13 +1583,6 @@ div.label-item:hover {
 
 /* Denser cards (product list) stay two per row instead of leaving an orphan. */
 @media (min-width: 1025px) {
-  /* Twenty preset buttons read as a 3-wide block (7 rows) on desktop; narrower widths
-     keep two columns and 640px and below keeps one, so every button stays ≥44px tall.
-     Five columns would shrink the longest Korean label below a comfortable target. */
-  .product-selector {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
   .cards-grid.cards-wide {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -1737,7 +1594,6 @@ div.label-item:hover {
     font-size: 0.92rem;
   }
 
-  .hero-grid,
   .decoder-layout,
   .hub-layout,
   .article-shell {
@@ -1817,23 +1673,6 @@ div.label-item:hover {
   }
   .product-filters { grid-template-columns: minmax(0, 1fr); padding: var(--space-4); }
   .product-filter-reset, .product-result-status { grid-column: 1; }
-
-  .product-selector {
-    grid-template-columns: 1fr;
-  }
-
-  .field-row {
-    grid-template-columns: 4.2rem minmax(0, 1fr);
-  }
-
-  .field-value {
-    grid-column: 1 / 3;
-    text-align: start;
-  }
-
-  .field-flag {
-    grid-column: 1 / 3;
-  }
 
   .conflict-grid,
   .compare-row {
@@ -1921,6 +1760,31 @@ div.label-item:hover {
   .footer-brand {
     margin-inline-start: 0;
     text-align: start;
+  }
+}
+
+/* The router home has to fit h1, lead, three cards and the trust line inside a
+   390x844 phone viewport without scrolling, so its vertical rhythm tightens on the
+   narrowest screens. Scoped to .router-main: no other page makes that promise. */
+@media (max-width: 480px) {
+  .router-main .hero {
+    padding-block: var(--space-6) var(--space-4);
+  }
+
+  .router-main .hero + .section {
+    padding-block-start: var(--space-2);
+  }
+
+  .router-main .cards-grid {
+    gap: var(--space-3);
+  }
+
+  .router-main .router-card {
+    padding: var(--space-4);
+  }
+
+  .router-main .router-note {
+    margin-block-start: var(--space-4);
   }
 }
 

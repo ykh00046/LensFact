@@ -16,6 +16,9 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='7'%20fill='%23051230'/%3E%3Ctext%20x='16'%20y='22'%20font-family='system-ui,sans-serif'%20font-size='14'%20font-weight='700'%20fill='%23FFFFFF'%20text-anchor='middle'%3ELF%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="../assets/fonts/pretendard/pretendard-dynamic-subset.css">
   <link rel="stylesheet" href="../assets/css/style.css">
+  <noscript><style>/* Without JavaScript the menu button can never open anything, so the mobile nav
+       stays expanded in flow instead of hiding behind a dead toggle. */
+    @media (max-width: 900px) { .menu-toggle { display: none; } .mobile-nav[hidden] { position: static; display: grid; } }</style></noscript>
   <script src="../assets/js/app.js" defer></script>
 </head>
 <body>
@@ -24,7 +27,7 @@
     <div class="wrap header-inner">
       <a class="brand" href="../index.html" aria-label="LensFact 홈"><span class="brand-mark">LF</span>렌즈팩트</a>
       <nav class="nav desktop-nav" aria-label="주요 메뉴">
-        <a href="../index.html">렌즈 숫자 해석</a>
+        <a href="../decoder/index.html">포장 숫자 해석</a>
         <a href="../products/index.html">제품</a>
         <a href="../products/index.html#product-search">검색</a>
         <a href="../compare/index.html">공식 사양 비교</a>
@@ -34,7 +37,7 @@
       <button class="menu-toggle" type="button" data-menu-toggle aria-label="메뉴 열기" aria-expanded="false" aria-controls="mobile-nav"><span aria-hidden="true"></span></button>
     </div>
     <nav class="nav mobile-nav" id="mobile-nav" aria-label="모바일 메뉴" hidden>
-      <a href="../index.html">렌즈 숫자 해석</a>
+      <a href="../decoder/index.html">포장 숫자 해석</a>
       <a href="../products/index.html">제품</a>
       <a href="../products/index.html#product-search">검색</a>
       <a href="../compare/index.html">공식 사양 비교</a>
