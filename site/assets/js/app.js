@@ -425,8 +425,10 @@ const ADS_ENABLED = false;
     const href = internalHref(`${inputProductBase()}${row.product.slug || row.product.id}.html`);
     const countNote = partial ? `<span class="cell-note">${entries.length}개 항목 중 ${row.hits.length}개 일치</span>` : "";
     // A product-level caveat (no Korean official page) travels with the product name,
-    // so a match found here is never read as "confirmed on sale in Korea".
-    const flagNote = row.product.flag ? `<span class="cell-note warn">${escapeHtml(row.product.flag)}</span>` : "";
+    // so a match found here is never read as "confirmed on sale in Korea". It is a
+    // distribution caveat, not a source conflict, so it stays neutral: amber is
+    // reserved for 공식 자료 간 충돌.
+    const flagNote = row.product.flag ? `<span class="cell-note">${escapeHtml(row.product.flag)}</span>` : "";
     // The conflict-of-interest label travels with the product name here too, so a match
     // is never read without the disclosure.
     const coiNote = coiChip(row.product);
@@ -1177,7 +1179,11 @@ const ADS_ENABLED = false;
     const panelId = `spec-${escapeHtml(item.id)}`;
     const headingId = `${panelId}-title`;
     const condition = item.sources?.[0]?.condition || "";
-    const flag = item.flag ? `<span class="status-label status-pending">${escapeHtml(item.flag)}</span>` : "";
+    // The annotation chip inherits the field's own state hue: a flag that restates a
+    // source disagreement must read amber like the state chip beside it, never the
+    // neutral treatment reserved for 확인되지 않음.
+    const flagClass = state === "conflict" ? "status-pending status-pending-conflict" : "status-pending";
+    const flag = item.flag ? `<span class="status-label ${flagClass}">${escapeHtml(item.flag)}</span>` : "";
     const conditionMarkup = condition ? `<p class="cell-note">측정·확인 조건 · ${text(condition)}</p>` : "";
     const caution = item.caution ? `<div class="info-block"><div class="info-label">주의할 점</div><p>${escapeHtml(item.caution)}</p></div>` : "";
     const sources = item.sources || [];

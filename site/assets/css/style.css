@@ -1,18 +1,29 @@
 :root {
-  --color-ink: #051230;
-  --color-coral: #F48067;
+  /* Blush Neutral 5a. Charcoal ink on warm greige paper, rose reserved for the brand
+     accent. Evidence semantics never share a hue: amber = sources disagree, wine =
+     conflict-of-interest disclosure, neutral = unverified. */
+  --color-ink: #2A2527;
+  --color-accent: #B0546A;
   --color-white: #FFFFFF;
-  --color-ivory: #FFF8F2;
-  --color-blue: #EAF5FF;
-  --color-border: #E5E7EB;
-  --color-muted: #5B6472;
+  --color-page: #FBF9F8;
+  --color-ivory: #F5EFEE;
+  --color-panel: #F0E9EC;
+  --color-border: #E8E0E2;
+  --color-field-border: #8F8285;
+  --color-rule: #B8A8AE;
+  --color-muted: #6E6469;
   --color-warn: #8A4B12;
-  --color-body: #16233C;
-  --color-secondary: #3C4655;
-  --color-ink-hover: #0B2050;
-  --color-coral-soft: #FFEFE6;
-  --color-ad-border: #D7DCE3;
-  --color-ad-surface: #FBFCFD;
+  --color-body: #443E41;
+  --color-secondary: #5C5458;
+  --color-ink-hover: #171314;
+  --color-accent-soft: #F7EBEE;
+  --color-conflict-surface: #FAF3E8;
+  --color-conflict-border: #D9A05B;
+  --color-coi: #8E3B52;
+  --color-coi-surface: #E7CFD7;
+  --color-coi-border: #9C4359;
+  --color-ad-border: #D9CFD2;
+  --color-ad-surface: #FAF7F6;
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
@@ -39,7 +50,7 @@ html {
 
 body {
   margin: 0;
-  background: var(--color-white);
+  background: var(--color-page);
   color: var(--color-ink);
   font-family: "Pretendard Variable", Pretendard, "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
   line-height: 1.75;
@@ -71,7 +82,7 @@ a {
 
 a:hover {
   text-decoration: underline;
-  text-decoration-color: var(--color-coral);
+  text-decoration-color: var(--color-accent);
   text-decoration-thickness: 0.12em;
   text-underline-offset: 0.2em;
 }
@@ -88,7 +99,7 @@ a:hover {
 .term-list-link,
 .footer-inner a {
   text-decoration: underline;
-  text-decoration-color: var(--color-coral);
+  text-decoration-color: var(--color-accent);
   text-decoration-thickness: 0.08em;
   text-underline-offset: 0.22em;
 }
@@ -103,9 +114,9 @@ button {
 }
 
 :focus-visible {
-  outline: 0.125rem solid var(--color-coral);
+  outline: 0.125rem solid var(--color-accent);
   outline-offset: 0.1875rem;
-  box-shadow: 0 0 0 0.3125rem rgba(5, 18, 48, 0.28);
+  box-shadow: 0 0 0 0.3125rem rgba(42, 37, 39, 0.28);
 }
 
 .visually-hidden {
@@ -141,7 +152,7 @@ button {
   inset-block-start: 0;
   z-index: 10;
   border-block-end: 1px solid var(--color-border);
-  background: rgba(255, 255, 255, 0.94);
+  background: rgba(251, 249, 248, 0.94);
   backdrop-filter: blur(14px);
 }
 
@@ -199,7 +210,7 @@ button {
 .nav a[aria-current="page"] {
   color: var(--color-ink);
   font-weight: 700;
-  box-shadow: inset 0 -0.125rem 0 var(--color-coral);
+  box-shadow: inset 0 -0.125rem 0 var(--color-accent);
 }
 
 .nav a:hover {
@@ -251,8 +262,8 @@ button {
 .hero {
   padding-block: clamp(3rem, 8vw, 6rem) clamp(1.75rem, 4vw, 2.5rem);
   background:
-    linear-gradient(180deg, var(--color-ivory), var(--color-white) 68%),
-    var(--color-white);
+    linear-gradient(180deg, var(--color-ivory), var(--color-page) 68%),
+    var(--color-page);
 }
 
 .hero + .section {
@@ -353,7 +364,7 @@ h3,
   background: transparent;
   color: var(--color-ink);
   padding-inline: var(--space-1);
-  box-shadow: inset 0 -0.125rem 0 var(--color-coral);
+  box-shadow: inset 0 -0.125rem 0 var(--color-accent);
 }
 
 .package-card {
@@ -397,13 +408,13 @@ h3,
 }
 
 .label-item:hover {
-  border-color: var(--color-coral);
+  border-color: var(--color-accent);
 }
 
 .label-item[aria-pressed="true"] {
-  border-color: var(--color-coral);
-  background: var(--color-coral-soft);
-  box-shadow: inset 0.2rem 0 0 var(--color-coral);
+  border-color: var(--color-accent);
+  background: var(--color-accent-soft);
+  box-shadow: inset 0.2rem 0 0 var(--color-accent);
 }
 
 .label-item strong {
@@ -418,6 +429,12 @@ h3,
   display: block;
   color: var(--color-muted);
   font-size: 0.88rem;
+}
+
+/* A summary tile that restates a source conflict must read amber like the spec-table
+   chip below it, not the neutral hue reserved for 확인되지 않음. */
+.label-item span.warn {
+  color: var(--color-warn);
 }
 
 .sample-note {
@@ -472,7 +489,7 @@ h3,
   min-block-size: 24rem;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-  background: var(--color-blue);
+  background: var(--color-panel);
   padding: clamp(1.25rem, 4vw, 2rem);
 }
 
@@ -522,7 +539,7 @@ h3,
 }
 
 .source-summary {
-  border-block-start: 1px solid rgba(5, 18, 48, 0.12);
+  border-block-start: 1px solid rgba(42, 37, 39, 0.12);
   padding-block-start: var(--space-4);
   color: var(--color-muted);
   font-size: 0.94rem;
@@ -565,7 +582,7 @@ h3,
 .input-field select {
   min-block-size: 3rem;
   inline-size: 100%;
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-field-border);
   border-radius: var(--radius);
   background: var(--color-white);
   padding-inline: var(--space-3);
@@ -620,7 +637,7 @@ h3,
 .input-result-field + .input-result-field,
 .input-result-matches {
   margin-block-start: var(--space-6);
-  border-block-start: 1px solid rgba(5, 18, 48, 0.12);
+  border-block-start: 1px solid rgba(42, 37, 39, 0.12);
   padding-block-start: var(--space-5);
 }
 
@@ -823,8 +840,9 @@ div.label-item:hover {
 }
 
 .conflict-item {
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-conflict-border);
   border-radius: var(--radius-sm);
+  background: var(--color-conflict-surface);
   padding: var(--space-3);
 }
 
@@ -889,10 +907,19 @@ div.label-item:hover {
 .product-filter-field { min-inline-size: 0; }
 .product-filter-field label { display: block; margin-block-end: var(--space-2); font-weight: 700; }
 .product-filter-field input,
-.product-filter-field select { inline-size: 100%; min-inline-size: 0; min-block-size: 3rem; }
+.product-filter-field select {
+  inline-size: 100%;
+  min-inline-size: 0;
+  min-block-size: 3rem;
+  border: 1px solid var(--color-field-border);
+  border-radius: var(--radius);
+  background: var(--color-white);
+  color: var(--color-ink);
+  font: inherit;
+}
 .product-filter-reset { min-block-size: 3rem; white-space: nowrap; }
 .product-result-status { grid-column: 1 / -1; margin: 0; color: var(--color-muted); font-size: 0.9rem; font-weight: 600; }
-.product-no-results { border: 1px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-blue); padding: var(--space-5); color: var(--color-body); }
+.product-no-results { border: 1px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-panel); padding: var(--space-5); color: var(--color-body); }
 
 /* Spec deep links (?bc=8.6) arrive from a term page. Each active condition is shown as a
    removable chip above the grid so the reader can see why the list is short and drop it. */
@@ -917,9 +944,9 @@ div.label-item:hover {
   align-items: center;
   gap: var(--space-2);
   min-block-size: 2.75rem;
-  border: 1px solid var(--color-coral);
+  border: 1px solid var(--color-accent);
   border-radius: 999px;
-  background: var(--color-coral-soft);
+  background: var(--color-accent-soft);
   color: var(--color-ink);
   padding-inline: var(--space-4);
   font-weight: 700;
@@ -995,8 +1022,8 @@ div.label-item:hover {
 }
 
 .status-conflict {
-  border-color: var(--color-coral);
-  background: var(--color-coral-soft);
+  border-color: var(--color-conflict-border);
+  background: var(--color-conflict-surface);
   color: var(--color-warn);
 }
 
@@ -1009,6 +1036,14 @@ div.label-item:hover {
 .status-pending {
   background: var(--color-ivory);
   color: var(--color-muted);
+}
+
+/* Same chip, conflict-state field: amber, so it cannot be read as the neutral
+   unverified state while sitting next to the amber 공식 자료 간 충돌 chip. */
+.status-pending.status-pending-conflict {
+  border-color: var(--color-conflict-border);
+  background: var(--color-conflict-surface);
+  color: var(--color-warn);
 }
 
 .pill-row {
@@ -1029,8 +1064,8 @@ div.label-item:hover {
 }
 
 .filter-button[aria-pressed="true"] {
-  border-color: var(--color-coral);
-  background: var(--color-coral-soft);
+  border-color: var(--color-accent);
+  background: var(--color-accent-soft);
   font-weight: 700;
 }
 
@@ -1051,7 +1086,7 @@ div.label-item:hover {
   gap: var(--space-3);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-  background: var(--color-blue);
+  background: var(--color-panel);
   padding: clamp(1.25rem, 4vw, 2rem);
 }
 
@@ -1104,7 +1139,7 @@ div.label-item:hover {
   inline-size: 0.4rem;
   block-size: 0.4rem;
   border-radius: 50%;
-  background: var(--color-coral);
+  background: var(--color-accent);
   content: "";
 }
 
@@ -1115,7 +1150,7 @@ div.label-item:hover {
 }
 
 .editorial-note {
-  border-inline-start: 0.1875rem solid var(--color-coral);
+  border-inline-start: 0.1875rem solid var(--color-accent);
   background: none;
   padding-inline-start: var(--space-5);
 }
@@ -1135,7 +1170,7 @@ div.label-item:hover {
 
 .editor-note {
   border-radius: var(--radius-md);
-  background: var(--color-blue);
+  background: var(--color-panel);
   padding: var(--space-4);
   color: var(--color-ink);
   font-weight: 600;
@@ -1210,8 +1245,11 @@ div.label-item:hover {
   cursor: pointer;
 }
 
+/* Selecting a product is a selection state, so it wears the accent like every other
+   pressed control. The ring is painted (inset shadow), so nothing shifts. */
 .picker-option:has(input:checked) {
-  background: var(--color-blue);
+  background: var(--color-accent-soft);
+  box-shadow: inset 0 0 0 1px var(--color-accent);
 }
 
 .picker-option:has(input:disabled) {
@@ -1261,8 +1299,8 @@ div.label-item:hover {
 }
 
 .compare-view-button[aria-pressed="true"] {
-  border-color: var(--color-coral);
-  background: var(--color-coral-soft);
+  border-color: var(--color-accent);
+  background: var(--color-accent-soft);
 }
 
 .compare-status {
@@ -1275,7 +1313,7 @@ div.label-item:hover {
 .compare-empty {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  background: var(--color-blue);
+  background: var(--color-panel);
   padding: var(--space-5);
   color: var(--color-body);
 }
@@ -1322,9 +1360,13 @@ div.label-item:hover {
   min-inline-size: 61rem;
 }
 
+/* Panel and ivory are one step apart in tone, so the header band is delimited by a
+   line rather than by a fill difference: the block-end rule closes the band and the
+   corner cell's inline-end rule separates 항목 from the product headings. */
 .compare-table thead th {
-  background: var(--color-blue);
+  background: var(--color-panel);
   color: var(--color-ink);
+  border-block-end-color: var(--color-rule);
 }
 
 .compare-table th:first-child {
@@ -1334,7 +1376,7 @@ div.label-item:hover {
   inline-size: 9rem;
   border-inline-end: 1px solid var(--color-border);
   background: var(--color-ivory);
-  box-shadow: 0.25rem 0 0.5rem -0.25rem rgba(5, 18, 48, 0.14);
+  box-shadow: 0.25rem 0 0.5rem -0.25rem rgba(42, 37, 39, 0.14);
 }
 
 .compare-table .status-label {
@@ -1345,6 +1387,7 @@ div.label-item:hover {
 
 .compare-table thead th:first-child {
   z-index: 2;
+  border-inline-end-color: var(--color-rule);
 }
 
 .compare-table td {
@@ -1402,7 +1445,7 @@ div.label-item:hover {
   inline-size: 0.4rem;
   block-size: 0.4rem;
   border-radius: 50%;
-  background: var(--color-coral);
+  background: var(--color-accent);
   content: "";
 }
 
@@ -1410,7 +1453,7 @@ div.label-item:hover {
 .bibliography a {
   overflow-wrap: anywhere;
   text-decoration: underline;
-  text-decoration-color: var(--color-coral);
+  text-decoration-color: var(--color-accent);
   text-underline-offset: 0.2em;
 }
 
@@ -1444,11 +1487,11 @@ div.label-item:hover {
 .coi-banner {
   display: block;
   margin-block-start: var(--space-4);
-  border: 1px solid var(--color-coral);
+  border: 1px solid var(--color-coi-border);
   border-radius: var(--radius-md);
-  background: var(--color-coral-soft);
+  background: var(--color-coi-surface);
   padding: var(--space-4);
-  color: var(--color-warn);
+  color: var(--color-coi);
   font-size: 0.94rem;
   font-weight: 600;
   line-height: 1.6;
@@ -1463,11 +1506,11 @@ div.label-item:hover {
 .coi-chip {
   display: inline-block;
   margin-block-start: var(--space-1);
-  border: 1px solid var(--color-coral);
+  border: 1px solid var(--color-coi-border);
   border-radius: var(--radius-sm);
-  background: var(--color-coral-soft);
+  background: var(--color-coi-surface);
   padding: 0.05rem var(--space-2);
-  color: var(--color-warn);
+  color: var(--color-coi);
   font-family: "Pretendard Variable", Pretendard, "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
   font-size: 0.8rem;
   font-weight: 700;
@@ -1545,7 +1588,7 @@ div.label-item:hover {
 .footer-boundary {
   max-inline-size: 40rem;
   border-radius: var(--radius-md);
-  background: var(--color-blue);
+  background: var(--color-panel);
   padding: var(--space-4);
   color: var(--color-ink);
   font-size: 1rem;
@@ -1628,7 +1671,7 @@ div.label-item:hover {
     display: grid;
     gap: var(--space-2);
     border-block-end: 1px solid var(--color-border);
-    background: var(--color-white);
+    background: var(--color-page);
     padding: var(--space-4);
   }
 
