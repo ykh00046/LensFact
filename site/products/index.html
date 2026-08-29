@@ -55,6 +55,14 @@
         <p class="eyebrow">제품 목록 · 확인일 2026.08.28</p>
         <h1 class="page-title">공식 사양을 확인한 제품</h1>
         <p class="lead">한국 공식 자료 또는 식약처 등록으로 제품 정체성을 확인한 투명 구면 렌즈 20개입니다. 일부 제품은 현재 판매 여부를 확인하지 못했습니다. 각 제품 페이지에는 값마다 출처 문서, 원문 표기, 측정·확인 조건, 확인일이 함께 있습니다. 판매·추천하지 않습니다.</p>
+        <dl class="evidence-summary" data-evidence-summary aria-label="검증 상태 요약">
+          <div><dt>제품</dt><dd><span data-summary-value="products">20</span>개</dd></div>
+          <div><dt>필드</dt><dd><span data-summary-value="fields">180</span>개</dd></div>
+          <div><dt>확인</dt><dd><span data-summary-value="verified">157</span>개</dd></div>
+          <div><dt>충돌</dt><dd><span data-summary-value="conflict">10</span>개</dd></div>
+          <div><dt>공식 자료에서 미확인</dt><dd><span data-summary-value="unknown">13</span>개</dd></div>
+          <div><dt>필드 연결 출처</dt><dd><span data-summary-value="sources">498</span>건</dd></div>
+        </dl>
       </div>
     </section>
 
@@ -64,6 +72,7 @@
           <div class="product-filter-field product-filter-search"><label for="product-search">제품 검색</label><input id="product-search" type="search" autocomplete="off" placeholder="제품명, 별칭, 제조사 또는 유통사" data-product-search disabled></div>
           <div class="product-filter-field"><label for="product-maker">제조사</label><select id="product-maker" data-product-maker disabled><option value="">전체 제조사</option><option>Johnson &amp; Johnson Vision</option><option>Alcon</option><option>CooperVision</option><option>Bausch + Lomb</option><option>Menicon</option><option>(주)인터로조</option></select></div>
           <div class="product-filter-field"><label for="product-replacement">교체주기</label><select id="product-replacement" data-product-replacement disabled><option value="">전체 교체주기</option><option value="1일">1일</option><option value="2주">2주</option><option value="1개월">1개월</option></select></div>
+          <div class="product-filter-field"><label for="product-status">검증 상태</label><select id="product-status" data-product-status disabled><option value="">전체</option><option value="conflict">충돌 있음</option><option value="unknown">미확인 있음</option><option value="verified">전체 필드 확인</option></select></div>
           <button class="text-button product-filter-reset" type="button" data-product-reset disabled>필터 초기화</button>
           <p class="product-result-status" data-product-result-status aria-live="polite" aria-atomic="true">전체 20개 중 20개 제품</p>
         </div>

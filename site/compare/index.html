@@ -75,10 +75,16 @@
             <p class="picker-limit" data-picker-limit hidden></p>
           </fieldset>
         </div>
+        <div class="compare-view" data-compare-view role="group" aria-label="비교 항목 보기" hidden>
+          <button type="button" class="compare-view-button" data-compare-mode="all" aria-pressed="true">전체 보기</button>
+          <button type="button" class="compare-view-button" data-compare-mode="diff" aria-pressed="false">차이만 보기</button>
+          <button type="button" class="compare-view-button" data-compare-mode="issues" aria-pressed="false">충돌·미확인만 보기</button>
+        </div>
         <p class="compare-status" data-compare-status aria-live="polite" hidden></p>
 
         <p class="table-caption" id="compare-caption">투명 구면 렌즈 공식 사양</p>
-        <div class="table-scroll" tabindex="0" aria-label="공식 사양 비교표. 넓은 화면에서는 가로로 스크롤할 수 있고, 좁은 화면에서는 항목별 카드로 표시됩니다.">
+        <p class="compare-empty" data-compare-empty aria-live="polite" hidden>선택한 보기 조건에 해당하는 비교 항목이 없습니다.</p>
+        <div class="table-scroll" data-compare-table-wrap tabindex="0" aria-label="공식 사양 비교표. 넓은 화면에서는 가로로 스크롤할 수 있고, 좁은 화면에서는 항목별 카드로 표시됩니다.">
           <div data-compare-live hidden>
             <table class="compare-table" aria-labelledby="compare-caption">
               <thead data-compare-head></thead>

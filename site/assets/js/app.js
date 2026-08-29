@@ -1124,6 +1124,53 @@ const ADS_ENABLED = false;
   const COMPARE_MAX = 4;
   const COMPARE_DEFAULT_COUNT = 3;
   const COMPARE_PARAM = "p";
+  const COMPARE_VIEW_PARAM = "view";
+  const COMPARE_VIEW_VALUES = new Set(["all", "diff", "issues"]);
+
+  function compareView(value) {
+    return COMPARE_VIEW_VALUES.has(value) ? value : "all";
+  }
+
+  function compareRowsForView(rows, selectedProducts, view) {
+    const mode = compareView(view);
+    if (mode === "all") return rows;
+    return rows.filter((row) => {
+      if (!row.fieldId) return false;
+      const fields = selectedProducts.map((product) => product.fields?.find((field) => field.id === row.fieldId));
+      if (mode === "issues") return fields.some((field) => fieldState(field?.state) !== "verified");
+      const pairs = fields.map((field) => `${fieldState(field?.state)}\u0000${String(field?.value ?? "")}`);
+      return new Set(pairs).size > 1;
+    });
+  }
+
+  function parseCompareUrl(href, order) {
+    const known = new Set(order);
+    let raw = "";
+    let view = "all";
+    try {
+      const params = new URL(href).searchParams;
+      raw = params.get(COMPARE_PARAM) || "";
+      view = compareView(params.get(COMPARE_VIEW_PARAM) || "all");
+    } catch {}
+    const selected = [];
+    raw.split(",").forEach((value) => {
+      const id = value.trim();
+      if (!id || !known.has(id) || selected.includes(id) || selected.length >= COMPARE_MAX) return;
+      selected.push(id);
+    });
+    return { selected: selected.length ? selected : order.slice(0, COMPARE_DEFAULT_COUNT), view };
+  }
+
+  function serializeCompareUrl(href, selected, view) {
+    const url = new URL(href, "https://lensfact.local");
+    url.searchParams.delete(COMPARE_PARAM);
+    url.searchParams.delete(COMPARE_VIEW_PARAM);
+    url.searchParams.set(COMPARE_PARAM, selected.join(","));
+    const mode = compareView(view);
+    if (mode !== "all") url.searchParams.set(COMPARE_VIEW_PARAM, mode);
+    const query = url.searchParams.toString().replaceAll("%2C", ",");
+    return `${url.pathname}${query ? `?${query}` : ""}${url.hash}`;
+  }
 
   // Declared column order first, then any product that has no declared column yet.
   function compareColumns(byId) {
@@ -1143,30 +1190,12 @@ const ADS_ENABLED = false;
   }
 
   function readCompareSelection(order) {
-    const known = new Set(order);
-    let raw = "";
-    try {
-      raw = new URL(window.location.href).searchParams.get(COMPARE_PARAM) || "";
-    } catch {
-      raw = "";
-    }
-    const picked = [];
-    raw.split(",").forEach((value) => {
-      const id = value.trim();
-      if (!id || !known.has(id) || picked.includes(id) || picked.length >= COMPARE_MAX) return;
-      picked.push(id);
-    });
-    return picked.length ? picked : order.slice(0, COMPARE_DEFAULT_COUNT);
+    return parseCompareUrl(window.location.href, order).selected;
   }
 
-  function writeCompareSelection(selected) {
+  function writeCompareSelection(selected, view = "all") {
     try {
-      const url = new URL(window.location.href);
-      url.searchParams.delete(COMPARE_PARAM);
-      const rest = url.searchParams.toString();
-      // Built by hand so the shared link keeps readable commas instead of %2C.
-      const search = `?${COMPARE_PARAM}=${selected.join(",")}${rest ? `&${rest}` : ""}`;
-      window.history.replaceState(null, "", `${url.pathname}${search}${url.hash}`);
+      window.history.replaceState(null, "", serializeCompareUrl(window.location.href, selected, view));
     } catch {
       // History is unavailable in some file:// contexts; the selection still applies.
     }
@@ -1198,18 +1227,26 @@ const ADS_ENABLED = false;
     const hint = qs("[data-picker-hint]");
     const limit = qs("[data-picker-limit]");
     const status = qs("[data-compare-status]");
+    const viewControls = qs("[data-compare-view]");
+    const tableWrap = qs("[data-compare-table-wrap]");
+    const empty = qs("[data-compare-empty]");
     const caption = qs("#compare-caption");
     const notes = qs("[data-compare-notes]");
 
-    let selected = readCompareSelection(order);
+    const initialState = parseCompareUrl(window.location.href, order);
+    let selected = initialState.selected;
+    let view = initialState.view;
 
     function renderTable() {
       const active = selected.map((id) => columnById[id]).filter(Boolean);
+      const visibleRows = compareRowsForView(COMPARE_ROWS, active.map((column) => byId[column.productId]), view);
       head.innerHTML = compareHeadRow(active, byId);
-      body.innerHTML = COMPARE_ROWS.map((row) => compareRow(row, byId, active)).join("");
+      body.innerHTML = visibleRows.map((row) => compareRow(row, byId, active)).join("");
       if (caption) caption.textContent = `선택한 ${active.length}개 제품 공식 사양`;
+      toggleHidden(tableWrap, visibleRows.length === 0);
+      toggleHidden(empty, visibleRows.length !== 0);
       if (notes) {
-        const noteRows = COMPARE_ROWS.filter((row) => row.rowNote);
+        const noteRows = visibleRows.filter((row) => row.rowNote);
         notes.innerHTML = noteRows.map((row) => `<span class="table-footnote-item" id="compare-note-${escapeHtml(row.rowId)}">${escapeHtml(row.label)}: ${text(row.rowNote)}</span>`).join("");
         toggleHidden(notes, !noteRows.length);
       }
@@ -1238,13 +1275,17 @@ const ADS_ENABLED = false;
         limit.textContent = message;
         toggleHidden(limit, !message);
       }
-      if (status) status.textContent = `${selected.length}개 제품 비교 중`;
+      const viewLabel = { all: "전체 보기", diff: "차이만 보기", issues: "충돌·미확인만 보기" }[view];
+      if (status) status.textContent = `${selected.length}개 제품 비교 중 · ${viewLabel}`;
+      qsa("[data-compare-mode]", viewControls || document).forEach((button) => {
+        setPressed(button, button.dataset.compareMode === view);
+      });
     }
 
-    function apply() {
+    function apply(writeUrl = true) {
       renderTable();
       syncPicker();
-      writeCompareSelection(selected);
+      if (writeUrl) writeCompareSelection(selected, view);
     }
 
     if (picker && options) {
@@ -1272,6 +1313,23 @@ const ADS_ENABLED = false;
       });
       toggleHidden(picker, false);
     }
+
+    if (viewControls) {
+      viewControls.addEventListener("click", (event) => {
+        const button = event.target.closest("[data-compare-mode]");
+        if (!button) return;
+        view = compareView(button.dataset.compareMode);
+        apply();
+      });
+      toggleHidden(viewControls, false);
+    }
+
+    window.addEventListener("popstate", () => {
+      const state = parseCompareUrl(window.location.href, order);
+      selected = state.selected;
+      view = state.view;
+      apply(false);
+    });
 
     toggleHidden(qs("[data-compare-live]"), false);
     if (status) toggleHidden(status, false);
@@ -1599,11 +1657,13 @@ const ADS_ENABLED = false;
   // Every term page links into the list this way, so the parameter names are the field ids.
   const SPEC_FILTER_FIELDS = ["bc", "dia", "water", "dkt", "material", "replacement"];
   const SEARCH_PARAM = "q";
+  const PRODUCT_STATUS_VALUES = new Set(["conflict", "unknown", "verified"]);
 
   function filterProducts(candidates, filters = {}) {
     const query = normalizeSearchText(filters.search);
     const maker = String(filters.maker || "").trim();
     const replacement = normalizeReplacement(filters.replacement);
+    const status = PRODUCT_STATUS_VALUES.has(filters.status) ? filters.status : "";
     const specs = SPEC_FILTER_FIELDS
       .map((fieldId) => ({ fieldId, wanted: String(filters.specs?.[fieldId] ?? "").trim() }))
       .filter((spec) => spec.wanted);
@@ -1611,39 +1671,62 @@ const ADS_ENABLED = false;
       const searchable = [product.name, ...(product.aliases || []), product.maker, product.distributor]
         .map(normalizeSearchText).join(" ");
       const replacementField = product.fields?.find((field) => field.id === "replacement");
+      const fields = product.fields || [];
+      const matchesStatus = !status
+        || (status === "verified" ? fields.length > 0 && fields.every((field) => fieldState(field.state) === "verified")
+          : fields.some((field) => fieldState(field.state) === status));
       return (!query || searchable.includes(query))
         && (!maker || product.maker === maker)
         && (!replacement || normalizeReplacement(replacementField?.value) === replacement)
+        && matchesStatus
         && specs.every((spec) => matchesFieldValue(spec.fieldId, productField(product, spec.fieldId), spec.wanted));
     });
   }
 
-  function readSpecFilters() {
+  function parseProductFilterUrl(href) {
     const specs = {};
-    let query = "";
+    let search = "";
+    let maker = "";
+    let replacement = "";
+    let status = "";
     try {
-      const params = new URL(window.location.href).searchParams;
-      SPEC_FILTER_FIELDS.forEach((fieldId) => {
+      const params = new URL(href).searchParams;
+      SPEC_FILTER_FIELDS.filter((fieldId) => fieldId !== "replacement").forEach((fieldId) => {
         const value = (params.get(fieldId) || "").trim();
         if (value) specs[fieldId] = value;
       });
-      query = (params.get(SEARCH_PARAM) || "").trim();
+      search = (params.get(SEARCH_PARAM) || "").trim();
+      maker = (params.get("maker") || "").trim();
+      replacement = (params.get("replacement") || "").trim();
+      const rawStatus = (params.get("status") || "").trim();
+      status = PRODUCT_STATUS_VALUES.has(rawStatus) ? rawStatus : "";
     } catch {
       // A file:// context can refuse URL parsing; the unfiltered list still renders.
     }
-    return { specs, query };
+    return { search, maker, replacement, status, specs };
   }
 
-  // The address bar keeps whatever the reader can see above the grid, so a filtered list
-  // stays linkable and a removed chip disappears from the URL as well.
-  function writeSpecFilters(specs, query) {
+  function serializeProductFilterUrl(href, filters) {
+    const url = new URL(href, "https://lensfact.local");
+    SPEC_FILTER_FIELDS.concat(SEARCH_PARAM, "maker", "status").forEach((key) => url.searchParams.delete(key));
+    SPEC_FILTER_FIELDS.filter((fieldId) => fieldId !== "replacement").forEach((fieldId) => {
+      const value = String(filters.specs?.[fieldId] || "").trim();
+      if (value) url.searchParams.set(fieldId, value);
+    });
+    const values = {
+      [SEARCH_PARAM]: String(filters.search || "").trim(),
+      maker: String(filters.maker || "").trim(),
+      replacement: String(filters.replacement || "").trim(),
+      status: PRODUCT_STATUS_VALUES.has(filters.status) ? filters.status : ""
+    };
+    Object.entries(values).forEach(([key, value]) => { if (value) url.searchParams.set(key, value); });
+    const query = url.searchParams.toString();
+    return `${url.pathname}${query ? `?${query}` : ""}${url.hash}`;
+  }
+
+  function writeProductFilters(filters) {
     try {
-      const url = new URL(window.location.href);
-      SPEC_FILTER_FIELDS.concat(SEARCH_PARAM).forEach((key) => url.searchParams.delete(key));
-      SPEC_FILTER_FIELDS.forEach((fieldId) => { if (specs[fieldId]) url.searchParams.set(fieldId, specs[fieldId]); });
-      if (query) url.searchParams.set(SEARCH_PARAM, query);
-      const search = url.searchParams.toString();
-      window.history.replaceState(null, "", `${url.pathname}${search ? `?${search}` : ""}${url.hash}`);
+      window.history.replaceState(null, "", serializeProductFilterUrl(window.location.href, filters));
     } catch {
       // History is unavailable in some file:// contexts; the filter still applies.
     }
@@ -1668,15 +1751,25 @@ const ADS_ENABLED = false;
     const search = qs("[data-product-search]", controls);
     const maker = qs("[data-product-maker]", controls);
     const replacement = qs("[data-product-replacement]", controls);
-    const status = qs("[data-product-result-status]", controls);
+    const statusSelect = qs("[data-product-status]", controls);
+    const resultStatus = qs("[data-product-result-status]", controls);
     const noResults = qs("[data-product-no-results]");
     const chips = qs("[data-spec-chips]");
     controls.hidden = false;
     qsa("input, select, button", controls).forEach((control) => { control.disabled = false; });
 
-    const state = readSpecFilters();
-    const specs = state.specs;
-    if (state.query && search) search.value = state.query;
+    const specs = {};
+
+    function restoreControls() {
+      const state = parseProductFilterUrl(window.location.href);
+      if (search) search.value = state.search;
+      if (maker) maker.value = state.maker;
+      if (replacement) replacement.value = state.replacement;
+      if (statusSelect) statusSelect.value = state.status;
+      SPEC_FILTER_FIELDS.forEach((fieldId) => { delete specs[fieldId]; });
+      Object.assign(specs, state.specs);
+    }
+    restoreControls();
 
     function renderChips() {
       if (!chips) return;
@@ -1687,14 +1780,15 @@ const ADS_ENABLED = false;
       toggleHidden(chips, !active.length);
     }
 
-    const apply = () => {
-      const matches = filterProducts(products, { search: search?.value, maker: maker?.value, replacement: replacement?.value, specs });
+    const apply = (writeUrl = true) => {
+      const filters = { search: search?.value, maker: maker?.value, replacement: replacement?.value, status: statusSelect?.value, specs };
+      const matches = filterProducts(products, filters);
       const ids = new Set(matches.map(({ id }) => id));
       cards.forEach((card, id) => { card.hidden = !ids.has(id); });
-      if (status) status.textContent = `전체 ${products.length}개 중 ${matches.length}개 제품`;
+      if (resultStatus) resultStatus.textContent = `전체 ${products.length}개 중 ${matches.length}개 제품`;
       if (noResults) noResults.hidden = matches.length !== 0;
       renderChips();
-      writeSpecFilters(specs, String(search?.value || "").trim());
+      if (writeUrl) writeProductFilters(filters);
     };
     controls.addEventListener("input", apply);
     controls.addEventListener("change", apply);
@@ -1709,17 +1803,46 @@ const ADS_ENABLED = false;
       if (search) search.value = "";
       if (maker) maker.value = "";
       if (replacement) replacement.value = "";
+      if (statusSelect) statusSelect.value = "";
       SPEC_FILTER_FIELDS.forEach((fieldId) => { delete specs[fieldId]; });
       apply();
       search?.focus();
     });
     apply();
+    window.addEventListener("popstate", () => {
+      restoreControls();
+      apply(false);
+    });
 
     // The header 검색 link lands on #product-search; the controls are only enabled here,
     // so the focus has to be moved after they stop being disabled.
     const focusSearch = () => { if (window.location.hash === "#product-search") search?.focus(); };
     window.addEventListener("hashchange", focusSearch);
     focusSearch();
+  }
+
+  function summarizeEvidence(candidates) {
+    const summary = { products: candidates.length, fields: 0, verified: 0, conflict: 0, unknown: 0, sources: 0 };
+    candidates.forEach((product) => {
+      (product.fields || []).forEach((field) => {
+        summary.fields += 1;
+        const state = fieldState(field.state);
+        summary[state] += 1;
+        summary.sources += (field.sources || []).length;
+      });
+    });
+    return summary;
+  }
+
+  function initEvidenceSummaries() {
+    if (!products.length) return;
+    const summary = summarizeEvidence(products);
+    qsa("[data-evidence-summary]").forEach((region) => {
+      Object.entries(summary).forEach(([key, value]) => {
+        const node = qs(`[data-summary-value="${key}"]`, region);
+        if (node) node.textContent = String(value);
+      });
+    });
   }
 
   // The "현재 수록된 N개 제품" copy is derived from the data, never typed by hand.
@@ -1757,6 +1880,7 @@ const ADS_ENABLED = false;
     initTermPage();
     initTermIndex();
     initProductCounts();
+    initEvidenceSummaries();
     initAdSlots();
   });
 })();

@@ -66,3 +66,16 @@ test("product controls are progressive and static cards remain complete", () => 
   const grid = html.match(/<div class="cards-grid cards-wide" data-product-index>[\s\S]*?<\/div>\s*<section class="source-section"/)?.[0] || "";
   assert.equal((grid.match(/<article class="card">/g) || []).length, 20);
 });
+
+test("home and product index expose the complete verification summary without JavaScript", () => {
+  for (const page of ["site/index.html", "site/products/index.html"]) {
+    const html = read(page);
+    const summary = html.match(/<dl[^>]+data-evidence-summary[\s\S]*?<\/dl>/)?.[0] || "";
+
+    assert.ok(summary, `${page} should contain an evidence summary`);
+    for (const [key, value] of Object.entries({ products: 20, fields: 180, verified: 157, conflict: 10, unknown: 13, sources: 498 })) {
+      assert.match(summary, new RegExp(`data-summary-value="${key}"[^>]*>${value}<`));
+    }
+    assert.match(summary, /공식 자료에서 미확인/);
+  }
+});

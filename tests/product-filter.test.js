@@ -23,7 +23,7 @@ vm.runInContext(fs.readFileSync(path.join(root, "site/assets/data/products.js"),
 
 const appSource = fs.readFileSync(path.join(root, "site/assets/js/app.js"), "utf8").replace(
   /\}\)\(\);\s*$/,
-  "globalThis.__productFilter = { filterProducts, normalizeSearchText, normalizeReplacement, fieldValues };\n})();"
+  "globalThis.__productFilter = { filterProducts, normalizeSearchText, normalizeReplacement, fieldValues, parseProductFilterUrl, serializeProductFilterUrl };\n})();"
 );
 vm.runInContext(appSource, context);
 
@@ -100,4 +100,63 @@ test("a conflicted field matches either recorded value and an unknown field matc
 test("empty state behaves as reset and restores all 20 products", () => {
   assert.equal(filter.filterProducts(products, {}).length, 20);
   assert.equal(filter.filterProducts(products, { search: "없는 제품명" }).length, 0);
+});
+
+test("status filters select conflicts, unknowns, or products with all fields verified", () => {
+  const conflicts = filter.filterProducts(products, { status: "conflict" });
+  const unknowns = filter.filterProducts(products, { status: "unknown" });
+  const verified = filter.filterProducts(products, { status: "verified" });
+
+  assert.ok(conflicts.length > 0 && conflicts.every((product) => product.fields.some((field) => field.state === "conflict")));
+  assert.ok(unknowns.length > 0 && unknowns.every((product) => product.fields.some((field) => field.state === "unknown")));
+  assert.ok(verified.length > 0 && verified.every((product) => product.fields.every((field) => field.state === "verified")));
+});
+
+test("status combines with search, maker, replacement, and spec conditions using AND", () => {
+  const matches = filter.filterProducts(products, {
+    search: "biofinity",
+    maker: "CooperVision",
+    replacement: "1개월",
+    status: "conflict",
+    specs: { bc: "8.6" }
+  });
+
+  assert.deepEqual(Array.from(matches, ({ id }) => id), ["biofinity", "biofinity-energys"]);
+  assert.equal(filter.filterProducts(products, { maker: "Alcon", status: "verified", specs: { dkt: "170" } }).length, 0);
+});
+
+test("product filter URL parsing sanitizes status and restores all supported controls", () => {
+  const parsed = filter.parseProductFilterUrl("https://example.test/products/?q=total&maker=Alcon&replacement=1%EC%9D%BC&status=issues&bc=8.5&unrelated=keep");
+  assert.deepEqual({ ...parsed, specs: { ...parsed.specs } }, {
+    search: "total",
+    maker: "Alcon",
+    replacement: "1일",
+    status: "",
+    specs: { bc: "8.5" }
+  });
+
+  assert.equal(filter.parseProductFilterUrl("https://example.test/products/?status=unknown").status, "unknown");
+});
+
+test("product filter URL serialization omits defaults and preserves unrelated parameters", () => {
+  const serialized = filter.serializeProductFilterUrl("https://example.test/products/?old=drop&unrelated=keep", {
+    search: "토탈 30",
+    maker: "Alcon",
+    replacement: "1개월",
+    status: "conflict",
+    specs: { dia: "14.2" }
+  });
+  const url = new URL(serialized, "https://example.test");
+
+  assert.equal(url.searchParams.get("q"), "토탈 30");
+  assert.equal(url.searchParams.get("maker"), "Alcon");
+  assert.equal(url.searchParams.get("replacement"), "1개월");
+  assert.equal(url.searchParams.get("status"), "conflict");
+  assert.equal(url.searchParams.get("dia"), "14.2");
+  assert.equal(url.searchParams.get("unrelated"), "keep");
+  assert.equal(url.searchParams.get("old"), "drop");
+
+  const defaults = new URL(filter.serializeProductFilterUrl(serialized, { search: "", maker: "", replacement: "", status: "", specs: {} }), "https://example.test");
+  for (const key of ["q", "maker", "replacement", "status", "dia"]) assert.equal(defaults.searchParams.has(key), false);
+  assert.equal(defaults.searchParams.get("unrelated"), "keep");
 });
