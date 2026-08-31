@@ -33,4 +33,5 @@ AdSense는 초기 범위에서 비활성화합니다. 빌드, 운영, 검색 발
 - `docs/MFDS_DAILIES_TOTAL1_IDENTITY_2026-08-27.json` — MFDS UDI 조회 원문 캡처
 - `docs/reviews/` — Codex 디자인·가독성 리뷰 3건
 - `design/boards/` — 수용된 디자인 레퍼런스 2건
+- `tools/build-pair-pages.js` — `site/compare/<id-a>-vs-<id-b>.html` 제품쌍 페이지 생성기 (`--check`로 커밋본 드리프트 검사)
 - `docs/MANUS_CONCEPT_PROMPT.md` — 초기 Manus 콘셉트 요청문(보관용)

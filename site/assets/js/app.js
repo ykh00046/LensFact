@@ -900,15 +900,24 @@ const ADS_ENABLED = false;
     let note = "";
     // A conflicted cell keeps both source values; a row note for the same product is
     // appended rather than dropped, so the reason for the conflict stays visible.
-    const productNote = row.notes?.[product.id] ? text(row.notes[product.id]) : "";
+    // On a row read with its source condition, that condition carries the test power the
+    // figure was measured at. A per-product note is added to it, never in place of it:
+    // dropping it left one column's -3.00D printed and the other column's missing on the
+    // very row the reader is invited to compare straight across. Where one of the two
+    // already contains the other word for word, only the fuller string is printed.
+    const noteSource = String(row.notes?.[product.id] || "");
+    const conditionSource = row.useCondition ? String(field.sources?.[0]?.condition || "") : "";
+    const productNote = noteSource && !(conditionSource && conditionSource.includes(noteSource)) ? text(noteSource) : "";
+    const condition = conditionSource && !noteSource.includes(conditionSource) ? text(conditionSource) : "";
     if (field.conflicts?.length) {
       const lines = field.conflicts.map((conflict) => `${escapeHtml(conflict.source)}: ${text(conflict.value)}`);
       if (productNote) lines.push(productNote);
+      if (condition) lines.push(condition);
       note = lines.join("<br>");
     } else if (productNote) {
-      note = productNote;
-    } else if (row.useCondition) {
-      note = text(field.sources?.[0]?.condition || "");
+      note = [productNote, condition].filter(Boolean).join("<br>");
+    } else if (condition) {
+      note = condition;
     }
     const noteMarkup = note ? `<span class="cell-note${conflicted ? " warn" : ""}">${note}</span>` : "";
     return `<td ${cellAttributes}>${value}${noteMarkup}</td>`;
@@ -1097,9 +1106,26 @@ const ADS_ENABLED = false;
       });
     }
 
+    // When the picker lands on exactly the two products a pair page covers, that page
+    // says more about them than this table can, so the tool points at it.
+    function renderPairLink() {
+      const link = qs("[data-compare-pair-link]");
+      if (!link) return;
+      const page = pairPageFor(selected);
+      if (!page) {
+        link.innerHTML = "";
+        toggleHidden(link, true);
+        return;
+      }
+      const href = internalHref(`./${pairFile(page.ids)}`);
+      link.innerHTML = `이 두 제품만 다룬 페이지가 있습니다 — <a href="${escapeHtml(href)}">${escapeHtml(pairLabel(page.ids))} 공식 표기 비교</a>`;
+      toggleHidden(link, false);
+    }
+
     function apply(writeUrl = true) {
       renderTable();
       syncPicker();
+      renderPairLink();
       if (writeUrl) writeCompareSelection(selected, view);
     }
 
@@ -1170,6 +1196,790 @@ const ADS_ENABLED = false;
       });
     });
     list.innerHTML = items.join("");
+  }
+
+  /* ---------------------------------------------------------------------------
+   * Product pair pages — /compare/<a>-vs-<b>.html
+   *
+   * One static page per recorded pair. The page answers a narrow question: which of
+   * the two products' official figures can be put in the same table, and which cannot.
+   * It never answers which product is better, which is why nothing below ranks, scores
+   * or recommends.
+   *
+   * Every sentence a pair page shows is derived from that pair's own data in
+   * products.js — the two field states, their recorded source conflicts, the
+   * measurement conditions their sources print, and the per-product notes COMPARE_ROWS
+   * already carries. No pair-specific figure or reason is typed by hand anywhere, so
+   * two pair pages can only share a paragraph if the underlying data is identical.
+   * ------------------------------------------------------------------------ */
+
+  const PAIR_PAGES = [
+    { ids: ["acuvue-oasys-1-day", "dailies-total1"] },
+    { ids: ["acuvue-oasys-1-day", "acuvue-moist-1-day"] },
+    { ids: ["myday", "clariti-1-day"] },
+    { ids: ["dailies-total1", "dailies-aquacomfort-plus"] },
+    { ids: ["biofinity", "airoptix-plus-hydraglyde"] },
+    { ids: ["acuvue-oasys-1-day", "acuvue-oasys-max-1-day"] },
+    { ids: ["acuvue-oasys-1-day", "acuvue-oasys-2-week"] },
+    { ids: ["dailies-total1", "total30"] }
+  ];
+
+  const PAIR_FIELD_IDS = ["permit", "replacement", "material", "bc", "dia", "water", "dkt", "thickness", "uv"];
+
+  function pairColumnIndex(id) {
+    const index = COMPARE_COLUMNS.findIndex((column) => column.productId === id);
+    return index < 0 ? COMPARE_COLUMNS.length : index;
+  }
+
+  // The declared column order fixes one file name per pair, so a pair can never end up
+  // with two URLs pointing at the same two products.
+  function pairOrder(ids) {
+    return ids.slice().sort((left, right) => pairColumnIndex(left) - pairColumnIndex(right));
+  }
+
+  function pairFile(ids) {
+    const ordered = pairOrder(ids);
+    return `${ordered[0]}-vs-${ordered[1]}.html`;
+  }
+
+  function pairPageFor(ids) {
+    if (!ids || ids.length !== 2) return null;
+    const key = pairOrder(ids).join("|");
+    return PAIR_PAGES.find((page) => pairOrder(page.ids).join("|") === key) || null;
+  }
+
+  function pairPagesWith(productId) {
+    return PAIR_PAGES.filter((page) => page.ids.includes(productId));
+  }
+
+  function pairProducts(ids) {
+    const found = pairOrder(ids).map((id) => products.find((product) => product.id === id));
+    return found.every(Boolean) ? found : null;
+  }
+
+  function pairColumnLabel(product) {
+    return COMPARE_COLUMNS.find((column) => column.productId === product.id)?.label || product.name;
+  }
+
+  function pairLabel(ids) {
+    const pair = pairProducts(ids);
+    return pair ? pair.map((product) => product.selectorLabel).join(" vs ") : "";
+  }
+
+  function compareRowForField(fieldId) {
+    return COMPARE_ROWS.find((row) => row.fieldId === fieldId) || null;
+  }
+
+  function pairFieldLabel(fieldId) {
+    return compareRowForField(fieldId)?.label || fieldCopy[fieldId]?.label || fieldId;
+  }
+
+  // A condition string doubles as an extraction record: where in a PDF the figure was read
+  // from, down to the column's x coordinate. Those coordinates belong in the data, not in a
+  // sentence a reader is asked to read, so they are dropped before any condition is quoted.
+  function pairConditionQuote(product, fieldId) {
+    return String(productField(product, fieldId)?.sources?.[0]?.condition || "")
+      .replace(/\s*\((?:좌표|x0?|y0?)[\s0-9.,;≈~–—-]*[^)]*\)/g, "")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+  // What one product actually prints beside one figure: the value itself (some makers
+  // print the test power inside it), the first source's 측정·확인 조건, and the
+  // per-product note the comparison table already carries.
+  function pairConditionText(product, fieldId) {
+    const field = productField(product, fieldId);
+    return [field?.value || "", field?.sources?.[0]?.condition || "", compareRowForField(fieldId)?.notes?.[product.id] || ""]
+      .filter(Boolean).join(" · ");
+  }
+
+  // "측정법·보정·온도 표기 없음" names three conditions in order to say that none of them
+  // is printed. Reading those words without their negation would turn an explicit
+  // absence into an explicit declaration, so negated clauses are dropped before any
+  // condition key is read.
+  function withoutNegatedClauses(value) {
+    return String(value ?? "").replace(
+      /(?:[가-힣A-Za-z/]+[·,]\s*)*[가-힣A-Za-z/]+\s*(?:항목\s*)?(?:조건\s*)?(?:표기(?:가|는)?\s*)?(?:미표기|없음|없다|없습니다|확인되지 않음|표기하지 않음|빠져 있으나)/g,
+      " "
+    );
+  }
+
+  // The four conditions that decide whether two figures were measured the same way.
+  // 중심두께 is deliberately not one of them: it is a property of the lens rather than a
+  // choice of method, so a thickness difference explains a Dk/t difference instead of
+  // forbidding the comparison.
+  const PAIR_CONDITION_KEYS = [
+    { id: "power", label: "시험도수", read: (value) => value.match(/-?\d+\.\d{2}\s*D/)?.[0].replace(/\s+/g, "") || "" },
+    { id: "method", label: "측정법", read: (value) => (/분극법|polarographic/i.test(value) ? "분극법" : "") },
+    { id: "correction", label: "경계·엣지 보정", read: (value) => (/boundary|edge|경계 보정/i.test(value) ? "boundary/edge 보정" : "") },
+    { id: "temperature", label: "측정 온도", read: (value) => (value.match(/\d+\s*°?\s*(?:℃|C\b)/)?.[0] || "").replace(/\s+/g, "").replace(/°?C$/, "℃") }
+  ];
+
+  function pairConditionKeys(product, fieldId) {
+    const source = withoutNegatedClauses(pairConditionText(product, fieldId));
+    const keys = {};
+    PAIR_CONDITION_KEYS.forEach((key) => { keys[key.id] = key.read(source); });
+    return keys;
+  }
+
+  // The centre thickness a Dk/t figure was measured at, when the maker prints one.
+  function pairThicknessCondition(product, fieldId) {
+    const source = withoutNegatedClauses(pairConditionText(product, fieldId));
+    const found = source.match(/(?:중심\s*(?:두께)?|Center Thickness)\s*(\d+\.\d+)\s*mm/i);
+    return found ? `${found[1]} mm` : "";
+  }
+
+  // 실리콘 하이드로겔 and 하이드로겔 are the two families the comparison table already
+  // names product by product; the site does not read water content or Dk/t across them.
+  // A family is only read from a phrase that is one of those two labels on its own. A
+  // maker phrase that qualifies the family — 표면처리된 플루오로실리콘 함유 하이드로겔 —
+  // is neither label, so it stays unclassified rather than being flattened into
+  // 하이드로겔, the same bare word the site uses for etafilcon A and nelfilcon A.
+  // "" — this string names no family. "?" — it names one but qualifies it, so the site
+  // refuses to file it under either label.
+  function pairMaterialFamilyFrom(value) {
+    const source = String(value ?? "");
+    if (!/하이드로겔|hydrogel/i.test(source)) return "";
+    // 실리콘 하이드로겔 counts only where 실리콘 starts the word: 워터 그라디언트 실리콘
+    // 하이드로겔 is the silicone family, 플루오로실리콘 함유 하이드로겔 is not this label.
+    if (/(?:^|[^가-힣A-Za-z])(?:실리콘 하이드로겔|silicone hydrogel)/i.test(source)) return "실리콘 하이드로겔";
+    if (/실리콘|silicone/i.test(source)) return "?";
+    return "하이드로겔";
+  }
+
+  function pairMaterialFamily(product) {
+    const field = productField(product, "material");
+    // Only the first clause of the comparison table's 재질 note names the family. The
+    // clauses after it record what a source leaves out or which comparison the site
+    // refuses — 실리콘 하이드로겔과 같은 축에서 … 비교하지 않음 names the other family in
+    // order to exclude it, and reading that clause would return the opposite answer.
+    // Only strings the site itself prints as this product's material are read: the note,
+    // the value, and — where the sources disagree on the USAN name — each recorded
+    // original. A source's surrounding prose ("a silicone containing hydrogel") describes
+    // the material rather than labelling its family, so it is not one of them.
+    const candidates = [
+      String(compareRowForField("material")?.notes?.[product.id] || "").split("·")[0],
+      field?.value || "",
+      ...(field?.conflicts || []).map((conflict) => conflict.value)
+    ].map(pairMaterialFamilyFrom);
+    // One qualified phrase anywhere in this product's own material record is enough to
+    // leave the family unset, and so is a disagreement between two of its own strings.
+    if (candidates.includes("?")) return "";
+    const found = Array.from(new Set(candidates.filter(Boolean)));
+    return found.length === 1 ? found[0] : "";
+  }
+
+  // What this site records as the product's material, in its own printed words: the value,
+  // and the comparison table's 재질 note where that note carries wording the value does not.
+  function pairMaterialRecord(product) {
+    const note = String(compareRowForField("material")?.notes?.[product.id] || "").split("·")[0].trim();
+    const value = pairFieldValue(product, "material");
+    return note && !value.includes(note) ? `${value}(${note})` : value;
+  }
+
+  // The family in front of the material name, unless the recorded value already prints
+  // that family itself — nelfilcon A (하이드로겔) must not become 하이드로겔 nelfilcon A (하이드로겔).
+  function pairMaterialPhrase(product, family) {
+    const value = pairFieldValue(product, "material");
+    return value.includes(family) ? value : `${family} ${value}`;
+  }
+
+  // Where the maker measured the water it prints: separate core and surface figures, a
+  // bulk figure, or a figure whose location the source never states.
+  function pairWaterBasis(product) {
+    if (/코어|표면/.test(productField(product, "water")?.value || "")) return "코어·표면 별도 표기";
+    if (/벌크/.test(pairConditionText(product, "water"))) return "벌크 함수율";
+    return "측정 위치 미표기";
+  }
+
+  function pairFieldValue(product, fieldId) {
+    return productField(product, fieldId)?.value || "";
+  }
+
+  function pairConflictLine(product, fieldId) {
+    const field = productField(product, fieldId);
+    if (!field?.conflicts?.length) return "";
+    return `${product.selectorLabel} — ${field.conflicts.map((conflict) => `${conflict.source}: ${conflict.value}`).join(" / ")}`;
+  }
+
+  function pairReason(code, sentence, evidence) {
+    return { code, sentence, evidence: evidence.filter(Boolean).join(" / ") };
+  }
+
+  // Korean particles follow the last sound of the word in front of them, and every word
+  // in a pair sentence is a product name or a printed value taken from the data, so the
+  // particle has to be picked at render time rather than written into the template.
+  function hasFinalConsonant(value) {
+    const last = String(value ?? "").trim().replace(/[)\]}"'’”·.]+$/, "").slice(-1);
+    if (!last) return false;
+    const code = last.charCodeAt(0);
+    if (code >= 0xac00 && code <= 0xd7a3) return (code - 0xac00) % 28 !== 0;
+    // 0 영 · 1 일 · 3 삼 · 6 육 · 7 칠 · 8 팔 end on a consonant; 2 4 5 9 do not.
+    if (/[0-9]/.test(last)) return ["0", "1", "3", "6", "7", "8"].includes(last);
+    // Latin letters are read as their Korean names: only l m n r end on a consonant.
+    if (/[a-z]/i.test(last)) return ["l", "m", "n", "r"].includes(last.toLowerCase());
+    return false;
+  }
+
+  function josa(value, forms) {
+    const [afterConsonant, afterVowel] = forms.split("/");
+    return `${value}${hasFinalConsonant(value) ? afterConsonant : afterVowel}`;
+  }
+
+  // 로 also follows ㄹ, so this one cannot use the plain consonant test.
+  function josaRo(value) {
+    const last = String(value ?? "").trim().replace(/[)\]}"'’”·.]+$/, "").slice(-1);
+    const code = last ? last.charCodeAt(0) : 0;
+    const rieul = code >= 0xac00 && code <= 0xd7a3 && (code - 0xac00) % 28 === 8;
+    return `${value}${!hasFinalConsonant(value) || rieul ? "로" : "으로"}`;
+  }
+
+  // One field, read across the two products. `blocked` reasons say why the two printed
+  // figures cannot go in the same row of the same table; `notes` are reading aids for a
+  // row that can. Every sentence carries the two products' own strings, so the same
+  // sentence cannot be produced for another pair unless the data is identical.
+  function pairFieldVerdictFor(left, right, fieldId) {
+    const label = pairFieldLabel(fieldId);
+    const fields = [productField(left, fieldId), productField(right, fieldId)];
+    const values = [pairFieldValue(left, fieldId), pairFieldValue(right, fieldId)];
+    const states = fields.map((field) => fieldState(field?.state));
+    const conditions = [pairConditionText(left, fieldId), pairConditionText(right, fieldId)];
+    const verdict = { fieldId, label, code: fieldCode(fieldId), values, states, blocked: [], notes: [], same: false, bothUnknown: false };
+
+    if (states[0] === "unknown" && states[1] === "unknown") {
+      verdict.bothUnknown = true;
+      verdict.notes.push(pairReason(
+        "both-unknown",
+        `${josa(label, "은/는")} 두 제품 모두 공식 자료에서 확인되지 않았습니다. 표기를 찾지 못했다는 기록이며 값이나 기능이 없다는 뜻이 아닙니다.`,
+        [`${left.selectorLabel} 확인 범위 — ${conditions[0]}`, `${right.selectorLabel} 확인 범위 — ${conditions[1]}`]
+      ));
+      return verdict;
+    }
+
+    if (states[0] === "unknown" || states[1] === "unknown") {
+      const missingAt = states[0] === "unknown" ? 0 : 1;
+      const known = missingAt === 0 ? right : left;
+      const missing = missingAt === 0 ? left : right;
+      verdict.blocked.push(pairReason(
+        "unknown-one-side",
+        `${josa(known.selectorLabel, "은/는")} ${josa(label, "을/를")} ${josaRo(values[1 - missingAt])} 인쇄하지만, ${missing.selectorLabel} 쪽 기록은 ${values[missingAt]}입니다. 표기를 찾지 못했다는 기록이지 값이나 기능이 없다는 뜻이 아니므로, 한쪽의 표기를 다른 쪽의 빈칸과 나란히 읽지 않습니다.`,
+        [`${missing.selectorLabel} 확인 범위 — ${conditions[missingAt]}`]
+      ));
+    }
+
+    // A recorded disagreement between official sources is kept as several originals, so
+    // there is no single figure to line up against the other product's single figure.
+    // What counts as a disagreement is the field's own state, the way every other
+    // conflict test on this page reads it — a field that records several originals while
+    // staying 확인 is a value printed in more than one wording, not a value in dispute.
+    const conflicted = [left, right].filter((product) => fieldState(productField(product, fieldId)?.state) === "conflict");
+    if (conflicted.length) {
+      const others = [left, right].filter((product) => !conflicted.includes(product));
+      const otherIndex = others.length ? (others[0] === left ? 0 : 1) : -1;
+      // 측정값에는 시험 조건이라는 개념이 있지만 허가번호·재질명·교체주기·UV 등급에는
+      // 없다. 조건을 묻는 문장을 식별·분류 항목에 붙이면 뜻이 통하지 않으므로, 같은 사유를
+      // 두 가지 문안으로 나눠 쓴다. 가리키는 원문은 이 문장 아래의 근거 원문 줄에 있다.
+      const measured = ["water", "dkt", "thickness"].includes(fieldId);
+      const otherText = !others.length
+        ? "두 제품 모두 원문이 여러 건이라 어느 원문끼리 대응하는지 정해져 있지 않습니다."
+        : states[otherIndex] === "unknown"
+          ? `${josa(others[0].selectorLabel, "은/는")} 이 항목의 공식 표기가 확인되지 않아, 여러 원문 가운데 어느 쪽과 맞대어 볼 상대 표기 자체가 없습니다.`
+          : measured
+            ? `${others[0].selectorLabel} 쪽 원문은 ${values[otherIndex]} 하나뿐이라, 그 값이 아래 근거 원문 가운데 어느 쪽과 같은 조건에서 나온 값인지 어느 문서도 밝히지 않습니다.`
+            : `${others[0].selectorLabel} 쪽 원문은 ${values[otherIndex]} 하나뿐이라, 그 값이 아래 근거 원문 가운데 어느 쪽과 대응하는 표기인지 어느 문서도 밝히지 않습니다.`;
+      verdict.blocked.push(pairReason(
+        "source-conflict",
+        `${conflicted.map((product) => product.selectorLabel).reduce((joined, name) => (joined ? `${josa(joined, "과/와")} ${name}` : name), "")}의 ${josa(label, "은/는")} 공식 출처끼리 다르게 인쇄돼 있어 하나로 정리하지 않았습니다. ${otherText}`,
+        conflicted.map((product) => pairConflictLine(product, fieldId))
+      ));
+    }
+
+    // The other shape a multi-original field takes: the sources print the same value in
+    // different sentences, so the data keeps every original while the value itself stays
+    // 확인. That is a reading note, not a barrier, and the originals are shown unmerged.
+    const restated = [left, right].filter((product) => {
+      const field = productField(product, fieldId);
+      return fieldState(field?.state) !== "conflict" && (field?.conflicts || []).length;
+    });
+    restated.forEach((product) => {
+      verdict.notes.push(pairReason(
+        "restated-original",
+        `${product.selectorLabel}의 ${josa(label, "은/는")} 공식 출처마다 다른 문장으로 인쇄돼 있습니다. 값 자체는 ${pairFieldValue(product, fieldId)} 하나로 확인됐고, 문장이 서로 다른 부분은 합치지 않고 아래 원문 그대로 둡니다.`,
+        [pairConflictLine(product, fieldId)]
+      ));
+    });
+
+    // Only the ACUVUE documents print the Dk/t unit. A number without a printed unit is
+    // never given one here, so two differently written figures do not share an axis.
+    if (fieldId === "dkt" && states.every((state) => state !== "unknown")) {
+      const united = values.map((value) => /×\s*10/.test(value));
+      if (united[0] !== united[1]) {
+        const withUnit = united[0] ? 0 : 1;
+        verdict.blocked.push(pairReason(
+          "unit-notation",
+          `Dk/t 원문의 단위 표기가 다릅니다. ${[left, right][withUnit].selectorLabel} 쪽은 ${values[withUnit]}처럼 단위까지 인쇄하고, ${[left, right][1 - withUnit].selectorLabel} 쪽은 ${values[1 - withUnit]}처럼 숫자만 인쇄합니다. 인쇄되지 않은 단위를 임의로 붙이지 않습니다.`,
+          [`${left.selectorLabel} — ${conditions[0]}`, `${right.selectorLabel} — ${conditions[1]}`]
+        ));
+      }
+    }
+
+    // Test conditions: a figure whose method, correction, temperature or test power is
+    // printed cannot be read against one whose source leaves them out.
+    if (["dkt", "thickness"].includes(fieldId) && states.every((state) => state !== "unknown")) {
+      const keys = [pairConditionKeys(left, fieldId), pairConditionKeys(right, fieldId)];
+      const missing = PAIR_CONDITION_KEYS.filter((key) => Boolean(keys[0][key.id]) !== Boolean(keys[1][key.id]));
+      const different = PAIR_CONDITION_KEYS.filter((key) => keys[0][key.id] && keys[1][key.id] && keys[0][key.id] !== keys[1][key.id]);
+      if (missing.length) {
+        const declared = keys.map((set) => PAIR_CONDITION_KEYS.filter((key) => set[key.id]).map((key) => `${key.label} ${set[key.id]}`));
+        verdict.blocked.push(pairReason(
+          "condition-level",
+          `${label} 값에 붙은 시험 조건의 표기 수준이 다릅니다. ${left.selectorLabel} 쪽 원문은 ${declared[0].length ? `${declared[0].join(" · ")}을 밝히고` : "시험 조건을 밝히지 않고"}, ${right.selectorLabel} 쪽 원문은 ${declared[1].length ? `${declared[1].join(" · ")}만 밝힙니다` : "시험 조건을 밝히지 않습니다"}. 같은 조건에서 잰 값인지 확인할 수 없어 숫자만 직접 비교하지 않습니다.`,
+          [`${left.selectorLabel} — ${conditions[0]}`, `${right.selectorLabel} — ${conditions[1]}`]
+        ));
+      }
+      if (different.length) {
+        verdict.blocked.push(pairReason(
+          "condition-value",
+          `${josa(label, "을/를")} 잰 조건 자체가 다릅니다: ${different.map((key) => `${key.label} ${keys[0][key.id]} 대 ${keys[1][key.id]}`).join(" · ")}. 조건이 다른 값은 같은 항목으로 놓지 않습니다.`,
+          [`${left.selectorLabel} — ${conditions[0]}`, `${right.selectorLabel} — ${conditions[1]}`]
+        ));
+      }
+    }
+
+    // Water measured separately at the core and at the surface is a different quantity
+    // from a single whole-lens figure, so those two cannot share a row. A source that
+    // states its measurement location and one that stays silent are both single figures:
+    // that difference is recorded as a reading note, not as a barrier.
+    if (fieldId === "water" && states.every((state) => state !== "unknown")) {
+      const basis = [pairWaterBasis(left), pairWaterBasis(right)];
+      const split = basis.map((item) => item === "코어·표면 별도 표기");
+      if (split[0] !== split[1]) {
+        verdict.blocked.push(pairReason(
+          "water-basis",
+          `함수율의 측정 위치 축이 다릅니다. ${josa(left.selectorLabel, "은/는")} ${josaRo(basis[0])} ${values[0]}, ${josa(right.selectorLabel, "은/는")} ${josaRo(basis[1])} ${values[1]}입니다. 코어와 표면을 나눠 재는 측정법은 렌즈 하나의 함수율을 재는 측정법과 다르므로 두 숫자를 같은 줄에 놓지 않습니다.`,
+          [`${left.selectorLabel} — ${conditions[0]}`, `${right.selectorLabel} — ${conditions[1]}`]
+        ));
+      } else if (basis[0] !== basis[1]) {
+        verdict.notes.push(pairReason(
+          "water-basis-note",
+          // The condition strings record where in a document a figure was read — page
+          // numbers and extraction coordinates — as well as how it was measured. Only the
+          // second is a measurement condition, so the difference is stated in words here
+          // rather than quoted, and a document location never reaches the reader as one.
+          `측정 위치를 밝히는 정도가 다릅니다. ${josa(left.selectorLabel, "은/는")} ${josaRo(basis[0])} ${values[0]}, ${josa(right.selectorLabel, "은/는")} ${josaRo(basis[1])} ${values[1]}입니다. 두 값 모두 렌즈 하나에 대한 단일 표기이지만, 한쪽 원문만 어디를 쟀는지 적고 다른 쪽 원문은 측정 위치를 적지 않습니다. 각 값에 붙은 조건·위치 표기는 ${pairConditionQuote(left, fieldId)} 대 ${josaRo(pairConditionQuote(right, fieldId))} 서로 다릅니다.`,
+          [`${left.selectorLabel} — ${conditions[0]}`, `${right.selectorLabel} — ${conditions[1]}`]
+        ));
+      }
+    }
+
+    // The site's own rule for water content and Dk/t across material families, stated
+    // product by product in the comparison table's 재질 row.
+    if (["water", "dkt"].includes(fieldId) && states.every((state) => state !== "unknown")) {
+      const families = [pairMaterialFamily(left), pairMaterialFamily(right)];
+      if (families[0] && families[1] && families[0] !== families[1]) {
+        verdict.blocked.push(pairReason(
+          "material-family",
+          `재질 계열이 다릅니다. ${josa(left.selectorLabel, "은/는")} ${pairMaterialPhrase(left, families[0])}, ${josa(right.selectorLabel, "은/는")} ${pairMaterialPhrase(right, families[1])}입니다. 계열이 다른 재질의 ${josa(label, "은/는")} 같은 축에서 비교하지 않습니다.`,
+          // The claim this reason rests on is the family, so the family's own recorded
+          // wording is quoted here rather than the two figures it decides about.
+          [left, right].map((product, index) => `${product.selectorLabel} 재질 표기 — ${pairMaterialRecord(product)} (${values[index]})`)
+        ));
+      } else if (families[0] !== families[1]) {
+        // One side's material record does not file it under either family. The site does
+        // not invent one, and it does not silently drop the difference either: the maker's
+        // own wording is printed beside the two figures as a reading note.
+        const unsetAt = families[0] ? 1 : 0;
+        const unset = [left, right][unsetAt];
+        verdict.notes.push(pairReason(
+          "material-family-unstated",
+          `${unset.selectorLabel} 쪽 공식 자료는 재질을 ${families[1 - unsetAt]} 같은 계열 이름으로 부르지 않습니다. 이 사이트가 기록한 표기는 ${pairMaterialRecord(unset)}입니다. 원문에 없는 계열을 사이트가 대신 정하지 않으므로, 두 ${josa(label, "을/를")} 계열이 같다고도 다르다고도 전제하지 않고 각각의 원문 그대로 읽습니다.`,
+          [left, right].map((product, index) => `${product.selectorLabel} ${values[index]}`)
+        ));
+      }
+    }
+
+    // Dk/t is a thickness-dependent figure, so a missing centre thickness on either side
+    // removes the condition the number has to be read with.
+    if (fieldId === "dkt") {
+      const missing = [left, right].filter((product) => fieldState(productField(product, "thickness")?.state) === "unknown");
+      if (missing.length) {
+        verdict.blocked.push(pairReason(
+          "thickness-dependency",
+          `Dk/t는 재질의 산소 투과성을 렌즈 두께로 나눈 값인데, ${missing.map((product) => product.selectorLabel).reduce((joined, name) => (joined ? `${josa(joined, "과/와")} ${name}` : name), "")}의 중심두께가 공식 자료에서 확인되지 않습니다. 두께 조건 없이 Dk/t 숫자만 비교하지 않고, Dk/t에서 두께를 역산하지도 않습니다.`,
+          missing.map((product) => `${product.selectorLabel} 중심두께 — ${pairFieldValue(product, "thickness")}`)
+        ));
+      }
+    }
+
+    // A figure recorded only from a global document is not the figure a Korean package
+    // prints, and one product's flag can say so while the other's does not.
+    if (states.every((state) => state !== "unknown")) {
+      const flags = [fields[0]?.flag || "", fields[1]?.flag || ""];
+      if (flags[0] !== flags[1] && flags.some((flag) => /한국 표기 미확인|한국 자료에|한국 공식 자료/.test(flag))) {
+        verdict.blocked.push(pairReason(
+          "region-notation",
+          `원문의 지역 범위가 다릅니다. ${left.selectorLabel}의 ${label} 표기 ${josa(values[0], "은/는")} ${flags[0] || "별도 표기 없음"}, ${right.selectorLabel}의 ${label} 표기 ${josa(values[1], "은/는")} ${josaRo(flags[1] || "별도 표기 없음")} 기록돼 있어 두 원문을 한국 표기끼리 맞대응시키지 못합니다.`,
+          [`${left.selectorLabel} ${values[0]} · ${right.selectorLabel} ${values[1]}`]
+        ));
+      }
+    }
+
+    if (verdict.blocked.length) return verdict;
+
+    verdict.same = values[0] === values[1];
+
+    // Two official sources can print the same grade in different words. The site rewrites
+    // neither wording, but it says the grade itself is the same so that a difference in
+    // wording is not read from the summary as a difference in grade.
+    if (!verdict.same && fieldId === "uv") {
+      const grades = values.map((value) => (value.match(/Class\s*\d+/i)?.[0] || "").replace(/\s+/g, " "));
+      if (grades[0] && grades[0] === grades[1]) {
+        verdict.sameGrade = pairReason(
+          "same-grade",
+          `두 원문이 인쇄한 등급은 ${josaRo(grades[0])} 같고, 그 등급을 적는 문구만 다릅니다. 문구 차이를 등급 차이로 읽지 않습니다.`,
+          [`${left.selectorLabel} ${values[0]} · ${right.selectorLabel} ${values[1]}`]
+        );
+        verdict.notes.push(verdict.sameGrade);
+      }
+    }
+
+    // Reading aids for a row that can be read: the document both figures come from, and
+    // the centre thickness each Dk/t was measured at.
+    // Whether both figures rest on one document is a fact about the page, not about the
+    // row, so it is recorded here and summarised once above the table.
+    const documents = fields.map((field) => field?.sources?.[0]?.document || "");
+    verdict.document = documents[0] && documents[0] === documents[1] ? documents[0] : "";
+    if (fieldId === "dkt") {
+      const thickness = [left, right].map((product) => pairThicknessCondition(product, "dkt") || pairFieldValue(product, "thickness"));
+      if (thickness[0] && thickness[1] && thickness[0] !== thickness[1]) {
+        verdict.notes.push(pairReason(
+          "thickness-condition",
+          `두 Dk/t는 중심두께 ${thickness[0]}인 렌즈와 ${thickness[1]}인 렌즈에서 잰 값입니다. Dk/t는 재질의 산소 투과성을 두께로 나눈 값이므로, 이 차이는 재질 차이와 구분해서 읽어야 합니다.`,
+          [`${left.selectorLabel} ${values[0]} · ${right.selectorLabel} ${values[1]}`]
+        ));
+      }
+    }
+    return verdict;
+  }
+
+  // 편집방침 4장: 착용방식·연속착용은 이 사이트가 판단하지 않는 항목이고, 그 구분이
+  // 필요한 자리에서는 값 옆에 함께 적는다. 제품 페이지가 값마다 붙이는 주의 문구를 쌍
+  // 페이지도 같은 규칙으로 싣는다 — 원문 한 줄만 읽고 지나가는 독자에게 닿아야 하는
+  // 문장이므로, 페이지 아래쪽의 공통 안내로 대신하지 않는다.
+  const PAIR_WEAR_TEXT = /연속착용|착용방식|끼고 자|extended wear|daily wear|overnight/i;
+
+  // The caution a product page keeps beside this value, printed wherever this page prints
+  // an original that mixes a wear schedule into the value. Quoted whole: choosing which
+  // sentence of a caution to carry would be the site editing its own warning.
+  function pairFieldCautions(pair, fieldId, printed) {
+    if (!fieldId || !PAIR_WEAR_TEXT.test(String(printed || ""))) return [];
+    return pair.map((product) => {
+      const caution = productField(product, fieldId)?.caution || "";
+      if (!caution || !PAIR_WEAR_TEXT.test(caution)) return "";
+      return `${product.selectorLabel} ${pairFieldLabel(fieldId)} 주의할 점 · ${caution}`;
+    }).filter(Boolean);
+  }
+
+  function pairFieldVerdict(left, right, fieldId) {
+    const verdict = pairFieldVerdictFor(left, right, fieldId);
+    verdict.blocked.concat(verdict.notes).forEach((reason) => {
+      reason.cautions = pairFieldCautions([left, right], fieldId, `${reason.sentence} ${reason.evidence}`);
+    });
+    return verdict;
+  }
+
+  function pairVerdicts(pair) {
+    return PAIR_FIELD_IDS.map((fieldId) => pairFieldVerdict(pair[0], pair[1], fieldId));
+  }
+
+  // Facts about the pair as a whole rather than about one row: how much of the two
+  // products' evidence rests on the same document, and which test conditions neither
+  // maker prints. Both are read off the same field records the table renders.
+  function pairReadingNotes(pair, verdicts) {
+    const notes = [];
+    const shared = new Map();
+    verdicts.filter((verdict) => verdict.document).forEach((verdict) => {
+      if (!shared.has(verdict.document)) shared.set(verdict.document, []);
+      shared.get(verdict.document).push(verdict);
+    });
+    // Where in that document each product sits: the first segment of the condition names
+    // the page, table and column the figure was read from.
+    const place = (product, fieldId) => pairConditionQuote(product, fieldId).split("·")[0].trim();
+    Array.from(shared.entries())
+      .filter(([, group]) => group.length > 1)
+      .forEach(([document, group]) => {
+        const anchor = group[0].fieldId;
+        notes.push(pairReason(
+          "same-document",
+          `${group.map((verdict) => verdict.label).join(" · ")} ${group.length}개 항목은 두 제품 모두 같은 문서를 1차 근거로 삼습니다: ${document}. 두 제품이 놓인 자리는 ${place(pair[0], anchor)} 대 ${josaRo(place(pair[1], anchor))} 서로 다른 칸이며, 같은 문서에서 읽었다는 것이 값이 같다는 뜻은 아닙니다.`,
+          [`${pair[0].selectorLabel} · ${pair[1].selectorLabel}`]
+        ));
+      });
+
+    const dkt = verdicts.find((verdict) => verdict.fieldId === "dkt");
+    if (dkt && !dkt.blocked.length && !dkt.bothUnknown) {
+      const keys = pair.map((product) => pairConditionKeys(product, "dkt"));
+      const absent = PAIR_CONDITION_KEYS.filter((key) => !keys[0][key.id] && !keys[1][key.id]);
+      if (absent.length) {
+        notes.push(pairReason(
+          "condition-shared-gap",
+          `두 제품의 Dk/t 원문 모두 ${josa(absent.map((key) => key.label).join(" · "), "을/를")} 밝히지 않습니다. 표기 수준이 같아 나란히 놓을 수는 있지만, 두 숫자가 같은 방법으로 잰 값이라는 근거도 없습니다.`,
+          [`${pair[0].selectorLabel} ${pairFieldValue(pair[0], "dkt")} · ${pair[1].selectorLabel} ${pairFieldValue(pair[1], "dkt")}`]
+        ));
+      }
+    }
+    return notes;
+  }
+
+  function pairBuckets(pair) {
+    const verdicts = pairVerdicts(pair);
+    return {
+      verdicts,
+      readings: pairReadingNotes(pair, verdicts),
+      blocked: verdicts.filter((verdict) => verdict.blocked.length),
+      bothUnknown: verdicts.filter((verdict) => verdict.bothUnknown),
+      same: verdicts.filter((verdict) => !verdict.blocked.length && !verdict.bothUnknown && verdict.same),
+      different: verdicts.filter((verdict) => !verdict.blocked.length && !verdict.bothUnknown && !verdict.same)
+    };
+  }
+
+
+  // The comparison table's own rows, with this pair's verdict appended to the row note,
+  // so a row that cannot be read side by side says so inside the table as well.
+  function pairRows(pair) {
+    const verdicts = pairVerdicts(pair);
+    const byField = {};
+    verdicts.forEach((verdict) => { byField[verdict.fieldId] = verdict; });
+    return COMPARE_ROWS.map((row) => {
+      const verdict = row.fieldId ? byField[row.fieldId] : null;
+      if (!verdict) return { ...row };
+      const lines = verdict.blocked.length
+        ? [`이 두 제품에서는 같은 항목으로 놓을 수 없습니다. ${verdict.blocked.map((reason) => reason.sentence).join(" ")}`]
+        : verdict.notes.map((note) => note.sentence);
+      // The cell itself prints every recorded original, so a wear-schedule sentence can
+      // reach the table even where no verdict quotes it. The caution travels with it.
+      const printed = pair.map((product) => {
+        const field = productField(product, row.fieldId);
+        return [field?.value, ...(field?.conflicts || []).map((conflict) => conflict.value), row.notes?.[product.id], field?.sources?.[0]?.condition]
+          .filter(Boolean).join(" · ");
+      }).join(" · ");
+      const cautions = pairFieldCautions(pair, row.fieldId, printed);
+      if (!lines.length && !cautions.length) return { ...row };
+      return { ...row, rowNote: [row.rowNote, ...lines, ...cautions].filter(Boolean).join(" ") };
+    });
+  }
+
+  function pairVerifiedAt(pair) {
+    const dates = [];
+    pair.forEach((product) => product.fields.forEach((field) => (field.sources || []).forEach((source) => {
+      if (source.verifiedAt) dates.push(source.verifiedAt);
+    })));
+    return dates.length ? displayDate(dates.sort().pop()) : "";
+  }
+
+  function pairReasonBody(reason, suffix = "") {
+    const evidence = reason.evidence ? `<span class="cell-note">근거 원문 · ${text(reason.evidence)}</span>` : "";
+    const cautions = (reason.cautions || [])
+      .map((caution) => `<span class="cell-note warn">${text(caution)}</span>`).join("");
+    return `${text(reason.sentence)}${suffix}${evidence}${cautions}`;
+  }
+
+  function pairTermLink(verdict) {
+    const href = fieldCopy[verdict.fieldId] ? internalHref(`../terms/${verdict.fieldId}.html`) : "";
+    return href ? ` <a href="${escapeHtml(href)}">${escapeHtml(verdict.label)} 표기 읽는 법</a>` : "";
+  }
+
+  // One list item per item, never per reason: the number in the heading above the list and
+  // the number of entries a reader counts in it have to be the same number. A field that
+  // carries several reasons keeps them inside its own entry.
+  function pairReasonItem(verdict, reasons) {
+    const list = [].concat(reasons);
+    if (list.length === 1) {
+      return `<li><strong>${escapeHtml(verdict.label)}</strong> · ${pairReasonBody(list[0], pairTermLink(verdict))}</li>`;
+    }
+    return `<li><strong>${escapeHtml(verdict.label)}</strong> · 사유 ${list.length}건${pairTermLink(verdict)}<ul class="source-links">${list.map((reason) => `<li>${pairReasonBody(reason)}</li>`).join("")}</ul></li>`;
+  }
+
+  function pairValuePair(verdict, pair) {
+    return verdict.values.map((value, index) => `${escapeHtml(pair[index].selectorLabel)} ${text(value)}`).join(" · ");
+  }
+
+  function pairPackageCard(product) {
+    const specs = (product.packageSpecs || []).map((spec) =>
+      `<div class="label-item"><strong>${text(spec.value)}</strong><span>${escapeHtml(spec.label)}</span></div>`).join("");
+    const href = internalHref(`../products/${product.slug || product.id}.html`);
+    return `<section class="package-card" aria-label="${escapeHtml(`${product.selectorLabel} 주요 표기`)}">
+      <div class="package-head">
+        <strong><a href="${escapeHtml(href)}">${escapeHtml(product.name)}</a></strong>
+        <span>${escapeHtml(product.type)}</span>
+      </div>
+      <div class="label-grid">${specs}</div>
+      <p class="sample-note">${escapeHtml(product.maker)} / ${escapeHtml(product.distributor)}${coiChip(product)}</p>
+    </section>`;
+  }
+
+  function pairSourceItems(pair) {
+    const seen = new Set();
+    const items = [];
+    pair.forEach((product) => (product.fields || []).forEach((field) => (field.sources || []).forEach((source) => {
+      const url = externalUrl(source.url);
+      if (url === "#") return;
+      const key = `${product.id}|${url}|${source.document}`;
+      if (seen.has(key)) return;
+      seen.add(key);
+      items.push(`<li><a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(source.document)}</a> <span class="cell-note">${escapeHtml(product.selectorLabel)} · ${escapeHtml(source.organization)} · 확인일 ${displayDate(source.verifiedAt || "")}</span></li>`);
+    })));
+    return items.join("");
+  }
+
+  // The count sentence the page states above the table. It is computed, never typed, so
+  // the static copy in the file can be checked against it.
+  function pairCountSentence(pair) {
+    const buckets = pairBuckets(pair);
+    const readable = buckets.same.length + buckets.different.length;
+    const unknown = buckets.bothUnknown.length
+      ? ` 두 제품 모두 공식 표기를 찾지 못한 항목이 ${buckets.bothUnknown.length}개 있습니다.`
+      : "";
+    return `공식 표기 ${PAIR_FIELD_IDS.length}개 항목 가운데 같은 항목으로 나란히 놓을 수 있는 것은 ${readable}개(값이 같은 항목 ${buckets.same.length}개 · 값이 다른 항목 ${buckets.different.length}개)이고, 같은 표에 놓을 수 없는 것은 ${buckets.blocked.length}개입니다.${unknown}`;
+  }
+
+  // The name a search result has to carry: the recorded product name without its trademark
+  // marks and without the English half, which is what tells one AIR OPTIX from another.
+  // The picker's short selectorLabel stays in the h1 and in the page's own prose.
+  function pairSearchName(product) {
+    const korean = String(product.name || "").split(" / ")[0].replace(/[®™]/g, "").replace(/\s+/g, " ").trim();
+    // Only where the recorded name is the picker label plus the half the label drops. Where
+    // the two spell the product differently — MAX against 맥스, 아큐브 오아시스 against
+    // 아큐브 오아시스 2주 — the label is the one that tells this product from its siblings.
+    return korean.includes(product.selectorLabel) ? korean : product.selectorLabel;
+  }
+
+  // A description a Korean SERP can actually show: the proposition first, the figures not
+  // at all. Putting two 함수율 numbers side by side in the snippet would print exactly the
+  // comparison the page itself declines to make.
+  function pairMetaDescription(pair) {
+    const buckets = pairBuckets(pair);
+    const names = `${josa(pairSearchName(pair[0]), "과/와")} ${pairSearchName(pair[1])}`;
+    const blocked = buckets.blocked.length
+      ? `${buckets.blocked.map((verdict) => verdict.label).join("·")} ${buckets.blocked.length}개 항목은 왜 같은 표에 놓을 수 없는지 근거 원문과 함께 밝힙니다.`
+      : "아홉 항목 모두 같은 항목으로 놓고 근거 원문을 함께 밝힙니다.";
+    return `${names}의 공식 표기를 출처·확인일과 함께 나란히 둡니다. ${blocked} 추천·순위·점수는 없습니다.`;
+  }
+
+  function pairMetaTitle(pair) {
+    const buckets = pairBuckets(pair);
+    return `${pairSearchName(pair[0])} vs ${pairSearchName(pair[1])} — 공식 표기 비교와 같은 표에 놓을 수 없는 ${buckets.blocked.length}개 항목 | LensFact`;
+  }
+
+  // The whole body of a pair page. `prefix` namespaces the table ids so the no-JS copy
+  // and the rendered copy can never collide.
+  function pairBodyMarkup(ids, prefix = "") {
+    const pair = pairProducts(ids);
+    if (!pair) return "";
+    const buckets = pairBuckets(pair);
+    const columns = pair.map((product) => ({ productId: product.id, colId: `${prefix}col-${product.id}`, label: pairColumnLabel(product) }));
+    const byId = {};
+    pair.forEach((product) => { byId[product.id] = product; });
+    const rows = pairRows(pair).map((row) => ({ ...row, rowId: `${prefix}${row.rowId}` }));
+    const captionId = `${prefix}pair-caption`;
+
+    const blockedList = buckets.blocked.length
+      ? `<ul class="source-links">${buckets.blocked.map((verdict) => pairReasonItem(verdict, verdict.blocked)).join("")}</ul>`
+      : `<p>이 두 제품에서는 아홉 항목 모두 같은 항목으로 놓을 수 있었습니다. 값이 같다는 뜻이 아니라, 두 표기가 같은 종류의 값이라는 뜻입니다.</p>`;
+
+    const unknownList = buckets.bothUnknown.length
+      ? `<section class="source-section" aria-labelledby="${prefix}pair-unknown-title">
+          <h2 id="${prefix}pair-unknown-title">두 제품 모두 공식 표기를 찾지 못한 항목</h2>
+          <ul class="source-links">${buckets.bothUnknown.map((verdict) => pairReasonItem(verdict, verdict.notes)).join("")}</ul>
+        </section>`
+      : "";
+
+    const readingList = buckets.readings.length
+      ? `<ul class="source-links">${buckets.readings.map((note) => `<li>${text(note.sentence)}</li>`).join("")}</ul>`
+      : "";
+
+    const comparable = [
+      buckets.same.length ? `<li><strong>값이 같은 항목 ${buckets.same.length}개</strong>${buckets.same.map((verdict) => `<span class="cell-note">${escapeHtml(verdict.label)} · ${text(verdict.values[0])}</span>`).join("")}</li>` : "",
+      buckets.different.length ? `<li><strong>값이 다른 항목 ${buckets.different.length}개</strong>${buckets.different.map((verdict) => `<span class="cell-note">${escapeHtml(verdict.label)} · ${pairValuePair(verdict, pair)}${verdict.sameGrade ? ` — ${text(verdict.sameGrade.sentence)}` : ""}</span>`).join("")}</li>` : ""
+    ].filter(Boolean).join("");
+
+    const memoRow = COMPARE_ROWS.find((row) => row.memo);
+    const memos = memoRow
+      ? `<ul class="source-links">${pair.map((product) => `<li><strong>${escapeHtml(product.selectorLabel)}</strong>${coiChip(product)}<span class="cell-note">${text(memoRow.memo[product.id] || "")}</span></li>`).join("")}</ul>`
+      : "";
+
+    const others = pair.flatMap((product) => pairPagesWith(product.id)
+      .filter((page) => pairFile(page.ids) !== pairFile(ids))
+      .map((page) => `<li><a href="${escapeHtml(internalHref(`./${pairFile(page.ids)}`))}">${escapeHtml(pairLabel(page.ids))} 공식 표기 비교</a></li>`));
+    const otherPages = others.length
+      ? `<section class="source-section" aria-labelledby="${prefix}pair-others-title">
+          <h2 id="${prefix}pair-others-title">이 두 제품이 들어간 다른 비교 페이지</h2>
+          <ul class="source-links">${Array.from(new Set(others)).join("")}</ul>
+        </section>`
+      : "";
+
+    return `<section class="source-section" aria-labelledby="${prefix}pair-summary-title">
+        <h2 id="${prefix}pair-summary-title">두 제품의 공식 표기를 항목별로 나눈 결과</h2>
+        <ul class="source-links">${comparable}</ul>
+        ${readingList}
+      </section>
+
+      <div class="cards-grid">${pair.map(pairPackageCard).join("")}</div>
+
+      <section class="source-section" aria-labelledby="${prefix}pair-blocked-title">
+        <h2 id="${prefix}pair-blocked-title">같은 표에 놓을 수 없는 항목 ${buckets.blocked.length}개</h2>
+        <p>아래 항목은 두 제품의 공식 표기가 서로 다른 종류의 값이거나, 원문이 여러 건이거나, 한쪽 표기를 찾지 못한 항목입니다. 값을 합치거나 한쪽을 대표값으로 고르지 않고, 왜 나란히 읽을 수 없는지만 적습니다.</p>
+        ${blockedList}
+      </section>
+
+      ${unknownList}
+
+      <section class="source-section" aria-labelledby="${prefix}pair-table-title">
+        <h2 id="${prefix}pair-table-title">공식 표기 나란히 보기</h2>
+        <p>비교표와 같은 행 구성입니다. 행 이름은 그 표기를 설명하는 용어 페이지로, 열 이름은 제품 페이지로 이어집니다.</p>
+        <p class="table-caption" id="${captionId}">${escapeHtml(pair.map((product) => product.selectorLabel).join(" · "))} 공식 표기 · 확인일 ${pairVerifiedAt(pair)}</p>
+        <div class="table-scroll" tabindex="0" aria-label="두 제품 공식 표기 비교표. 좁은 화면에서는 항목별 카드로 표시됩니다.">
+          <table class="compare-table pair-table" aria-labelledby="${captionId}">
+            <thead>${compareHeadRow(columns, byId)}</thead>
+            <tbody>${rows.map((row) => compareRow(row, byId, columns)).join("")}</tbody>
+          </table>
+        </div>
+        <p class="table-footnote">${rows.filter((row) => row.rowNote).map((row) => `<span class="table-footnote-item" id="compare-note-${escapeHtml(row.rowId)}">${escapeHtml(row.label)}: ${text(row.rowNote)}</span>`).join("")}</p>
+      </section>
+
+      <section class="source-section" aria-labelledby="${prefix}pair-memo-title">
+        <h2 id="${prefix}pair-memo-title">두 제품의 확인 메모</h2>
+        <p>제품별로 무엇을 어떻게 확인했는지, 어디에서 확인하지 못했는지 그대로 옮겨 둡니다.</p>
+        ${memos}
+      </section>
+
+      <section class="source-section" aria-labelledby="${prefix}pair-sources-title">
+        <h2 id="${prefix}pair-sources-title">이 비교에 사용한 공식 출처</h2>
+        <p>표의 모든 값은 아래 공개 자료에서 옮겨 적었습니다. 주소는 제품 데이터에 기록된 출처를 그대로 사용합니다.</p>
+        <ul class="source-links">${pairSourceItems(pair)}</ul>
+      </section>
+
+      ${otherPages}`;
+  }
+
+  function initComparePairPage() {
+    const main = qs("[data-compare-pair]");
+    if (!main || !products.length) return;
+    const ids = String(main.dataset.comparePair || "").split(",").map((id) => id.trim()).filter(Boolean);
+    const pair = pairProducts(ids);
+    if (!pair) return;
+
+    const eyebrow = qs("[data-pair-eyebrow]", main);
+    const verifiedAt = pairVerifiedAt(pair);
+    if (eyebrow && verifiedAt) eyebrow.textContent = `두 제품 공식 표기 비교 · 확인일 ${verifiedAt}`;
+
+    const countNote = qs("[data-pair-count]", main);
+    if (countNote) countNote.textContent = pairCountSentence(pair);
+
+    const live = qs("[data-pair-live]", main);
+    if (!live) return;
+    live.innerHTML = pairBodyMarkup(ids, "");
+    toggleHidden(live, false);
   }
 
   // Product pages render every field open: the evidence is the page, not a disclosure.
@@ -1672,6 +2482,7 @@ const ADS_ENABLED = false;
     initArticleDisclosure();
     initArticleList();
     initCompareTable();
+    initComparePairPage();
     initProductPage();
     initProductIndex();
     initTermPage();

@@ -175,7 +175,7 @@ test("home is a three-path router whose trust line keeps a correct unknown fallb
 
 test("no page still links to the removed home decoder anchor", () => {
   const pages = htmlPages();
-  assert.equal(pages.length, 40, "site should contain the full page set");
+  assert.equal(pages.length, 48, "site should contain the full page set");
 
   // Any resurrected home fragment counts, not just the one literal that was removed.
   const offenders = pages.filter((page) => /href="[^"]*#(?:input-)?decoder"/.test(read(page)));
@@ -184,7 +184,7 @@ test("no page still links to the removed home decoder anchor", () => {
 
 test("every page's nav points at the decoder page at its own depth", () => {
   const pages = htmlPages();
-  assert.equal(pages.length, 40);
+  assert.equal(pages.length, 48);
 
   for (const page of pages) {
     const html = read(page);
@@ -246,5 +246,293 @@ test("the decoder page carries the whole input tool and its no-JS fallbacks", ()
   const withoutNoscript = main.replace(/<noscript>[\s\S]*?<\/noscript>/g, "");
   for (const field of ["bc", "dia", "water", "material", "dkt", "thickness", "replacement", "permit", "uv"]) {
     assert.match(withoutNoscript, new RegExp(`href="\.\./terms/${field}\.html"`), field);
+  }
+});
+
+// --- Product pair pages ----------------------------------------------------------
+// The pair pages are generated from products.js by tools/build-pair-pages.js, so the
+// tests reach for the generator rather than restating any figure.
+const pairTool = require("../tools/build-pair-pages.js");
+const pairApi = pairTool.loadPairApi();
+const pairFiles = () => pairApi.PAIR_PAGES.map((page) => ({
+  page,
+  ids: page.ids,
+  file: `site/compare/${pairApi.pairFile(page.ids)}`,
+  name: pairApi.pairFile(page.ids),
+  pair: pairApi.pairProducts(page.ids)
+}));
+
+// Every sentence a pair page generates, with both product names masked. Two pair pages
+// that could share a paragraph would collide here even though their names differ.
+const pairSentences = (entry) => {
+  const buckets = pairApi.pairBuckets(entry.pair);
+  const reasons = buckets.verdicts.flatMap((verdict) => verdict.blocked.concat(verdict.notes)).concat(buckets.readings);
+  const names = pairApi.PAIR_PAGES
+    .flatMap((page) => pairApi.pairProducts(page.ids))
+    .flatMap((product) => [product.name, product.selectorLabel])
+    .sort((left, right) => right.length - left.length);
+  const mask = (value) => names.reduce((text, name) => text.split(name).join("«P»"), value);
+  // The sentence alone and the sentence with its quoted evidence both have to be unique:
+  // a reason that reads the same once the two names are removed is a paragraph another
+  // pair page could carry unchanged, which is exactly what makes a set of pages a doorway.
+  return reasons.flatMap((reason) => [mask(reason.sentence), mask(`${reason.sentence} || ${reason.evidence}`)]);
+};
+
+test("every recorded product pair has its own indexable page", () => {
+  const entries = pairFiles();
+  assert.ok(entries.length >= 8, "the pilot ships at least the eight recorded pairs");
+
+  for (const entry of entries) {
+    const html = read(entry.file);
+    const main = html.match(/<main[\s\S]*?<\/main>/)?.[0] || "";
+    assert.ok(main, `${entry.name} should have a main region`);
+    assert.equal((main.match(/<h1[ >]/g) || []).length, 1, entry.name);
+
+    // The reason these pages exist: a product-versus-product query needs a URL whose
+    // title, description and canonical name both products.
+    const title = html.match(/<title>([^<]+)<\/title>/)?.[1] || "";
+    const description = html.match(/<meta name="description" content="([^"]+)">/)?.[1] || "";
+    const canonical = html.match(/<link rel="canonical" href="([^"]+)">/)?.[1] || "";
+    const ogTitle = html.match(/<meta property="og:title" content="([^"]+)">/)?.[1] || "";
+    const ogUrl = html.match(/<meta property="og:url" content="([^"]+)">/)?.[1] || "";
+    for (const product of entry.pair) {
+      assert.ok(title.includes(product.selectorLabel), `${entry.name} title names ${product.selectorLabel}`);
+      assert.ok(description.includes(product.selectorLabel), `${entry.name} description names ${product.selectorLabel}`);
+      assert.ok(ogTitle.includes(product.selectorLabel), `${entry.name} og:title names ${product.selectorLabel}`);
+    }
+    assert.equal(canonical, `https://DOMAIN-TBD/compare/${entry.name}`, entry.name);
+    assert.equal(ogUrl, canonical, entry.name);
+    assert.equal(html.match(/<h1 class="page-title">([^<]+)<\/h1>/)?.[1].includes("vs"), true, entry.name);
+
+    // Shared chrome, at this depth.
+    assert.match(html, /<a class="skip-link" href="#main">/, entry.name);
+    assert.match(html, /<link rel="icon" href="data:image\/svg\+xml/, entry.name);
+    assert.match(html, /<meta name="theme-color" content="#FBF9F8">/, entry.name);
+    assert.ok(
+      html.indexOf("pretendard-dynamic-subset.css") < html.indexOf("assets/css/style.css"),
+      `${entry.name} loads Pretendard before the stylesheet`
+    );
+    assert.match(html, /<span class="footer-boundary">/, entry.name);
+    assert.equal(
+      (html.match(/<a href="\.\.\/compare\/index\.html" aria-current="page">공식 사양 비교<\/a>/g) || []).length,
+      2,
+      `${entry.name} marks the comparison nav entry in both nav copies`
+    );
+
+    // Wiring: into the comparison tool with both ids preselected, and into both products.
+    assert.ok(main.includes(`href="./index.html?p=${entry.ids.join(",")}"`), `${entry.name} preselects the pair in the tool`);
+    for (const product of entry.pair) {
+      assert.ok(main.includes(`../products/${product.slug}.html`), `${entry.name} links ${product.slug}`);
+    }
+  }
+});
+
+test("pair pages are the generator's output, so their values cannot drift from products.js", () => {
+  for (const page of pairTool.pairPageFiles()) {
+    const committed = pairTool.normalizeEol(read(page.relativePath));
+    assert.equal(
+      committed,
+      pairTool.normalizeEol(page.html),
+      `${page.relativePath} differs from tools/build-pair-pages.js output — regenerate it`
+    );
+  }
+
+  // The generated no-JS copy has to carry the printed values, not just the chrome.
+  for (const entry of pairFiles()) {
+    const noscript = read(entry.file).match(/<noscript>[\s\S]*?<\/noscript>/g)?.pop() || "";
+    assert.ok(noscript.includes("ns-row-permit"), `${entry.name} noscript keeps the full table`);
+    for (const product of entry.pair) {
+      for (const fieldId of ["permit", "bc", "dia", "water"]) {
+        const value = product.fields.find((field) => field.id === fieldId)?.value || "";
+        const printed = value.replaceAll("&", "&amp;");
+        assert.ok(noscript.includes(printed), `${entry.name} noscript prints ${product.id} ${fieldId} ${value}`);
+      }
+    }
+  }
+});
+
+test("pair pages state their computed counts and never rank the two products", () => {
+  // 추천 · 순위 · 점수 · 더 나은 may only appear inside a sentence that denies them; the
+  // superlatives of an advertorial may not appear at all.
+  const forbidden = ["추천", "순위", "점수", "더 좋", "더 나은", "더 낫", "적합"];
+  const absolute = [/최고/, /베스트/, /승자/, /우승/, /TOP\s*\d/, /\d위\b/];
+
+  for (const entry of pairFiles()) {
+    const html = read(entry.file);
+    const main = html.match(/<main[\s\S]*?<\/main>/)?.[0] || "";
+    const plain = main.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ");
+
+    const stated = html.match(/<p class="editor-note" data-pair-count>([^<]+)<\/p>/)?.[1] || "";
+    assert.equal(stated, pairApi.pairCountSentence(entry.pair), `${entry.name} count sentence must equal the computed one`);
+
+    for (const pattern of absolute) assert.doesNotMatch(plain, pattern, `${entry.name} must not compare the two products`);
+    for (const sentence of plain.split(/(?<=다\.)/)) {
+      for (const word of forbidden) {
+        if (!sentence.includes(word)) continue;
+        assert.match(sentence, /않|없/, `${entry.name} uses "${word}" outside a denial: ${sentence.trim()}`);
+      }
+    }
+  }
+});
+
+test("no two pair pages can share a paragraph", () => {
+  const seen = new Map();
+  for (const entry of pairFiles()) {
+    const sentences = pairSentences(entry);
+    assert.ok(sentences.length, `${entry.name} should derive at least one sentence from its own data`);
+    for (const sentence of sentences) {
+      const owner = seen.get(sentence);
+      assert.ok(
+        owner === undefined || owner === entry.name,
+        `${entry.name} repeats a sentence from ${owner}: ${sentence.slice(0, 120)}`
+      );
+      seen.set(sentence, entry.name);
+    }
+  }
+});
+
+test("pair pages are reachable from the comparison tool and from both product pages", () => {
+  const compare = read("site/compare/index.html");
+  assert.match(compare, /data-compare-pair-link/, "the tool needs the slot it points at a pair page with");
+
+  for (const entry of pairFiles()) {
+    assert.ok(compare.includes(`href="./${entry.name}"`), `compare/index.html should list ${entry.name}`);
+    for (const product of entry.pair) {
+      const productPage = read(`site/products/${product.slug}.html`);
+      assert.ok(
+        productPage.includes(`href="../compare/${entry.name}"`),
+        `products/${product.slug}.html should link ${entry.name}`
+      );
+    }
+  }
+
+  const sitemap = read("site/sitemap.xml");
+  for (const entry of pairFiles()) {
+    const url = sitemap.match(new RegExp(`<url>\\s*<loc>https://DOMAIN-TBD/compare/${entry.name}</loc>\\s*<lastmod>([^<]+)</lastmod>`));
+    assert.ok(url, `sitemap.xml should carry ${entry.name}`);
+    assert.equal(url[1], pairTool.PAGE_DATE, entry.name);
+  }
+});
+
+// The blocked list counts items, and its heading states that count. A field can carry more
+// than one reason, so the reasons live inside the field's own entry; if that ever inverts,
+// a reader counting the entries under the heading gets a different number from the heading.
+test("the blocked-item heading counts exactly the entries listed under it", () => {
+  const topLevelItems = (list) => {
+    let depth = 0;
+    let count = 0;
+    for (const token of list.matchAll(/<(\/?)(ul|li)\b/g)) {
+      const [, closing, tag] = token;
+      if (tag === "ul") depth += closing ? -1 : 1;
+      else if (!closing && depth === 0) count += 1;
+    }
+    return count;
+  };
+
+  for (const entry of pairFiles()) {
+    const html = read(entry.file);
+    const section = html.match(/<h2 id="ns-pair-blocked-title">같은 표에 놓을 수 없는 항목 (\d+)개<\/h2>([\s\S]*?)<\/section>/);
+    assert.ok(section, `${entry.name} should state a blocked-item count`);
+    const stated = Number(section[1]);
+    assert.equal(stated, pairApi.pairBuckets(entry.pair).blocked.length, `${entry.name} heading must state the computed count`);
+    const list = section[2].match(/<ul class="source-links">([\s\S]*)<\/ul>/);
+    if (!stated) {
+      assert.equal(list, null, `${entry.name} states no blocked item, so it must not list one`);
+      continue;
+    }
+    assert.equal(topLevelItems(list[1]), stated, `${entry.name} lists a different number of items than its heading states`);
+  }
+});
+
+// The two material families are labels the data prints, never labels the site derives. A
+// product whose sources qualify the family — 표면처리된 플루오로실리콘 함유 하이드로겔 — has
+// no family here, and a note that names the other family in order to exclude it is not a
+// claim about this product. Both readings once shipped, in opposite directions.
+test("a material family is only ever a label the product's own record prints", () => {
+  // Every product on file, not only the eleven a shipped pair happens to use: the two
+  // hardest cases are the ones no pair exercised, and both once classified backwards.
+  const expected = {
+    "acuvue-oasys-1-day": "실리콘 하이드로겔",
+    "dailies-total1": "실리콘 하이드로겔",
+    "biofinity": "실리콘 하이드로겔",
+    "acuvue-moist-1-day": "하이드로겔",
+    "myday": "실리콘 하이드로겔",
+    // 재질명은 공식 출처끼리 다르지만, 한국 공식 페이지가 계열을 실리콘 하이드로겔로 적는다.
+    "clariti-1-day": "실리콘 하이드로겔",
+    "acuvue-oasys-2-week": "실리콘 하이드로겔",
+    "precision1": "실리콘 하이드로겔",
+    "biotrue-oneday": "하이드로겔",
+    "acuvue-oasys-max-1-day": "실리콘 하이드로겔",
+    "dailies-aquacomfort-plus": "하이드로겔",
+    "acuvue-vita": "실리콘 하이드로겔",
+    "total30": "실리콘 하이드로겔",
+    // 제조사 문서가 계열을 표면처리된 플루오로실리콘 함유 하이드로겔로 적는다. 어느 공식
+    // 자료도 이 재질을 두 계열 중 하나로 부르지 않으므로 사이트가 대신 정하지 않는다.
+    "airoptix-plus-hydraglyde": "",
+    // 데이터가 PC-하이드로겔(하이드로겔 계열)이라 적고, 이어지는 절은 실리콘 하이드로겔과
+    // 비교하지 않는다는 배제 문구다. 그 절을 읽으면 계열이 정반대로 뒤집힌다.
+    "proclear-1-day": "하이드로겔",
+    "biofinity-energys": "실리콘 하이드로겔",
+    "ultra-one-day": "실리콘 하이드로겔",
+    "miru-1day": "하이드로겔",
+    "soflens-daily": "하이드로겔",
+    "clalen-1day": "실리콘 하이드로겔"
+  };
+
+  assert.deepEqual(
+    Object.fromEntries(pairApi.products.map((product) => [product.id, pairApi.pairMaterialFamily(product)])),
+    expected,
+    "a derived material family changed; check it against that product's own 재질 record before accepting it"
+  );
+
+  // No pair page may print a family label as this product's own unless the classifier set one.
+  for (const entry of pairFiles()) {
+    const html = read(entry.file);
+    for (const product of entry.pair) {
+      if (pairApi.pairMaterialFamily(product)) continue;
+      assert.ok(
+        !html.includes(`${product.selectorLabel}는 하이드로겔`) && !html.includes(`${product.selectorLabel}은 하이드로겔`) &&
+        !html.includes(`${product.selectorLabel}는 실리콘 하이드로겔`) && !html.includes(`${product.selectorLabel}은 실리콘 하이드로겔`),
+        `${entry.name} states a material family for ${product.id} that its data does not`
+      );
+    }
+  }
+});
+
+// The two authored lines per page are the only hand-written text on a pair page. They may
+// not describe wearing, discarding or reusing a lens — the site records 교체주기 and leaves
+// 착용방식 to a professional — and they may not rank this page against the site's others.
+test("the authored pair copy stays inside the site's own vocabulary", () => {
+  const banned = ["쓰고 버리", "하루 쓰", "재사용", "세척", "끼고 자", "착용시간", "가장 적", "가장 많", "가장 좋"];
+  for (const [file, copy] of Object.entries(pairTool.PAIR_COPY)) {
+    for (const line of [copy.headline, copy.lead]) {
+      for (const word of banned) {
+        assert.ok(!line.includes(word), `${file} authored copy uses "${word}": ${line}`);
+      }
+    }
+  }
+});
+
+// A description longer than the site's own ceiling loses its point past the snippet cut, and
+// the point is what separates this page from an advertorial.
+test("pair descriptions lead with the page's proposition and stay inside the site's length", () => {
+  const ceiling = 216;
+  for (const entry of pairFiles()) {
+    const description = read(entry.file).match(/<meta name="description" content="([^"]+)">/)?.[1] || "";
+    assert.ok(description.length <= ceiling, `${entry.name} description is ${description.length} chars, over ${ceiling}`);
+    assert.match(description, /추천·순위·점수는 없습니다\.$/, entry.name);
+  }
+});
+
+// The hub card states the same count as the page it links to. It is typed into the hub by
+// hand, so it is the one place a recomputed count can go stale unnoticed.
+test("the comparison hub states each pair page's computed blocked-item count", () => {
+  const hub = read("site/compare/index.html");
+  for (const entry of pairFiles()) {
+    const count = pairApi.pairBuckets(entry.pair).blocked.length;
+    const line = hub.split("\n").find((candidate) => candidate.includes(`href="./${entry.name}"`)) || "";
+    const card = line.match(/같은 표에 놓을 수 없는 항목 (\d+)개/);
+    assert.ok(card, `compare/index.html should carry a card for ${entry.name} stating its blocked-item count`);
+    assert.equal(Number(card[1]), count, `${entry.name} hub card states ${card[1]}, the page computes ${count}`);
   }
 });

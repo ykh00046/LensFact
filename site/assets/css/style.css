@@ -717,6 +717,13 @@ h3,
   min-inline-size: 0;
 }
 
+/* Pair pages compare exactly two products, so the same table fits the 45rem document
+   column without the twenty-product minimum. */
+.pair-table.compare-table,
+.pair-table.compare-table td {
+  min-inline-size: 0;
+}
+
 .term-table [headers~="term-col-count"],
 .term-table [headers~="ns-term-col-count"] {
   white-space: nowrap;
@@ -1447,6 +1454,16 @@ div.label-item:hover {
   border-radius: 50%;
   background: var(--color-accent);
   content: "";
+}
+
+/* One blocked item can carry several reasons. They nest inside that item so the number in
+   the heading above the list stays the number of entries a reader counts under it. */
+.source-links .source-links {
+  margin-block-start: var(--space-2);
+}
+
+.source-links .source-links > li::before {
+  background: var(--color-border);
 }
 
 .source-links a,
