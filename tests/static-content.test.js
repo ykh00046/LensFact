@@ -292,7 +292,7 @@ test("the 404 page carries the shared chrome and leads back into the site", () =
 // launch commit cannot pass.
 test("every page carries the preview noindex meta directly under the viewport line", () => {
   const pages = htmlPages();
-  assert.equal(pages.length, 48, "site should contain the full page set");
+  assert.equal(pages.length, 49, "site should contain the full page set");
 
   const meta = '<meta name="robots" content="noindex, nofollow">';
   const viewport = '<meta name="viewport" content="width=device-width, initial-scale=1">';
@@ -507,7 +507,7 @@ test("home hero uses the approved decorative image without changing the router",
 
 test("no page still links to the removed home decoder anchor", () => {
   const pages = htmlPages();
-  assert.equal(pages.length, 48, "site should contain the full page set");
+  assert.equal(pages.length, 49, "site should contain the full page set");
 
   // Any resurrected home fragment counts, not just the one literal that was removed.
   const offenders = pages.filter((page) => /href="[^"]*#(?:input-)?decoder"/.test(read(page)));
@@ -516,7 +516,7 @@ test("no page still links to the removed home decoder anchor", () => {
 
 test("every page's nav points at the decoder page at its own depth", () => {
   const pages = htmlPages();
-  assert.equal(pages.length, 48);
+  assert.equal(pages.length, 49);
 
   for (const page of pages) {
     const html = read(page);
@@ -582,6 +582,60 @@ test("the decoder page carries the whole input tool and its no-JS fallbacks", ()
   for (const field of ["bc", "dia", "water", "material", "dkt", "thickness", "replacement", "permit", "uv"]) {
     assert.match(withoutNoscript, new RegExp(`href="\.\./terms/${field}\.html"`), field);
   }
+});
+
+test("the BC DIA PWR knowledge article publishes the required identity, sources, and routes", () => {
+  const page = "site/knowledge/contact-lens-bc-dia-pwr.html";
+  assert.ok(htmlPages().includes(page), `${page} should exist`);
+  const html = read(page);
+
+  assert.match(html, /<title>콘택트렌즈 포장 숫자 BC·DIA·PWR 읽는 법 \| LensFact<\/title>/);
+  assert.match(html, /<link rel="canonical" href="https:\/\/DOMAIN-TBD\/knowledge\/contact-lens-bc-dia-pwr\.html">/);
+  assert.match(html, /<meta name="robots" content="noindex, nofollow">/);
+
+  const bibliography = html.match(/<ol class="bibliography">[\s\S]*?<\/ol>/)?.[0] || "";
+  assert.equal((bibliography.match(/<li id="source-[1-6]">/g) || []).length, 6);
+  const sourceUrls = [
+    "https://www.acuvue.com/en-us/eye-health/contact-lens-power/",
+    "https://precision.myalcon.com/prescription-101/",
+    "https://www.ftc.gov/business-guidance/resources/contact-lens-rule-guide-prescribers-sellers",
+    "https://www.ftc.gov/sites/default/files/filefield_paths/dr_eydelman_powerpoint_presentation.pdf",
+    "https://shop.acuvue.com/pub/media/ACUVUE-Technical-Specification-Guide-05-27-25.pdf",
+    "https://coopervision.co.kr/sites/coopervision.co.kr/files/CVK%20Product%20Specifications.pdf"
+  ];
+  sourceUrls.forEach((url, index) => {
+    assert.ok(bibliography.includes(`<li id="source-${index + 1}"><a href="${url}"`));
+  });
+  assert.equal((bibliography.match(/<li\b/g) || []).length, 6);
+
+  for (const href of [
+    "../decoder/index.html",
+    "../terms/bc.html",
+    "../terms/dia.html",
+    "../products/index.html#product-search"
+  ]) {
+    assert.ok(html.includes(`href="${href}"`), `${page} should link ${href}`);
+  }
+});
+
+test("the BC DIA PWR article is the latest live registration while water content stays featured", () => {
+  const context = { window: {} };
+  vm.runInNewContext(read("site/assets/data/articles.js"), context);
+  const articles = Array.from(context.window.LENSFACT_ARTICLES);
+  const latest = articles[0];
+  const featured = articles.filter((article) => article.featured);
+
+  assert.equal(latest.href, "./contact-lens-bc-dia-pwr.html");
+  assert.equal(latest.status, "live");
+  assert.equal(latest.featured, false);
+  assert.equal(latest.sources, 6);
+  assert.equal(latest.verifiedAt, "확인일 2026.09.01");
+  assert.deepEqual(featured.map((article) => article.href), ["./water-content-moisture.html"]);
+
+  const hub = read("site/knowledge/index.html");
+  const latestCard = hub.match(/<div class="article-list" data-article-list>[\s\S]*?<\/div>\s*<\/div>/)?.[0] || "";
+  assert.match(latestCard, /href="\.\/contact-lens-bc-dia-pwr\.html"/);
+  assert.match(hub, /class="feature-card"[\s\S]*href="\.\.\/knowledge\/water-content-moisture\.html"/);
 });
 
 // --- Product pair pages ----------------------------------------------------------

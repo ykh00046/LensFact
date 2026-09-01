@@ -118,6 +118,7 @@ non-text minimum.
 - Variants: featured and compact.
 - Accessibility: entire card is not nested in a link; primary title link remains clear.
 - States: completed articles expose a title link and verification metadata; unfinished articles show `준비 중` without a destination and use the dashed ivory `.card-pending` treatment with a muted title.
+- Knowledge articles reuse the article shell, conclusion, table of contents, source disclosure, limits, related-content cards, and professional-fitting boundary; factual comparison strips show source structure and never rank products.
 
 ### Comparison Table
 - Structure: one semantic table with row and product column headers; values reference both through `headers`.
