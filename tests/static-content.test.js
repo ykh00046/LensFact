@@ -292,7 +292,7 @@ test("the 404 page carries the shared chrome and leads back into the site", () =
 // launch commit cannot pass.
 test("every page carries the preview noindex meta directly under the viewport line", () => {
   const pages = htmlPages();
-  assert.equal(pages.length, 49, "site should contain the full page set");
+  assert.equal(pages.length, 50, "site should contain the full page set");
 
   const meta = '<meta name="robots" content="noindex, nofollow">';
   const viewport = '<meta name="viewport" content="width=device-width, initial-scale=1">';
@@ -507,7 +507,7 @@ test("home hero uses the approved decorative image without changing the router",
 
 test("no page still links to the removed home decoder anchor", () => {
   const pages = htmlPages();
-  assert.equal(pages.length, 49, "site should contain the full page set");
+  assert.equal(pages.length, 50, "site should contain the full page set");
 
   // Any resurrected home fragment counts, not just the one literal that was removed.
   const offenders = pages.filter((page) => /href="[^"]*#(?:input-)?decoder"/.test(read(page)));
@@ -516,7 +516,7 @@ test("no page still links to the removed home decoder anchor", () => {
 
 test("every page's nav points at the decoder page at its own depth", () => {
   const pages = htmlPages();
-  assert.equal(pages.length, 49);
+  assert.equal(pages.length, 50);
 
   for (const page of pages) {
     const html = read(page);
@@ -618,22 +618,62 @@ test("the BC DIA PWR knowledge article publishes the required identity, sources,
   }
 });
 
-test("the BC DIA PWR article is the latest live registration while water content stays featured", () => {
+test("the Dk and Dk/t knowledge article publishes its identity, official sources, boundaries, and routes", () => {
+  const page = "site/knowledge/contact-lens-dk-dkt.html";
+  assert.ok(htmlPages().includes(page), `${page} should exist`);
+  const html = read(page);
+
+  assert.match(html, /<title>콘택트렌즈 Dk와 Dk\/t 차이: 산소투과성 수치 비교 주의점 \| LensFact<\/title>/);
+  assert.match(html, /<link rel="canonical" href="https:\/\/DOMAIN-TBD\/knowledge\/contact-lens-dk-dkt\.html">/);
+  assert.match(html, /<meta name="robots" content="noindex, nofollow">/);
+  assert.match(html, /Dk<\/strong>는 렌즈 <strong>재료의 산소투과성/);
+  assert.match(html, /Dk\/t<\/strong>는 그 재료로 만든 <strong>특정 렌즈의 두께\(t\)를 반영한 산소전달률/);
+  assert.match(html, /단위 배율·측정법·온도·보정법·시험 도수와 두께 조건/);
+  assert.match(html, /처방·피팅·착용방식 판단을 대신하지 않습니다/);
+  assert.match(html, /직접 비교하거나 순위를 정할 수 없습니다/);
+
+  const bibliography = html.match(/<ol class="bibliography">[\s\S]*?<\/ol>/)?.[0] || "";
+  const sourceUrls = [
+    "https://www.fda.gov/regulatory-information/search-fda-guidance-documents/soft-hydrophilic-daily-wear-contact-lenses-performance-criteria-safety-and-performance-based-pathway",
+    "https://www.iso.org/standard/66341.html",
+    "https://shop.acuvue.com/pub/media/ACUVUE-Technical-Specification-Guide-05-27-25.pdf",
+    "https://coopervision.com/sites/coopervision.com/files/pfg01047_clariti_1_day_family_us_invigor_and_non-invigor-rev_b.pdf",
+    "https://www.accessdata.fda.gov/cdrh_docs/pdf8/P080011B.pdf",
+    "https://www.fda.gov/medical-devices/contact-lenses/types-contact-lenses"
+  ];
+  sourceUrls.forEach((url, index) => {
+    assert.ok(bibliography.includes(`<li id="source-${index + 1}"><a href="${url}"`));
+  });
+  assert.equal((bibliography.match(/<li\b/g) || []).length, 6);
+
+  for (const href of [
+    "./water-content-moisture.html",
+    "./contact-lens-bc-dia-pwr.html",
+    "../terms/dkt.html",
+    "../decoder/index.html",
+    "../compare/index.html"
+  ]) {
+    assert.ok(html.includes(`href="${href}"`), `${page} should link ${href}`);
+  }
+});
+
+test("the Dk and Dk/t article is the latest live registration while water content stays featured", () => {
   const context = { window: {} };
   vm.runInNewContext(read("site/assets/data/articles.js"), context);
   const articles = Array.from(context.window.LENSFACT_ARTICLES);
   const latest = articles[0];
   const featured = articles.filter((article) => article.featured);
 
-  assert.equal(latest.href, "./contact-lens-bc-dia-pwr.html");
+  assert.equal(latest.href, "./contact-lens-dk-dkt.html");
   assert.equal(latest.status, "live");
   assert.equal(latest.featured, false);
   assert.equal(latest.sources, 6);
-  assert.equal(latest.verifiedAt, "확인일 2026.09.01");
+  assert.equal(latest.verifiedAt, "확인일 2026.09.02");
   assert.deepEqual(featured.map((article) => article.href), ["./water-content-moisture.html"]);
 
   const hub = read("site/knowledge/index.html");
   const latestCard = hub.match(/<div class="article-list" data-article-list>[\s\S]*?<\/div>\s*<\/div>/)?.[0] || "";
+  assert.match(latestCard, /href="\.\/contact-lens-dk-dkt\.html"/);
   assert.match(latestCard, /href="\.\/contact-lens-bc-dia-pwr\.html"/);
   assert.match(hub, /class="feature-card"[\s\S]*href="\.\.\/knowledge\/water-content-moisture\.html"/);
 });

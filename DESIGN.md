@@ -119,6 +119,7 @@ non-text minimum.
 - Accessibility: entire card is not nested in a link; primary title link remains clear.
 - States: completed articles expose a title link and verification metadata; unfinished articles show `준비 중` without a destination and use the dashed ivory `.card-pending` treatment with a muted title.
 - Knowledge articles reuse the article shell, conclusion, table of contents, source disclosure, limits, related-content cards, and professional-fitting boundary; factual comparison strips show source structure and never rank products.
+- The knowledge hub registers nine topics: three live long-form articles (water content, BC·DIA·PWR, and Dk versus Dk/t), four linked term explainers, and two pending cards. The Dk/Dk/t article uses the existing comparison strip only to preserve each official value with its test conditions; it never converts values or ranks products across differing units, methods, temperatures, corrections, powers, or thicknesses.
 
 ### Comparison Table
 - Structure: one semantic table with row and product column headers; values reference both through `headers`.
