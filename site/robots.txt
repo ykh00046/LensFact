@@ -1,8 +1,23 @@
-# Preview deployment: indexing is blocked on purpose.
-# The domain is not final and the content is still being reviewed.
+# This file is NOT the effective robots.txt for the current preview deployment.
 #
-# Before public launch, replace `Disallow: /` with `Allow: /`,
-# replace DOMAIN-TBD with the real host, and uncomment the Sitemap line below.
+# The preview is served as a GitHub Pages *project* site, under a path prefix
+# (https://<user>.github.io/LensFact/). Crawlers only ever read robots.txt at the
+# origin root — https://<user>.github.io/robots.txt — which this repository does
+# not control. So everything below is ignored today.
+#
+# The actual indexing block for the preview is a per-page
+# `<meta name="robots" content="noindex, nofollow">` in the <head> of every HTML
+# page, plus the same line in the head template of tools/build-pair-pages.js so
+# regenerated pair pages keep it.
+#
+# The rules below are kept as belt-and-braces: on a future custom-domain (or any
+# apex-origin) deployment this file WOULD be the effective robots.txt.
+#
+# At launch, in one change (see the pre-publish checklist in site/README.md):
+#   1. remove the robots meta from every HTML page and from
+#      tools/build-pair-pages.js, and delete the test that asserts it,
+#   2. change `Disallow: /` below to `Allow: /` and uncomment the Sitemap line,
+#   3. replace DOMAIN-TBD with the real origin everywhere.
 
 User-agent: *
 Disallow: /

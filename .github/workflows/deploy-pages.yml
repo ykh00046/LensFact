@@ -25,6 +25,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # The test suite is the deploy gate. It runs before the artifact is uploaded, in
+      # this same job, so a failure stops the run while the previously deployed version
+      # is still the live one. The suite is what holds the preview noindex meta on every
+      # page, the sitemap against the files on disk, the generated pair pages against
+      # products.js, and the committed provenance digest, so publishing without it would
+      # publish exactly the drift the suite exists to catch.
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      # Quoted on purpose: node expands the pattern itself (node >= 22), and the same
+      # command then reads identically here and in site/README.md.
+      - name: Run tests
+        run: node --test "tests/*.test.js"
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
 

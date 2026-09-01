@@ -31,7 +31,7 @@ vm.runInContext(appSource, context);
 test("evidence summary totals are calculated from every product field and source record", () => {
   const products = context.window.LENSFACT_PRODUCTS;
   const summary = context.__verificationLayer.summarizeEvidence(products);
-  assert.deepEqual({ ...summary }, { products: 20, fields: 180, verified: 157, conflict: 10, unknown: 13, sources: 498 });
+  assert.deepEqual({ ...summary }, { products: 19, fields: 171, verified: 149, conflict: 10, unknown: 12, sources: 475 });
 });
 
 test("evidence summary follows its input instead of fixed repository totals", () => {

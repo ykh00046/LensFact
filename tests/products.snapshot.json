@@ -1,0 +1,33 @@
+{
+  "note": "Digest over every leaf value of site/assets/data/products.js. It exists so that no verified value, source url, document name or 확인일 can change without the change being deliberate and visible in a diff.",
+  "regenerate": "node tools/products-snapshot.js --write",
+  "beforeYouRegenerate": "Re-open the cited source and confirm the new value is what that document actually prints. The site's promise is the trace, not the number.",
+  "totals": {
+    "products": 19,
+    "fields": 171,
+    "sources": 475,
+    "leaves": 5153
+  },
+  "digest": "sha256:531daa16b06101fed097639a584a71127ceba825f5e16e15b80d7c1d59792428",
+  "products": {
+    "acuvue-oasys-1-day": "sha256:01f0c473ecf1561713b3f0214fbbee250008d99e45a45faef7b648de1bef0e82",
+    "dailies-total1": "sha256:454c34b262557e829bea6bac43f3793837f330c7ec91adbc600f23e5fbcebe78",
+    "biofinity": "sha256:b396e7684474fd6e4ef419d7e24ed6d3252020c4ea238ead7a7890f4496078dd",
+    "acuvue-moist-1-day": "sha256:bf9da2c37744382628b9040d4a03328fd2e89f28678bdaa8d3fdaf9ff49550c8",
+    "myday": "sha256:cbf3d443b96e1028ed169479aef9f07383547e9b8f4b262c785ff91b1363e736",
+    "clariti-1-day": "sha256:db2f670112f04f5911558dd3bebfc3bd75cf6ca7bc320b4ae352aadee198d1c7",
+    "acuvue-oasys-2-week": "sha256:3e1bd3f2a1645ccd5ca85234ce404649723a9c40f77db86b92761c9904f8995c",
+    "precision1": "sha256:67187e05c27d5e2b29634880a5275d3dbf22ae5b1c06a11e714990ffa14b3287",
+    "biotrue-oneday": "sha256:d1d46ce8665849155f0666d266d0f04eb71746ef3fcd2ce3241f5f9701a96063",
+    "acuvue-oasys-max-1-day": "sha256:ac7c0dca9f44ce61b92ee654d09353d7135084a7f559e901fdc6785e7b50c699",
+    "dailies-aquacomfort-plus": "sha256:b2db0900971cfb799b38241e646e415a0c749f22eee865c4973ac42548143b53",
+    "acuvue-vita": "sha256:da56655d679eb465a870ef41f5d6194757a08368b773c4c5b5d4fddcff16e5bd",
+    "total30": "sha256:80476ae33fd1348025a7e35050cdcadca351657a360ec880b8a96ffcc7b044d6",
+    "airoptix-plus-hydraglyde": "sha256:f34d6bf4f82b4fe48290e94d929742c4294173bf526a4703ed714806c28f6764",
+    "proclear-1-day": "sha256:55f63ac060c990fda5f7dbe23ab8585d2d3edcb2469e0394580d2e2cdcb5326e",
+    "biofinity-energys": "sha256:fcb3c333c417ad2bdc956e25e7d1402512c0c87f8c5226d01c32ddfe67338251",
+    "ultra-one-day": "sha256:ddec34ead7c1dd991248df62503597913dad024fe22cff92698a1eaa846f2892",
+    "miru-1day": "sha256:80876328eebbadc7b6724bf7a746e5f50171c17b423d163eacf2a2dea0237bbc",
+    "soflens-daily": "sha256:03467b453d069d92a3256a6b09bbfceed00011cf66f6050739aac235cedcbd2f"
+  }
+}

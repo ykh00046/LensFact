@@ -37,7 +37,12 @@ test("search matches normalized names, aliases, makers, and distributors", () =>
   );
   assert.ok(filter.filterProducts(products, { search: "아쿠아 렌즈" }).some(({ id }) => id === "dailies-aquacomfort-plus"));
   assert.equal(filter.filterProducts(products, { search: "Johnson & Johnson" }).length, 5);
-  assert.equal(filter.filterProducts(products, { search: "인터로조" }).length, 1);
+  // Distributor-only coverage: 매니콘코리아 appears in no name, alias or maker on file,
+  // so a hit can only have come from the distributor field.
+  assert.deepEqual(
+    Array.from(filter.filterProducts(products, { search: "매니콘코리아" }), ({ id }) => id),
+    ["miru-1day"]
+  );
 });
 
 test("replacement spellings normalize to the supported monthly option", () => {
@@ -63,10 +68,10 @@ test("manufacturer, replacement, and search filters combine with AND", () => {
 
 test("spec deep links match the exact printed figure and combine with the other filters", () => {
   const bc86 = filter.filterProducts(products, { specs: { bc: "8.6" } });
-  assert.equal(bc86.length, 9);
+  assert.equal(bc86.length, 8);
   assert.ok(bc86.every(({ id }) => id !== "acuvue-oasys-1-day"));
   // 8.60 and 8.6 are the same printed figure; 8.65 is not on file.
-  assert.equal(filter.filterProducts(products, { specs: { bc: "8.60" } }).length, 9);
+  assert.equal(filter.filterProducts(products, { specs: { bc: "8.60" } }).length, 8);
   assert.equal(filter.filterProducts(products, { specs: { bc: "8.65" } }).length, 0);
 
   assert.deepEqual(
@@ -97,8 +102,8 @@ test("a conflicted field matches either recorded value and an unknown field matc
   }
 });
 
-test("empty state behaves as reset and restores all 20 products", () => {
-  assert.equal(filter.filterProducts(products, {}).length, 20);
+test("empty state behaves as reset and restores all 19 products", () => {
+  assert.equal(filter.filterProducts(products, {}).length, 19);
   assert.equal(filter.filterProducts(products, { search: "없는 제품명" }).length, 0);
 });
 

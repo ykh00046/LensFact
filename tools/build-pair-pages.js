@@ -24,9 +24,9 @@ const vm = require("node:vm");
 const root = path.resolve(__dirname, "..");
 const read = (relativePath) => fs.readFileSync(path.join(root, relativePath), "utf8");
 
-// The day the pair pages were written. It is the sitemap's <lastmod> and the JSON-LD
+// The day the pair pages were last generated. It is the sitemap's <lastmod> and the JSON-LD
 // dateModified; the per-value 확인일 shown on the page is computed from the data instead.
-const PAGE_DATE = "2026-08-31";
+const PAGE_DATE = "2026-09-01";
 
 // One angle per pair, in the words of the editor rather than of the data. Neither line
 // may state a figure, a ranking or a suitability judgement.
@@ -106,11 +106,17 @@ function pairPageHtml(ids) {
   const heading = `${pair[0].selectorLabel} vs ${pair[1].selectorLabel} — ${copy.headline}`;
   const preselect = `./index.html?p=${ids.join(",")}`;
 
+  // The robots noindex below is the preview-deployment block: on a GitHub Pages project
+  // site the origin-root robots.txt governs, so site/robots.txt is inert and the per-page
+  // meta is the real block. Remove it here and from every committed page in the launch
+  // commit — see the pre-publish checklist in site/README.md.
+
   return `<!doctype html>
 <html lang="ko">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
   <title>${api.escapeHtml(title)}</title>
   <meta name="description" content="${api.escapeHtml(description)}">
   <link rel="canonical" href="${canonical}">
@@ -198,7 +204,7 @@ ${api.pairBodyMarkup(ids, "ns-")}
         </section>
 
         <div class="cta-grid">
-          <article class="card"><h3>제품을 더 넣어 비교하기</h3><p>이 두 제품을 비교표에 그대로 열고, 최대 네 개까지 제품을 더 고를 수 있습니다.</p><div class="actions"><a class="button" href="${preselect}">비교표에서 열기</a><a class="text-button" href="./index.html">스무 제품 비교표 열기</a></div></article>
+          <article class="card"><h3>제품을 더 넣어 비교하기</h3><p>이 두 제품을 비교표에 그대로 열고, 최대 네 개까지 제품을 더 고를 수 있습니다.</p><div class="actions"><a class="button" href="${preselect}">비교표에서 열기</a><a class="text-button" href="./index.html"><span data-product-count>${api.products.length}</span>개 제품 비교표 열기</a></div></article>
           <article class="card"><h3>제품 하나씩 자세히 보기</h3><p>각 값의 기관·문서명·원문 표기·주소·확인일을 제품 페이지에서 그대로 확인합니다.</p><div class="actions"><a class="text-button" href="../products/${pair[0].slug}.html">${api.escapeHtml(pair[0].selectorLabel)} 공식 사양</a><a class="text-button" href="../products/${pair[1].slug}.html">${api.escapeHtml(pair[1].selectorLabel)} 공식 사양</a></div></article>
         </div>
       </div>

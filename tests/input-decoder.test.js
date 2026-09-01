@@ -44,7 +44,7 @@ test("material matches only exact normalized material values", () => {
   assert.ok(match("material", "comfilcon A", "biofinity"));
   assert.ok(match("material", "comfilcon A", "biofinity-energys"));
 
-  for (const raw of ["Biofinity", "Clalen", "a", "con"]) {
+  for (const raw of ["Biofinity", "Precision1", "a", "con"]) {
     const matchingProducts = products.filter((candidate) => match("material", raw, candidate.id));
     assert.equal(matchingProducts.length, 0, raw);
   }

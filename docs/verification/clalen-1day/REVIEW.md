@@ -1,5 +1,13 @@
 # 검토 체크리스트 — 클라렌 오투오투 원데이 그랩수 플러스 (Clalen O2O2 1Day / Grab Soo Plus)
 
+> **2026-09-01 · 이 제품은 사이트에서 제외됐다.**
+> 2026-08-28에 아래 절차대로 검증해 수록했으나, 2026-09-01에 편집방침의 이해관계 규칙에 따라 내렸다.
+> 운영자에게 이해관계가 있는 제조사의 제품은 다루지 않는다 — 규칙 원문은 `site/policy/editorial.html`
+> 6절(정정 절차) 마지막 문단에 있다.
+> 값이 틀려서가 아니므로 아래 검증 기록은 철회하지 않고 그대로 남긴다. 값을 조용히 바꾸지 않는다는
+> 원칙은 값을 조용히 없애지 않는다는 뜻이기도 하다.
+> 제외 경위는 `docs/verification/CORRECTIONS.md`의 2026-09-01 정정 7 항목에 적었다.
+
 검증일: 2026-08-28
 근거: `docs/verification/clalen-1day/EVIDENCE.md`
 편입 후보 엔트리: `docs/verification/clalen-1day/products-entry.js`

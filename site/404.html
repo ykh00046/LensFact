@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>페이지를 찾을 수 없습니다 | LensFact 렌즈팩트</title>
+  <meta name="description" content="요청한 주소에 해당하는 페이지가 없습니다. 포장 숫자 해석, 제품 목록, 표기 용어 목록으로 이동할 수 있습니다.">
+  <meta property="og:title" content="페이지를 찾을 수 없습니다 | LensFact 렌즈팩트">
+  <meta property="og:description" content="요청한 주소에 해당하는 페이지가 없습니다. 포장 숫자 해석, 제품 목록, 표기 용어 목록으로 이동할 수 있습니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ko_KR">
+  <meta name="twitter:card" content="summary">
+  <meta name="theme-color" content="#FBF9F8">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='7'%20fill='%232A2527'/%3E%3Ctext%20x='16'%20y='22'%20font-family='system-ui,sans-serif'%20font-size='14'%20font-weight='700'%20fill='%23FFFFFF'%20text-anchor='middle'%3ELF%3C/text%3E%3C/svg%3E">
+  <script>
+    /* This page is served for every unmatched path, with the requested URL left in the
+       address bar, so its relative links and stylesheet resolve against the directory
+       that was asked for rather than against the site root. At /products/typo.html the
+       link below would look for /products/products/index.html and the stylesheet for
+       /products/assets/css/style.css.
+
+       The site root is recoverable without hard-coding an origin — which matters,
+       because the domain is not settled and the site is currently served from a
+       GitHub Pages project path: the site's top-level directories are a closed set, so
+       the last path segment naming one of them sits exactly one level below the root.
+       tests/static-content.test.js reads that list back off the directories on disk, so
+       it cannot drift from the file tree.
+
+       The stylesheets and app.js are written from here rather than sitting in static
+       markup, because a <base> cannot win a race it starts too late: Chromium's preload
+       scanner resolves any href it can see against the document URL before the parser
+       reaches this script, so a static ./assets/... link at /products/typo.html would be
+       fetched from /products/assets/ and 404 before the base ever existed. Writing them
+       with the resolved root leaves the scanner nothing to speculate about.
+
+       Without JavaScript nothing here runs; the <noscript> block below carries the same
+       two stylesheets with the relative hrefs, which is correct for a 404 at the site
+       root and for the whole site whenever it is served from an origin root. */
+    (function () {
+      var DIRS = ["about", "assets", "compare", "decoder", "knowledge", "policy", "products", "terms"];
+      var parts = location.pathname.split("/");
+      parts.pop();
+      var cut = -1;
+      for (var i = 0; i < parts.length; i += 1) {
+        if (DIRS.indexOf(parts[i]) > -1) cut = i;
+      }
+      var here = parts.join("/") + "/";
+      var root = (cut === -1 ? parts : parts.slice(0, cut)).join("/") + "/";
+      if (root !== here) {
+        var base = document.createElement("base");
+        base.href = root;
+        document.head.insertBefore(base, document.head.firstChild);
+        // A base element also re-points fragment-only links, which would send the skip
+        // link to the home page instead of to this page's own main region.
+        document.addEventListener("DOMContentLoaded", function () {
+          var skip = document.querySelector(".skip-link");
+          if (skip) skip.href = location.pathname + location.search + "#main";
+        });
+      }
+      // document.write, not appendChild: this script is parser-inserted and still parsing,
+      // so the three tags land exactly where they are written, in order, and the deferred
+      // script keeps defer semantics. app.js only — this page renders no product data, so
+      // the 485 KB of records the rest of the site loads would buy nothing here; app.js
+      // reads an empty catalogue safely and still runs the shared header menu.
+      document.write(
+        '<link rel="stylesheet" href="' + root + 'assets/fonts/pretendard/pretendard-dynamic-subset.css">' +
+        '<link rel="stylesheet" href="' + root + 'assets/css/style.css">' +
+        '<script src="' + root + 'assets/js/app.js" defer><\/script>'
+      );
+    })();
+  </script>
+  <noscript>
+    <link rel="stylesheet" href="./assets/fonts/pretendard/pretendard-dynamic-subset.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
+  </noscript>
+  <noscript><style>/* Without JavaScript the menu button can never open anything, so the mobile nav
+       stays expanded in flow instead of hiding behind a dead toggle. */
+    @media (max-width: 900px) { .menu-toggle { display: none; } .mobile-nav[hidden] { position: static; display: grid; } }</style></noscript>
+</head>
+<body>
+  <a class="skip-link" href="#main">본문으로 건너뛰기</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="./index.html" aria-label="LensFact 홈"><span class="brand-mark">LF</span>렌즈팩트</a>
+      <nav class="nav desktop-nav" aria-label="주요 메뉴">
+        <a href="./decoder/index.html">포장 숫자 해석</a>
+        <a href="./products/index.html">제품</a>
+        <a href="./products/index.html#product-search">검색</a>
+        <a href="./compare/index.html">공식 사양 비교</a>
+        <a href="./knowledge/index.html">렌즈 상식</a>
+        <a href="./about/index.html">소개</a>
+      </nav>
+      <button class="menu-toggle" type="button" data-menu-toggle aria-label="메뉴 열기" aria-expanded="false" aria-controls="mobile-nav"><span aria-hidden="true"></span></button>
+    </div>
+    <nav class="nav mobile-nav" id="mobile-nav" aria-label="모바일 메뉴" hidden>
+      <a href="./decoder/index.html">포장 숫자 해석</a>
+      <a href="./products/index.html">제품</a>
+      <a href="./products/index.html#product-search">검색</a>
+      <a href="./compare/index.html">공식 사양 비교</a>
+      <a href="./knowledge/index.html">렌즈 상식</a>
+      <a href="./about/index.html">소개</a>
+      <a href="./policy/editorial.html">편집방침</a>
+      <a href="./policy/methodology.html">근거·방법론</a>
+      <a href="./policy/privacy.html">개인정보처리방침</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="section alt" aria-labelledby="notfound-title">
+      <div class="wrap">
+        <p class="eyebrow">404 · 주소를 찾을 수 없음</p>
+        <h1 class="page-title" id="notfound-title">이 주소에 해당하는 페이지가 없습니다</h1>
+        <p class="lead">주소가 잘못 입력되었거나, 예전 주소를 따라오셨을 수 있습니다. 확인하려던 내용을 아래에서 다시 찾을 수 있습니다.</p>
+        <p class="editor-note">수록 범위가 바뀌면 그 사실과 이유를 <a href="./policy/editorial.html">편집방침</a>의 정정 절차에 따라 기록합니다. 값을 조용히 바꾸거나 지우지 않습니다.</p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="notfound-routes-title">
+      <div class="wrap">
+        <h2 id="notfound-routes-title">무엇을 확인하려 오셨나요?</h2>
+        <div class="cards-grid cards-wide">
+          <article class="card">
+            <div class="category">01</div>
+            <h3><a href="./decoder/index.html">포장 숫자 해석</a></h3>
+            <p>포장지에 적힌 숫자를 넣으면 각 표기의 뜻과, 같은 값을 적는 제품을 함께 보여 줍니다.</p>
+          </article>
+          <article class="card">
+            <div class="category">02</div>
+            <h3><a href="./products/index.html#product-search">제품 찾기</a></h3>
+            <p>제품명·제조사·교체주기로 찾아, 각 값을 출처·확인일과 함께 확인합니다.</p>
+          </article>
+          <article class="card">
+            <div class="category">03</div>
+            <h3><a href="./compare/index.html">제품 비교</a></h3>
+            <p>여러 제품의 공식 표기를 한 표에 놓고, 같은 표에 놓을 수 없는 항목은 그 이유까지 봅니다.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt" aria-labelledby="notfound-index-title">
+      <div class="wrap">
+        <h2 id="notfound-index-title">목록에서 찾기</h2>
+        <ul class="source-links">
+          <li><a href="./products/index.html">제품 목록</a> · 수록된 제품 전체와 제조사·교체주기 필터</li>
+          <li><a href="./terms/index.html">표기 용어 목록</a> · 포장지와 공식 자료에 적히는 아홉 가지 표기</li>
+          <li><a href="./compare/index.html">공식 사양 비교</a> · 제품쌍 비교 페이지 목록 포함</li>
+          <li><a href="./knowledge/index.html">렌즈 상식</a> · 공식 자료와 문헌으로 확인한 주제</li>
+          <li><a href="./about/index.html">소개</a> · 이 사이트가 하는 일과 하지 않는 일</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <span class="footer-boundary">최종 적합성·도수·피팅은 안경사 또는 안과 전문인에게 확인하세요.</span>
+      <span class="footer-brand">LENSFACT 렌즈팩트<br>독립 정보 서비스 · 판매하지 않습니다</span>
+    </div>
+    <nav class="wrap footer-links" aria-label="사이트 정보">
+      <a href="./about/index.html">소개</a>
+      <a href="./policy/editorial.html">편집방침</a>
+      <a href="./policy/methodology.html">근거·방법론</a>
+      <a href="./policy/privacy.html">개인정보처리방침</a>
+    </nav>
+  </footer>
+</body>
+</html>
