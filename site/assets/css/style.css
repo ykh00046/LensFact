@@ -979,10 +979,41 @@ div.label-item:hover {
 }
 
 .home-hero-layout {
+  position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(19rem, 0.65fr);
-  align-items: end;
-  gap: clamp(3rem, 8vw, 7rem);
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: var(--space-5);
+  aspect-ratio: 16 / 9;
+  padding: clamp(2rem, 4vw, 3rem);
+  overflow: hidden;
+}
+
+.home-hero-visual {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+}
+
+.home-hero-visual img {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.home-hero-copy,
+.home-evidence-ledger {
+  position: relative;
+  z-index: 1;
+  grid-column: 1;
+  min-inline-size: 0;
+}
+
+.home-hero-copy {
+  align-self: start;
+  grid-row: 1;
 }
 
 .home-identity,
@@ -1004,16 +1035,17 @@ div.label-item:hover {
 
 .home-hero-copy h1 {
   max-inline-size: 14ch;
-  margin-block-end: var(--space-8);
-  font-size: clamp(2.75rem, 6vw, 5.25rem);
+  margin-block-end: var(--space-5);
+  font-size: clamp(2.75rem, 4.5vw, 3.75rem);
   line-height: 1.12;
   letter-spacing: -0.045em;
   text-wrap: balance;
 }
 
 .home-evidence-ledger {
+  grid-row: 2;
   border-block: 1px solid var(--color-rule);
-  padding-block: var(--space-5);
+  padding-block: var(--space-3);
 }
 
 .home-ledger-header {
@@ -1022,7 +1054,7 @@ div.label-item:hover {
   justify-content: space-between;
   gap: var(--space-4);
   border-block-end: 1px solid var(--color-border);
-  padding-block-end: var(--space-4);
+  padding-block-end: var(--space-2);
 }
 
 .home-ledger-header h2,
@@ -1050,7 +1082,7 @@ div.label-item:hover {
   justify-content: space-between;
   gap: var(--space-3);
   border-block-end: 1px solid var(--color-border);
-  padding-block: var(--space-3);
+  padding-block: var(--space-2);
 }
 
 .home-ledger-metrics div:nth-child(odd) {
@@ -1076,7 +1108,7 @@ div.label-item:hover {
 }
 
 .home-ledger-note {
-  margin: var(--space-4) 0 0;
+  margin: var(--space-2) 0 0;
   color: var(--color-secondary);
   font-size: 0.84rem;
   line-height: 1.65;
@@ -1849,6 +1881,25 @@ div.label-item:hover {
     gap: var(--space-12);
   }
 
+  .home-hero-layout {
+    grid-template-rows: none;
+    aspect-ratio: auto;
+    padding: 0;
+    overflow: visible;
+  }
+
+  .home-hero-visual,
+  .home-hero-copy,
+  .home-evidence-ledger {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .home-hero-visual {
+    position: static;
+    aspect-ratio: 16 / 9;
+  }
+
   .home-evidence-ledger {
     max-inline-size: 40rem;
   }
@@ -2035,6 +2086,12 @@ div.label-item:hover {
   .home-hero-layout,
   .home-route-layout {
     gap: var(--space-4);
+  }
+
+  /* The illustration is decorative. On short phone viewports the three evidence
+     routes take priority, so the visual leaves the flow without hiding content. */
+  .home-hero-visual {
+    display: none;
   }
 
   .home-identity,

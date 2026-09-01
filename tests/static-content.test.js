@@ -490,6 +490,21 @@ test("home is a three-path router whose trust line keeps a correct unknown fallb
   );
 });
 
+test("home hero uses the approved decorative image without changing the router", () => {
+  const html = read("site/index.html");
+  const hero = html.match(/<section class="hero home-hero"[\s\S]*?<\/section>/)?.[0] || "";
+  const image = hero.match(/<img\b[^>]*>/)?.[0] || "";
+  const asset = "site/assets/images/lensfact-evidence-desk-hero.webp";
+
+  assert.ok(hero, "home should keep its hero section");
+  assert.match(image, /src="\.\/assets\/images\/lensfact-evidence-desk-hero\.webp"/);
+  assert.match(image, /alt=""/, "the decorative illustration should have an empty alt");
+  assert.match(image, /width="1280"/);
+  assert.match(image, /height="720"/);
+  assert.ok(fs.existsSync(path.join(root, asset)), `${asset} should be deployed with the site`);
+  assert.equal((hero.match(/<img\b/g) || []).length, 1);
+});
+
 test("no page still links to the removed home decoder anchor", () => {
   const pages = htmlPages();
   assert.equal(pages.length, 48, "site should contain the full page set");
