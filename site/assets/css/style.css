@@ -976,17 +976,195 @@ div.label-item:hover {
   color: var(--color-secondary);
 }
 
-/* Home path router. The card is not wrapped in a link (DESIGN.md 5), so the
-   heading link carries its own tap target: 2.75rem is 44px at the default
-   16px root size, and the text stays vertically centred inside it. */
-.router-card h3 a {
-  display: flex;
-  align-items: center;
-  min-block-size: 2.75rem;
+.router-main .home-hero {
+  padding-block: clamp(3.5rem, 8vw, 7rem);
+  background: var(--color-page);
 }
 
-.router-note {
-  margin-block-start: var(--space-6);
+.home-hero-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(19rem, 0.65fr);
+  align-items: end;
+  gap: clamp(3rem, 8vw, 7rem);
+}
+
+.home-identity,
+.home-ledger-kicker,
+.home-section-mark,
+.home-route-number {
+  font-family: Georgia, "Times New Roman", serif;
+  letter-spacing: 0.12em;
+}
+
+.home-identity,
+.home-ledger-kicker,
+.home-section-mark {
+  margin-block-end: var(--space-5);
+  color: var(--color-accent);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.home-hero-copy h1 {
+  max-inline-size: 14ch;
+  margin-block-end: var(--space-8);
+  font-size: clamp(2.75rem, 6vw, 5.25rem);
+  line-height: 1.12;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
+}
+
+.home-evidence-ledger {
+  border-block: 1px solid var(--color-rule);
+  padding-block: var(--space-5);
+}
+
+.home-ledger-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+  border-block-end: 1px solid var(--color-border);
+  padding-block-end: var(--space-4);
+}
+
+.home-ledger-header h2,
+.home-ledger-header p {
+  margin: 0;
+}
+
+.home-ledger-header h2 {
+  font-size: 1.25rem;
+}
+
+.home-ledger-kicker {
+  font-size: 0.7rem;
+}
+
+.home-ledger-metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 0;
+}
+
+.home-ledger-metrics div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  border-block-end: 1px solid var(--color-border);
+  padding-block: var(--space-3);
+}
+
+.home-ledger-metrics div:nth-child(odd) {
+  padding-inline-end: var(--space-4);
+}
+
+.home-ledger-metrics div:nth-child(even) {
+  border-inline-start: 1px solid var(--color-border);
+  padding-inline-start: var(--space-4);
+}
+
+.home-ledger-metrics dt {
+  color: var(--color-muted);
+  font-size: 0.82rem;
+}
+
+.home-ledger-metrics dd {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.35rem;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.home-ledger-note {
+  margin: var(--space-4) 0 0;
+  color: var(--color-secondary);
+  font-size: 0.84rem;
+  line-height: 1.65;
+}
+
+.home-routes {
+  border-block-start: 1px solid var(--color-border);
+  padding-block: clamp(3rem, 7vw, 6rem);
+}
+
+.home-route-layout {
+  display: grid;
+  grid-template-columns: minmax(14rem, 0.65fr) minmax(0, 1.35fr);
+  gap: clamp(3rem, 9vw, 8rem);
+}
+
+.home-route-intro h2 {
+  margin-block-end: var(--space-5);
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  line-height: 1.2;
+}
+
+.home-route-intro > p:last-child {
+  max-inline-size: 25rem;
+  color: var(--color-secondary);
+}
+
+.home-route-index {
+  margin: 0;
+  padding: 0;
+  border-block-start: 1px solid var(--color-rule);
+  list-style: none;
+}
+
+.home-route-index li {
+  border-block-end: 1px solid var(--color-rule);
+}
+
+.home-route-index a {
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-5);
+  min-block-size: 7.5rem;
+  padding-block: var(--space-5);
+}
+
+.home-route-index a:hover {
+  text-decoration: none;
+}
+
+.home-route-number {
+  align-self: start;
+  padding-block-start: var(--space-1);
+  color: var(--color-accent);
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.home-route-text strong,
+.home-route-text small {
+  display: block;
+}
+
+.home-route-text strong {
+  margin-block-end: var(--space-2);
+  font-size: clamp(1.35rem, 2.5vw, 1.8rem);
+  line-height: 1.35;
+}
+
+.home-route-text small {
+  color: var(--color-secondary);
+  font-size: 0.95rem;
+}
+
+.home-route-arrow {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.5rem;
+}
+
+.home-trust-line {
+  margin: var(--space-8) 0 0;
+  max-inline-size: 44rem;
+  color: var(--color-secondary);
+  font-size: 0.92rem;
 }
 
 .card-pending {
@@ -1696,6 +1874,16 @@ div.label-item:hover {
     min-block-size: 3rem;
     padding-inline: var(--space-3);
   }
+
+  .home-hero-layout,
+  .home-route-layout {
+    grid-template-columns: 1fr;
+    gap: var(--space-12);
+  }
+
+  .home-evidence-ledger {
+    max-inline-size: 40rem;
+  }
 }
 
 @media (max-width: 640px) {
@@ -1714,6 +1902,41 @@ div.label-item:hover {
 
   .hero {
     padding-block: var(--space-12) var(--space-8);
+  }
+
+  .router-main .home-hero {
+    padding-block: var(--space-10) var(--space-12);
+  }
+
+  .home-hero-layout,
+  .home-route-layout {
+    gap: var(--space-10);
+  }
+
+  .home-hero-copy h1 {
+    font-size: clamp(2.35rem, 12vw, 3.35rem);
+  }
+
+  .home-ledger-header {
+    align-items: flex-start;
+    flex-direction: column-reverse;
+    gap: var(--space-2);
+  }
+
+  .home-ledger-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .home-ledger-metrics div:nth-child(odd),
+  .home-ledger-metrics div:nth-child(even) {
+    border-inline-start: 0;
+    padding-inline: 0;
+  }
+
+  .home-route-index a {
+    grid-template-columns: 2rem minmax(0, 1fr) auto;
+    gap: var(--space-3);
+    min-block-size: 6.5rem;
   }
 
   .actions,
@@ -1820,31 +2043,6 @@ div.label-item:hover {
   .footer-brand {
     margin-inline-start: 0;
     text-align: start;
-  }
-}
-
-/* The router home has to fit h1, lead, three cards and the trust line inside a
-   390x844 phone viewport without scrolling, so its vertical rhythm tightens on the
-   narrowest screens. Scoped to .router-main: no other page makes that promise. */
-@media (max-width: 480px) {
-  .router-main .hero {
-    padding-block: var(--space-6) var(--space-4);
-  }
-
-  .router-main .hero + .section {
-    padding-block-start: var(--space-2);
-  }
-
-  .router-main .cards-grid {
-    gap: var(--space-3);
-  }
-
-  .router-main .router-card {
-    padding: var(--space-4);
-  }
-
-  .router-main .router-note {
-    margin-block-start: var(--space-4);
   }
 }
 

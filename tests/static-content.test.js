@@ -155,13 +155,22 @@ test("product index exposes the complete verification summary without JavaScript
 test("home is a three-path router whose trust line keeps a correct unknown fallback", () => {
   const html = read("site/index.html");
   const main = html.match(/<main[\s\S]*?<\/main>/)?.[0] || "";
+  const ledger = main.match(/<aside[^>]+class="[^"]*home-evidence-ledger[^"]*"[^>]*data-evidence-summary[\s\S]*?<\/aside>/)?.[0] || "";
+  const routeIndex = main.match(/<ol[^>]+class="[^"]*home-route-index[^"]*"[\s\S]*?<\/ol>/)?.[0] || "";
 
   assert.ok(main, "home should have a main region");
   assert.equal((main.match(/<h1[ >]/g) || []).length, 1);
-  assert.equal((main.match(/<article class="card router-card">/g) || []).length, 3);
-  assert.match(main, /href="\.\/decoder\/index\.html"/);
-  assert.match(main, /href="\.\/products\/index\.html#product-search"/);
-  assert.match(main, /href="\.\/compare\/index\.html"/);
+  assert.ok(ledger, "home should expose its distinctive evidence ledger");
+  for (const [key, value] of Object.entries(computedEvidenceSummary())) {
+    assert.match(ledger, new RegExp(`data-summary-value="${key}"[^>]*>${value}<`));
+  }
+  assert.ok(routeIndex, "home should expose an ordered editorial route index");
+  assert.equal((routeIndex.match(/<li\b/g) || []).length, 3);
+  assert.doesNotMatch(main, /router-card/);
+  assert.deepEqual(
+    [...main.matchAll(/<a\s[^>]*href="([^"]+)"/g)].map((match) => match[1]),
+    ["./decoder/index.html", "./products/index.html#product-search", "./compare/index.html"]
+  );
   assert.doesNotMatch(main, /<button/);
   assert.match(main, /최종 피팅은 전문가에게 확인하세요/);
 

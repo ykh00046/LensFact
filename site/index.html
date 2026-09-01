@@ -53,31 +53,66 @@
   </header>
 
   <main class="router-main" id="main">
-    <section class="hero">
-      <div class="wrap">
-        <h1>콘택트렌즈 포장 숫자, 무엇부터 확인할까요?</h1>
-        <p class="lead">한국에서 유통되는 렌즈 <span data-product-count>20</span>개의 공식 표기를 출처·확인일과 함께 봅니다.</p>
+    <section class="hero home-hero" aria-labelledby="home-title">
+      <div class="wrap home-hero-layout">
+        <div class="home-hero-copy">
+          <p class="home-identity">CONTACT LENS · EVIDENCE DESK</p>
+          <h1 id="home-title">렌즈 포장 숫자를<br>근거부터 읽습니다</h1>
+          <p class="lead">한국에서 유통되는 렌즈 <span data-product-count>20</span>개의 공식 표기를 출처·확인일과 함께 봅니다.</p>
+        </div>
+
+        <aside class="home-evidence-ledger" data-evidence-summary aria-labelledby="ledger-title">
+          <header class="home-ledger-header">
+            <p class="home-ledger-kicker">EVIDENCE LEDGER</p>
+            <h2 id="ledger-title">검증 원장</h2>
+          </header>
+          <dl class="home-ledger-metrics">
+            <div><dt>제품</dt><dd><span data-summary-value="products">20</span></dd></div>
+            <div><dt>표기 항목</dt><dd><span data-summary-value="fields">180</span></dd></div>
+            <div><dt>확인</dt><dd><span data-summary-value="verified">157</span></dd></div>
+            <div><dt>출처 충돌</dt><dd><span data-summary-value="conflict">10</span></dd></div>
+            <div><dt>미확인</dt><dd><span data-summary-value="unknown">13</span></dd></div>
+            <div><dt>출처 기록</dt><dd><span data-summary-value="sources">498</span></dd></div>
+          </dl>
+          <p class="home-ledger-note">값을 합치거나 추정하지 않고, 확인 상태를 그대로 기록합니다.</p>
+        </aside>
       </div>
     </section>
 
-    <section class="section" aria-labelledby="paths-title">
-      <div class="wrap">
-        <h2 class="visually-hidden" id="paths-title">확인을 시작하는 세 가지 방법</h2>
-        <div class="cards-grid">
-          <article class="card router-card">
-            <h3><a href="./decoder/index.html">포장 숫자 해석</a></h3>
-            <p>포장지 숫자를 넣어 뜻과 값을 대조합니다.</p>
-          </article>
-          <article class="card router-card">
-            <h3><a href="./products/index.html#product-search">제품 찾기</a></h3>
-            <p>제품명·제조사로 공식 사양을 확인합니다.</p>
-          </article>
-          <article class="card router-card">
-            <h3><a href="./compare/index.html">제품 비교</a></h3>
-            <p>두 제품의 공식 표기를 나란히 봅니다.</p>
-          </article>
+    <section class="section home-routes" aria-labelledby="paths-title">
+      <div class="wrap home-route-layout">
+        <div class="home-route-intro">
+          <p class="home-section-mark">START WITH A QUESTION</p>
+          <h2 id="paths-title">무엇을 확인하려<br>오셨나요?</h2>
+          <p>답을 고르는 대신, 확인하려는 질문에 맞는 근거 화면으로 안내합니다.</p>
         </div>
-        <p class="lead router-note" data-evidence-summary>공식 자료를 출처와 함께 확인하고, 확인하지 못한 값은 미확인 <span data-summary-value="unknown">13</span>개로 그대로 남깁니다. 최종 피팅은 전문가에게 확인하세요.</p>
+
+        <div>
+          <ol class="home-route-index">
+            <li>
+              <a href="./decoder/index.html">
+                <span class="home-route-number">01</span>
+                <span class="home-route-text"><strong>포장 숫자 해석</strong><small>포장지 숫자를 넣어 뜻과 값을 대조합니다.</small></span>
+                <span class="home-route-arrow" aria-hidden="true">→</span>
+              </a>
+            </li>
+            <li>
+              <a href="./products/index.html#product-search">
+                <span class="home-route-number">02</span>
+                <span class="home-route-text"><strong>제품 찾기</strong><small>제품명·제조사로 공식 사양을 확인합니다.</small></span>
+                <span class="home-route-arrow" aria-hidden="true">→</span>
+              </a>
+            </li>
+            <li>
+              <a href="./compare/index.html">
+                <span class="home-route-number">03</span>
+                <span class="home-route-text"><strong>제품 비교</strong><small>두 제품의 공식 표기를 나란히 봅니다.</small></span>
+                <span class="home-route-arrow" aria-hidden="true">→</span>
+              </a>
+            </li>
+          </ol>
+          <p class="home-trust-line" data-evidence-summary>공식 자료를 출처와 함께 확인하고, 확인하지 못한 값은 미확인 <span data-summary-value="unknown">13</span>개로 그대로 남깁니다. 최종 피팅은 전문가에게 확인하세요.</p>
+        </div>
       </div>
     </section>
   </main>
