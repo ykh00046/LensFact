@@ -24,6 +24,22 @@ const htmlPages = () => siteFiles().filter((file) => file.endsWith(".html")).map
 const domainPlaceholderFiles = () =>
   siteFiles().filter((file) => fs.readFileSync(file, "utf8").includes("DOMAIN-TBD")).map(relative).sort();
 
+test("public site and generators contain no operator-employer disclosure UI", () => {
+  const publicFiles = [
+    ...siteFiles(),
+    path.join(root, "tools", "build-pair-pages.js")
+  ].filter((file) => !/\.(?:gif|jpe?g|png|webp|woff2?)$/i.test(file));
+  const disclosureMarkers = /운영자 근무처 제품|이해관계 공시|운영자와 이해관계 공개|\bcoi(?:-banner|-chip)?\b|--color-coi/iu;
+  const offenders = publicFiles
+    .filter((file) => disclosureMarkers.test(fs.readFileSync(file, "utf8")))
+    .map(relative)
+    .sort();
+
+  assert.deepEqual(offenders, []);
+  assert.match(read("site/assets/data/products.js"), /maker: "\(주\)인터로조"/);
+  assert.match(read("site/assets/data/products.js"), /https:\/\/www\.interojo\.com\//);
+});
+
 // The rendered counts come from the data through app.js. The static HTML fallbacks
 // are only trustworthy if they still match what the page computes at runtime.
 const computedEvidenceSummary = () => {

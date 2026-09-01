@@ -93,9 +93,6 @@ function loadPairApi() {
 
 const api = loadPairApi();
 
-const COI_DISCLOSURE = (product) =>
-  `        <p class="coi-banner"><strong>운영자 근무처 제품 · 이해관계 공시</strong><br>이 페이지가 다루는 ${api.escapeHtml(product.name)}의 제조사 ${api.escapeHtml(product.maker)}는 이 사이트 운영자의 근무처입니다. 이 페이지의 값은 다른 제품과 같은 절차로 공개 자료에서만 옮겨 적었고 사내 자료나 업무상 알게 된 정보는 사용하지 않았습니다. <a href="../about/index.html#coi">소개 · 운영자와 이해관계 공개</a></p>\n`;
-
 function pairPageHtml(ids) {
   const file = api.pairFile(ids);
   const copy = PAIR_COPY[file];
@@ -107,7 +104,6 @@ function pairPageHtml(ids) {
   const description = api.pairMetaDescription(pair);
   const canonical = `https://DOMAIN-TBD/compare/${file}`;
   const heading = `${pair[0].selectorLabel} vs ${pair[1].selectorLabel} — ${copy.headline}`;
-  const coi = pair.filter((product) => product.coi).map(COI_DISCLOSURE).join("");
   const preselect = `./index.html?p=${ids.join(",")}`;
 
   return `<!doctype html>
@@ -169,7 +165,7 @@ function pairPageHtml(ids) {
       <div class="wrap">
         <p class="eyebrow" data-pair-eyebrow>두 제품 공식 표기 비교 · 확인일 ${api.pairVerifiedAt(pair)}</p>
         <h1 class="page-title">${api.escapeHtml(heading)}</h1>
-${coi}        <p class="lead">${api.escapeHtml(copy.lead)}</p>
+        <p class="lead">${api.escapeHtml(copy.lead)}</p>
       </div>
     </section>
 

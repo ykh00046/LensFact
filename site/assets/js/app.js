@@ -109,15 +109,6 @@ const ADS_ENABLED = false;
     return { verified: "공식 원문 확인", conflict: "공식 출처 간 충돌", unknown: "공식 자료에서 미확인" }[fieldState(state)];
   }
 
-  // Conflict-of-interest disclosure. One product on file is manufactured by the site
-  // operator's employer. Every screen that shows such a product carries the same visible
-  // label; the product page adds a banner that links to the disclosure on the about page.
-  const COI_LABEL = "운영자 근무처 제품 · 이해관계 공시";
-
-  function coiChip(product) {
-    return product?.coi ? `<span class="coi-chip">${escapeHtml(COI_LABEL)}</span>` : "";
-  }
-
   function resolvedField(field) {
     const copy = fieldCopy[field.id] || {};
     return { ...copy, ...field, caution: field.caution || copy.caution || "", meaning: field.meaning || copy.meaning || "" };
@@ -429,15 +420,11 @@ const ADS_ENABLED = false;
     // distribution caveat, not a source conflict, so it stays neutral: amber is
     // reserved for 공식 자료 간 충돌.
     const flagNote = row.product.flag ? `<span class="cell-note">${escapeHtml(row.product.flag)}</span>` : "";
-    // The conflict-of-interest label travels with the product name here too, so a match
-    // is never read without the disclosure.
-    const coiNote = coiChip(row.product);
     const chips = row.hits.map((item) => matchChip(item.spec, item.hit)).join("");
     return `<li class="match-item">
       <a href="${escapeHtml(href)}">${escapeHtml(row.product.name)}</a>
       ${countNote}
       ${flagNote}
-      ${coiNote}
       <ul class="match-values">${chips}</ul>
     </li>`;
   }
@@ -853,7 +840,7 @@ const ADS_ENABLED = false;
         "ultra-one-day": "MFDS UDI 180건 전수 대조로 허가번호 확인. 한국명 울트라 원데이 = 미국 INFUSE One-Day · MFDS 원장 모델명 kalifilcon A로 연결 확인(제품명 검색 불가). BC·DIA·함수율·재질은 한국 브랜드 페이지 상세정보 이미지에 인쇄된 값이며 페이지 텍스트 검색으로는 재현되지 않습니다. 같은 이미지가 재질을 kalificon A로 적어 두 표기를 함께 남깁니다. Dk/t 134와 같은 문서군의 Dk 107은 다른 물리량이며 환산하지 않았습니다.",
         "miru-1day": "MFDS UDI 154건 전수 대조로 허가번호 확인. 한국 유통사 법인명은 원장 표기 (주)매니콘코리아이고 원장 모델명은 1day  Flat Pack(공백 2칸)이라 Miru 1day로는 조회되지 않습니다. 같은 업체 안에서 허가번호 하나가 제품 하나를 뜻하지 않습니다(프리미오와 미루 1M은 수허 15-319 호를 공유). BC·DIA·함수율·재질은 한국 공식 소비자·전문가 페이지가 직접 인쇄한 값입니다. Dk/t·중심두께·UV는 한국·글로벌 공식 자료에 항목이 없음(형제 제품에는 있음). 일본 동계열 제품 자료는 참고 출처로만 남기고 값으로 쓰지 않았습니다.",
         "soflens-daily": "MFDS UDI 201건 전수 대조로 허가번호 확인. 원장 모델명이 Daily Disposable이어서 SofLens로는 조회되지 않고, 수허 09-975 호는 트루핏 원데이와 공유 등록입니다. BC·DIA·함수율은 한국 브랜드 페이지 상세정보 이미지에 인쇄된 값이며 페이지 텍스트 검색으로는 재현되지 않습니다. 한국 공급 도수가 근시 범위뿐이라 유형을 근시용으로 적었습니다. Dk/t는 표기 자체가 없고(같은 문서의 Dk 22 × 10⁻¹¹은 다른 물리량), 중심두께는 단일 시험도수 값 없이 범위로만 인쇄돼 있으며, UV는 검토한 세 문서 모두 표기가 없어 미확인입니다.",
-        "clalen-1day": "MFDS 제허 21-680 호(제조허가) 397건 전수 대조. 수치 근거는 clalen.com 제품 상세 이미지 1장(텍스트 없음) · 페이지 운영 법인은 (주)메디엔토이며 제조사 연결은 interojo.com 링크와 원장 모델명 일치로 확인 · 운영자 근무처 제품"
+        "clalen-1day": "MFDS 제허 21-680 호(제조허가) 397건 전수 대조. 수치 근거는 clalen.com 제품 상세 이미지 1장(텍스트 없음) · 페이지 운영 법인은 (주)메디엔토이며 제조사 연결은 interojo.com 링크와 원장 모델명 일치로 확인"
       }
     }
   ];
@@ -884,7 +871,7 @@ const ADS_ENABLED = false;
   function compareCell(row, product, column) {
     const headers = `${row.rowId} ${column.colId}`;
     const cellAttributes = `headers="${headers}" data-label="${escapeHtml(column.label)}" data-product="${escapeHtml(product.id)}"`;
-    if (row.memo) return `<td ${cellAttributes}>${text(row.memo[product.id] || "")}${coiChip(product)}</td>`;
+    if (row.memo) return `<td ${cellAttributes}>${text(row.memo[product.id] || "")}</td>`;
 
     const field = product.fields.find((candidate) => candidate.id === row.fieldId);
     if (!field) return `<td ${cellAttributes}><span class="status-label status-unknown">${escapeHtml(stateLabel("unknown"))}</span></td>`;
@@ -942,7 +929,7 @@ const ADS_ENABLED = false;
     const cells = columns.map((column) => {
       const product = byId[column.productId];
       const href = internalHref(`../products/${product?.slug || column.productId}.html`);
-      return `<th id="${escapeHtml(column.colId)}" scope="col"><a href="${escapeHtml(href)}">${escapeHtml(column.label)}</a>${coiChip(product)}</th>`;
+      return `<th id="${escapeHtml(column.colId)}" scope="col"><a href="${escapeHtml(href)}">${escapeHtml(column.label)}</a></th>`;
     }).join("");
     return `<tr><th id="col-item" scope="col">항목</th>${cells}</tr>`;
   }
@@ -1814,7 +1801,7 @@ const ADS_ENABLED = false;
         <span>${escapeHtml(product.type)}</span>
       </div>
       <div class="label-grid">${specs}</div>
-      <p class="sample-note">${escapeHtml(product.maker)} / ${escapeHtml(product.distributor)}${coiChip(product)}</p>
+      <p class="sample-note">${escapeHtml(product.maker)} / ${escapeHtml(product.distributor)}</p>
     </section>`;
   }
 
@@ -1905,7 +1892,7 @@ const ADS_ENABLED = false;
 
     const memoRow = COMPARE_ROWS.find((row) => row.memo);
     const memos = memoRow
-      ? `<ul class="source-links">${pair.map((product) => `<li><strong>${escapeHtml(product.selectorLabel)}</strong>${coiChip(product)}<span class="cell-note">${text(memoRow.memo[product.id] || "")}</span></li>`).join("")}</ul>`
+      ? `<ul class="source-links">${pair.map((product) => `<li><strong>${escapeHtml(product.selectorLabel)}</strong><span class="cell-note">${text(memoRow.memo[product.id] || "")}</span></li>`).join("")}</ul>`
       : "";
 
     const others = pair.flatMap((product) => pairPagesWith(product.id)
@@ -2149,7 +2136,7 @@ const ADS_ENABLED = false;
     if (entry.note) notes.push(entry.note);
     if (conflicted) notes.push(`공식 출처 간 충돌 · 원문 표기 ${entry.field.value}`);
     const note = notes.length ? `<span class="cell-note${conflicted ? " warn" : ""}">${text(notes.join(" · "))}</span>` : "";
-    return `<li><a href="${escapeHtml(href)}">${escapeHtml(product.selectorLabel)}</a>${coiChip(product)}${note}</li>`;
+    return `<li><a href="${escapeHtml(href)}">${escapeHtml(product.selectorLabel)}</a>${note}</li>`;
   }
 
   function termRowMarkup(fieldId, row, index, prefix) {

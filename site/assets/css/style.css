@@ -1,7 +1,7 @@
 :root {
   /* Blush Neutral 5a. Charcoal ink on warm greige paper, rose reserved for the brand
-     accent. Evidence semantics never share a hue: amber = sources disagree, wine =
-     conflict-of-interest disclosure, neutral = unverified. */
+     accent. Evidence semantics never share a hue: amber = sources disagree,
+     neutral = unverified. */
   --color-ink: #2A2527;
   --color-accent: #B0546A;
   --color-white: #FFFFFF;
@@ -19,9 +19,6 @@
   --color-accent-soft: #F7EBEE;
   --color-conflict-surface: #FAF3E8;
   --color-conflict-border: #D9A05B;
-  --color-coi: #8E3B52;
-  --color-coi-surface: #E7CFD7;
-  --color-coi-border: #9C4359;
   --color-ad-border: #D9CFD2;
   --color-ad-surface: #FAF7F6;
   --space-1: 0.25rem;
@@ -1673,43 +1670,6 @@ div.label-item:hover {
 
 .warn {
   color: var(--color-warn);
-}
-
-/* Conflict-of-interest disclosure. One product on file is made by the operator's
-   employer, so the same label is shown wherever that product appears: a banner on its
-   product page, a chip in the comparison header, memo cell, product card and match list,
-   and a short mark on the home preset button. */
-.coi-banner {
-  display: block;
-  margin-block-start: var(--space-4);
-  border: 1px solid var(--color-coi-border);
-  border-radius: var(--radius-md);
-  background: var(--color-coi-surface);
-  padding: var(--space-4);
-  color: var(--color-coi);
-  font-size: 0.94rem;
-  font-weight: 600;
-  line-height: 1.6;
-}
-
-.coi-banner a {
-  color: inherit;
-  text-decoration: underline;
-  text-underline-offset: 0.2em;
-}
-
-.coi-chip {
-  display: inline-block;
-  margin-block-start: var(--space-1);
-  border: 1px solid var(--color-coi-border);
-  border-radius: var(--radius-sm);
-  background: var(--color-coi-surface);
-  padding: 0.05rem var(--space-2);
-  color: var(--color-coi);
-  font-family: "Pretendard Variable", Pretendard, "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
-  font-size: 0.8rem;
-  font-weight: 700;
-  line-height: 1.55;
 }
 
 [data-ad-slot] {

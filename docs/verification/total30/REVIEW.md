@@ -287,12 +287,6 @@ should be advised to remove their lenses while sleeping.`라고 직접 적으므
 
 ---
 
-## 9. 이해관계
-
-해당 없음. (운영자 근무처는 (주)인터로조 / 클라렌이며 이 제품과 무관하다.)
-
----
-
 ## 10. 후속 조치 제안
 
 1. `docs/PRODUCT_CANDIDATES_20.md` 표 A 6번의 UDI 검색 키워드 `TOTAL30`, `Total 30`에서

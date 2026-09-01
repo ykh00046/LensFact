@@ -13,9 +13,8 @@ LensFact feels like a calm evidence desk for consumer lens-package labels: warm 
 ## 2. Color
 
 Palette: **Blush Neutral 5a**. Charcoal ink on warm greige paper, with rose reserved for the
-brand accent. Three evidence meanings are deliberately kept on three different hues so none
-of them can be mistaken for the accent: amber = sources disagree, wine = conflict-of-interest
-disclosure, neutral = not verified.
+brand accent. Evidence meanings stay distinct from the accent: amber = sources disagree,
+neutral = not verified.
 
 | Role | Token | Value | Usage |
 | --- | --- | --- | --- |
@@ -32,9 +31,6 @@ disclosure, neutral = not verified.
 | Warn (amber) | `--color-warn` | `#8A4B12` | Cautions and conflict text |
 | Conflict Surface | `--color-conflict-surface` | `#FAF3E8` | 공식 자료 간 충돌 chip and list fill |
 | Conflict Border | `--color-conflict-border` | `#D9A05B` | 공식 자료 간 충돌 chip and list border |
-| COI (wine) | `--color-coi` | `#8E3B52` | Operator-employer disclosure text |
-| COI Surface | `--color-coi-surface` | `#E7CFD7` | Disclosure banner and chip fill — one step deeper than the accent tint so a disclosure chip is never read as a selected chip |
-| COI Border | `--color-coi-border` | `#9C4359` | Disclosure banner and chip border |
 | Body | `--color-body` | `#443E41` | Long-form reading text |
 | Soft Accent | `--color-accent-soft` | `#F7EBEE` | Selected backgrounds |
 | Secondary | `--color-secondary` | `#5C5458` | Leads, card copy, compare row names |
@@ -48,8 +44,7 @@ cards, panels, table cells, chips, form controls, buttons — stays `--color-whi
 
 Contrast (WCAG 2.2 AA): every text token clears 4.5:1 on every surface it is used on — ink
 15.1:1 on white and 14.4:1 on page, body 10.4/10.0, secondary 7.3/7.0, muted 5.7/5.4, warn
-6.8:1 on white and 6.2:1 on the conflict surface, coi 7.3:1 on white and 4.9:1 on the coi
-surface, accent 4.9:1 on white. The rose focus ring is 4.9:1 against white, above the 3:1
+6.8:1 on white and 6.2:1 on the conflict surface, accent 4.9:1 on white. The rose focus ring is 4.9:1 against white, above the 3:1
 non-text minimum.
 
 ## 3. Typography
@@ -108,9 +103,9 @@ non-text minimum.
 - Responsive contract: desktop uses the asymmetric hero and route-intro/index grids. At 900px both become single-column; at 640px the ledger becomes a one-column metric list and route rows tighten without dropping below the touch target. Focus and reduced-motion rules remain global.
 
 ### Retired: Decoder Field Row and Product Selector (2026-08-29)
-- The home page used to carry a preset decoder: twenty product buttons (with the `.coi-mark` 공시 badge on the operator-employer product), a field-row list and a detail panel. The home rewrite removed it, so neither component appears in any page any more.
-- What replaced them: package-label reading is now the Input Decoder on `decoder/index.html`, per-product values live on `products/<slug>.html`, and per-field values live on `terms/<field>.html`. The conflict-of-interest disclosure still runs on the product page as the `.coi-banner` under the h1, and on the products index, the comparison table, the decoder page's match list and the term-page value lists as the `.coi-chip` label.
-- Their CSS rules and their JavaScript were removed from `style.css` and `app.js` on 2026-08-29 (`.hero-grid`, `.trust-list`, `.product-selector`, `.product-button`, `.selector-help`, `.field-list`, `.field-row`, `.field-code`, `.field-label`, `.field-value`, `.field-flag`, `.extra-fields`, `.coi-mark`). The `.coi-mark` badge went with them: the disclosure now renders as the `.coi-chip` used by the product, list, comparison, decoder-match and term-value surfaces.
+- The home page used to carry a preset decoder with twenty product buttons, a field-row list and a detail panel. The home rewrite removed it, so neither component appears in any page any more.
+- What replaced them: package-label reading is now the Input Decoder on `decoder/index.html`, per-product values live on `products/<slug>.html`, and per-field values live on `terms/<field>.html`.
+- Their CSS rules and JavaScript were removed from `style.css` and `app.js` on 2026-08-29 (`.hero-grid`, `.trust-list`, `.product-selector`, `.product-button`, `.selector-help`, `.field-list`, `.field-row`, `.field-code`, `.field-label`, `.field-value`, `.field-flag`, `.extra-fields`).
 
 ### Evidence Panel
 - Structure: detail region (code, value, meaning, caution, source summary, source disclosure), rendered once on product and term pages. The separate visually-hidden `aria-live` status region went with the home decoder on 2026-08-29: the surfaces that remain render once and have no state change to announce, and `app.js` now contains no `aria-live` at all. The only live regions left on the site are the decoder result panel, the comparison status line and the product-list result status, none of them visually hidden.
@@ -134,14 +129,14 @@ non-text minimum.
 - No-JS: `<noscript>` keeps the full all-product table and the full permit-evidence list for SEO and no-JS readers.
 - Column width: with at most four product columns the table fits the 1120px wrap without horizontal scroll (item column 9rem, product columns min 13rem); `.table-scroll` stays as the safety net for the noscript full table and narrow desktops.
 - Responsive state: above 640px the table stays intact inside a keyboard-focusable horizontal scroll region with a sticky, edge-shadowed first column; at 640px and below it transposes to per-row cards (`data-label` per cell) with no horizontal scroll.
-- Evidence states: `conflict` is amber (`--color-warn` on `--color-conflict-surface` with `--color-conflict-border`) and never borrows the rose accent; `unknown` is neutral (border, muted text on white) so a missing value never reads as an alarm. The operator-employer disclosure is wine (`--color-coi*`) and is the only thing that uses it.
+- Evidence states: `conflict` is amber (`--color-warn` on `--color-conflict-surface` with `--color-conflict-border`) and never borrows the rose accent; `unknown` is neutral (border, muted text on white) so a missing value never reads as an alarm.
 
 ### Product Pair Page
 - Location: `compare/<id-a>-vs-<id-b>.html`, one static page per recorded pair, generated by `tools/build-pair-pages.js`. The pair order in the file name follows `COMPARE_COLUMNS`, so a pair has exactly one URL and the `?p=` query stays a tool state rather than a second address for the same content.
 - Purpose: a product-versus-product search usually wants a winner. This page never gives one. It answers the narrower question the data can actually answer — which of the two products' official figures can be placed in the same table, and which cannot — so the 같은 표에 놓을 수 없는 항목 section, not the table, is the page.
 - Structure: hero (`.eyebrow[data-pair-eyebrow]` + h1 + lead) → `.comparison-limits` question block closing with `.editor-note[data-pair-count]` → `[data-pair-live]` (filled by `initComparePairPage()`, with a generated `<noscript>` copy beside it) → 이 페이지가 판단하지 않는 것 (`.source-section.article-body`) → `.cta-grid`. Inside the live region: bucket summary, two `.package-card`s, the incomparable list, the three-column table, the two 확인 메모, the source list, and links to the other pair pages the two products appear in.
-- Reuse only: `.comparison-limits`, `.package-card`, `.cards-grid`, `.source-section`, `.source-links`, `.cell-note`, `.table-scroll`, `.compare-table`, `.table-footnote`, `.editor-note`, `.cta-grid`. The single new CSS rule is `.pair-table.compare-table { min-inline-size: 0 }`, the same exception `.spec-summary` and `.term-table` already take, because two product columns fit the 45rem document column. No new colour, radius, spacing step or state treatment enters the system; conflict stays amber, unknown stays neutral, the operator-employer disclosure stays wine.
-- Table: the comparison table's own `compareHeadRow` / `compareRow` / `compareCell` with two columns and the full nine-field row set plus 확인 메모, so term links, product links, `headers` wiring, COI chips and the 640px card transposition come along unchanged. A row that cannot be read side by side has this pair's reason appended to its `rowNote`, which the existing `aria-describedby="compare-note-<rowId>"` footnote slot already renders.
+- Reuse only: `.comparison-limits`, `.package-card`, `.cards-grid`, `.source-section`, `.source-links`, `.cell-note`, `.table-scroll`, `.compare-table`, `.table-footnote`, `.editor-note`, `.cta-grid`. The single new CSS rule is `.pair-table.compare-table { min-inline-size: 0 }`, the same exception `.spec-summary` and `.term-table` already take, because two product columns fit the 45rem document column. No new colour, radius, spacing step or state treatment enters the system; conflict stays amber and unknown stays neutral.
+- Table: the comparison table's own `compareHeadRow` / `compareRow` / `compareCell` with two columns and the full nine-field row set plus 확인 메모, so term links, product links, `headers` wiring and the 640px card transposition come along unchanged. A row that cannot be read side by side has this pair's reason appended to its `rowNote`, which the existing `aria-describedby="compare-note-<rowId>"` footnote slot already renders.
 - Language: derived, not authored. Every figure, state, conflict, condition, count and reason comes from `products.js` through the pair functions in `app.js`; the only hand-written strings are the h1 tail and one lead sentence per pair in `tools/build-pair-pages.js`, and neither may state a figure. 추천 · 순위 · 점수 · 적합 never appear outside the disclaimer, and a blocked-item sentence always says why rather than which product wins.
 - Anti-duplication: because each reason quotes that pair's own values, flags, conflicts and condition strings, no sentence can be reused by another pair page. `tests/static-content.test.js` asserts it directly — with both product names masked out, no two pair pages share a generated sentence.
 - No-JS: the `<noscript>` copy is the same `pairBodyMarkup()` output with an `ns-` id prefix, generated rather than typed, and the test regenerates it to catch drift from the data.
@@ -170,7 +165,6 @@ Borders and fills define surfaces; the package card is ivory with a hairline and
 - Footer: the medical boundary is the primary element (mauve `--color-panel` note at ink) and appears in the footer only; the brand is quiet right-aligned meta.
 - Resolved debt: the accent boundary on selected states is now 4.18:1 against soft accent (was 2.29:1 with coral).
 - Accepted debt: the amber conflict border is 2.09:1 against the conflict surface; the chip also carries amber text at 6.15:1 and the explicit label `공식 출처 간 충돌`, so no meaning rests on that boundary alone.
-- Resolved debt: the wine disclosure border is 4.26:1 against the disclosure fill (was 2.32:1) and 5.49:1 against the ivory band, so the `.coi-chip` and `.coi-banner` outlines hold on every surface they land on, including the mauve compare header.
 - Resolved debt: the decoder and product-list form controls are outlined in `--color-field-border` at 3.40:1 on the field fill and 3.24:1 on the page, so the boundary that identifies them as an input meets SC 1.4.11 (they were 1.24-1.30:1 before).
 - Reading: article body remains single-column on mobile with no fixed canvas.
 - Accepted debt: MFDS 상세 원장 직접 대조가 미완료인 두 허가번호와 공식 출처 간 충돌은 제품 데이터와 화면에 명시적으로 남긴다.

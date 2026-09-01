@@ -6284,7 +6284,6 @@ window.LENSFACT_PRODUCTS = [
     maker: "(주)인터로조",
     distributor: "(주)인터로조",
     type: "근시용 투명 구면 · 1일 교체",
-    coi: "운영자 근무처 제품",
     packageSpecs: [
       { value: "BC 8.6", label: "Base Curve · 단위 미표기" },
       { value: "DIA 14.2", label: "Diameter · mm" },
