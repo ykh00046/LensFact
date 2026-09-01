@@ -15,3 +15,6 @@ desktop.ini
 # logs
 *.log
 .gstack/
+
+# codex playwright MCP snapshots
+.playwright-mcp/
