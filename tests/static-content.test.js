@@ -499,8 +499,8 @@ test("home hero uses the approved decorative image without changing the router",
   assert.ok(hero, "home should keep its hero section");
   assert.match(image, /src="\.\/assets\/images\/lensfact-evidence-desk-hero\.webp"/);
   assert.match(image, /alt=""/, "the decorative illustration should have an empty alt");
-  assert.match(image, /width="1280"/);
-  assert.match(image, /height="720"/);
+  assert.match(image, /width="1672"/);
+  assert.match(image, /height="941"/);
   assert.ok(fs.existsSync(path.join(root, asset)), `${asset} should be deployed with the site`);
   assert.equal((hero.match(/<img\b/g) || []).length, 1);
 });
