@@ -292,7 +292,7 @@ test("the 404 page carries the shared chrome and leads back into the site", () =
 // launch commit cannot pass.
 test("every page carries the preview noindex meta directly under the viewport line", () => {
   const pages = htmlPages();
-  assert.equal(pages.length, 50, "site should contain the full page set");
+  assert.equal(pages.length, 51, "site should contain the full page set");
 
   const meta = '<meta name="robots" content="noindex, nofollow">';
   const viewport = '<meta name="viewport" content="width=device-width, initial-scale=1">';
@@ -507,7 +507,7 @@ test("home hero uses the approved decorative image without changing the router",
 
 test("no page still links to the removed home decoder anchor", () => {
   const pages = htmlPages();
-  assert.equal(pages.length, 50, "site should contain the full page set");
+  assert.equal(pages.length, 51, "site should contain the full page set");
 
   // Any resurrected home fragment counts, not just the one literal that was removed.
   const offenders = pages.filter((page) => /href="[^"]*#(?:input-)?decoder"/.test(read(page)));
@@ -516,7 +516,7 @@ test("no page still links to the removed home decoder anchor", () => {
 
 test("every page's nav points at the decoder page at its own depth", () => {
   const pages = htmlPages();
-  assert.equal(pages.length, 50);
+  assert.equal(pages.length, 51);
 
   for (const page of pages) {
     const html = read(page);
@@ -649,6 +649,7 @@ test("the Dk and Dk/t knowledge article publishes its identity, official sources
   for (const href of [
     "./water-content-moisture.html",
     "./contact-lens-bc-dia-pwr.html",
+    "./silicone-hydrogel-vs-hydrogel.html",
     "../terms/dkt.html",
     "../decoder/index.html",
     "../compare/index.html"
@@ -657,24 +658,128 @@ test("the Dk and Dk/t knowledge article publishes its identity, official sources
   }
 });
 
-test("the Dk and Dk/t article is the latest live registration while water content stays featured", () => {
+// The material-family article is the one place a reader could take away "silicone hydrogel
+// is better" as the site's verdict. The assertions hold the sentences that refuse it: the
+// family explains the oxygen pathway, not a ranking; water content is not read across
+// families; comfort and safety stay per product and per person; overnight wear follows the
+// product's own approval. The bibliography is pinned in order so a swapped or dropped
+// source cannot leave a citation number pointing at a different document.
+test("the silicone hydrogel article publishes its identity, official sources, boundaries, and routes", () => {
+  const page = "site/knowledge/silicone-hydrogel-vs-hydrogel.html";
+  assert.ok(htmlPages().includes(page), `${page} should exist`);
+  const html = read(page);
+
+  assert.match(html, /<title>실리콘 하이드로겔과 하이드로겔 콘택트렌즈의 차이 \| LensFact<\/title>/);
+  assert.match(html, /<link rel="canonical" href="https:\/\/DOMAIN-TBD\/knowledge\/silicone-hydrogel-vs-hydrogel\.html">/);
+  assert.match(html, /<meta name="robots" content="noindex, nofollow">/);
+  assert.match(html, /실리콘\(실록산\) 성분이 별도의 산소 전달 경로를 제공해 <strong>일반적으로<\/strong> 더 높은 Dk와 Dk\/t가 가능합니다/);
+  assert.match(html, /재료군 이름만으로 순위를 만들 수 없고/);
+  assert.match(html, /함수율은 재료군 안에서 읽습니다/);
+  assert.match(html, /실리콘 하이드로겔이라는 이유만으로 특정 사람에게 더 편안하거나, 하이드로겔이라는 이유만으로 덜 안전하다고 말할 수 없습니다/);
+  assert.match(html, /그 제품의 허가 내용과 안경사 또는 안과 전문의의 판단<\/strong>으로 정해집니다/);
+  assert.match(html, /이 표는 제품 우열표가 아닙니다/);
+
+  // The site's own vocabulary: 추천 · 순위 · 점수 · 적합 only inside a denial, or — the one
+  // permitted use of 적합 (DESIGN.md 5) — the sentence that hands 적합성 to a professional.
+  const main = html.match(/<main[\s\S]*?<\/main>/)?.[0] || "";
+  const plain = main.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ");
+  for (const sentence of plain.split(/(?<=다\.)/)) {
+    for (const word of ["추천", "순위", "점수", "적합"]) {
+      if (!sentence.includes(word)) continue;
+      assert.match(sentence, /않|없|보류|안과 전문의에게 확인/, `${page} uses "${word}" outside a denial: ${sentence.trim()}`);
+    }
+  }
+
+  const bibliography = html.match(/<ol class="bibliography">[\s\S]*?<\/ol>/)?.[0] || "";
+  const sourceUrls = [
+    "https://www.ecfr.gov/current/title-21/chapter-I/subchapter-H/part-886/subpart-F/section-886.5925",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC12184980",
+    "https://www.accessdata.fda.gov/cdrh_docs/pdf21/K213164.pdf",
+    "https://www.accessdata.fda.gov/cdrh_docs/pdf8/P080011B.pdf",
+    "https://coopervision.com/sites/coopervision.com/files/pfg01047_clariti_1_day_family_us_invigor_and_non-invigor-rev_b.pdf",
+    "https://coopervision.com/sites/coopervision.com/files/media-document/coopervision-product-reference-guide-052026.pdf",
+    "https://shop.acuvue.com/pub/media/ACUVUE-Technical-Specification-Guide-05-27-25.pdf",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC7917563"
+  ];
+  sourceUrls.forEach((url, index) => {
+    assert.ok(bibliography.includes(`<li id="source-${index + 1}"><a href="${url}"`), `source ${index + 1} should be ${url}`);
+  });
+  assert.equal((bibliography.match(/<li\b/g) || []).length, 8);
+
+  // Every figure the comparison strip prints for a product on file has to be a figure
+  // products.js records for it, so the article cannot drift from the product pages.
+  const strip = html.match(/<div class="compare-strip"[\s\S]*?<\/div>\s*<p>/)?.[0] || "";
+  assert.ok(strip, `${page} should carry the comparison strip`);
+  const expected = {
+    "proclear-1-day": { water: "60%", dkt: "28" },
+    "clariti-1-day": { water: "56%", dkt: "86" },
+    "myday": { water: "54%", dkt: "100" },
+    "acuvue-moist-1-day": { water: "58%", dkt: "25.5 × 10⁻⁹" },
+    "acuvue-oasys-1-day": { water: "38%", dkt: "121 × 10⁻⁹" },
+    "biofinity": { water: "48%" }
+  };
+  for (const [id, fields] of Object.entries(expected)) {
+    const product = pairApi.products.find((candidate) => candidate.id === id);
+    assert.ok(product, `${id} should be on file`);
+    for (const [fieldId, value] of Object.entries(fields)) {
+      const recorded = String(product.fields.find((field) => field.id === fieldId)?.value || "");
+      assert.ok(
+        recorded === value || recorded.split(" / ").includes(value),
+        `${id} ${fieldId}: the article relies on ${value} but products.js records ${recorded}`
+      );
+    }
+    assert.ok(strip.includes(`함수율 ${fields.water}`), `${page} strip should print ${id}'s water content ${fields.water}`);
+    if (fields.dkt) {
+      const printedDkt = fields.dkt.replace(" × 10⁻⁹", " × 10<sup>−9</sup>");
+      assert.ok(strip.includes(`Dk/t ${printedDkt}`), `${page} strip should print ${id}'s Dk/t ${fields.dkt}`);
+    }
+  }
+
+  for (const href of [
+    "./water-content-moisture.html",
+    "./contact-lens-dk-dkt.html",
+    "../terms/material.html",
+    "../products/biofinity.html",
+    "../products/clariti-1-day.html",
+    "../decoder/index.html",
+    "../compare/index.html"
+  ]) {
+    assert.ok(html.includes(`href="${href}"`), `${page} should link ${href}`);
+  }
+
+  // Both older articles route into this one, so a reader who arrives on either axis can
+  // reach the family explanation without the hub.
+  assert.ok(read("site/knowledge/water-content-moisture.html").includes('href="./silicone-hydrogel-vs-hydrogel.html"'));
+  assert.ok(read("site/knowledge/contact-lens-dk-dkt.html").includes('href="./silicone-hydrogel-vs-hydrogel.html"'));
+});
+
+test("the silicone hydrogel article is the latest live registration while water content stays featured", () => {
   const context = { window: {} };
   vm.runInNewContext(read("site/assets/data/articles.js"), context);
   const articles = Array.from(context.window.LENSFACT_ARTICLES);
   const latest = articles[0];
   const featured = articles.filter((article) => article.featured);
 
-  assert.equal(latest.href, "./contact-lens-dk-dkt.html");
+  assert.equal(latest.href, "./silicone-hydrogel-vs-hydrogel.html");
   assert.equal(latest.status, "live");
   assert.equal(latest.featured, false);
-  assert.equal(latest.sources, 6);
+  assert.equal(latest.sources, 8);
   assert.equal(latest.verifiedAt, "확인일 2026.09.02");
+  assert.equal(articles[1].href, "./contact-lens-dk-dkt.html");
   assert.deepEqual(featured.map((article) => article.href), ["./water-content-moisture.html"]);
+
+  // The hub card, the registration and the page have to agree on the source count, or
+  // the hub advertises a bibliography the page does not carry.
+  const sourceCount = (read("site/knowledge/silicone-hydrogel-vs-hydrogel.html").match(/<ol class="bibliography">[\s\S]*?<\/ol>/)?.[0].match(/<li\b/g) || []).length;
+  assert.equal(sourceCount, latest.sources);
 
   const hub = read("site/knowledge/index.html");
   const latestCard = hub.match(/<div class="article-list" data-article-list>[\s\S]*?<\/div>\s*<\/div>/)?.[0] || "";
-  assert.match(latestCard, /href="\.\/contact-lens-dk-dkt\.html"/);
-  assert.match(latestCard, /href="\.\/contact-lens-bc-dia-pwr\.html"/);
+  const order = ["./silicone-hydrogel-vs-hydrogel.html", "./contact-lens-dk-dkt.html", "./contact-lens-bc-dia-pwr.html"]
+    .map((href) => latestCard.indexOf(`href="${href}"`));
+  assert.ok(order.every((at) => at > -1), "the hub's static list should carry the three latest article cards");
+  assert.deepEqual([...order].sort((left, right) => left - right), order, "the static hub list should be newest first");
+  assert.match(latestCard, /출처 8건/);
   assert.match(hub, /class="feature-card"[\s\S]*href="\.\.\/knowledge\/water-content-moisture\.html"/);
 });
 

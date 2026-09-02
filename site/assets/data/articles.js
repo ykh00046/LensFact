@@ -1,5 +1,15 @@
 window.LENSFACT_ARTICLES = [
   {
+    category: "오해 확인",
+    title: "실리콘 하이드로겔과 하이드로겔 콘택트렌즈의 차이: 재료군 이름으로 알 수 있는 것과 없는 것",
+    lead: "두 재료군의 산소 전달 경로 차이, 함수율을 같은 축으로 읽지 않는 이유, 재료군 이름만으로 순위·착용감·야간착용을 정할 수 없는 근거를 정리합니다.",
+    href: "./silicone-hydrogel-vs-hydrogel.html",
+    featured: false,
+    status: "live",
+    sources: 8,
+    verifiedAt: "확인일 2026.09.02"
+  },
+  {
     category: "공식 사양 비교",
     title: "콘택트렌즈 Dk와 Dk/t 차이: 산소투과성 수치를 비교할 때 주의할 점",
     lead: "재료의 Dk와 특정 렌즈 두께를 반영한 Dk/t를 구분하고, 단위·측정법·온도·보정·시험 도수 조건을 확인합니다.",
