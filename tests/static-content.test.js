@@ -292,7 +292,7 @@ test("the 404 page carries the shared chrome and leads back into the site", () =
 // launch commit cannot pass.
 test("every page carries the preview noindex meta directly under the viewport line", () => {
   const pages = htmlPages();
-  assert.equal(pages.length, 52, "site should contain the full page set");
+  assert.equal(pages.length, 53, "site should contain the full page set");
 
   const meta = '<meta name="robots" content="noindex, nofollow">';
   const viewport = '<meta name="viewport" content="width=device-width, initial-scale=1">';
@@ -507,7 +507,7 @@ test("home hero uses the approved decorative image without changing the router",
 
 test("no page still links to the removed home decoder anchor", () => {
   const pages = htmlPages();
-  assert.equal(pages.length, 52, "site should contain the full page set");
+  assert.equal(pages.length, 53, "site should contain the full page set");
 
   // Any resurrected home fragment counts, not just the one literal that was removed.
   const offenders = pages.filter((page) => /href="[^"]*#(?:input-)?decoder"/.test(read(page)));
@@ -516,7 +516,7 @@ test("no page still links to the removed home decoder anchor", () => {
 
 test("every page's nav points at the decoder page at its own depth", () => {
   const pages = htmlPages();
-  assert.equal(pages.length, 52);
+  assert.equal(pages.length, 53);
 
   for (const page of pages) {
     const html = read(page);
@@ -753,34 +753,76 @@ test("the silicone hydrogel article publishes its identity, official sources, bo
   assert.ok(read("site/knowledge/contact-lens-dk-dkt.html").includes('href="./silicone-hydrogel-vs-hydrogel.html"'));
 });
 
-test("the replacement schedule article is the latest live registration and featured guide", () => {
+test("the UV article is the latest live registration and featured guide", () => {
   const context = { window: {} };
   vm.runInNewContext(read("site/assets/data/articles.js"), context);
   const articles = Array.from(context.window.LENSFACT_ARTICLES);
   const latest = articles[0];
   const featured = articles.filter((article) => article.featured);
 
-  assert.equal(latest.href, "./contact-lens-replacement-schedule.html");
+  assert.equal(latest.href, "./contact-lens-uv-blocking.html");
   assert.equal(latest.status, "live");
   assert.equal(latest.featured, true);
   assert.equal(latest.sources, 8);
   assert.equal(latest.verifiedAt, "확인일 2026.09.02");
-  assert.equal(articles[1].href, "./silicone-hydrogel-vs-hydrogel.html");
-  assert.deepEqual(featured.map((article) => article.href), ["./contact-lens-replacement-schedule.html"]);
+  assert.equal(articles[1].href, "./contact-lens-replacement-schedule.html");
+  assert.deepEqual(featured.map((article) => article.href), ["./contact-lens-uv-blocking.html"]);
 
   // The hub card, the registration and the page have to agree on the source count, or
   // the hub advertises a bibliography the page does not carry.
-  const sourceCount = (read("site/knowledge/contact-lens-replacement-schedule.html").match(/<ol class="bibliography">[\s\S]*?<\/ol>/)?.[0].match(/<li\b/g) || []).length;
+  const sourceCount = (read("site/knowledge/contact-lens-uv-blocking.html").match(/<ol class="bibliography">[\s\S]*?<\/ol>/)?.[0].match(/<li\b/g) || []).length;
   assert.equal(sourceCount, latest.sources);
 
   const hub = read("site/knowledge/index.html");
   const latestCard = hub.match(/<div class="article-list" data-article-list>[\s\S]*?<\/div>\s*<\/div>/)?.[0] || "";
-  const order = ["./contact-lens-replacement-schedule.html", "./silicone-hydrogel-vs-hydrogel.html", "./contact-lens-dk-dkt.html"]
+  const order = ["./contact-lens-uv-blocking.html", "./contact-lens-replacement-schedule.html", "./silicone-hydrogel-vs-hydrogel.html"]
     .map((href) => latestCard.indexOf(`href="${href}"`));
   assert.ok(order.every((at) => at > -1), "the hub's static list should carry the three latest article cards");
   assert.deepEqual([...order].sort((left, right) => left - right), order, "the static hub list should be newest first");
   assert.match(latestCard, /출처 8건/);
-  assert.match(hub, /class="feature-card"[\s\S]*href="\.\.\/knowledge\/contact-lens-replacement-schedule\.html"/);
+  assert.match(hub, /class="feature-card"[\s\S]*href="\.\.\/knowledge\/contact-lens-uv-blocking\.html"/);
+});
+
+test("the UV guide preserves product evidence states and the official protection boundary", () => {
+  const page = "site/knowledge/contact-lens-uv-blocking.html";
+  assert.ok(htmlPages().includes(page), `${page} should exist`);
+  const html = read(page);
+
+  assert.match(html, /<meta name="robots" content="noindex, nofollow">/);
+  assert.match(html, /<link rel="canonical" href="https:\/\/DOMAIN-TBD\/knowledge\/contact-lens-uv-blocking\.html">/);
+  assert.match(html, /특정 파장 범위와 시험 조건에서 렌즈 재료 또는 완제품을 통과하는 자외선의 비율이나 차단되는 비율/);
+  assert.match(html, /눈 전체·눈꺼풀·눈 주변부를 덮지 않습니다/);
+  assert.match(html, /관련 안질환 발생을 줄인다는 임상 근거가 확립되지 않았다고 경고/);
+  assert.match(html, /선글라스와 챙 있는 모자를 함께 사용합니다/);
+  assert.match(html, /이 표는 제품 우열표가 아닙니다/);
+  assert.match(html, /유료 ANSI 표준 원문을 읽었다고 주장하지 않고/);
+
+  const bibliography = html.match(/<ol class="bibliography">[\s\S]*?<\/ol>/)?.[0] || "";
+  const sourceUrls = [
+    "https://coopervision.com/sites/coopervision.com/files/media-document/coopervision-product-reference-guide-052026.pdf",
+    "https://www.fda.gov/consumers/consumer-updates/tips-stay-safe-sun-sunscreen-sunglasses",
+    "https://www.who.int/news-room/fact-sheets/detail/ultraviolet-radiation",
+    "https://shop.acuvue.com/pub/media/ACUVUE-Technical-Specification-Guide-05-27-25.pdf",
+    "https://www.myalcon.com/professional/contact-lenses/daily/precision1/",
+    "https://alcon.widen.net/content/6h4uwcilld/original/W900331896-I-VEROFA-PREC1-US.pdf",
+    "https://coopervision.co.kr/sites/coopervision.co.kr/files/CVK%20Product%20Specifications.pdf",
+    "https://pi.bausch.com/globalassets/pdf/packageinserts/vision-care/lenses/biotrue-one-day-pifg53.pdf"
+  ];
+  sourceUrls.forEach((url, index) => assert.ok(bibliography.includes(`<li id="source-${index + 1}"><a href="${url}"`)));
+  assert.equal((bibliography.match(/<li\b/g) || []).length, 8);
+
+  const examples = {
+    "acuvue-oasys-1-day": "한국: UVB 99% 이상 / UVA 90%",
+    precision1: "자외선 차단 1등급 (UVA 90% 이상 / UVB 99% 이상)",
+    "biotrue-oneday": "UVB 투과율 5% 미만 (280~315nm) / UVA 투과율 50% 미만 (316~380nm)",
+    "proclear-1-day": "UV 차단 없음 (한국 사양서 표기 No)"
+  };
+  for (const [id, expected] of Object.entries(examples)) {
+    const product = pairApi.products.find((candidate) => candidate.id === id);
+    assert.equal(product.fields.find((field) => field.id === "uv")?.value, expected);
+    assert.ok(html.includes(`href="../products/${id}.html"`));
+  }
+  assert.ok(read("site/terms/uv.html").includes('href="../knowledge/contact-lens-uv-blocking.html"'));
 });
 
 test("the replacement schedule guide separates replacement, wear mode, and unopened expiry", () => {

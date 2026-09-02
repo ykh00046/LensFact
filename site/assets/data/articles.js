@@ -1,10 +1,20 @@
 window.LENSFACT_ARTICLES = [
   {
     category: "포장지·허가정보 읽기",
+    title: "콘택트렌즈 UV 차단 표기가 보장하는 것과 보장하지 않는 것",
+    lead: "특정 파장과 시험 조건의 차단율·투과율·등급이 뜻하는 범위와, 눈 전체 보호·안질환 예방·선글라스 대체를 보장하지 않는 한계를 정리합니다.",
+    href: "./contact-lens-uv-blocking.html",
+    featured: true,
+    status: "live",
+    sources: 8,
+    verifiedAt: "확인일 2026.09.02"
+  },
+  {
+    category: "포장지·허가정보 읽기",
     title: "콘택트렌즈 교체주기 표기 읽는 법: 1일·2주·1개월과 착용 가능 기간의 차이",
     lead: "교체주기, 하루 착용시간, 매일착용·연속착용과 미개봉 EXP를 서로 다른 축으로 구분하고 처방된 일정을 지켜야 하는 근거를 정리합니다.",
     href: "./contact-lens-replacement-schedule.html",
-    featured: true,
+    featured: false,
     status: "live",
     sources: 8,
     verifiedAt: "확인일 2026.09.02"
@@ -54,5 +64,4 @@ window.LENSFACT_ARTICLES = [
   { category: "오해 확인", title: "같은 BC면 같은 착용감일까요", lead: "곡률 숫자가 같아도 재질과 형상이 다를 때 생기는 차이를 검토할 예정입니다.", status: "pending" },
   { category: "포장지·허가정보 읽기", title: "식약처 허가정보에서 무엇을 확인할 수 있나요", lead: "수허·제허 허가번호의 뜻과 수록 19개 제품의 허가 확인 방식을 용어 페이지에서 확인합니다.", href: "../terms/permit.html", status: "term" },
   { category: "포장지·허가정보 읽기", title: "포장 표기와 제조사 자료가 다를 때", lead: "출처 간 값이 다를 때 병합하지 않고 기록하는 원칙을 설명할 예정입니다.", status: "pending" },
-  { category: "공식 사양 비교", title: "UV 표기는 무엇을 보장하나요", lead: "등급·차단율·투과율 표기의 차이와 수록 제품의 실제 UV 표기를 용어 페이지에서 확인합니다.", href: "../terms/uv.html", status: "term" }
 ];
