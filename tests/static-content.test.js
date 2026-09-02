@@ -292,7 +292,7 @@ test("the 404 page carries the shared chrome and leads back into the site", () =
 // launch commit cannot pass.
 test("every page carries the preview noindex meta directly under the viewport line", () => {
   const pages = htmlPages();
-  assert.equal(pages.length, 51, "site should contain the full page set");
+  assert.equal(pages.length, 52, "site should contain the full page set");
 
   const meta = '<meta name="robots" content="noindex, nofollow">';
   const viewport = '<meta name="viewport" content="width=device-width, initial-scale=1">';
@@ -507,7 +507,7 @@ test("home hero uses the approved decorative image without changing the router",
 
 test("no page still links to the removed home decoder anchor", () => {
   const pages = htmlPages();
-  assert.equal(pages.length, 51, "site should contain the full page set");
+  assert.equal(pages.length, 52, "site should contain the full page set");
 
   // Any resurrected home fragment counts, not just the one literal that was removed.
   const offenders = pages.filter((page) => /href="[^"]*#(?:input-)?decoder"/.test(read(page)));
@@ -516,7 +516,7 @@ test("no page still links to the removed home decoder anchor", () => {
 
 test("every page's nav points at the decoder page at its own depth", () => {
   const pages = htmlPages();
-  assert.equal(pages.length, 51);
+  assert.equal(pages.length, 52);
 
   for (const page of pages) {
     const html = read(page);
@@ -753,34 +753,74 @@ test("the silicone hydrogel article publishes its identity, official sources, bo
   assert.ok(read("site/knowledge/contact-lens-dk-dkt.html").includes('href="./silicone-hydrogel-vs-hydrogel.html"'));
 });
 
-test("the silicone hydrogel article is the latest live registration while water content stays featured", () => {
+test("the replacement schedule article is the latest live registration and featured guide", () => {
   const context = { window: {} };
   vm.runInNewContext(read("site/assets/data/articles.js"), context);
   const articles = Array.from(context.window.LENSFACT_ARTICLES);
   const latest = articles[0];
   const featured = articles.filter((article) => article.featured);
 
-  assert.equal(latest.href, "./silicone-hydrogel-vs-hydrogel.html");
+  assert.equal(latest.href, "./contact-lens-replacement-schedule.html");
   assert.equal(latest.status, "live");
-  assert.equal(latest.featured, false);
+  assert.equal(latest.featured, true);
   assert.equal(latest.sources, 8);
   assert.equal(latest.verifiedAt, "확인일 2026.09.02");
-  assert.equal(articles[1].href, "./contact-lens-dk-dkt.html");
-  assert.deepEqual(featured.map((article) => article.href), ["./water-content-moisture.html"]);
+  assert.equal(articles[1].href, "./silicone-hydrogel-vs-hydrogel.html");
+  assert.deepEqual(featured.map((article) => article.href), ["./contact-lens-replacement-schedule.html"]);
 
   // The hub card, the registration and the page have to agree on the source count, or
   // the hub advertises a bibliography the page does not carry.
-  const sourceCount = (read("site/knowledge/silicone-hydrogel-vs-hydrogel.html").match(/<ol class="bibliography">[\s\S]*?<\/ol>/)?.[0].match(/<li\b/g) || []).length;
+  const sourceCount = (read("site/knowledge/contact-lens-replacement-schedule.html").match(/<ol class="bibliography">[\s\S]*?<\/ol>/)?.[0].match(/<li\b/g) || []).length;
   assert.equal(sourceCount, latest.sources);
 
   const hub = read("site/knowledge/index.html");
   const latestCard = hub.match(/<div class="article-list" data-article-list>[\s\S]*?<\/div>\s*<\/div>/)?.[0] || "";
-  const order = ["./silicone-hydrogel-vs-hydrogel.html", "./contact-lens-dk-dkt.html", "./contact-lens-bc-dia-pwr.html"]
+  const order = ["./contact-lens-replacement-schedule.html", "./silicone-hydrogel-vs-hydrogel.html", "./contact-lens-dk-dkt.html"]
     .map((href) => latestCard.indexOf(`href="${href}"`));
   assert.ok(order.every((at) => at > -1), "the hub's static list should carry the three latest article cards");
   assert.deepEqual([...order].sort((left, right) => left - right), order, "the static hub list should be newest first");
   assert.match(latestCard, /출처 8건/);
-  assert.match(hub, /class="feature-card"[\s\S]*href="\.\.\/knowledge\/water-content-moisture\.html"/);
+  assert.match(hub, /class="feature-card"[\s\S]*href="\.\.\/knowledge\/contact-lens-replacement-schedule\.html"/);
+});
+
+test("the replacement schedule guide separates replacement, wear mode, and unopened expiry", () => {
+  const page = "site/knowledge/contact-lens-replacement-schedule.html";
+  assert.ok(htmlPages().includes(page), `${page} should exist`);
+  const html = read(page);
+  assert.match(html, /<meta name="robots" content="noindex, nofollow">/);
+  assert.match(html, /<link rel="canonical" href="https:\/\/DOMAIN-TBD\/knowledge\/contact-lens-replacement-schedule\.html">/);
+  assert.match(html, /교체주기<\/strong>는 한 렌즈를 언제 새 렌즈로 바꾸는지/);
+  assert.match(html, /하루 착용시간<\/strong>은 하루 중 몇 시간 끼는지/);
+  assert.match(html, /착용방식<\/strong>은 깨어 있을 때만 쓰는 매일착용인지 수면을 포함할 수 있는 연속착용인지/);
+  assert.match(html, /FDA 정의를 인용한 CDC 안내에서 disposable은 한 번 사용하고 폐기/);
+  assert.match(html, /EXP<\/strong>는 밀봉된 미개봉 포장의 유효기간/);
+  assert.match(html, /케이스는[\s\S]*최소 3개월마다 교체/);
+  assert.match(html, /매년 또는 전문가가 권한 주기로 방문/);
+  assert.match(html, /연속착용자의 각막궤양 위험이 매일착용자보다 크고/);
+
+  const bibliography = html.match(/<ol class="bibliography">[\s\S]*?<\/ol>/)?.[0] || "";
+  const sourceUrls = [
+    "https://www.cdc.gov/contact-lenses/about/about-contact-lens-types.html",
+    "https://www.ecfr.gov/current/title-21/chapter-I/subchapter-H/part-886/subpart-F/section-886.5925",
+    "https://www.accessdata.fda.gov/cdrh_docs/pdf15/K153643.pdf",
+    "https://coopervision.com/sites/coopervision.com/files/pfg01047_clariti_1_day_family_us_invigor_and_non-invigor-rev_b.pdf",
+    "https://shop.acuvue.com/pub/media/ACUVUE-Technical-Specification-Guide-05-27-25.pdf",
+    "https://www.fda.gov/medical-devices/contact-lenses/everyday-eye-care",
+    "https://www.accessdata.fda.gov/cdrh_docs/pdf8/P080011B.pdf",
+    "https://www.cdc.gov/contact-lenses/prevention/index.html"
+  ];
+  sourceUrls.forEach((url, index) => assert.ok(bibliography.includes(`<li id="source-${index + 1}"><a href="${url}"`)));
+  assert.equal((bibliography.match(/<li\b/g) || []).length, 8);
+
+  const examples = { "acuvue-oasys-1-day": "1일", "acuvue-oasys-2-week": "2주", "acuvue-vita": "1달" };
+  for (const [id, expected] of Object.entries(examples)) {
+    const product = pairApi.products.find((candidate) => candidate.id === id);
+    assert.ok(product, `${id} should be on file`);
+    assert.equal(product.fields.find((field) => field.id === "replacement")?.value, expected);
+    assert.ok(html.includes(`href="../products/${id}.html"`));
+  }
+  assert.ok(read("site/knowledge/contact-lens-bc-dia-pwr.html").includes('href="./contact-lens-replacement-schedule.html#expiry"'));
+  assert.ok(read("site/knowledge/silicone-hydrogel-vs-hydrogel.html").includes('href="./contact-lens-replacement-schedule.html"'));
 });
 
 // --- Product pair pages ----------------------------------------------------------

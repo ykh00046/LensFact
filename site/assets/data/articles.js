@@ -1,5 +1,15 @@
 window.LENSFACT_ARTICLES = [
   {
+    category: "포장지·허가정보 읽기",
+    title: "콘택트렌즈 교체주기 표기 읽는 법: 1일·2주·1개월과 착용 가능 기간의 차이",
+    lead: "교체주기, 하루 착용시간, 매일착용·연속착용과 미개봉 EXP를 서로 다른 축으로 구분하고 처방된 일정을 지켜야 하는 근거를 정리합니다.",
+    href: "./contact-lens-replacement-schedule.html",
+    featured: true,
+    status: "live",
+    sources: 8,
+    verifiedAt: "확인일 2026.09.02"
+  },
+  {
     category: "오해 확인",
     title: "실리콘 하이드로겔과 하이드로겔 콘택트렌즈의 차이: 재료군 이름으로 알 수 있는 것과 없는 것",
     lead: "두 재료군의 산소 전달 경로 차이, 함수율을 같은 축으로 읽지 않는 이유, 재료군 이름만으로 순위·착용감·야간착용을 정할 수 없는 근거를 정리합니다.",
@@ -34,7 +44,7 @@ window.LENSFACT_ARTICLES = [
     title: "함수율이 높으면 더 촉촉한 렌즈일까요?",
     lead: "함수율이 말하는 범위와 착용 중 촉촉함을 단독으로 예측할 수 없는 이유를 과학 문헌과 공식 제품 자료로 확인합니다.",
     href: "./water-content-moisture.html",
-    featured: true,
+    featured: false,
     status: "live",
     sources: 12,
     verifiedAt: "확인일 2026.08.27"
